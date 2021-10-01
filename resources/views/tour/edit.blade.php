@@ -13,7 +13,7 @@
                                 <img src="{{ asset('admin-master/asset/images/undraw_posting_photo.svg')}}" width="100%" alt="" />
                             </div>
 
-                            <h3 class="profile-username text-center">Name zxc</h3>
+                            <h3 class="profile-username text-center">Name Tour</h3>
 
                             <p class="text-muted text-center">Type tour</p>
 

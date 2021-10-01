@@ -12,10 +12,11 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name Booths</th>
-                                <th>Avatar</th>
-                                <th>Company</th>
-                                <th>Status</th>
+                                <th>Events</th>
+                                <th>Baner</th>
+                                <th>Name</th>
+                                <th>Link MSteam</th>
+                                <th>Start time</th>
                                 <th>Date</th>
                                 <th style="width: 10%;">Action</th>
                             </tr>
@@ -23,23 +24,16 @@
                         <tbody>
                             <tr>
                                 <td>1</td>
-                                <td>Dinh phong Boots</td>
-                                <td><img class="booth-tables" src="https://dt2sdf0db8zob.cloudfront.net/wp-content/uploads/2019/08/99-logo.png" alt=""></td>
-                                <td>Dinh phong</td>
-                                <td><span class="btn btn-df1">In Process</span></td>
-                                <td>September 26, 2021</td>
+                                <td>Event 279</td>
+                                <td><img style="width: 150px; max-height: 80px;" src="https://cdn.vn.garenanow.com/web/fo4vn/2019-Nov/VNDAU/KV-Adapt-1920x1080.jpg" alt=""></td>
+                                <td>Thuyết trình triển lãm</td>
                                 <td>
-                                    <a class="btn btn-xs btn-danger" href="#"><i class="fa fa-trash"></i></a>
+                                    <a href="https://github.com/">https://github.com/</a>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Dinh phong Boots 2</td>
-                                <td><img class="booth-tables" src="https://dt2sdf0db8zob.cloudfront.net/wp-content/uploads/2019/08/99-logo.png" alt=""></td>
-                                <td>Dinh phong 3</td>
-                                <td><span class="btn btn-df2">Processed</span></td>
-                                <td>September 26, 2021</td>
+                                <td>12:00 to 13.30</td>
+                                <td>Friday 1 Oct 2021</td>
                                 <td>
+                                    <a class="btn btn-xs btn-info" href="#"><i class="fa fa-pen"></i></a>
                                     <a class="btn btn-xs btn-danger" href="#"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
@@ -48,6 +42,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 @endsection

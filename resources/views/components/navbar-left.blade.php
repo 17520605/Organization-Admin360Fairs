@@ -36,12 +36,12 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-building"></i>
-            <span>Companies</span>
+            <span>Company</span>
         </a>
         <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Companies:</h6>
-                <a class="collapse-item" href="buttons.html">Companies</a>
+                <h6 class="collapse-header">Custom Company:</h6>
+                <a class="collapse-item" href="buttons.html">Company</a>
             </div>
         </div>
     </li>
@@ -54,9 +54,14 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Booths:</h6>
                 <a class="collapse-item" href="buttons.html">Booths</a>
-                <a class="collapse-item" href="buttons.html">Products</a>
             </div>
         </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#">
+            <i class="fas fa-archive"></i>
+            <span>Producs</span>
+        </a>
     </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseevent" aria-expanded="true" aria-controls="collapseTwo">
@@ -67,9 +72,28 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Events:</h6>
                 <a class="collapse-item" href="buttons.html">Events</a>
+                <a class="collapse-item" href="buttons.html">Events Card</a>
             </div>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsewebina" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span>Webina</span>
+        </a>
+        <div id="collapsewebina" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Custom Webina:</h6>
+                <a class="collapse-item" href="buttons.html">Webina</a>
+            </div>
+        </div>
+    </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider" />
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        File
+    </div>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseresource" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-folder"></i>
@@ -92,20 +116,12 @@
     <div class="sidebar-heading">
         Persons
     </div>
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-            <i class="fas fa-user-tie"></i>
-            <span>Managerment</span>
-        </a>
-    </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#">
             <i class="fas fa-users"></i>
             <span>Viewer</span>
         </a>
     </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider" />
 

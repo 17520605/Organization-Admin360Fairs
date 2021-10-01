@@ -41,6 +41,12 @@
         <script src="{{ asset('admin-master/asset/js/adminlte.min.js')}}"></script>
 
         <!-- Page level plugins -->
+        <script src="{{ asset('admin-master/asset/vendor/chart.js/Chart.min.js')}}"></script>
+        <!-- Page level custom scripts -->
+        <script src="{{ asset('admin-master/asset/js/demo/chart-area-demo.js')}}"></script>
+
+        <script src="{{ asset('admin-master/asset/js/demo/chart-pie-demo.js')}}"></script>
+        <!-- Page level plugins -->
         <script src="{{ asset('admin-master/asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
 
         <script src="{{ asset('admin-master/asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
