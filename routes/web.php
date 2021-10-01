@@ -1,20 +1,22 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'AdminEventController@index');
 
-// ROUTER AUTH
-Route::get('/login', 'AuthController@login');
-Route::get('/register', 'AuthController@register');
-Route::get('/forgot', 'AuthController@forgot');
+Route::match(['get', 'post'], '/login', 'AuthController@login')->name('login');
+Route::match(['get', 'post'], '/register', 'AuthController@register')->name('register');
 
-// ROUTER TOUR
-Route::get('/tour', 'TourController@index');
+Route::middleware('auth')->group(function (){
+    Route::get('/', 'AdminEventController@index')->name('home');
 
-
-// ROUTER AUTH
-Route::group(['prefix' => 'company'], function(){
-    Route::get('/', 'CompanyController@index');
-    Route::get('/add', 'CompanyController@add');
-    Route::get('/edit', 'CompanyController@edit');
+    // ROUTER TOUR
+    Route::group(['prefix' => 'tour'], function(){
+        Route::get('/{id}', 'TourController@index');
+    });
+    
+    // Route::group(['prefix' => 'company'], function(){
+    //     Route::get('/', 'CompanyController@index');
+    //     Route::get('/add', 'CompanyController@add');
+    //     Route::get('/edit', 'CompanyController@edit');
+    // });
 });
+

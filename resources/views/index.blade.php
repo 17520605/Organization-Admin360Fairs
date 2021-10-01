@@ -23,7 +23,7 @@
                                     <p>Expires on 2022-09-12</p>
                                 </div>
                                 <div class="col-auto" style="padding-left: 40px;">
-                                    <a href="#" class="btn" style="color: #fff; background-color: #491bd5; border-color: #461ac9; margin-top: .5rem!important;margin-bottom: .5rem!important;font-size: 14px!important;padding: 8px 34px!important; line-height: 30px!important;">
+                                    <a href="{{env('APP_URL')}}/tour/1" class="btn" style="color: #fff; background-color: #491bd5; border-color: #461ac9; margin-top: .5rem!important;margin-bottom: .5rem!important;font-size: 14px!important;padding: 8px 34px!important; line-height: 30px!important;">
                                         <span>Manage</span>
                                     </a>
                                 </div>
