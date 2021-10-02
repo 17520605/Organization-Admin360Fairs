@@ -50,6 +50,8 @@ class AuthController extends Controller
         $user->level = 1;
         $user->save();
 
+        
+
         return redirect('/login');
     }
 
