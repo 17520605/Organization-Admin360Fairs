@@ -8,9 +8,16 @@ Route::match(['get', 'post'], '/register', 'AuthController@register')->name('reg
 Route::middleware('auth')->group(function (){
     Route::get('/', 'AdminEventController@index')->name('home');
 
-    // ROUTER TOUR
-    Route::group(['prefix' => 'tour'], function(){
+    Route::group(['prefix' => 'tours'], function(){
+        //dashboard
+
+        //tour
         Route::get('/{id}', 'TourController@index');
+        Route::get('/{id}/tour', 'TourController@edit');
+        Route::get('/{id}/tour/edit', 'TourController@edit');
+        Route::post('/{id}/tour/save-edit', 'TourController@saveEdit');
+
+        // 
     });
     
     // Route::group(['prefix' => 'company'], function(){
