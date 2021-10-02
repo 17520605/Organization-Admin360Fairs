@@ -13,7 +13,7 @@ Route::middleware('auth')->group(function (){
 
         //tour
         Route::get('/{id}', 'TourController@index');
-        Route::get('/{id}/tour', 'TourController@edit');
+        Route::get('/{id}/tour', 'TourController@index');
         Route::get('/{id}/tour/edit', 'TourController@edit');
         Route::post('/{id}/tour/save-edit', 'TourController@saveEdit');
 
