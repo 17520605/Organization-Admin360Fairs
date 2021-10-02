@@ -1,33 +1,24 @@
 @extends('layouts.super')
 @section('content')
-    <div class="container">
-        <div style="margin-top: 5%;">
-            <h3 style="color: #35373b">Wellcome Khai !</h3>
-            <div class="" style="border: 1px solid #dad9da; background-color: #fff;margin-bottom: 24px; border-radius: 8px;">
-                <div class="" style="border-bottom: 1px solid #dad9da;">
-                    <span style="color: #35373b;font-size: 16px; line-height:50px;font-weight: 700; padding: 10px 20px;">
-                        <span>Hosting</span>
-                    </span>
+    <div class="container card-tour">
+        <div class="tour-mg-top">
+            <h3>Hi, Khai 👋 </h3>
+            <div class="border_card">
+                <div class="card_header">
+                    <span>Hosting</span>
+                    <i onclick="onActiveTourCard()" class="icon_show_hide_card fas fa-chevron-up"></i>
                 </div>
-                <div class="" style="padding: 10px 20px; position: relative;">
-                    <div class="active-order-item border-dashed">
-                        <div style="position: relative;">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <i class="fab fa-accusoft" style="font-size: 50px;color: #491bd5;"></i>
-                                </div>
-                                <div class="col-9">
-                                    <div class="d-flex align-items-center">
-                                        <span style="color: #35373b;font-size: 16px; line-height: 24px;font-weight: 700; margin: 0;"> 360fairs.com </span>
-                                    </div>
-                                    <p>Expires on 2022-09-12</p>
-                                </div>
-                                <div class="col-auto" style="padding-left: 40px;">
-                                    <a href="{{env('APP_URL')}}/tour/1" class="btn" style="color: #fff; background-color: #491bd5; border-color: #461ac9; margin-top: .5rem!important;margin-bottom: .5rem!important;font-size: 14px!important;padding: 8px 34px!important; line-height: 30px!important;">
-                                        <span>Manage</span>
-                                    </a>
-                                </div>
-                            </div>
+                <div class="card_body active">
+                    <div class="row">
+                        <div class="col-auto">
+                            <i class="fab fa-accusoft"></i>
+                        </div>
+                        <div class="col-9">
+                            <span class="span-name-tour"> 360fairs.com </span>
+                            <span>Expires on 2022-09-12</span>
+                        </div>
+                        <div class="col-auto" style="padding-left: 50px;">
+                            <a href="{{env('APP_URL')}}/tour/1" class="btn btn-manage-tour"> Manage </a>
                         </div>
                     </div>
                 </div>

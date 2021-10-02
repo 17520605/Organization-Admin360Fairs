@@ -5,6 +5,21 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
+                <div class="card card-waves mb-4 mt-5">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col">
+                                <h2 class="text-primary">Welcome back, your dashboard is ready!</h2>
+                                <p class="text-gray-700">Great job, your affiliate dashboard is ready to go! You can view sales, generate links, prepare coupons, and download affiliate reports using this dashboard.</p>
+                                <a class="btn btn-primary p-3" href="#!">
+                                    Get Started
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right ms-1"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </a>
+                            </div>
+                            <div class="col d-none d-lg-block mt-xxl-n4"><img class="img-fluid px-xl-4 mt-xxl-n5" src="assets/img/illustrations/statistics.svg"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-3">
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
@@ -43,15 +58,10 @@
                             </p>
 
                             <hr />
-
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-
                             <p class="text-muted">Malibu, California</p>
-
                             <hr />
-
                             <strong><i class="fas fa-pencil-alt mr-1"></i> Discription</strong>
-
                             <p class="text-muted">
                                 <span class="tag tag-danger">UI Design</span>
                                 <span class="tag tag-success">Coding</span>
@@ -59,92 +69,13 @@
                                 <span class="tag tag-warning">PHP</span>
                                 <span class="tag tag-primary">Node.js</span>
                             </p>
-
-                            <hr />
-
-                            <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
-
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
-                        </div>
+                          </div>
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
                 </div>
                 <!-- /.col -->
                 <div class="col-md-9">
-                    <div class="row text-center">
-                        <!-- Team item -->
-                        <div class="col-xl-4 col-sm-6 mb-5">
-                            <div class="bg-white rounded shadow-sm py-5 px-4">
-                                <img src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-4.jpg" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm" />
-                                <h5 class="mb-0">Nevoresky</h5>
-                                <span class="small text-uppercase text-muted">CEO - Founder</span>
-                                <ul class="social mb-0 list-inline mt-3">
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End -->
-
-                        <!-- Team item -->
-                        <div class="col-xl-4 col-sm-6 mb-5">
-                            <div class="bg-white rounded shadow-sm py-5 px-4">
-                                <img src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-2.jpg" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm" />
-                                <h5 class="mb-0">Samuel Hardy</h5>
-                                <span class="small text-uppercase text-muted">CEO - Founder</span>
-                                <ul class="social mb-0 list-inline mt-3">
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End -->
-
-                        <!-- Team item -->
-                        <div class="col-xl-4 col-sm-6 mb-5">
-                            <div class="bg-white rounded shadow-sm py-5 px-4">
-                                <img src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-1.jpg" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm" />
-                                <h5 class="mb-0">Tom Sunderland</h5>
-                                <span class="small text-uppercase text-muted">CEO - Founder</span>
-                                <ul class="social mb-0 list-inline mt-3">
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End -->
-                    </div>
                     <div class="card">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
