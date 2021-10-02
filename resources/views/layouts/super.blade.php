@@ -27,5 +27,22 @@
             card_body.classList.toggle('active');
         }
     </script>
+    <script>
+        $('#btn-form-personal-profile').click(function(){
+            $('.form-step1').hide();
+            $('.form-step2').show();
+            $('.form-step3').hide();
+        });
+        $('#btn-form-business-profile').click(function(){
+            $('.form-step1').hide();
+            $('.form-step2').hide();
+            $('.form-step3').show();
+        });
+        $('.close').click(function(){
+            $('.form-step1').show();
+            $('.form-step2').hide();
+            $('.form-step3').hide();
+        });
+    </script>
     </body>
 </html>
