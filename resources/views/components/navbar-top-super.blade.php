@@ -4,6 +4,17 @@
     </div>
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
+             <i class="fas fa-torii-gate" style="margin-right: 8px"></i>  Tours
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
+              <i class="fas fa-align-right" style="margin-right: 8px"></i>  Profile
+            </a>
+        </li>
+        <div class="topbar-divider d-none d-sm-block"></div>
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline" style="font-size:0.9rem; color: #fff;">Khai nguyễn Hữu Minh</span>
