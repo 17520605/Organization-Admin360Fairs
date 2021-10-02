@@ -30,6 +30,7 @@ class TourController extends Controller
         $type = $request->type;
         $location = $request->location;
         $description = $request->description;
+        $image = $request->image;
 
         $tour = DB::table('360tool_tour')
             ->where('id', $id)
@@ -40,8 +41,11 @@ class TourController extends Controller
                 'type' => $type,
                 'location' => $location,
                 'description' => $description,
+                'image' => $image,
             ]);
 
-         return redirect('/tours/'.$id.'/tour');
+        return redirect('/tours/'.$id.'/tour');
     }
+
+    
 }

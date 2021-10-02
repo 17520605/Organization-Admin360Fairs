@@ -25,4 +25,27 @@ class ToursController extends Controller
 
         return view('tours.index', ['user' => $user, 'tours'=>$tours]);
     }
+
+    public function saveCreate(Request $request)
+    {
+        $name = $request->name;
+        $start_at = $request->start_at;
+        $end_at = $request->end_at;
+        $type = $request->type;
+        $location = $request->location;
+        $description = $request->description;
+
+        $tour = DB::table('360tool_tour')
+            ->insert([
+                'name' => $name,
+                'start_at' => $start_at,
+                'end_at' => $end_at,
+                'type' => $type,
+                'location' => $location,
+                'description' => $description,
+                'user_id' => Auth::id()
+            ]);
+
+        return redirect('/tours');
+    }
 }
