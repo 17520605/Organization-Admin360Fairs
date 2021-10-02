@@ -13476,7 +13476,7 @@ img {
 }
 
 .card-tour .tour-mg-top {
-    margin-top: 5%;
+    margin-top: 6%;
 }
 
 .tour-mg-top h3 {
@@ -13531,18 +13531,24 @@ img {
 
 .tour-mg-top .card_body .row .fa-accusoft {
     font-size: 50px;
-    color: #491bd5;
+    color: #2e59d9;
 }
 
 .tour-mg-top .card_body .btn-manage-tour {
     color: #fff;
-    background-color: #491bd5;
-    border-color: #461ac9;
+    background-color: #2e59d9;
+    border-color: #2653d4;
     margin-top: .5rem!important;
     margin-bottom: .5rem!important;
     font-size: 14px!important;
     padding: 5px 30px!important;
     line-height: 30px!important;
+}
+
+.tour-mg-top .card_body .btn-manage-tour:hover {
+    color: #fff;
+    background-color: #224abe;
+    border-color: #224abe;
 }
 
 .tour-mg-top .card_body .span-name-tour {
@@ -13555,7 +13561,7 @@ img {
 }
 
 .tour-mg-top .card_header i {
-    color: #491bd5;
+    color: #2e59d9;
     cursor: pointer;
     transition: 0.7s ease-in;
 }
@@ -13563,4 +13569,24 @@ img {
 .tour-mg-top .card_header i.active {
     transform: rotate(180deg);
     transition: 0.7s ease-in;
+}
+
+.tour-mg-top .btn-add-tour {
+    position: absolute;
+    top: -15px;
+    right: 10px;
+    color: #fff;
+    background-color: #2e59d9;
+    border-color: #2653d4;
+    margin-top: .5rem!important;
+    margin-bottom: .5rem!important;
+    font-size: 14px!important;
+    padding: 5px 30px!important;
+    line-height: 30px!important;
+}
+
+.tour-mg-top .btn-add-tour:hover {
+    color: #fff;
+    background-color: #224abe;
+    border-color: #224abe;
 }
