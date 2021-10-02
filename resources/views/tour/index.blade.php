@@ -3,9 +3,7 @@
 @section('content')
     <div class="container-fluid booths-card">
         <div class="container-fluid">
-            <h3>Overview Booths</h3>
-            <hr class="mt-0 mb-4">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-lg-4 mb-4">
                     <div class="card h-100 border-start-lg border-start-primary">
                         <div class="card-body">
@@ -42,15 +40,23 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="card card-header-actions mb-4">
                 <div class="card-header">
-                    Tour View
-                    <span style="position: absolute; right: 10px; top: 10px;">
-                        <button class="btn btn-df1" style="padding: 5px 25px;margin-right: 5px; font-weight: 600;"><i class="fas fa-pen"></i> Edit </button>
-                        <button class="btn btn-df1" style="padding: 5px 25px;margin-right: 5px; font-weight: 600;"><i class="fas fa-cog"></i> Configs </button>
-                        <button class="btn btn-df1" style="padding: 5px 25px;font-weight: 600;"><i class="fas fa-blog"></i> Public </button>
-                    </span>
+                    Tour View     
+                    <div style="float: right">
+                        <div class="btn-toolbar" >
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <a href="/tours/{{$tour->id}}/tour/edit"><button class="btn btn-light">Edit </button></a> 
+                            </div>
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <a><button class="btn btn-light"> Tool Config </button></a> 
+                            </div>
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <a><button class="btn btn-primary"> Publish </button></a> 
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body px-4">
                     <div class="row">
@@ -65,7 +71,7 @@
                                         </p>
                                         <hr>
                                         <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-                                        <p class="text-muted">Malibu, California</p>
+                                        <p class="text-muted">{{$tour->location}}</p>
                                         <hr>
                                     </div>
                                     <a href="#" class="btn btn-primary btn-block"><b>Share</b></a>
@@ -76,31 +82,25 @@
                             <div class="mb-4">
                                 <div class="card-body">
                                     <h3 class="mt-0" style="color: #35373b;">
-                                        App design and development
+                                        {{$tour->name}}
                                     </h3>
                                     <div class="row" style="margin-top: 25px;">
                                         <div class="col-md-4">
                                             <div class="mb-4">
                                                 <h5 style="color: #35373b;">Start Date</h5>
-                                                <p>17 March 2018 <small class="text-muted">1:00 PM</small></p>
+                                                <p>{{$tour->end_at != null ? Carbon\Carbon::parse($tour->start_at)->format('Y-m-d') : 'N/A'}}</p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="mb-4">
                                                 <h5 style="color: #35373b;">End Date</h5>
-                                                <p>22 December 2018 <small class="text-muted">1:00 PM</small>
-                                                </p>
+                                                <p>{{$tour->end_at != null ? Carbon\Carbon::parse($tour->end_at)->format('Y-m-d') : 'N/A'}}</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <h5 style="color: #35373b;">Discription Tour :</h5>
+                                    <h5 style="color: #35373b;">Description</h5>
                                     <p class="text-muted mb-2">
-                                        With supporting text below as a natural lead-in to additional contenposuere erat a ante. Voluptates, illo, iste itaque voluptas corrupti ratione reprehenderit magni similique? Tempore, quos delectus asperiores libero voluptas quod perferendis! Voluptate,
-                                        quod illo rerum? Lorem ipsum dolor sit amet.
-                                    </p>
-                                    <p class="text-muted mb-4">
-                                        Voluptates, illo, iste itaque voluptas corrupti ratione reprehenderit magni similique? Tempore, quos delectus asperiores libero voluptas quod perferendis! Voluptate, quod illo rerum? Lorem ipsum dolor sit amet. With supporting text below as a natural
-                                        lead-in to additional contenposuere erat a ante.
+                                        {{$tour->description}}
                                     </p>
                                 </div>
                             </div>

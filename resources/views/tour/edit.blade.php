@@ -15,15 +15,9 @@
                 </div>
                 <div class="col-xl-8">
                     <div class="card mb-4">
-                        <div class="card-header">Tour Edit
-                            <span style="position: absolute; right: 10px; top: 8px;">
-                                <button class="btn btn-df1" style="padding: 5px 25px;margin-right: 5px; font-weight: 600;"><i class="fas fa-cog"></i> Configs </button>
-                                <button class="btn btn-df1" style="padding: 5px 25px;font-weight: 600;"><i class="fas fa-blog"></i> Public </button>
-                            </span>
-                        </div>
-
+                        <div class="card-header">Tour Edit</div>
                         <div class="card-body">
-                            <form class="form-signin needs-validation" action="/tours/{{$tour->id}}/tour/save-edit" method="post" novalidate>
+                            <form id="tour-form" class="form-signin needs-validation" action="/tours/{{$tour->id}}/tour/save-edit" method="post" novalidate>
                                 @csrf 
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputUsername"></label>
@@ -64,8 +58,10 @@
                                         Please enter tour description.
                                     </div>
                                 </div>
-                                <button class="btn btn-primary" type="submit">Save changes</button>
                             </form>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" form="tour-form" type="submit">Save changes</button>
                         </div>
                     </div>
                 </div>

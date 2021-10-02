@@ -12,12 +12,7 @@ class TourController extends Controller
     public function index($id)
     {
         $tour = DB::table('360tool_tour')->find($id);
-        if($tour->is_publishing == 0){
-            return redirect('/tours/'.$id.'/tour/edit');
-        }
-        else{
-            return redirect('/tours/'.$id.'/dashboard');
-        }
+        return view('tour.index', ['tour' => $tour]);
     }
 
     public function edit($id)
@@ -46,6 +41,6 @@ class TourController extends Controller
                 'description' => $description,
             ]);
 
-         return redirect('/tours/'.$id.'/tour/edit');
+         return redirect('/tours/'.$id.'/tour');
     }
 }
