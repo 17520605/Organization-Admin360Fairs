@@ -13513,7 +13513,7 @@ img {
 }
 
 .tour-mg-top .card_body {
-    padding: 20px;
+    padding: 0px 20px;
     position: relative;
     border-top: 1px solid #dad9da;
     display: none;
@@ -13587,4 +13587,8 @@ img {
     color: #fff;
     background-color: #224abe;
     border-color: #224abe;
+}
+
+.tour-mg-top .border-top-card-tour:not(:first-child) {
+    border-top: 1px solid #dad9da;
 }

@@ -13,16 +13,18 @@
                 </div>
                 <div class="card_body active">
                     @foreach ($tours as $tour)
-                        <div class="row mb-3 mt-3">
-                            <div class="col-auto">
-                                <i class="fab fa-accusoft"></i>
-                            </div>
-                            <div class="col-9">
-                                <span class="span-name-tour"> {{$tour->name}} </span>
-                                <span>Expires on {{$tour->end_at != null ? Carbon\Carbon::parse($tour->end_at)->format('Y-m-d') : 'N/A'}}</span>
-                            </div>
-                            <div class="col-auto" style="padding-left: 50px;">
-                                <a href="{{env('APP_URL')}}/tours/{{$tour->id}}" class="btn btn-manage-tour"> Manage </a>
+                        <div class="border-top-card-tour">
+                            <div class="row mb-3 mt-3">
+                                <div class="col-auto">
+                                    <i class="fab fa-accusoft"></i>
+                                </div>
+                                <div class="col-9">
+                                    <span class="span-name-tour"> {{$tour->name}} </span>
+                                    <span>Expires on {{$tour->end_at != null ? Carbon\Carbon::parse($tour->end_at)->format('Y-m-d') : 'N/A'}}</span>
+                                </div>
+                                <div class="col-auto" style="padding-left: 50px;">
+                                    <a href="{{env('APP_URL')}}/tours/{{$tour->id}}" class="btn btn-manage-tour"> Manage </a>
+                                </div>
                             </div>
                         </div>
                     @endforeach
