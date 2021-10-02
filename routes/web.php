@@ -24,11 +24,9 @@ Route::middleware('auth')->group(function (){
         //
         
     });
-    
-    // Route::group(['prefix' => 'company'], function(){
-    //     Route::get('/', 'CompanyController@index');
-    //     Route::get('/add', 'CompanyController@add');
-    //     Route::get('/edit', 'CompanyController@edit');
-    // });
+
+    Route::group(['prefix' => 'profile'], function(){
+        Route::get('/', 'ProfileController@index');
+    });
 });
 
