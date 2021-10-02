@@ -59,4 +59,10 @@ class AuthController extends Controller
     {
         return view('auth.forgot');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/login');
+    }
 }

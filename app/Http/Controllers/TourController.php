@@ -11,14 +11,15 @@ class TourController extends Controller
 {
     public function index($id)
     {
+
         $tour = DB::table('360tool_tour')->find($id);
-        return view('tour.index', ['tour' => $tour]);
+        return view('tour.index', ['user' => Auth::user(), 'tour'=>$tour]);
     }
 
     public function edit($id)
     {
         $tour = DB::table('360tool_tour')->find($id);
-        return view('tour.edit', ['tour' => $tour]);
+        return view('tour.edit', ['user' => Auth::user(),'tour' => $tour]);
     }
 
     public function saveEdit($id, Request $request)
