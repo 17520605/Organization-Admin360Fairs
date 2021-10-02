@@ -5,12 +5,12 @@
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
+            <a href="/tours" class="nav-link" data-widget="fullscreen" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
              <i class="fas fa-torii-gate" style="margin-right: 8px"></i>  Tours
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
+            <a href="/profile" class="nav-link" data-widget="fullscreen" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
               <i class="fas fa-align-right" style="margin-right: 8px"></i>  Profile
             </a>
         </li>
