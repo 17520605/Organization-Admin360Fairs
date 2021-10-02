@@ -7,22 +7,26 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class TourController extends Controller
+class ToursController extends Controller
 {
-    public function index($id)
+    public function index()
     {
+        $user = Auth::user();
+        $tours = DB::table('360tool_tour')->where('user_id', '=', $user->id)->get();
 
-        $tour = DB::table('360tool_tour')->find($id);
-        return view('tour.index', ['user' => Auth::user(), 'tour'=>$tour]);
+        if(count($tours) == 0){
+            $tour = DB::table('360tool_tour')->insert([
+                'name' => 'First Tour',
+                'user_id' => $user->id
+            ]);
+
+            $tours = DB::table('360tool_tour')->where('user_id', '=', $user->id)->get();
+        }
+
+        return view('tours.index', ['user' => $user, 'tours'=>$tours]);
     }
 
-    public function edit($id)
-    {
-        $tour = DB::table('360tool_tour')->find($id);
-        return view('tour.edit', ['user' => Auth::user(),'tour' => $tour]);
-    }
-
-    public function saveEdit($id, Request $request)
+    public function saveCreate(Request $request)
     {
         $name = $request->name;
         $start_at = $request->start_at;
@@ -30,22 +34,18 @@ class TourController extends Controller
         $type = $request->type;
         $location = $request->location;
         $description = $request->description;
-        $image = $request->image;
 
         $tour = DB::table('360tool_tour')
-            ->where('id', $id)
-            ->update([
+            ->insert([
                 'name' => $name,
                 'start_at' => $start_at,
                 'end_at' => $end_at,
                 'type' => $type,
                 'location' => $location,
                 'description' => $description,
-                'image' => $image,
+                'user_id' => Auth::id()
             ]);
 
-        return redirect('/tours/'.$id.'/tour');
+        return redirect('/tours');
     }
-
-    
 }

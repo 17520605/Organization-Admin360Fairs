@@ -63,7 +63,11 @@
                         <div class="col-xl-4">
                             <div class="mb-4 mb-xl-0">
                                 <div class="card-body">
-                                    <img class=" mb-2" style="width: 100%;" src="https://gconnect.edu.vn/wp-content/uploads/2016/06/bg-slide-01.jpg" alt="">
+                                    @if ($tour->image != null)
+                                        <img class="card-img-top" alt="100%x180" style="height: 180px; width: 100%; display: block;" src="{{$tour->image}}" data-holder-rendered="true"> 
+                                    @else
+                                        <img class="card-img-top" alt="100%x180" style="height: 180px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17c4158f272%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17c4158f272%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22107.1953125%22%20y%3D%2296.3%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+                                    @endif
                                     <div class="card-body">
                                         <strong><i class="fas fa-building mr-1"></i> Organization</strong>
                                         <p class="text-muted">
