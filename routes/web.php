@@ -20,9 +20,6 @@ Route::middleware('auth')->group(function (){
         Route::get('/{id}/tour', 'TourController@index');
         Route::get('/{id}/tour/edit', 'TourController@edit');
         Route::post('/{id}/tour/save-edit', 'TourController@saveEdit');
-        
-        //
-        
     });
 
     Route::group(['prefix' => 'profile'], function(){

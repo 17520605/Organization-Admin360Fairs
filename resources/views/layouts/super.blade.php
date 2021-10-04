@@ -28,12 +28,12 @@
         }
     </script>
     <script>
-        $('#btn-form-personal-profile').click(function(){
+        $('#btn-form-business-profile').click(function(){
             $('.form-step1').hide();
             $('.form-step2').show();
             $('.form-step3').hide();
         });
-        $('#btn-form-business-profile').click(function(){
+        $('#btn-form-personal-profile').click(function(){
             $('.form-step1').hide();
             $('.form-step2').hide();
             $('.form-step3').show();

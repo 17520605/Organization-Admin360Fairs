@@ -13620,12 +13620,14 @@ img {
     position: absolute;
     top: -15px;
     right: 10px;
-    border-color: #2653d4;
+    border: 2px solid #2653d4;
     margin-top: .5rem!important;
     margin-bottom: .5rem!important;
     font-size: 14px!important;
     padding: 5px 30px!important;
     line-height: 30px!important;
+    color: #224abe;
+    font-weight: 600;
 }
 
 .tour-mg-top .btn-add-tour:hover {

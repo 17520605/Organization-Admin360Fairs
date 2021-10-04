@@ -8,14 +8,14 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        return view('companies.index');
+        return view('company.index');
     }
     public function add()
     {
-        return view('companies.add');
+        return view('company.add');
     }
     public function edit()
     {
-        return view('companies.edit');
+        return view('company.edit');
     }
 }
