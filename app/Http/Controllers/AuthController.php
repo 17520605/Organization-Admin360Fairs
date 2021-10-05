@@ -36,15 +36,11 @@ class AuthController extends Controller
             $url = $request->get('url');
             return view('auth.register');
         }
-       
-        $firstname = $request->firstname;
-        $lastname = $request->lastname;
+
         $email = $request->email;
         $password = $request->password;
 
         $user = new User;
-        $user->firstname = $firstname;
-        $user->lastname = $lastname;
         $user->email = $email;
         $user->password = bcrypt($password);
         $user->level = 1;

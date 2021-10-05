@@ -92,13 +92,13 @@
                                         <div class="col-md-4">
                                             <div class="mb-4">
                                                 <h5 style="color: #35373b;">Start Date</h5>
-                                                <p>{{$tour->end_at != null ? Carbon\Carbon::parse($tour->start_at)->format('Y-m-d') : 'N/A'}}</p>
+                                                <p>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->startTime)->format('Y-m-d') : 'N/A'}}</p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="mb-4">
                                                 <h5 style="color: #35373b;">End Date</h5>
-                                                <p>{{$tour->end_at != null ? Carbon\Carbon::parse($tour->end_at)->format('Y-m-d') : 'N/A'}}</p>
+                                                <p>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->endTime)->format('Y-m-d') : 'N/A'}}</p>
                                             </div>
                                         </div>
                                     </div>

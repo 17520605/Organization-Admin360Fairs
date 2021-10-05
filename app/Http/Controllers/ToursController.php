@@ -12,15 +12,15 @@ class ToursController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $tours = DB::table('360tool_tour')->where('user_id', '=', $user->id)->get();
+        $tours = DB::table('tour')->where('organizerId', '=', $user->id)->get();
 
         if(count($tours) == 0){
-            $tour = DB::table('360tool_tour')->insert([
+            $tour = DB::table('tour')->insert([
                 'name' => 'First Tour',
-                'user_id' => $user->id
+                'organizerId' => $user->id
             ]);
 
-            $tours = DB::table('360tool_tour')->where('user_id', '=', $user->id)->get();
+            $tours = DB::table('tour')->where('organizerId', '=', $user->id)->get();
         }
 
         return view('tours.index', ['user' => $user, 'tours'=>$tours]);
@@ -35,15 +35,14 @@ class ToursController extends Controller
         $location = $request->location;
         $description = $request->description;
 
-        $tour = DB::table('360tool_tour')
+        $tour = DB::table('tour')
             ->insert([
                 'name' => $name,
-                'start_at' => $start_at,
-                'end_at' => $end_at,
-                'type' => $type,
+                'startTime' => $start_at,
+                'endTime' => $end_at,
                 'location' => $location,
                 'description' => $description,
-                'user_id' => Auth::id()
+                'organizerId' => Auth::id()
             ]);
 
         return redirect('/tours');
