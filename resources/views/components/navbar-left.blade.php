@@ -58,12 +58,6 @@
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-            <i class="fas fa-archive"></i>
-            <span>Producs</span>
-        </a>
-    </li>
-    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseevent" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-calendar-week"></i>
             <span>Events</span>
@@ -97,15 +91,15 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseresource" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-folder"></i>
-            <span>File Manager</span>
+            <span>Objects Manager</span>
         </a>
         <div id="collapseresource" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">List Resource:</h6>
-                <a class="collapse-item" href="buttons.html">Images</a>
-                <a class="collapse-item" href="buttons.html">Videos</a>
-                <a class="collapse-item" href="buttons.html">Audios</a>
-                <a class="collapse-item" href="buttons.html">Other</a>
+                <h6 class="collapse-header"> Types </h6>
+                <a href="/tours/{{$tour->id}}/objetcts/images" class="collapse-item" href="buttons.html">Images</a>
+                <a href="/tours/{{$tour->id}}/objetcts/videos" class="collapse-item" href="buttons.html">Videos</a>
+                <a href="/tours/{{$tour->id}}/objetcts/audios" class="collapse-item" href="buttons.html">Audios</a>
+                <a href="/tours/{{$tour->id}}/objetcts/3dmodels" class="collapse-item" href="buttons.html">3D Model</a>
             </div>
         </div>
     </li>
