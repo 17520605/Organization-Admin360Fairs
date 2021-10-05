@@ -88,15 +88,11 @@
                                         <input class="form-control" id="" type="text" placeholder="Enter your link youtube">
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="">L</label>
-                                    <input placeholder="Enter Link Image or Model 3D Of Company" class="form-control">
-                                </div>
                                 <!-- Form Group (create account submit)-->
                                 <a class="btn btn-primary btn-block" href="">Create Organization Profile</a>
                             </div>
                             <div class="form-step2 profile__upload-box" style="display: none">
-                                <div class="mb-3">
+                                <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="">First Name</label>
                                         <input class="form-control" id="" type="text" placeholder="Enter your First Name">
