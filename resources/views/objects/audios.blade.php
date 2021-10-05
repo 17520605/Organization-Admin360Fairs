@@ -4,16 +4,14 @@
     <div class="container-fluid gallery">
          <div class="container-fluid gallery-ds">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Images</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Audios  <button class="btn btn-df" data-toggle="modal" data-target="#create_upload_object" style="position: absolute; right: 1.5rem;"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new file</button></h1>
                     <div class="row clearfix">
                         <div class="col-lg-3 col-md-4 col-sm-12">
                             <div class="card">
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
+                                            <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/5.jpg" alt="img" class="img-fluid">
@@ -31,9 +29,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
@@ -51,9 +47,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
@@ -71,9 +65,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/3.jpg" alt="img" class="img-fluid">
@@ -91,9 +83,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/4.jpg" alt="img" class="img-fluid">
@@ -111,9 +101,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/1.jpg" alt="img" class="img-fluid">
@@ -131,9 +119,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/2.jpg" alt="img" class="img-fluid">
@@ -151,9 +137,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
@@ -171,9 +155,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/10.jpg" alt="img" class="img-fluid">
@@ -191,9 +173,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/11.jpg" alt="img" class="img-fluid">
@@ -211,9 +191,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/12.jpg" alt="img" class="img-fluid">
@@ -231,9 +209,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/13.jpg" alt="img" class="img-fluid">
@@ -251,9 +227,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/14.jpg" alt="img" class="img-fluid">
@@ -271,9 +245,7 @@
                                 <div class="file">
                                     <a href="javascript:void(0);">
                                         <div class="hover">
-                                            <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                         </div>
                                         <div class="image">
                                             <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/15.jpg" alt="img" class="img-fluid">
