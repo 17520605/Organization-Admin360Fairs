@@ -29,27 +29,7 @@
         </a>
       
         <!-- Bootstrap core JavaScript-->
-        <script src="{{ asset('admin-master/asset/vendor/jquery/jquery.min.js')}}"></script>
-        <script src="{{ asset('admin-master/asset/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-        <!-- Core plugin JavaScript-->
-        <script src="{{ asset('admin-master/asset/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-        <!-- Custom scripts for all pages-->
-        <script src="{{ asset('admin-master/asset/js/sb-admin-2.min.js')}}"></script>
-
-        <script src="{{ asset('admin-master/asset/js/adminlte.min.js')}}"></script>
-
-        <!-- Page level plugins -->
-        <script src="{{ asset('admin-master/asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
-
-        <script src="{{ asset('admin-master/asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-        <!-- Page level custom scripts -->
-        <script src="{{ asset('admin-master/asset/js/demo/datatables-demo.js')}}"></script>
-
-    <script src="{{ asset('admin-master/asset/plugins/filterizr/jquery.filterizr.min.js')}}"></script>
-    <script src="{{ asset('admin-master/asset/plugins/summernote/summernote-bs4.min.js')}}"></script>
+       
     {{-- <script>
         $(function() {
             $(document).on('click', '[data-toggle="lightbox"]', function(event) {
