@@ -49,7 +49,7 @@
                         <div class="form-step2 object__upload-box" style="display: none">
                             <div class="mb-3">
                                 <div class="form_upload">
-                                    <input type="text" placeholder="e.g. https://www.image.com/watch?v=9bZkp7q19f0">
+                                    <input class="form-control" type="text" placeholder="e.g. https://www.image.com/watch?v=9bZkp7q19f0">
                                 </div>
                                 <div class="form_preview" style="display: none;">
                                     <img src="https://i.ytimg.com/vi/g3TYaM-p870/maxresdefault.jpg" style="border-radius: 5px;" alt="">
