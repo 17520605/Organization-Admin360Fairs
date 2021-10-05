@@ -22,71 +22,85 @@
             </div>
             <!-- End of Content Wrapper -->
         </div>
-
+        {{-- POP --}}
+        @include('components.up_object')
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
       
         <!-- Bootstrap core JavaScript-->
-       
-    {{-- <script>
-        $(function() {
-            $(document).on('click', '[data-toggle="lightbox"]', function(event) {
-                event.preventDefault();
-                $(this).ekkoLightbox({
-                    alwaysShowClose: true
+        {{-- <script>
+            $(function() {
+                $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+                    event.preventDefault();
+                    $(this).ekkoLightbox({
+                        alwaysShowClose: true
+                    });
                 });
-            });
 
-            $('.filter-container').filterizr({
-                gutterPixels: 3
-            });
-            $('.btn[data-filter]').on('click', function() {
-                $('.btn[data-filter]').removeClass('active');
-                $(this).addClass('active');
-            });
-        })
-    </script> --}}
-
-    <script>
-        $(function() {
-            //Enable check and uncheck all functionality
-            $('.checkbox-toggle').click(function() {
-                var clicks = $(this).data('clicks')
-                if (clicks) {
-                    //Uncheck all checkboxes
-                    $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
-                    $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
-                } else {
-                    //Check all checkboxes
-                    $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
-                    $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
-                }
-                $(this).data('clicks', !clicks)
+                $('.filter-container').filterizr({
+                    gutterPixels: 3
+                });
+                $('.btn[data-filter]').on('click', function() {
+                    $('.btn[data-filter]').removeClass('active');
+                    $(this).addClass('active');
+                });
             })
+        </script> --}}
 
-            //Handle starring for font awesome
-            $('.mailbox-star').click(function(e) {
-                e.preventDefault()
-                    //detect type
-                var $this = $(this).find('a > i')
-                var fa = $this.hasClass('fa')
+        <script>
+            $(function() {
+                //Enable check and uncheck all functionality
+                $('.checkbox-toggle').click(function() {
+                    var clicks = $(this).data('clicks')
+                    if (clicks) {
+                        //Uncheck all checkboxes
+                        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
+                        $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+                    } else {
+                        //Check all checkboxes
+                        $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
+                        $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+                    }
+                    $(this).data('clicks', !clicks)
+                })
 
-                //Switch states
-                if (fa) {
-                    $this.toggleClass('fa-star')
-                    $this.toggleClass('fa-star-o')
-                }
+                //Handle starring for font awesome
+                $('.mailbox-star').click(function(e) {
+                    e.preventDefault()
+                        //detect type
+                    var $this = $(this).find('a > i')
+                    var fa = $this.hasClass('fa')
+
+                    //Switch states
+                    if (fa) {
+                        $this.toggleClass('fa-star')
+                        $this.toggleClass('fa-star-o')
+                    }
+                })
             })
-        })
-    </script>
+        </script>
 
-    <script>
-        $(function() {
-            //Add text editor
-            $('#compose-textarea').summernote()
-        })
+        <script>
+            $(function() {
+                //Add text editor
+                $('#compose-textarea').summernote()
+            })
+        </script>
+        <script>
+            $('#btn_object_local').click(function(){
+                $('#btn_object_local').addClass("active");
+                $('#btn_object_link').removeClass("active");
+                $('#create_upload_object').find('.form-step1').show();
+                $('#create_upload_object').find('.form-step2').hide();
+            });
+            $('#btn_object_link').click(function(){
+                $('#btn_object_link').addClass("active");
+                $('#btn_object_local').removeClass("active");
+                $('#create_upload_object').find('.form-step1').hide();
+                $('#create_upload_object').find('.form-step2').show();
+            });
     </script>
     </body>
 </html>

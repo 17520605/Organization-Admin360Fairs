@@ -88,8 +88,9 @@
                                         <input class="form-control" id="" type="text" placeholder="Enter your link youtube">
                                     </div>
                                 </div>
-                                <!-- Form Group (create account submit)-->
-                                <a class="btn btn-primary btn-block" href="">Create Organization Profile</a>
+                                <div class="modal-footer" style="padding: 0.85rem 0px;">
+                                    <a class="btn btn-primary btn-block" href="">Create Organization Profile</a>
+                                </div>
                             </div>
                             <div class="form-step2 profile__upload-box" style="display: none">
                                 <div class="row mb-3">
@@ -136,8 +137,9 @@
                                         <input class="form-control" id="" type="text" placeholder="Enter your link youtube">
                                     </div>
                                 </div>
-                                <!-- Form Group (create account submit)-->
-                                <a class="btn btn-primary btn-block" href="">Create Personal Profile</a>
+                                <div class="modal-footer" style="padding: 0.85rem 0px;">
+                                    <a class="btn btn-primary btn-block" href="">Create Personal Profile</a>
+                                </div>
                             </div>
                         </div>
                     </div>

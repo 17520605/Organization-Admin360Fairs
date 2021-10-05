@@ -13098,7 +13098,7 @@ body.sidebar-toggled footer.sticky-footer {
 
 /* ========================================= */
 
-.card {
+.gallery .card {
     border-radius: .55rem;
     background: #fff;
     transition: .5s;
@@ -13106,10 +13106,10 @@ body.sidebar-toggled footer.sticky-footer {
     margin-bottom: 30px;
     position: relative;
     width: 100%;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+    box-shadow: rgb(50 50 105 / 15%) 0px 2px 5px 0px, rgb(0 0 0 / 5%) 0px 1px 1px 0px;
 }
 
-.file {
+.card .file {
     position: relative;
     border-radius: .55rem;
     overflow: hidden;

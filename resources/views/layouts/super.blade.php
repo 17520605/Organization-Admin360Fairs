@@ -31,14 +31,14 @@
         $('#btn-form-business-profile').click(function(){
             $('#btn-form-business-profile').addClass("active");
             $('#btn-form-personal-profile').removeClass("active");
-            $('.form-step1').show();
-            $('.form-step2').hide();
+            $('#create_profile').find('.form-step1').show();
+            $('#create_profile').find('.form-step2').hide();
         });
         $('#btn-form-personal-profile').click(function(){
             $('#btn-form-personal-profile').addClass("active");
             $('#btn-form-business-profile').removeClass("active");
-            $('.form-step1').hide();
-            $('.form-step2').show();
+            $('#create_profile').find('.form-step1').hide();
+            $('#create_profile').find('.form-step2').show();
         });
     </script>
     </body>
