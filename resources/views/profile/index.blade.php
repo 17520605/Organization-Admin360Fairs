@@ -60,39 +60,51 @@
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="">Organization Email</label>
+                                        <label class="small mb-1" for="">Email</label>
                                         <input class="form-control" id="" type="email" placeholder="Enter Type Email">
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="">Organization Phone</label>
+                                        <label class="small mb-1" for="">Phone</label>
                                         <input class="form-control" id="" type="tel" placeholder="Enter your Phone">
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="inputUsername">Link Images or Link Model 3D Company</label>
-                                    <input placeholder="Enter Link Image or Model 3D Of Company" class="form-control">
-                                </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="">Organization Location Company</label>
+                                        <label class="small mb-1" for="">Address</label>
                                         <input class="form-control" id="" type="text" placeholder="Enter location company">
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="">Organization link Website</label>
+                                        <label class="small mb-1" for="">Link Website</label>
                                         <input class="form-control" id="" type="text" placeholder="Enter your website">
                                     </div>
                                 </div>
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="">Link Facebook</label>
+                                        <input class="form-control" id="" type="text" placeholder="Enter your link facebook">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="">Link Youtube</label>
+                                        <input class="form-control" id="" type="text" placeholder="Enter your link youtube">
+                                    </div>
+                                </div>
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputUsername">Organization Description</label>
-                                    <textarea placeholder="Enter your tour description" class="form-control" name="" id="" rows="4"></textarea>
+                                    <label class="small mb-1" for="">L</label>
+                                    <input placeholder="Enter Link Image or Model 3D Of Company" class="form-control">
                                 </div>
                                 <!-- Form Group (create account submit)-->
                                 <a class="btn btn-primary btn-block" href="">Create Organization Profile</a>
                             </div>
                             <div class="form-step2 profile__upload-box" style="display: none">
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="">Full Name</label>
-                                    <input class="form-control" id="" type="text" placeholder="Enter Organization Name">
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="">First Name</label>
+                                        <input class="form-control" id="" type="text" placeholder="Enter your First Name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="">Last Name</label>
+                                        <input class="form-control" id="" type="text" placeholder="Enter your Last Name">
+                                    </div>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
@@ -104,23 +116,29 @@
                                         <input class="form-control" id="" type="tel" placeholder="Enter your Phone">
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="inputUsername">Link Images or Link Model 3D </label>
-                                    <input placeholder="Enter Link Image or Model 3D " class="form-control">
-                                </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="">Location</label>
-                                        <input class="form-control" id="" type="text" placeholder="Enter location company">
+                                        <label class="small mb-1" for="">Gender</label>
+                                        <select class="form-control" name="" id="">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="">Link Website</label>
                                         <input class="form-control" id="" type="text" placeholder="Enter your website">
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="inputUsername">Description</label>
-                                    <textarea placeholder="Enter your tour description" class="form-control" name="" id="" rows="4"></textarea>
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="">Link Facebook</label>
+                                        <input class="form-control" id="" type="text" placeholder="Enter your link facebook">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="">Link Youtube</label>
+                                        <input class="form-control" id="" type="text" placeholder="Enter your link youtube">
+                                    </div>
                                 </div>
                                 <!-- Form Group (create account submit)-->
                                 <a class="btn btn-primary btn-block" href="">Create Personal Profile</a>
@@ -131,6 +149,5 @@
             </div>
         </div>
     </div>
-
 @endsection
 
