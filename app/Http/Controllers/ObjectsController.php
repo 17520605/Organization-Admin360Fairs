@@ -11,13 +11,13 @@ class ObjectsController extends Controller
 {
     public function index($id)
     {
-
         $tour = DB::table('tour')->find($id);
         return view('tour.index', ['user' => Auth::user(), 'tour'=>$tour]);
     }
 
     public function images ($id, Request $request)
     {
-        return view('tour.index', ['user' => Auth::user(), 'tour'=>$tour]);
+        $tour = DB::table('tour')->find($id);
+        return view('objects.images', ['user' => Auth::user(), 'tour'=>$tour]);
     }
 }

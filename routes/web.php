@@ -20,6 +20,13 @@ Route::middleware('auth')->group(function (){
         Route::get('/{id}/tour', 'TourController@index');
         Route::get('/{id}/tour/edit', 'TourController@edit');
         Route::post('/{id}/tour/save-edit', 'TourController@saveEdit');
+
+        // objects
+        Route::get('/{id}/objects', 'ObjectsController@index');
+        Route::get('/{id}/objects/images', 'ObjectsController@images');
+        Route::get('/{id}/objects/videos', 'ObjectsController@videos');
+        Route::get('/{id}/objects/audios', 'ObjectsController@audios');
+        Route::get('/{id}/objects/models', 'ObjectsController@models');
     });
 
     Route::group(['prefix' => 'profile'], function(){
