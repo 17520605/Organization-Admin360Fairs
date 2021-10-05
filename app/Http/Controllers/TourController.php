@@ -12,13 +12,13 @@ class TourController extends Controller
     public function index($id)
     {
 
-        $tour = DB::table('360tool_tour')->find($id);
+        $tour = DB::table('tour')->find($id);
         return view('tour.index', ['user' => Auth::user(), 'tour'=>$tour]);
     }
 
     public function edit($id)
     {
-        $tour = DB::table('360tool_tour')->find($id);
+        $tour = DB::table('tour')->find($id);
         return view('tour.edit', ['user' => Auth::user(),'tour' => $tour]);
     }
 
@@ -27,18 +27,16 @@ class TourController extends Controller
         $name = $request->name;
         $start_at = $request->start_at;
         $end_at = $request->end_at;
-        $type = $request->type;
         $location = $request->location;
         $description = $request->description;
         $image = $request->image;
 
-        $tour = DB::table('360tool_tour')
+        $tour = DB::table('tour')
             ->where('id', $id)
             ->update([
                 'name' => $name,
-                'start_at' => $start_at,
-                'end_at' => $end_at,
-                'type' => $type,
+                'startTime' => $start_at,
+                'endTime' => $end_at,
                 'location' => $location,
                 'description' => $description,
                 'image' => $image,

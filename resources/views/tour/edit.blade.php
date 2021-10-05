@@ -37,14 +37,14 @@
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputFirstName">Start time</label>
-                                        <input class="form-control" id="inputFirstName" type="date" name="start_at" value="{{ Carbon\Carbon::parse($tour->start_at)->format('Y-m-d')}}" required>
+                                        <input class="form-control" id="inputFirstName" type="date" name="start_at" value="{{ Carbon\Carbon::parse($tour->startTime)->format('Y-m-d')}}" required>
                                         <div class="invalid-feedback">
                                             Please enter start time.
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputLastName">End time</label>
-                                        <input class="form-control" id="inputLastName" type="date" name="end_at" value="{{ Carbon\Carbon::parse($tour->end_at)->format('Y-m-d')}}" required>
+                                        <input class="form-control" id="inputLastName" type="date" name="end_at" value="{{ Carbon\Carbon::parse($tour->endTime)->format('Y-m-d')}}" required>
                                         <div class="invalid-feedback">
                                             Please enter end time.
                                         </div>
