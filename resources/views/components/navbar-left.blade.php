@@ -96,10 +96,10 @@
         <div id="collapseresource" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"> Types </h6>
-                <a href="/tours/{{$tour->id}}/objetcts/images" class="collapse-item" href="buttons.html">Images</a>
-                <a href="/tours/{{$tour->id}}/objetcts/videos" class="collapse-item" href="buttons.html">Videos</a>
-                <a href="/tours/{{$tour->id}}/objetcts/audios" class="collapse-item" href="buttons.html">Audios</a>
-                <a href="/tours/{{$tour->id}}/objetcts/3dmodels" class="collapse-item" href="buttons.html">3D Model</a>
+                <a href="/tours/{{$tour->id}}/objects/images" class="collapse-item" href="buttons.html">Images</a>
+                <a href="/tours/{{$tour->id}}/objects/videos" class="collapse-item" href="buttons.html">Videos</a>
+                <a href="/tours/{{$tour->id}}/objects/audios" class="collapse-item" href="buttons.html">Audios</a>
+                <a href="/tours/{{$tour->id}}/objects/models" class="collapse-item" href="buttons.html">3D Model</a>
             </div>
         </div>
     </li>
