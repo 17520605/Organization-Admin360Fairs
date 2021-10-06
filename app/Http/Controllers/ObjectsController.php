@@ -30,6 +30,7 @@ class ObjectsController extends Controller
     public function videos ($id, Request $request)
     {
         $tour = DB::table('tour')->find($id);
+        //TODO
         return view('objects.videos', ['user' => Auth::user(), 'tour'=>$tour]);
     }
 

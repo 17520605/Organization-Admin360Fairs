@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function (){
         Route::get('/{id}/objects/audios', 'ObjectsController@audios');
         Route::get('/{id}/objects/models', 'ObjectsController@models');
         Route::post('/{id}/objects/save-create', 'ObjectsController@saveCreate');
+        //TODO
         
     });
 
