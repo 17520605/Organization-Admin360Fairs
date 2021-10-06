@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid gallery">
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Document  <button class="btn btn-df" data-toggle="modal" data-target="#create_upload_object" style="position: absolute; right: 1.5rem;"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new file</button></h1>
+    <h1 class="h3 mb-4 text-gray-800">Document  <button class="btn btn-df" data-toggle="modal" data-target="#create_upload_object" style="position: absolute; right: 1.5rem;"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new file</button></h1>
     <!-- DataTales Example -->
     <div class="row clearfix">
         <div class="col-lg-3 col-md-4 col-sm-12">

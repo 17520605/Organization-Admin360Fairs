@@ -14,8 +14,8 @@ class StorageController extends Controller
         if($request->hasFile('file')){
             $rs = cloudinary()->upload($request->file('file')->getRealPath(), [
                 'resource_type' => 'auto'
-            ])->getSecurePath();
-            return response($rs);
+            ]);
+            return response(json_encode($rs->getResponse()));
         }
         return response();
     }

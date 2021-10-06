@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function (){
         Route::get('/{id}/objects/videos', 'ObjectsController@videos');
         Route::get('/{id}/objects/audios', 'ObjectsController@audios');
         Route::get('/{id}/objects/models', 'ObjectsController@models');
+        Route::post('/{id}/objects/save-create', 'ObjectsController@saveCreate');
+        
     });
 
     Route::group(['prefix' => 'profile'], function(){
