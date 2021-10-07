@@ -13703,12 +13703,40 @@ img {
 .form_preview img {
     max-height: 400px;
     width: 100%;
+    object-fit: fill;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_preview video {
+    max-height: 400px;
+    object-fit: fill;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_preview model-viewer {
+    max-height: 400px;
+    min-height: 400px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_preview audio {
+    max-height: 200px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .remove_item_object {
+    pointer-events: none;
     position: absolute;
     top: 0;
     display: flex;
@@ -13719,6 +13747,7 @@ img {
 }
 
 .remove_item_object .btn_remove {
+    pointer-events: all;
     padding: .25rem .5rem;
     font-size: .875rem;
     border-radius: .2rem;
@@ -13730,9 +13759,14 @@ img {
     font-weight: 400;
     line-height: 1.25;
     text-align: center;
+    opacity: 0.7;
     white-space: nowrap;
     vertical-align: middle;
     user-select: none;
     border: 1px solid transparent;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.remove_item_object .btn_remove:hover {
+    opacity: 1;
 }
