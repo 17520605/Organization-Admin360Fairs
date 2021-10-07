@@ -127,7 +127,6 @@
         });
 
         $('#popup-create-object__local-file-hidden-input').change(function () { 
-debugger;
             let type =$('#popup-create-object').find('input[name="type"]').val();
             let file = this.files[0];
             if(file != null){
@@ -196,46 +195,78 @@ debugger;
         });
 
         $('#popup-create-object__link-url-input').change( async function () { 
+debugger;
             let type =$('#popup-create-object').find('input[name="type"]').val();
             let url = $(this).val();
-            let correct = false;
+            //let correct = false;
             if(url != null && url != ""){
-                let file = await fetch(url).then(function(response) {
-                    if (response.ok)  correct = true;
-                    return response;
-                });
+                // let file = await fetch(url).then(function(response) {
+                //     if (response.ok)  correct = true;
+                //     return response;
+                // });
 
-                if(correct){
-                    if(type=='image')
-                    {
-                        $('#popup-create-object__link-preview-img').attr('src', URL.createObjectURL(this.files[0]));
-                    }
-                    else if(type=='video')
-                    {
-                        $('#popup-create-object__link-preview-video').attr('src', URL.createObjectURL(this.files[0]));
-                    }
-                    else if(type=='audio')
-                    {
-                        $('#popup-create-object__link-preview-audio').attr('src', URL.createObjectURL(this.files[0]));
-                    }
-                    $('#popup-create-object').find(".form_upload").hide();
-                    $('#popup-create-object').find(".form_preview").show();
-                    $('#popup-create-object__link-save-btn').prop('disabled', false);
-                    $('#popup-create-object__link-remove-btn').show();
+                // if(correct){
+                     
+
+
+                //     return;
+                // }
+
+                if(type=='image')
+                {
+//test
+                    $('#popup-create-object__link-preview-img').attr('src', url );
 
                     let img = document.getElementById('popup-create-object__link-preview-img');
-                    
                     $('#popup-create-object').find('input[name="url"]').val(img.src);
                     $('#popup-create-object').find('input[name="format"]').val(img.src.split('.').pop());
                     $('#popup-create-object').find('input[name="width"]').val(img.naturalWidth);
                     $('#popup-create-object').find('input[name="height"]').val(img.naturalHeight);
-                    $('#popup-create-object').find('input[name="size"]').val(file.size);
-
-                    $('#popup-create-object__link-save-btn').prop('disabled', false);
-                    $('#popup-create-object__link-remove-btn').show();
-
-                    return;
+                    $('#popup-create-object').find('input[name="size"]').val(0);
                 }
+                else if(type=='video')
+                {
+                    $('#popup-create-object__link-preview-video').attr('src', url);
+                    let video = document.getElementById('popup-create-object__link-preview-video');
+                    $('#popup-create-object').find('input[name="url"]').val(video.src);
+                    $('#popup-create-object').find('input[name="format"]').val(video.src.split('.').pop());
+                    $('#popup-create-object').find('input[name="width"]').val(video.naturalWidth);
+                    $('#popup-create-object').find('input[name="height"]').val(video.naturalHeight);
+                    $('#popup-create-object').find('input[name="size"]').val(0);
+                }
+                else if(type=='audio')
+                {
+                    $('#popup-create-object__link-preview-audio').attr('src', url);
+                    let audio = document.getElementById('popup-create-object__link-preview-audio');
+                    $('#popup-create-object').find('input[name="url"]').val(audio.src);
+                    $('#popup-create-object').find('input[name="format"]').val(audio.src.split('.').pop());
+                    $('#popup-create-object').find('input[name="width"]').val(audio.naturalWidth);
+                    $('#popup-create-object').find('input[name="height"]').val(audio.naturalHeight);
+                    $('#popup-create-object').find('input[name="size"]').val(0);
+                }
+                else if(type=='model')
+                {
+                    $('#popup-create-object__link-preview-model').attr('src', url);
+                    let model = document.getElementById('popup-create-object__link-preview-model');
+                    $('#popup-create-object').find('input[name="url"]').val(model.src);
+                    $('#popup-create-object').find('input[name="format"]').val(model.src.split('.').pop());
+                    $('#popup-create-object').find('input[name="width"]').val(model.naturalWidth);
+                    $('#popup-create-object').find('input[name="height"]').val(model.naturalHeight);
+                    $('#popup-create-object').find('input[name="size"]').val(0);
+                }
+                $('#popup-create-object').find(".form_upload").hide();
+                $('#popup-create-object').find(".form_preview").show();
+                $('#popup-create-object__link-save-btn').prop('disabled', false);
+                $('#popup-create-object__link-remove-btn').show();
+
+                $('#popup-create-object__link-save-btn').prop('disabled', false);
+                $('#popup-create-object__link-remove-btn').show();
+                $('#popup-create-object__link-name-input').change(function(){
+                    let val =$('#popup-create-object__link-name-input').val();
+                    if(url != null && url != ""){
+                        $('#popup-create-object__link-save-btn').prop('disabled', false);
+                    }
+                });
             }
 
             $('#popup-create-object__link-save-btn').prop('disabled', true);
