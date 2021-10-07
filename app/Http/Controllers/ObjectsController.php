@@ -30,20 +30,33 @@ class ObjectsController extends Controller
     public function videos ($id, Request $request)
     {
         $tour = DB::table('tour')->find($id);
-        //TODO
-        return view('objects.videos', ['user' => Auth::user(), 'tour'=>$tour]);
+
+        $videos = DB::table('object')->where([
+            ['tourId','=', $id],
+            ['type','=', 'video'],
+        ])->get();
+
+        return view('objects.videos', ['user' => Auth::user(), 'tour'=>$tour, 'videos' => $videos]);
     }
 
     public function audios ($id, Request $request)
     {
         $tour = DB::table('tour')->find($id);
-        return view('objects.audios', ['user' => Auth::user(), 'tour'=>$tour]);
+        $audios = DB::table('object')->where([
+            ['tourId','=', $id],
+            ['type','=', 'audio'],
+        ])->get();
+        return view('objects.audios', ['user' => Auth::user(), 'tour'=>$tour, 'audios' => $audios]);
     }
 
     public function models ($id, Request $request)
     {
         $tour = DB::table('tour')->find($id);
-        return view('objects.documents', ['user' => Auth::user(), 'tour'=>$tour]);
+        $models = DB::table('object')->where([
+            ['tourId','=', $id],
+            ['type','=', 'model'],
+        ])->get();
+        return view('objects.models', ['user' => Auth::user(), 'tour'=>$tour,'models' => $models]);
     }
 
     public function documents ($id, Request $request)

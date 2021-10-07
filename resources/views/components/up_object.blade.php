@@ -34,7 +34,10 @@
                                     <p>Drop your file here or Click to browse</p>
                                 </div>
                                 <div class="form_preview" style="display: none;">
-                                    <img id="popup-create-object__local-preview-img" src="" alt="" style="border-radius: 5px;" >
+                                    <img id="popup-create-object__local-preview-img" src="" style="border-radius: 5px; display: none" >
+                                    <video id="popup-create-object__local-preview-video" controls src="" style="border-radius: 5px; display: none" ></video>
+                                    <audio id="popup-create-object__local-preview-audio" controls src="" style="border-radius: 5px; display: none"></audio>
+                                    <model-viewer id="popup-create-object__local-preview-model"  src="" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls style="border-radius: 5px; display: none"></model-viewer>
                                     <div class="remove_item_object">
                                         <div id="popup-create-object__local-remove-btn" class="btn_remove ">Remove</div>
                                     </div>
@@ -67,7 +70,10 @@
                                     <input id="popup-create-object__link-url-input" class="form-control" type="text" placeholder="e.g. https://www.image.com/watch?v=9bZkp7q19f0">
                                 </div>
                                 <div class="form_preview" style="display: none;">
-                                    <img id="popup-create-object__link-preview-img" src="" alt="" style="border-radius: 5px;" >
+                                    <img id="popup-create-object__link-preview-img" src="" style="border-radius: 5px; display: none" >
+                                    <video id="popup-create-object__link-preview-video" controls src="" style="border-radius: 5px; display: none" ></video>
+                                    <audio id="popup-create-object__link-preview-audio" controls src="" style="border-radius: 5px; display: none"></audio>
+                                    <model-viewer id="popup-create-object__link-preview-model" src="" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls style="border-radius: 5px; display: none"></model-viewer>
                                     <div class="remove_item_object">
                                         <div id="popup-create-object__link-remove-btn" class="btn_remove ">Remove</div>
                                     </div>
@@ -121,9 +127,27 @@
         });
 
         $('#popup-create-object__local-file-hidden-input').change(function () { 
+debugger;
+            let type =$('#popup-create-object').find('input[name="type"]').val();
             let file = this.files[0];
             if(file != null){
-                $('#popup-create-object__local-preview-img').attr('src', URL.createObjectURL(this.files[0]));
+                if(type=='image')
+                {
+                    $('#popup-create-object__local-preview-img').attr('src', URL.createObjectURL(this.files[0]));
+                }
+                else if(type=='video')
+                {
+                    $('#popup-create-object__local-preview-video').attr('src', URL.createObjectURL(this.files[0]));
+                }
+                else if(type=='audio')
+                {
+                    $('#popup-create-object__local-preview-audio').attr('src', URL.createObjectURL(this.files[0]));
+                }
+                else if(type=='model')
+                {
+                    $('#popup-create-object__local-preview-model').attr('src', URL.createObjectURL(this.files[0]));
+                }
+               
                 $('#popup-create-object').find(".form_upload").hide();
                 $('#popup-create-object').find(".form_preview").show();
                 $('#popup-create-object__local-save-btn').prop('disabled', true);
@@ -160,15 +184,19 @@
 
         $('#popup-create-object__local-remove-btn').click(function (e) { 
             $('#popup-create-object__local-preview-img').attr('src', null);
+            $('#popup-create-object__local-preview-video').attr('src', null);
+            $('#popup-create-object__local-preview-audio').attr('src', null);
             $('#popup-create-object').find(".form_upload").show();
             $('#popup-create-object').find(".form_preview").hide();
             $('#popup-create-object__local-save-btn').prop('disabled', true);
             $('#popup-create-object__local-remove-btn').hide();
             $('#popup-create-object__local-file-hidden-input').val(null);
             $('#popup-create-object').find('input[name="url"]').val(null);
+
         });
 
-        $('#popup-create-object__link-url-input').change( async function () {  
+        $('#popup-create-object__link-url-input').change( async function () { 
+            let type =$('#popup-create-object').find('input[name="type"]').val();
             let url = $(this).val();
             let correct = false;
             if(url != null && url != ""){
@@ -178,7 +206,18 @@
                 });
 
                 if(correct){
-                    $('#popup-create-object__link-preview-img').attr('src', url);
+                    if(type=='image')
+                    {
+                        $('#popup-create-object__link-preview-img').attr('src', URL.createObjectURL(this.files[0]));
+                    }
+                    else if(type=='video')
+                    {
+                        $('#popup-create-object__link-preview-video').attr('src', URL.createObjectURL(this.files[0]));
+                    }
+                    else if(type=='audio')
+                    {
+                        $('#popup-create-object__link-preview-audio').attr('src', URL.createObjectURL(this.files[0]));
+                    }
                     $('#popup-create-object').find(".form_upload").hide();
                     $('#popup-create-object').find(".form_preview").show();
                     $('#popup-create-object__link-save-btn').prop('disabled', false);
@@ -204,18 +243,61 @@
 
         $('#popup-create-object__link-remove-btn').click(function (e) { 
             $('#popup-create-object__link-preview-img').attr('src', null);
+            $('#popup-create-object__link-preview-video').attr('src', null);
+            $('#popup-create-object__link-preview-audio').attr('src', null);
             $('#popup-create-object').find(".form_upload").show();
             $('#popup-create-object').find(".form_preview").hide();
             $('#popup-create-object__link-save-btn').prop('disabled', true);
             $('#popup-create-object__link-remove-btn').hide();
             $('#popup-create-object__link-file-hidden-input').val(null);
             $('#popup-create-object').find('input[name="url"]').val(null);
+
         });
     });
 </script>
 
 <script>
     function openPopupCreateObject(type) {   
+        if(type == 'image'){
+            $('#popup-create-object__link-preview-img').show();
+            $('#popup-create-object__link-preview-video').hide();
+            $('#popup-create-object__link-preview-audio').hide();
+            $('#popup-create-object__local-preview-img').show();
+            $('#popup-create-object__local-preview-video').hide();
+            $('#popup-create-object__local-preview-audio').hide();
+            $('#popup-create-object__local-preview-model').hide();
+            $('#popup-create-object__link-preview-model').hide();
+        }
+        else if(type == 'video'){
+            $('#popup-create-object__link-preview-img').hide();
+            $('#popup-create-object__link-preview-video').show();
+            $('#popup-create-object__link-preview-audio').hide();
+            $('#popup-create-object__local-preview-img').hide();
+            $('#popup-create-object__local-preview-video').show();
+            $('#popup-create-object__local-preview-audio').hide();
+            $('#popup-create-object__local-preview-model').hide();
+            $('#popup-create-object__link-preview-model').hide();
+        } 
+        else if(type == 'audio'){
+            $('#popup-create-object__link-preview-img').hide();
+            $('#popup-create-object__link-preview-video').hide();
+            $('#popup-create-object__link-preview-audio').show();
+            $('#popup-create-object__local-preview-img').hide();
+            $('#popup-create-object__local-preview-video').hide();
+            $('#popup-create-object__local-preview-audio').show();
+            $('#popup-create-object__local-preview-model').hide();
+            $('#popup-create-object__link-preview-model').hide();
+        }
+        else if(type == 'model'){
+            $('#popup-create-object__link-preview-img').hide();
+            $('#popup-create-object__link-preview-video').hide();
+            $('#popup-create-object__link-preview-audio').hide();
+            $('#popup-create-object__local-preview-img').hide();
+            $('#popup-create-object__local-preview-video').hide();
+            $('#popup-create-object__local-preview-audio').hide();
+            $('#popup-create-object__local-preview-model').show();
+            $('#popup-create-object__link-preview-model').show();
+        }
         $('#popup-create-object').find('input[name="type"]').val(type);
         $('#popup-create-object').modal('show');
     }
