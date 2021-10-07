@@ -206,13 +206,15 @@ debugger;
                 // });
 
                 // if(correct){
-                   
+                     
+
 
                 //     return;
                 // }
 
                 if(type=='image')
                 {
+//test
                     $('#popup-create-object__link-preview-img').attr('src', url );
 
                     let img = document.getElementById('popup-create-object__link-preview-img');
