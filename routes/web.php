@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 Route::match(['get', 'post'], '/login', 'AuthController@login')->name('login');
 Route::match(['get', 'post'], '/register', 'AuthController@register')->name('register');
 Route::get('/logout', 'AuthController@logout');
+Route::get('/mail/send', 'MailController@send');
 
 Route::middleware('auth')->group(function (){
     Route::post('storage/upload', 'StorageController@upload');
@@ -28,8 +29,8 @@ Route::middleware('auth')->group(function (){
         Route::get('/{id}/objects/audios', 'ObjectsController@audios');
         Route::get('/{id}/objects/models', 'ObjectsController@models');
         Route::post('/{id}/objects/save-create', 'ObjectsController@saveCreate');
-        //TODO
-        
+
+
     });
 
     Route::group(['prefix' => 'profile'], function(){
