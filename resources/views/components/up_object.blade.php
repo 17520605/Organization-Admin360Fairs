@@ -195,65 +195,67 @@
         });
 
         $('#popup-create-object__link-url-input').change( async function () { 
-debugger;
+
             let type =$('#popup-create-object').find('input[name="type"]').val();
             let url = $(this).val();
-            //let correct = false;
+            let correct = false;
             if(url != null && url != ""){
-                // let file = await fetch(url).then(function(response) {
-                //     if (response.ok)  correct = true;
-                //     return response;
-                // });
+                let blob = await fetch(url).then(function(response) {
+                    if (response.ok)  correct = true;
+                    return response.blob();
+                });
 
-                // if(correct){
-                     
-
-
-                //     return;
-                // }
-
-                if(type=='image')
-                {
-//test
-                    $('#popup-create-object__link-preview-img').attr('src', url );
-
-                    let img = document.getElementById('popup-create-object__link-preview-img');
-                    $('#popup-create-object').find('input[name="url"]').val(img.src);
-                    $('#popup-create-object').find('input[name="format"]').val(img.src.split('.').pop());
-                    $('#popup-create-object').find('input[name="width"]').val(img.naturalWidth);
-                    $('#popup-create-object').find('input[name="height"]').val(img.naturalHeight);
-                    $('#popup-create-object').find('input[name="size"]').val(0);
+                if(correct){
+                    if(type=='image' && blob.type.split("/")[0] == 'image')
+                    { 
+                        $('#popup-create-object__link-preview-img').attr('src', url );
+                        let img = document.getElementById('popup-create-object__link-preview-img');
+                        $('#popup-create-object').find('input[name="url"]').val(img.src);
+                        $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
+                        $('#popup-create-object').find('input[name="width"]').val(img.naturalWidth);
+                        $('#popup-create-object').find('input[name="height"]').val(img.naturalHeight);
+                        $('#popup-create-object').find('input[name="size"]').val(blob.size);
+                    }
+                    else if(type=='video' && blob.type.split("/")[0] == 'video')
+                    {
+                        $('#popup-create-object__link-preview-video').attr('src', url);
+                        let video = document.getElementById('popup-create-object__link-preview-video');
+                        $('#popup-create-object').find('input[name="url"]').val(video.src);
+                        $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
+                        $('#popup-create-object').find('input[name="width"]').val(video.naturalWidth);
+                        $('#popup-create-object').find('input[name="height"]').val(video.naturalHeight);
+                        $('#popup-create-object').find('input[name="size"]').val(0);
+                    }
+                    else if(type=='audio' && blob.type.split("/")[0] == 'audio')
+                    {
+                        $('#popup-create-object__link-preview-audio').attr('src', url);
+                        let audio = document.getElementById('popup-create-object__link-preview-audio');
+                        $('#popup-create-object').find('input[name="url"]').val(audio.src);
+                        $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
+                        $('#popup-create-object').find('input[name="width"]').val(audio.naturalWidth);
+                        $('#popup-create-object').find('input[name="height"]').val(audio.naturalHeight);
+                        $('#popup-create-object').find('input[name="size"]').val(0);
+                    }
+                    else if(type=='model' && blob.type.split("/")[0] == 'model')
+                    {
+                        $('#popup-create-object__link-preview-model').attr('src', url);
+                        let model = document.getElementById('popup-create-object__link-preview-model');
+                        $('#popup-create-object').find('input[name="url"]').val(model.src);
+                        $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
+                        $('#popup-create-object').find('input[name="width"]').val(model.naturalWidth);
+                        $('#popup-create-object').find('input[name="height"]').val(model.naturalHeight);
+                        $('#popup-create-object').find('input[name="size"]').val(0);
+                    }
+                    else{
+                        alert("SAI FORMAT FILE");
+                        return;
+                    }
                 }
-                else if(type=='video')
-                {
-                    $('#popup-create-object__link-preview-video').attr('src', url);
-                    let video = document.getElementById('popup-create-object__link-preview-video');
-                    $('#popup-create-object').find('input[name="url"]').val(video.src);
-                    $('#popup-create-object').find('input[name="format"]').val(video.src.split('.').pop());
-                    $('#popup-create-object').find('input[name="width"]').val(video.naturalWidth);
-                    $('#popup-create-object').find('input[name="height"]').val(video.naturalHeight);
-                    $('#popup-create-object').find('input[name="size"]').val(0);
+                else{
+                    alert("LINK KHONG DUNG");
+                    return;
                 }
-                else if(type=='audio')
-                {
-                    $('#popup-create-object__link-preview-audio').attr('src', url);
-                    let audio = document.getElementById('popup-create-object__link-preview-audio');
-                    $('#popup-create-object').find('input[name="url"]').val(audio.src);
-                    $('#popup-create-object').find('input[name="format"]').val(audio.src.split('.').pop());
-                    $('#popup-create-object').find('input[name="width"]').val(audio.naturalWidth);
-                    $('#popup-create-object').find('input[name="height"]').val(audio.naturalHeight);
-                    $('#popup-create-object').find('input[name="size"]').val(0);
-                }
-                else if(type=='model')
-                {
-                    $('#popup-create-object__link-preview-model').attr('src', url);
-                    let model = document.getElementById('popup-create-object__link-preview-model');
-                    $('#popup-create-object').find('input[name="url"]').val(model.src);
-                    $('#popup-create-object').find('input[name="format"]').val(model.src.split('.').pop());
-                    $('#popup-create-object').find('input[name="width"]').val(model.naturalWidth);
-                    $('#popup-create-object').find('input[name="height"]').val(model.naturalHeight);
-                    $('#popup-create-object').find('input[name="size"]').val(0);
-                }
+
                 $('#popup-create-object').find(".form_upload").hide();
                 $('#popup-create-object').find(".form_preview").show();
                 $('#popup-create-object__link-save-btn').prop('disabled', false);
