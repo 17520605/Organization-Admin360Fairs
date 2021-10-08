@@ -508,7 +508,9 @@ mark {
     content: "\2014\00A0";
 }
 
-.img-fluid {
+.img-fluid1 {
+    max-height: 150px;
+    width: 100%;
     max-width: 100%;
     height: auto;
 }
@@ -13161,7 +13163,7 @@ a:focus {
 .file .icon i {
     text-align: center;
     display: table-cell;
-    font-size: 30px;
+    font-size: 39px;
     vertical-align: middle;
     color: #777;
     line-height: 100px;
@@ -13769,4 +13771,8 @@ img {
 
 .remove_item_object .btn_remove:hover {
     opacity: 1;
+}
+
+.hover button i {
+    color: #4e73df;
 }

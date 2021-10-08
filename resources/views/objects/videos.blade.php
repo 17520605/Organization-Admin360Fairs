@@ -24,6 +24,10 @@
                                     </div>
                                 @elseif($video->source == 'link')
                                     <div class="icon">
+                                        <i class="fas fa-link text-info"></i>
+                                    </div>
+                                @elseif($video->source == 'youtube')
+                                    <div class="icon">
                                         <i class="fab fa-youtube text-danger"></i>
                                     </div>
                                 @endif

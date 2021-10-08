@@ -71,9 +71,11 @@
                                 </div>
                                 <div class="form_preview" style="display: none;">
                                     <img id="popup-create-object__link-preview-img" src="" style="border-radius: 5px; display: none" >
-                                    <video id="popup-create-object__link-preview-video" controls src="" style="border-radius: 5px; display: none" ></video>
+                                    <video id="popup-create-object__link-preview-video" controls src="" style="border-radius: 5px; display: none" ></video> 
+                                    <iframe id="popup-create-object__link-preview-video-ytb" style="display: none" width="100%" height="400px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     <audio id="popup-create-object__link-preview-audio" controls src="" style="border-radius: 5px; display: none"></audio>
                                     <model-viewer id="popup-create-object__link-preview-model" src="" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls style="border-radius: 5px; display: none"></model-viewer>
+
                                     <div class="remove_item_object">
                                         <div id="popup-create-object__link-remove-btn" class="btn_remove ">Remove</div>
                                     </div>
@@ -197,65 +199,21 @@
         $('#popup-create-object__link-url-input').change( async function () { 
 
             let type =$('#popup-create-object').find('input[name="type"]').val();
+debugger;
             let url = $(this).val();
+            let slipt = url.split(".")[0];
             let correct = false;
-            if(url != null && url != ""){
-                let blob = await fetch(url).then(function(response) {
-                    if (response.ok)  correct = true;
-                    return response.blob();
-                });
-
-                if(correct){
-                    if(type=='image' && blob.type.split("/")[0] == 'image')
-                    { 
-                        $('#popup-create-object__link-preview-img').attr('src', url );
-                        let img = document.getElementById('popup-create-object__link-preview-img');
-                        $('#popup-create-object').find('input[name="url"]').val(img.src);
-                        $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
-                        $('#popup-create-object').find('input[name="width"]').val(img.naturalWidth);
-                        $('#popup-create-object').find('input[name="height"]').val(img.naturalHeight);
-                        $('#popup-create-object').find('input[name="size"]').val(blob.size);
-                    }
-                    else if(type=='video' && blob.type.split("/")[0] == 'video')
-                    {
-                        $('#popup-create-object__link-preview-video').attr('src', url);
-                        let video = document.getElementById('popup-create-object__link-preview-video');
-                        $('#popup-create-object').find('input[name="url"]').val(video.src);
-                        $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
-                        $('#popup-create-object').find('input[name="width"]').val(video.naturalWidth);
-                        $('#popup-create-object').find('input[name="height"]').val(video.naturalHeight);
-                        $('#popup-create-object').find('input[name="size"]').val(0);
-                    }
-                    else if(type=='audio' && blob.type.split("/")[0] == 'audio')
-                    {
-                        $('#popup-create-object__link-preview-audio').attr('src', url);
-                        let audio = document.getElementById('popup-create-object__link-preview-audio');
-                        $('#popup-create-object').find('input[name="url"]').val(audio.src);
-                        $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
-                        $('#popup-create-object').find('input[name="width"]').val(audio.naturalWidth);
-                        $('#popup-create-object').find('input[name="height"]').val(audio.naturalHeight);
-                        $('#popup-create-object').find('input[name="size"]').val(0);
-                    }
-                    else if(type=='model' && blob.type.split("/")[0] == 'model')
-                    {
-                        $('#popup-create-object__link-preview-model').attr('src', url);
-                        let model = document.getElementById('popup-create-object__link-preview-model');
-                        $('#popup-create-object').find('input[name="url"]').val(model.src);
-                        $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
-                        $('#popup-create-object').find('input[name="width"]').val(model.naturalWidth);
-                        $('#popup-create-object').find('input[name="height"]').val(model.naturalHeight);
-                        $('#popup-create-object').find('input[name="size"]').val(0);
-                    }
-                    else{
-                        alert("SAI FORMAT FILE");
-                        return;
-                    }
+            if( slipt == "https://youtu"){
+                $('#popup-create-object__link-preview-video-ytb').show();
+                $('#popup-create-object__link-preview-video').hide();
+                if(type=='video')
+                {
+                    let link_ytb= url.replace("https://youtu.be/", "https://www.youtube.com/embed/");
+                    $('#popup-create-object__link-preview-video-ytb').attr('src', link_ytb);
+                    $('#popup-create-object').find('input[name="url"]').val(link_ytb);
+                    $('#popup-create-object').find('input[name="source"]').val('youtube');
+                    $('#popup-create-object').find('input[name="format"]').val('youtube');
                 }
-                else{
-                    alert("LINK KHONG DUNG");
-                    return;
-                }
-
                 $('#popup-create-object').find(".form_upload").hide();
                 $('#popup-create-object').find(".form_preview").show();
                 $('#popup-create-object__link-save-btn').prop('disabled', false);
@@ -270,6 +228,80 @@
                     }
                 });
             }
+            else {
+                $('#popup-create-object__link-preview-video-ytb').hide();
+                $('#popup-create-object__link-preview-video').show();
+                if(url != null && url != ""){
+                    let blob = await fetch(url).then(function(response) {
+                        if (response.ok)  correct = true;
+                        return response.blob();
+                    });
+                    if(correct){
+                        if(type=='image' && blob.type.split("/")[0] == 'image')
+                        { 
+                            $('#popup-create-object__link-preview-img').attr('src', url );
+                            let img = document.getElementById('popup-create-object__link-preview-img');
+                            $('#popup-create-object').find('input[name="url"]').val(img.src);
+                            $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
+                            $('#popup-create-object').find('input[name="width"]').val(img.naturalWidth);
+                            $('#popup-create-object').find('input[name="height"]').val(img.naturalHeight);
+                            $('#popup-create-object').find('input[name="size"]').val(blob.size);
+                        }
+                        else if(type=='video' && blob.type.split("/")[0] == 'video')
+                        {
+                            $('#popup-create-object__link-preview-video').attr('src', url);
+                            let video = document.getElementById('popup-create-object__link-preview-video');
+                            $('#popup-create-object').find('input[name="url"]').val(video.src);
+                            $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
+                            $('#popup-create-object').find('input[name="width"]').val(video.naturalWidth);
+                            $('#popup-create-object').find('input[name="height"]').val(video.naturalHeight);
+                            $('#popup-create-object').find('input[name="size"]').val(0);
+                        }
+                        else if(type=='audio' && blob.type.split("/")[0] == 'audio')
+                        {
+                            $('#popup-create-object__link-preview-audio').attr('src', url);
+                            let audio = document.getElementById('popup-create-object__link-preview-audio');
+                            $('#popup-create-object').find('input[name="url"]').val(audio.src);
+                            $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
+                            $('#popup-create-object').find('input[name="width"]').val(audio.naturalWidth);
+                            $('#popup-create-object').find('input[name="height"]').val(audio.naturalHeight);
+                            $('#popup-create-object').find('input[name="size"]').val(0);
+                        }
+                        else if(type=='model' && blob.type.split("/")[0] == 'model')
+                        {
+                            $('#popup-create-object__link-preview-model').attr('src', url);
+                            let model = document.getElementById('popup-create-object__link-preview-model');
+                            $('#popup-create-object').find('input[name="url"]').val(model.src);
+                            $('#popup-create-object').find('input[name="format"]').val(blob.type.split("/")[1]);
+                            $('#popup-create-object').find('input[name="width"]').val(model.naturalWidth);
+                            $('#popup-create-object').find('input[name="height"]').val(model.naturalHeight);
+                            $('#popup-create-object').find('input[name="size"]').val(0);
+                        }
+                        else{
+                            alert("SAI FORMAT FILE");
+                            return;
+                        }
+                    }
+                    else{
+                        alert("LINK KHONG DUNG");
+                        return;
+                    }
+                    $('#popup-create-object').find(".form_upload").hide();
+                    $('#popup-create-object').find(".form_preview").show();
+                    $('#popup-create-object__link-save-btn').prop('disabled', false);
+                    $('#popup-create-object__link-remove-btn').show();
+
+                    $('#popup-create-object__link-save-btn').prop('disabled', false);
+                    $('#popup-create-object__link-remove-btn').show();
+                    $('#popup-create-object__link-name-input').change(function(){
+                        let val =$('#popup-create-object__link-name-input').val();
+                        if(url != null && url != ""){
+                            $('#popup-create-object__link-save-btn').prop('disabled', false);
+                        }
+                    });
+                }
+            }
+            
 
             $('#popup-create-object__link-save-btn').prop('disabled', true);
         });
@@ -300,6 +332,8 @@
             $('#popup-create-object__local-preview-audio').hide();
             $('#popup-create-object__local-preview-model').hide();
             $('#popup-create-object__link-preview-model').hide();
+            $('#popup-create-object__local-file-hidden-input').attr('accept','image/*');
+
         }
         else if(type == 'video'){
             $('#popup-create-object__link-preview-img').hide();
@@ -310,6 +344,7 @@
             $('#popup-create-object__local-preview-audio').hide();
             $('#popup-create-object__local-preview-model').hide();
             $('#popup-create-object__link-preview-model').hide();
+            $('#popup-create-object__local-file-hidden-input').attr('accept','video/*');
         } 
         else if(type == 'audio'){
             $('#popup-create-object__link-preview-img').hide();
@@ -320,6 +355,7 @@
             $('#popup-create-object__local-preview-audio').show();
             $('#popup-create-object__local-preview-model').hide();
             $('#popup-create-object__link-preview-model').hide();
+            $('#popup-create-object__local-file-hidden-input').attr('accept','audio/*');
         }
         else if(type == 'model'){
             $('#popup-create-object__link-preview-img').hide();
@@ -330,6 +366,7 @@
             $('#popup-create-object__local-preview-audio').hide();
             $('#popup-create-object__local-preview-model').show();
             $('#popup-create-object__link-preview-model').show();
+            $('#popup-create-object__local-file-hidden-input').attr('accept','.glb');
         }
         $('#popup-create-object').find('input[name="type"]').val(type);
         $('#popup-create-object').modal('show');
@@ -337,7 +374,7 @@
 
     function closePopupCreateObject() { 
         $('#popup-create-object').find('img').attr('src', null);
-        $('#popup-create-object').find('input').not('input[name="_token"]').not('input[name="type"]').val(null);
+        $('#popup-create-object').find('input').not('input[name="_token"]').not('input[name="type"]').not('input[name="source"]').val(null);
         $('#popup-create-object').find('textarea').val(null);
         $('#popup-create-object').find(".form_upload").show();
         $('#popup-create-object').find(".form_preview").hide();
