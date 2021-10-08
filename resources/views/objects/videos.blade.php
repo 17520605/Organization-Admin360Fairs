@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid gallery">
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Videos  <button class="btn btn-df" onclick="openPopupCreateObject('video')" style="position: absolute; right: 1.5rem;"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new file</button></h1>
+        <h1 class="h3 mb-4 text-gray-800">Videos  <button class="btn btn-df" onclick="openPopupCreateObject('video')" style="position: absolute; right: 1.5rem;"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new file</button></h1>
         <div class="row clearfix">
             @if (count($videos) == 0)
                 <div style=" text-align: center; width: 100%; padding: 30vh 0px; ">
@@ -16,7 +16,7 @@
                         <div class="file">
                             <a href="javascript:void(0);">
                                 <div class="hover">
-                                    <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
+                                    <button class="btn"><i class="fas fa-trash-alt"></i></button>
                                 </div>
                                 @if ($video->source == 'local')
                                     <div class="icon">
