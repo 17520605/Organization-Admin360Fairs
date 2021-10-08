@@ -48,12 +48,13 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-store"></i>
-            <span>Booth</span>
+            <span>Booths</span>
         </a>
         <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Booths:</h6>
-                <a class="collapse-item" href="buttons.html">Booths</a>
+                <h6 class="collapse-header">Booths Manager</h6>
+                <a href="/tours/{{$tour->id}}/zones" class="collapse-item" >zones</a>
+                <a href="/tours/{{$tour->id}}/booths" class="collapse-item" >Booths</a>
             </div>
         </div>
     </li>
@@ -96,10 +97,10 @@
         <div id="collapseresource" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"> Types </h6>
-                <a href="/tours/{{$tour->id}}/objects/images" class="collapse-item" href="buttons.html">Images</a>
-                <a href="/tours/{{$tour->id}}/objects/videos" class="collapse-item" href="buttons.html">Videos</a>
-                <a href="/tours/{{$tour->id}}/objects/audios" class="collapse-item" href="buttons.html">Audios</a>
-                <a href="/tours/{{$tour->id}}/objects/models" class="collapse-item" href="buttons.html">3D Model</a>
+                <a href="/tours/{{$tour->id}}/objects/images" class="collapse-item">Images</a>
+                <a href="/tours/{{$tour->id}}/objects/videos" class="collapse-item">Videos</a>
+                <a href="/tours/{{$tour->id}}/objects/audios" class="collapse-item">Audios</a>
+                <a href="/tours/{{$tour->id}}/objects/models" class="collapse-item">3D Model</a>
             </div>
         </div>
     </li>

@@ -22,6 +22,13 @@ Route::middleware('auth')->group(function (){
         Route::get('/{id}/tour/edit', 'TourController@edit');
         Route::post('/{id}/tour/save-edit', 'TourController@saveEdit');
 
+        // zones
+        Route::get('/{id}/zones', 'ZonesController@index');
+        Route::post('/{id}/zones/save-create', 'ZonesController@saveCreate');
+
+        // booths
+        Route::get('/{id}/booths', 'BoothsController@booths');
+
         // objects
         Route::get('/{id}/objects', 'ObjectsController@index');
         Route::get('/{id}/objects/images', 'ObjectsController@images');
