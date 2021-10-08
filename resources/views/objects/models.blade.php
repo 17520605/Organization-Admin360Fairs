@@ -17,7 +17,7 @@
                             <div class="file">
                                 <a href="javascript:void(0);">
                                     <div class="hover">
-                                        <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
+                                        <button class="btn"><i class="fas fa-trash-alt"></i></button>
                                     </div>
                                     <div class="image">
                                         <model-viewer src="{{$model->url}}"></model-viewer>

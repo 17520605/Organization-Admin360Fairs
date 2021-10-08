@@ -13131,8 +13131,8 @@ a:focus {
 
 .file .hover {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 2px;
+    top: 2px;
     display: none;
     transition: all 0.2s ease-in-out;
 }
@@ -13182,6 +13182,13 @@ img {
 .file .file-name {
     padding: 10px;
     border-top: 1px solid #f7f7f7;
+}
+
+.file .file-name p {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .m-b-5,
@@ -13774,5 +13781,9 @@ img {
 }
 
 .hover button i {
-    color: #4e73df;
+    color: #ccc;
+}
+
+.hover button:hover i {
+    transform: scale(1.2);
 }
