@@ -20,7 +20,7 @@
                                         <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
                                     </div>
                                     <div class="image">
-                                        <img src="{{$image->url}}" alt="img" class="img-fluid">
+                                        <img src="{{$image->url}}" alt="img" class="img-fluid1">
                                     </div>
                                     <div class="file-name">
                                         <p class="text-muted">{{$image->name != null ? $image->name : "n/a"}}</p>
