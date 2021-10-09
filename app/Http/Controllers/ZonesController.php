@@ -14,6 +14,8 @@ class ZonesController extends Controller
         $user = Auth::user();
         $tour = DB::table('tour')->find($id);
 
+        
+
         $zones = DB::table('zone')->where('tourId', $id)->get();
         foreach ($zones as $zone) {
             $booths = DB::table('booth')

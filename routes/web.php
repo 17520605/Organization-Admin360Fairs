@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function (){
         Route::post('/{id}/zones/save-create', 'ZonesController@saveCreate');
 
         // booths
-        Route::get('/{id}/booths', 'BoothsController@booths');
+        Route::get('/{id}/booths', 'BoothsController@index');
 
         // objects
         Route::get('/{id}/objects', 'ObjectsController@index');
