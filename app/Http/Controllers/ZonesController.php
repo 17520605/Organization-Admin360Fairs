@@ -14,14 +14,14 @@ class ZonesController extends Controller
         $user = Auth::user();
         $tour = DB::table('tour')->find($id);
 
-        
-
         $zones = DB::table('zone')->where('tourId', $id)->get();
         foreach ($zones as $zone) {
             $booths = DB::table('booth')
                 ->join('zone_booth', 'booth.id', '=', 'zone_booth.boothId')
+                ->join('user', 'user.id', '=', 'booth.participantId')
+                ->join('', 'user.id', '=', 'booth.participantId')
                 ->where('zone_booth.zoneId', $zone->id)
-                ->select('booth.*')
+                ->select('booth.*', )
                 ->get();
 
             $zone->booths = $booths;
