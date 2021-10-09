@@ -16,6 +16,7 @@ class CreateWebinarTable extends Migration
         Schema::create('webinar', function (Blueprint $table) {
             $table->id();
             $table->integer('tourId')->nullable();
+            $table->string('name');
             $table->date('startAt');
             $table->date('finishAt');
             $table->timestamps();

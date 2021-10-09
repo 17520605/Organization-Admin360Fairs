@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePersonalCompanyTable extends Migration
+class CreateProfileCompanyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreatePersonalCompanyTable extends Migration
      */
     public function up()
     {
-        Schema::create('personal_company', function (Blueprint $table) {
+        Schema::create('profile', function (Blueprint $table) {
             $table->id();
-            $table->integer('accountId')->nullable();
+            $table->integer('userId')->nullable();
+            $table->integer('type')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('gender')->nullable();
+            $table->string('name');
+            $table->string('address')->nullable();
             $table->string('email')->nullable();
             $table->string('contact')->nullable();
             $table->string('facebook')->nullable();
@@ -37,6 +37,6 @@ class CreatePersonalCompanyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personal_company');
+        Schema::dropIfExists('profile');
     }
 }

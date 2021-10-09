@@ -15,7 +15,7 @@ class CreateViewTable extends Migration
     {
         Schema::create('view', function (Blueprint $table) {
             $table->id();
-            $table->integer('visiterId')->nullable();
+            $table->integer('visitorId')->nullable();
             $table->integer('objectId')->nullable();
             $table->integer('boothId')->nullable();
             $table->integer('zoneId')->nullable();

@@ -13,7 +13,7 @@ class CreateVisiterTable extends Migration
      */
     public function up()
     {
-        Schema::create('visiter', function (Blueprint $table) {
+        Schema::create('visitor', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email');

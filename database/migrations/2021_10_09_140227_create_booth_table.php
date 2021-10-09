@@ -15,10 +15,9 @@ class CreateBoothTable extends Migration
     {
         Schema::create('booth', function (Blueprint $table) {
             $table->id();
-            $table->integer('participantId')->nullable();
+            $table->integer('ownerId')->nullable();
             $table->string('name');
             $table->string('accessCode')->nullable();
-            $table->boolean('isViewsCount')->default(0);
             $table->timestamps();
         });
     }
