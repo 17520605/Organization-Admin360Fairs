@@ -79,7 +79,7 @@
         <div id="collapsewebina" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Event types</h6>
-                <a class="collapse-item" href="/tours/{{$tour->id}}/events/webinars/1">Webinars</a>
+                <a class="collapse-item" href="/tours/{{$tour->id}}/events/webinars">Webinars</a>
                 <a class="collapse-item" href="buttons.html">...</a>
             </div>
         </div>

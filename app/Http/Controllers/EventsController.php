@@ -12,7 +12,12 @@ class EventsController extends Controller
     public function webinars($id)
     {
         $tour = DB::table('tour')->find($id);
-        return view('webinars.index', ['user' => Auth::user(), 'tour'=>$tour]);
+        $speakers = \App\Models\Profile::where([
+            ['type', '=', 'speaker'],
+            ['tourId', '=', $id]
+        ]);
+
+        return view('events.webinars', ['user' => Auth::user(), 'tour'=>$tour, 'speakers' => $speakers]);
     }
 
     public function webinar($id, $webinarId)
