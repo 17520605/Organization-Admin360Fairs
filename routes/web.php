@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function (){
         Route::post('/{id}/objects/save-create', 'ObjectsController@saveCreate');
 
 
+        // Event
+        Route::get('/{id}/events/webinars', 'ObjectsController@webinars');
     });
 
     Route::group(['prefix' => 'profile'], function(){

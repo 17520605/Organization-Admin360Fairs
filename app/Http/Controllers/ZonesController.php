@@ -18,8 +18,7 @@ class ZonesController extends Controller
         foreach ($zones as $zone) {
             $booths = DB::table('booth')
                 ->join('zone_booth', 'booth.id', '=', 'zone_booth.boothId')
-                ->join('user', 'user.id', '=', 'booth.participantId')
-                ->join('', 'user.id', '=', 'booth.participantId')
+                ->join('users', 'users.id', '=', 'booth.ownerId')
                 ->where('zone_booth.zoneId', $zone->id)
                 ->select('booth.*', )
                 ->get();
