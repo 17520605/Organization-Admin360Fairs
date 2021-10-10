@@ -11,7 +11,6 @@ class TourController extends Controller
 {
     public function index($id)
     {
-
         $tour = DB::table('tour')->find($id);
         return view('tour.index', ['user' => Auth::user(), 'tour'=>$tour]);
     }

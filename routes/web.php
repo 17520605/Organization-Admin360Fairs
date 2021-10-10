@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function (){
 
         // zones
         Route::get('/{id}/zones', 'ZonesController@index');
+        Route::get('/{id}/zones/{zoneId}', 'ZonesController@zone');
         Route::post('/{id}/zones/save-create', 'ZonesController@saveCreate');
 
         // booths
@@ -37,9 +38,9 @@ Route::middleware('auth')->group(function (){
         Route::get('/{id}/objects/models', 'ObjectsController@models');
         Route::post('/{id}/objects/save-create', 'ObjectsController@saveCreate');
 
-
-        // Event
-        Route::get('/{id}/events/webinars', 'ObjectsController@webinars');
+        // event
+        Route::get('/{id}/events/webinars', 'EventsController@webinars');
+        Route::get('/{id}/events/webinars/{webinarId}', 'EventsController@webinar');
     });
 
     Route::group(['prefix' => 'profile'], function(){

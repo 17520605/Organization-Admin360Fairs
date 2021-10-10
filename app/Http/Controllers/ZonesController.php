@@ -18,7 +18,6 @@ class ZonesController extends Controller
         foreach ($zones as $zone) {
             $booths = DB::table('booth')
                 ->join('zone_booth', 'booth.id', '=', 'zone_booth.boothId')
-                ->join('users', 'users.id', '=', 'booth.ownerId')
                 ->where('zone_booth.zoneId', $zone->id)
                 ->select('booth.*', )
                 ->get();
@@ -54,5 +53,23 @@ class ZonesController extends Controller
         }
 
         return back();
+    }
+
+    public function zone ($id, $zoneId)
+    {
+        
+        $tour = DB::table('tour')->find($id);
+        $zone = \App\Models\Zone::find($zoneId);
+        $overview = \App\Models\Panorama::find($zone->overviewId);
+        $objects = $objects = \App\Models\Zone_Object::with('object')
+            ->select('object.*')
+            ->where('zone.id', '=', $zoneId)
+            ->get();
+        $booths = \App\Models\Zone_Booth::with('booth')
+            ->select('booth.*')
+            ->where('zone.id', '=', $zoneId)
+            ->get();
+        
+        return view('zones.zone', ['user' => $user, 'tour'=> $tour, 'overview'=> $overview, 'objects' => $objects, 'booths' => $booths]);
     }
 }

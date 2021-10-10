@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid card-event">
-        <h1 class="h3 mb-4 text-gray-800">Events <button  class="btn btn-df" style="position: absolute; right: 1.5rem;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new event</button></h1>
+        <h1 class="h3 mb-4 text-gray-800">Events <button  class="btn btn-df" style="position: absolute; right: 1.5rem;" data-toggle="modal" data-target="#popup-create-event"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new event</button></h1>
         <div class="row">
             <div class="col-lg-4">
                 <div class="card card-margin">
