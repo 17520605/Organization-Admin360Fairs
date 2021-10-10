@@ -1,58 +1,105 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container-fluid booths-card">
-    <div class="container-fluid">
-        <!-- Account page navigation-->
-        <h3>Overview Booths</h3>
-        <hr class="mt-0 mb-4">
+    <div class="container-fluid card-event">
+        <h1 class="h3 mb-4 text-gray-800">Events <button  class="btn btn-df" style="position: absolute; right: 1.5rem;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new event</button></h1>
         <div class="row">
-            <div class="col-lg-4 mb-4">
-                <!-- Billing card 1-->
-                <div class="card h-100 border-start-lg border-start-primary">
-                    <div class="card-body">
-                        <div class="small text-muted">Current monthly bill</div>
-                        <div class="h3">$20.00</div>
-                        <a class="text-arrow-icon small" href="#!">
-                            Switch to yearly billing
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </a>
+            <div class="col-lg-4">
+                <div class="card card-margin">
+                    <div class="card-header no-border">
+                        <h5 class="card-title">MOM</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="widget-49">
+                            <div class="widget-49-title-wrapper">
+                                <div class="widget-49-date-primary">
+                                    <span class="widget-49-date-day">09</span>
+                                    <span class="widget-49-date-month">apr</span>
+                                </div>
+                                <div class="widget-49-meeting-info">
+                                    <span class="widget-49-pro-title">PRO-08235 DeskOpe. Website</span>
+                                    <span class="widget-49-meeting-time">12:00 to 13.30 Hrs</span>
+                                </div>
+                            </div>
+                            <ol class="widget-49-meeting-points">
+                                <li class="widget-49-meeting-item"><span>Expand module is removed</span>
+                                </li>
+                                <li class="widget-49-meeting-item"><span>Data migration is in scope</span>
+                                </li>
+                                <li class="widget-49-meeting-item"><span>Session timeout increase to 30
+                                        minutes</span></li>
+                            </ol>
+                            <div class="widget-49-meeting-action">
+                                <a href="#" class="btn btn-sm btn-flash-border-primary">View All</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 mb-4">
-                <!-- Billing card 2-->
-                <div class="card h-100 border-start-lg border-start-secondary">
-                    <div class="card-body">
-                        <div class="small text-muted">Next payment due</div>
-                        <div class="h3">July 15</div>
-                        <a class="text-arrow-icon small text-secondary" href="#!">
-                            View payment history
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </a>
+            <div class="col-lg-4">
+                <div class="card card-margin">
+                    <div class="card-header no-border">
+                        <h5 class="card-title">MOM</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="widget-49">
+                            <div class="widget-49-title-wrapper">
+                                <div class="widget-49-date-warning">
+                                    <span class="widget-49-date-day">13</span>
+                                    <span class="widget-49-date-month">apr</span>
+                                </div>
+                                <div class="widget-49-meeting-info">
+                                    <span class="widget-49-pro-title">PRO-08235 Lexa Corp.</span>
+                                    <span class="widget-49-meeting-time">12:00 to 13.30 Hrs</span>
+                                </div>
+                            </div>
+                            <ol class="widget-49-meeting-points">
+                                <li class="widget-49-meeting-item"><span>Scheming module is removed</span>
+                                </li>
+                                <li class="widget-49-meeting-item"><span>App design contract
+                                        confirmed</span></li>
+                                <li class="widget-49-meeting-item"><span>Client request to send
+                                        invoice</span></li>
+                            </ol>
+                            <div class="widget-49-meeting-action">
+                                <a href="#" class="btn btn-sm btn-flash-border-warning">View All</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 mb-4">
-                <!-- Billing card 3-->
-                <div class="card h-100 border-start-lg border-start-success">
-                    <div class="card-body">
-                        <div class="small text-muted">Current plan</div>
-                        <div class="h3 d-flex align-items-center">Freelancer</div>
-                        <a class="text-arrow-icon small text-success" href="#!">
-                            Upgrade plan
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                        </a>
+            <div class="col-lg-4">
+                <div class="card card-margin">
+                    <div class="card-header no-border">
+                        <h5 class="card-title">MOM</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="widget-49">
+                            <div class="widget-49-title-wrapper">
+                                <div class="widget-49-date-success">
+                                    <span class="widget-49-date-day">22</span>
+                                    <span class="widget-49-date-month">apr</span>
+                                </div>
+                                <div class="widget-49-meeting-info">
+                                    <span class="widget-49-pro-title">PRO-027865 Opera module</span>
+                                    <span class="widget-49-meeting-time">12:00 to 13.30 Hrs</span>
+                                </div>
+                            </div>
+                            <ol class="widget-49-meeting-points">
+                                <li class="widget-49-meeting-item"><span>Scope is revised and updated</span>
+                                </li>
+                                <li class="widget-49-meeting-item"><span>Time-line has been changed</span>
+                                </li>
+                                <li class="widget-49-meeting-item"><span>Received approval to start
+                                        wire-frame</span></li>
+                            </ol>
+                            <div class="widget-49-meeting-action">
+                                <a href="#" class="btn btn-sm btn-flash-border-success">View All</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="card card-header-actions mb-4">
-            <div class="card-header">
-                Payment Methods
-                <button class="btn btn-sm btn-primary" type="button">Add Payment Method</button>
             </div>
         </div>
     </div>
-</div>
 @endsection
