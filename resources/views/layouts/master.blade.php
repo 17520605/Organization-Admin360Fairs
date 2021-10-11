@@ -134,5 +134,28 @@
             $(e.currentTarget).parent().parent().remove();
         }
     </script>
+    <script>
+        // image gallery
+        // init the state from the input
+        $(".image-checkbox").each(function() {
+            if ($(this).find('input[type="checkbox"]').first().attr("checked")) {
+                $(this).addClass('image-checkbox-checked');
+                $(this).addClass('show');
+            } else {
+                $(this).removeClass('image-checkbox-checked');
+                $(this).removeClass('show');
+            }
+        });
+
+        // sync the state to the input
+        $(".image-checkbox").on("click", function(e) {
+            $(this).toggleClass('image-checkbox-checked');
+            var $checkbox = $(this).find('input[type="checkbox"]');
+            $checkbox.prop("checked", !$checkbox.prop("checked"))
+
+            e.preventDefault();
+        });
+        //# sourceURL=pen.js
+    </script>
     </body>
 </html>
