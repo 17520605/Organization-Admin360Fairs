@@ -59,21 +59,8 @@
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseevent" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-calendar-week"></i>
-            <span>Events</span>
-        </a>
-        <div id="collapseevent" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Events:</h6>
-                <a class="collapse-item" href="buttons.html">Events</a>
-                <a class="collapse-item" href="buttons.html">Events Card</a>
-            </div>
-        </div>
-    </li>
-    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsewebina" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-chalkboard-teacher"></i>
+            <i class="fas fa-calendar-week"></i>
             <span>Events</span>
         </a>
         <div id="collapsewebina" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
