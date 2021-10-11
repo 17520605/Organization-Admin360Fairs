@@ -27,7 +27,7 @@
                                         <small>
                                             <span class="mb-2 float-left" style="color: #007bff !importan;">Size: {{ number_format(floatval($model->size)/1048576, 1) }} MB</span>
                                             <span class="ml-3 float-left text-muted" style="text-transform: uppercase;">{{ $model->format }}</span>
-                                            <span class="mb-2 float-right text-muted">{{Carbon\Carbon::parse($model->updatedAt)->format('M d Y')}}</span>
+                                            <span class="mb-2 float-right text-muted">{{Carbon\Carbon::parse($model->updated_at)->format('M d Y')}}</span>
                                         </small>
                                     </div>
                                 </a>

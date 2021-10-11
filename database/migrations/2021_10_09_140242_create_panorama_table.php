@@ -15,6 +15,7 @@ class CreatePanoramaTable extends Migration
     {
         Schema::create('panorama', function (Blueprint $table) {
             $table->id();
+            $table->string('type')->nullable();
             $table->string('name');
             $table->string('imageUrl');
             $table->string('lookAt')->nullable();
