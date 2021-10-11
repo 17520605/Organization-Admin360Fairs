@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function (){
         // event
         Route::get('/{id}/events/webinars', 'EventsController@webinars');
         Route::get('/{id}/events/webinars/{webinarId}', 'EventsController@webinar');
+        Route::post('/{id}/events/webinars/save-create', 'EventsController@saveCreate');
+
     });
 
     Route::group(['prefix' => 'profile'], function(){

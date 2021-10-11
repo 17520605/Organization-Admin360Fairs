@@ -8,5 +8,6 @@ class Booth extends Model
 {
     protected $table = 'booth';
     
+    
 }
 
