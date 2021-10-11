@@ -41,12 +41,14 @@
                                             @endphp
                                             @foreach ($webinar->details as $detail)
                                             <div class="row timeline-box-card">
+                                                {{-- <div class="col-md-6">
+                                                    
+                                                </div> --}}
+
                                                 <div class="col-md-6">
                                                     <div class="timeline-icon">
-                                                        <i class="bx bx-briefcase-alt-2 text-primary h2 mb-0"></i>
+                                                        {{-- <i class="bx bx-briefcase-alt-2 text-primary h2 mb-0"></i> --}}
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
                                                     <div class="timeline-box">
                                                         <div class="timeline-date bg-primary text-center rounded">
                                                             <h4 class="text-white mb-0"> {{$time->format('h')}}</h4>
@@ -54,8 +56,8 @@
                                                         </div>
                                                         <div class="event-content">
                                                             <div class="timeline-text">
-                                                                <h3 class="font-size-18">{{$detail->speaker->name}}</h3>
-                                                                <h3 class="font-size-18">{{$detail->title}}</h3>
+                                                                <h3 class="font-size-17"> {{$detail->speaker->name}}</h3>
+                                                                <h3 class="font-size-14"><i class="fas fa-check"></i> {{$detail->title}}</h3>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -8,7 +8,8 @@
             <div class="col-lg-4">
                 <div class="card card-margin">
                     <div class="card-header no-border">
-                        {{-- <h5 class="card-title">MOM</h5> --}}
+                        <h5 class="card-title">MOM</h5>
+                        <button class="btn btn-default btn-remove-event-card"><i class="far fa-times-circle"></i></button>
                     </div>
                     <div class="card-body pt-0">
                         <div class="widget-49">
