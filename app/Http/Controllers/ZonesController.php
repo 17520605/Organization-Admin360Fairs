@@ -61,7 +61,7 @@ class ZonesController extends Controller
         $tour = DB::table('tour')->find($id);
         $zone = \App\Models\Zone::find($zoneId);
         $overview = \App\Models\Panorama::find($zone->overviewId);
-        $objects = $objects = \App\Models\Zone_Object::with('object')
+        $objects = \App\Models\Zone_Object::with('object')
             ->select('object.*')
             ->where('zone.id', '=', $zoneId)
             ->get();

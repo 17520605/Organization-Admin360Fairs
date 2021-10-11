@@ -16,7 +16,7 @@ class CreateWebinarDetailTable extends Migration
         Schema::create('webinar_detail', function (Blueprint $table) {
             $table->id();
             $table->integer('webinarId');
-            $table->integer('title');
+            $table->string('title');
             $table->integer('speakerId');
             $table->integer('duration');
             $table->timestamps();

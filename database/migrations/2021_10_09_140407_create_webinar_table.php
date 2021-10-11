@@ -17,8 +17,9 @@ class CreateWebinarTable extends Migration
             $table->id();
             $table->integer('tourId')->nullable();
             $table->string('topic');
-            $table->date('startAt');
-            $table->date('finishAt');
+            $table->dateTime('startAt');
+            $table->dateTime('endAt');
+            $table->string('description');
             $table->timestamps();
         });
     }

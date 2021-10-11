@@ -18,7 +18,7 @@ class CreateProfileTable extends Migration
             $table->integer('userId')->nullable();
             $table->integer('tourId')->nullable();
             $table->integer('boothId')->nullable();
-            $table->integer('type')->nullable();
+            $table->string('type')->nullable();
             $table->string('avatar')->nullable();
             $table->string('name');
             $table->string('address')->nullable();
