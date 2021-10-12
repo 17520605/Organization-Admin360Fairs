@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function (){
         Route::get('/{id}/tour/edit', 'TourController@edit');
         Route::post('/{id}/tour/save-edit', 'TourController@saveEdit');
 
+        // participants
+        Route::get('/{id}/participants', 'ParticipantsController@index');
+
         // zones
         Route::get('/{id}/zones', 'ZonesController@index');
         Route::get('/{id}/zones/{zoneId}', 'ZonesController@zone');
