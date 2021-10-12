@@ -4,7 +4,8 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Booths</h6>
+                <h6 class="m-0 font-weight-bold text-primary float-left">Booths</h6>
+                <button class="btn float-right" data-toggle="modal" data-target="#popup-create-booth"><i class="fas fa-plus"></i> Add </button>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -26,10 +27,15 @@
                             </td>
                         </tr>
                         <tbody class="group-0">
+                            @if (count($freeBooths) == 0)
+                                <tr>
+                                    <td colspan="10"><center><span>No booths</span></center></td>
+                                </tr>
+                            @endif
                             @foreach ($freeBooths as $freeBooth)
                             <tr>
                                 <td>1</td>
-                                <td>{{$freeBooth->name}}</td>
+                                <td><a href="booths/{{$freeBooth->id}}">{{$freeBooth->name}}</a></td>
                                 <td>Dinh phong</td>
                                 <td><span>In Process</span></td>
                                 <td>September 26, 2021</td>
@@ -39,19 +45,19 @@
                             </tr>
                             @endforeach
                         </tbody>
-                        @foreach ($zones as $zone)
+                        @foreach ($groups as $group)
                         <div>
-                            <tr style="background-color: #ccc !important; border: 1px solid #ccc;" onclick="toggleGroup({{$zone->id}})">
+                            <tr style="background-color: #ccc !important; border: 1px solid #ccc;" onclick="toggleGroup({{$group->id}})">
                                 <td colspan="8">
-                                    <span style="float: left">{{$zone->name}}</span>
+                                    <span style="float: left">{{$group->name}}</span>
                                     <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
                                 </td>
                             </tr>
-                            <tbody class="group-{{$zone->id}}">
-                                @foreach ($zone->booths as $booth)
+                            <tbody class="group-{{$group->id}}">
+                                @foreach ($group->booths as $booth)
                                 <tr>
                                     <td>1</td>
-                                    <td>{{$booth->name}}</td>
+                                    <td><a href="booths/{{$booth->id}}">{{$booth->name}}</a></td>
                                     <td>Dinh phong</td>
                                     <td><span>In Process</span></td>
                                     <td>September 26, 2021</td>
@@ -68,9 +74,53 @@
             </div>
         </div>
     </div>
+    {{-- POPUP CREATE BOOTH --}}
+    <div class="modal fade" id="popup-create-booth" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Create New Booth</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body p-3">
+                    <form action="/tours/{{$tour->id}}/booths/save-create" method="POST">
+                        @csrf
+                        <div class="row mb-3">
+                            <label class="small mb-1" for="">Name</label>
+                            <input class="form-control" type="text" name="name" placeholder="Enter Booth Name">
+                        </div>
+                        <div id="popup-create-booth__choose-zone-text" class="row row mb-3"> Choose zone </div>
+                        <div class="row mb-3 p-3 border zones-wrapper" style="display: none;">
+                            @if (count($zones) == 0)
+                                <center><span>No zone</span></center>
+                            @else
+                                @foreach ($zones as $zone)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="{{$zone->id}}" name="zoneId">
+                                    <label class="form-check-label"> {{$zone->name}} </label>
+                                  </div>
+                                @endforeach
+                            @endif
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" type="submit">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         function toggleGroup(id) {  
             $('.group-' + id).toggle();
         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#popup-create-booth__choose-zone-text').click(function () {  
+                $('#popup-create-booth').find('.zones-wrapper').toggle();
+            });
+        });
     </script>
 @endsection

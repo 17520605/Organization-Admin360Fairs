@@ -15,7 +15,9 @@ class BoothsController extends Controller
         $user = Auth::user();
         $tour = DB::table('tour')->find($id);
 
-        $zones = DB::table('zone_booth')
+        $zones = \App\Models\Zone::get();
+
+        $groups = DB::table('zone_booth')
             ->join('zone', 'zone.id', '=', 'zone_booth.zoneId')
             ->select('zone.*')
             ->where('zone.tourId', $id)
@@ -23,20 +25,40 @@ class BoothsController extends Controller
             ->orderBy('zone.id', 'asc')
             ->get();
         
-        foreach ($zones as $zone) {
+        foreach ($groups as $group) {
             $booth = DB::table('zone_booth')
                 ->join('booth', 'booth.id', '=', 'zone_booth.boothId')
                 ->select('booth.*')
-                ->where('zone_booth.zoneId', '=', $zone->id)
+                ->where('zone_booth.zoneId', '=', $group->id)
                 ->get();
 
-             $zone->booths = $booth;
+            $group->booths = $booth;
         }
 
         $freeBooths = DB::table('booth')
             ->whereRaw(" NOT EXISTS ( SELECT * FROM zone_booth  WHERE  zone_booth.boothId = booth.id )")
             ->get();
 
-        return view('booths.index', ['user' => $user, 'tour'=> $tour, 'zones' => $zones, 'freeBooths'=> $freeBooths]);
+        return view('booths.index', ['user' => $user, 'tour'=> $tour, 'zones' => $zones, 'groups' => $groups, 'freeBooths'=> $freeBooths]);
+    }
+
+    public function saveCreate($id, Request $request)
+    {
+        $tour = DB::table('tour')->find($id);
+
+        $name = $request->name;
+        $zoneId = $request->zoneId;
+
+        $booth = new \App\Models\Booth(); 
+        $booth->name =  $name;
+        $booth->tourId =  $id;
+        $booth->save();
+
+        $zone_booth = new \App\Models\Zone_Booth();
+        $zone_booth->zoneId =  $zoneId;
+        $zone_booth->boothId =  $booth->id;
+        $zone_booth->save();
+
+        return back();
     }
 }

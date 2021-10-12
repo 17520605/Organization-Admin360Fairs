@@ -15,6 +15,7 @@ class CreateBoothTable extends Migration
     {
         Schema::create('booth', function (Blueprint $table) {
             $table->id();
+            $table->integer('tourId');
             $table->integer('ownerId')->nullable();
             $table->string('name');
             $table->string('accessCode')->nullable();

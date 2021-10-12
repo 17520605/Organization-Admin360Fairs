@@ -23,11 +23,11 @@
                             @foreach ($zones as $zone)
                             <tr>
                                 <td>1</td>
-                                <td>{{$zone->name}}</td>
+                                <td><a href="zones/{{$zone->id}}">{{$zone->name}}</a></td>
                                 <td>{{ count($zone->booths)}} </td>
                                 <td>
                                     @foreach ($zone->booths as $booth)
-                                        <a>{{$booth->name}}</a> , 
+                                        <a href="booths/{{$booth->id}}">{{$booth->name}}</a> , 
                                     @endforeach
                                 </td>
                                 <td>

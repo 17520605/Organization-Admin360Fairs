@@ -25,10 +25,13 @@ Route::middleware('auth')->group(function (){
         // zones
         Route::get('/{id}/zones', 'ZonesController@index');
         Route::get('/{id}/zones/{zoneId}', 'ZonesController@zone');
+        Route::post('/{id}/zones/{zoneId}/save-add-booths', 'ZonesController@saveAddBooths');
         Route::post('/{id}/zones/save-create', 'ZonesController@saveCreate');
+       
 
         // booths
         Route::get('/{id}/booths', 'BoothsController@index');
+        Route::post('/{id}/booths/save-create', 'BoothsController@saveCreate');
 
         // objects
         Route::get('/{id}/objects', 'ObjectsController@index');
