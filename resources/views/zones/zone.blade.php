@@ -1,4 +1,4 @@
-<div class="col-sm-12" style="margin-bottom: 10px">
+
     @extends('layouts.master')
 
     @section('content')
@@ -6,7 +6,8 @@
             <div class="row mb-3">
                 <div class="col-md-12">
                     <div class="card p-3">
-                        <h1 class="h4 text-gray-800">{{ $zone->name }}</h1>
+                        <h1 class="h4 text-gray-800" style="margin: 0px">{{ $zone->name }}</h1>
+                        <a href="" class="btn btn-df" target="_blank" style="width: 180px; position: absolute ;top: 0.75rem; right: 1rem;"><i class="fas fa-cog"></i> Config Zone</a>
                     </div>
                 </div>
             </div>
@@ -100,8 +101,7 @@
                                         <div class="row" style="padding: 0 5px 5px 5px;">
                                             <div class="col-12">
                                                 <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                    <div style="width: 70%; height: 3px; background-color: rgb(84, 255, 84)"
-                                                        ></div>
+                                                    <div style="width: 70%; height: 3px; background-color: rgb(0, 189, 0)"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -205,18 +205,16 @@
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="card" style="width: 100%; padding: 0.25rem;">
-                        <div class="card-body" style="color: #555; font-size: 14px;">
+                    <div class="card card_object_zone" >
+                        <div class="card-body" >
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-12 title">
                                     <h6 class="text-gray-600 float-left">Objects </h6>
-                                    <button class="btn float-right"
-                                        style="margin-top: -12px; margin-right: -10px; font-size: 14px!important;  padding: 3px 20px!important;  line-height: 28px!important;  color: #224abe; font-weight: 600;"><i
-                                            class="fas fa-plus" style="margin-right: 10px;"></i> Add </button>
+                                    <button class="btn float-right"><i class="fas fa-plus"></i> Add </button>
                                 </div>
                             </div>
-                            <div class="row" style="height: 320px; overflow-y: scroll;">
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                            <div class="row list_object">
+                                <div class="col-lg-3 col-md-4 col-sm-12">
                                     <div class="card">
                                         <div class="file">
                                             <a href="javascript:void(0);">
@@ -231,22 +229,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
-                                                        alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="col-lg-3 col-md-4 col-sm-12">
                                     <div class="card">
                                         <div class="file">
                                             <a href="javascript:void(0);">
@@ -261,22 +244,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
-                                                        alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="col-lg-3 col-md-4 col-sm-12">
                                     <div class="card">
                                         <div class="file">
                                             <a href="javascript:void(0);">
@@ -291,22 +259,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
-                                                        alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="col-lg-3 col-md-4 col-sm-12">
                                     <div class="card">
                                         <div class="file">
                                             <a href="javascript:void(0);">
@@ -321,12 +274,72 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="col-lg-3 col-md-4 col-sm-12">
                                     <div class="card">
                                         <div class="file">
                                             <a href="javascript:void(0);">
                                                 <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
+                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg"
+                                                        alt="img" class="img-fluid">
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card">
+                                        <div class="file">
+                                            <a href="javascript:void(0);">
+                                                <div class="image">
+                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg"
+                                                        alt="img" class="img-fluid">
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card">
+                                        <div class="file">
+                                            <a href="javascript:void(0);">
+                                                <div class="image">
+                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg"
+                                                        alt="img" class="img-fluid">
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card">
+                                        <div class="file">
+                                            <a href="javascript:void(0);">
+                                                <div class="image">
+                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg"
+                                                        alt="img" class="img-fluid">
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card">
+                                        <div class="file">
+                                            <a href="javascript:void(0);">
+                                                <div class="image">
+                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg"
                                                         alt="img" class="img-fluid">
                                                 </div>
                                                 <div class="file-name">
