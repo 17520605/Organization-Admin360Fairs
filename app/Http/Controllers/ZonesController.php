@@ -38,11 +38,11 @@ class ZonesController extends Controller
         $zone = \App\Models\Zone::find($zoneId);
         $overview = \App\Models\Panorama::find($zone->overviewId);
 
-        $objects = DB::table('object')
-            ->join('zone_object', 'object.id', '=', 'zone_object.objectId')
-            ->where('zoneId', '=', $zoneId)
-            ->select('object.*')
-            ->get();
+        // $objects = DB::table('object')
+        //     ->join('zone_object', 'object.id', '=', 'zone_object.objectId')
+        //     ->where('zoneId', '=', $zoneId)
+        //     ->select('object.*')
+        //     ->get();
 
         $booths =  DB::table('booth')
             ->join('zone_booth', 'booth.id', '=', 'zone_booth.boothId')
@@ -54,22 +54,22 @@ class ZonesController extends Controller
             ->whereRaw(" NOT EXISTS ( SELECT * FROM zone_booth  WHERE  zone_booth.boothId = booth.id )")
             ->get();
 
-        $types = DB::table('object')
-            ->join('zone_object', 'object.id', '=', 'zone_object.objectId')
-            ->where('zone_object.zoneId', $zoneId)
-            ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(object.id) as count'))
-            ->groupBy('type')
-            ->get();  
+        // $types = DB::table('object')
+        //     ->join('zone_object', 'object.id', '=', 'zone_object.objectId')
+        //     ->where('zone_object.zoneId', $zoneId)
+        //     ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(object.id) as count'))
+        //     ->groupBy('type')
+        //     ->get();  
 
         return view('zones.zone', [
             'user' =>Auth::user(),
             'tour'=> $tour,
             'overview'=> $overview, 
             'zone'=>$zone,
-            'objects' => $objects,
+           // 'objects' => $objects,
             'booths' => $booths,
             'freeBooths' => $freeBooths,
-            'types' => $types,
+           // 'types' => $types,
         ]);
     }
 

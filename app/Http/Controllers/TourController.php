@@ -11,8 +11,21 @@ class TourController extends Controller
 {
     public function index($id)
     {
+        // $tour = DB::table('tour')->find($id);
+        // return view('tour.index', ['user' => Auth::user(), 'tour'=>$tour]);
+
         $tour = DB::table('tour')->find($id);
-        return view('tour.index', ['user' => Auth::user(), 'tour'=>$tour]);
+
+        $zones = \App\Models\Zone::get();
+
+        $overview = \App\Models\Panorama::find($tour->overviewId);
+
+        return view('tour.index', [
+            'user' =>Auth::user(),
+            'tour'=> $tour,
+            'overview'=> $overview, 
+            'zones'=>$zones
+        ]);
     }
 
     public function edit($id)
@@ -44,5 +57,4 @@ class TourController extends Controller
         return redirect('/tours/'.$id.'/tour');
     }
 
-    
 }
