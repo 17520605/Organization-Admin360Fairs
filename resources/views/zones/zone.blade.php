@@ -1,4 +1,4 @@
-<div class="col-sm-12" style="margin-bottom: 10px">
+
     @extends('layouts.master')
 
     @section('content')
@@ -41,11 +41,11 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <h6 class="text-gray-600">Types :</h6>
+                                    <h6 class="font-weight-bold text-primary float-left"">Types :</h6>
                                 </div>
                             </div> 
                             <div class="row">
-                                <div class="col-sm-12" style="margin-bottom: 10px">
+                                <div class="col-sm-12" style="margin-bottom: 10px; cursor: pointer">
                                     <div class="card">
                                         <div class="card-body" style="padding: 10px;">
                                             <div class="row">
@@ -56,7 +56,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
-                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" href="/apps-filemanager">All</a></p>
+                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" onclick="switchTag('all')" >All</a></p>
                                                 </div>
                                                 <div class="col-4">
                                                     <p class="text-muted text-truncate mb-0">{{ $types->sum('count')}} Files</p>
@@ -76,7 +76,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12" style="margin-bottom: 10px">
+                                <div class="col-sm-12" style="margin-bottom: 10px; cursor: pointer"">
                                     <div class="card">
                                         <div class="card-body" style="padding: 10px;">
                                             <div class="row">
@@ -87,7 +87,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
-                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" href="/apps-filemanager">Images</a></p>
+                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" onclick="switchTag('images')">Images</a></p>
                                                 </div>
                                                 <div class="col-4">
                                                     <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'image')->first() != null ?$types->where('type', 'image')->first()->count : 0 }} Files</p>
@@ -107,7 +107,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12" style="margin-bottom: 10px">
+                                <div class="col-sm-12" style="margin-bottom: 10px; cursor: pointer"">
                                     <div class="card">
                                         <div class="card-body" style="padding: 10px;">
                                             <div class="row">
@@ -118,7 +118,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
-                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" href="/apps-filemanager">Videos</a></p>
+                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" onclick="switchTag('videos')">Videos</a></p>
                                                 </div>
                                                 <div class="col-4">
                                                     <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'video')->first() != null ?$types->where('type', 'video')->first()->count : 0 }} Files</p>
@@ -138,7 +138,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12" style="margin-bottom: 10px">
+                                <div class="col-sm-12" style="margin-bottom: 10px; cursor: pointer"">
                                     <div class="card">
                                         <div class="card-body" style="padding: 10px;">
                                             <div class="row">
@@ -149,7 +149,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
-                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" href="/apps-filemanager">Audio</a></p>
+                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" onclick="switchTag('audios')">Audio</a></p>
                                                 </div>
                                                 <div class="col-4">
                                                     <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'audio')->first() != null ?$types->where('type', 'audio')->first()->count : 0 }} Files</p>
@@ -169,7 +169,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12" style="margin-bottom: 10px">
+                                <div class="col-sm-12" style="margin-bottom: 10px; cursor: pointer"">
                                     <div class="card">
                                         <div class="card-body" style="padding: 10px;">
                                             <div class="row">
@@ -180,7 +180,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-3">
-                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" href="/apps-filemanager">Models</a></p>
+                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" onclick="switchTag('models')">Models</a></p>
                                                 </div>
                                                 <div class="col-4">
                                                     <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'model')->first() != null ?$types->where('type', 'model')->first()->count : 0 }} Files</p>
@@ -209,133 +209,149 @@
                         <div class="card-body" style="color: #555; font-size: 14px;">
                             <div class="row">
                                 <div class="col-12">
-                                    <h6 class="text-gray-600 float-left">Objects </h6>
+                                    <h6 class="font-weight-bold text-primary float-left">Objects</h6>
                                     <button class="btn float-right"
                                         style="margin-top: -12px; margin-right: -10px; font-size: 14px!important;  padding: 3px 20px!important;  line-height: 28px!important;  color: #224abe; font-weight: 600;"><i
                                             class="fas fa-plus" style="margin-right: 10px;"></i> Add </button>
                                 </div>
                             </div>
-                            <div class="row" style="height: 320px; overflow-y: scroll;">
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
+                            <div id="all-wrapper" class="objects-wrapper row" style="height: 320px; overflow-y: scroll;">
+                                @foreach ($objects as $object)
+                                    @if ($object->type == 'image')
+                                    <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                        <div class="card">
+                                            <div class="file">
                                                 <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg"
+                                                    <img src="{{$object->url}}"
                                                         alt="img" class="img-fluid">
                                                 </div>
                                                 <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                                    <a href="" class="m-b-5 text-muted">{{$object->name}}</a>
                                                 </div>
-                                            </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    @endif
+                                    @if ($object->type == 'video')
+                                    <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                        <div class="card">
+                                            <div class="file">
+                                                <div class="icon">
+                                                    <i class="fas fa-link text-info"></i>
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="text-muted">{{$object->name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @if ($object->type == 'audio')
+                                    <div class="col-lg-3 col-md-4 col-sm-12">
+                                        <div class="card">
+                                            <div class="file">
+                                                <div class="icon">
+                                                    <i class="fab fa-soundcloud"></i>
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="text-muted">{{$object->name}}</p> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @if ($object->type == 'model')
+                                    <div class="col-lg-3 col-md-4 col-sm-12">
+                                        <div class="card">
+                                            <div class="file">
+                                                <div class="image">
+                                                    <model-viewer src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="text-muted">{{$object->name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div id="images-wrapper" class="objects-wrapper row" style="display: none; height: 320px; overflow-y: scroll;">
+                                @php
+                                    $images =  $objects->where('type', 'image');
+                                @endphp
+                                @foreach ($images as $image)
                                 <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
                                     <div class="card">
                                         <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
-                                                        alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
+                                            <div class="image">
+                                                <img src="{{$image->url}}"
+                                                    alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <a href="" class="m-b-5 text-muted">{{$image->name}}</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                @endforeach
+                            </div>
+                            <div id="videos-wrapper" class="objects-wrapper row" style="display: none; height: 320px; overflow-y: scroll;">
+                                @php
+                                    $videos =  $objects->where('type', 'video');
+                                @endphp
+                                @foreach ($videos as $video)
                                 <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
                                     <div class="card">
                                         <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg"
-                                                        alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
+                                            <div class="icon">
+                                                <i class="fas fa-link text-info"></i>
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="text-muted">VIDEO 1</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                @endforeach
+                            </div>
+                            <div id="audios-wrapper" class="objects-wrapper row" style="display: none; height: 320px; overflow-y: scroll;">
+                                @php
+                                    $audios =  $objects->where('type', 'audio');
+                                @endphp
+                                @foreach ($audios as $audio)
+                                <div class="col-lg-3 col-md-4 col-sm-12">
                                     <div class="card">
                                         <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
-                                                        alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
+                                            <div class="icon">
+                                                <i class="fab fa-soundcloud"></i>
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="text-muted">{{$audio->name}}</p> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                @endforeach
+                            </div>
+                            <div id="models-wrapper" class="objects-wrapper row" style="display: none; height: 320px; overflow-y: scroll;">
+                                @php
+                                    $models =  $objects->where('type', 'model');
+                                @endphp
+                                @foreach ($models as $model)
+                                <div class="col-lg-3 col-md-4 col-sm-12">
                                     <div class="card">
                                         <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg"
-                                                        alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
+                                            <div class="image">
+                                                <model-viewer src="{{$model->url}}" ar-status="not-presenting"></model-viewer>
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="text-muted">{{$model->name}}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
-                                                        alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg"
-                                                        alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
-                                                        alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -345,7 +361,8 @@
                 <div class="col-md-12">
                     <div class="card mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <h6 class="m-0 font-weight-bold text-primary float-left">Booths</h6>
+                            <h6 class="m-0 font-weight-bold text-primary float-right"><i class="fas fa-plus" style="margin-right: 10px;"></i>Add</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -354,47 +371,34 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Images</th>
-                                            <th>Price</th>
-                                            <th>Link Products</th>
-                                            <th>Code</th>
-                                            <th>Booths</th>
-                                            <th style="width: 10%;">Action</th>
+                                            <th style="width: 25%;">Owner</th>
+                                            <th style="width: 100px;"> Panoramas</th>
+                                            <th style="width: 100px;">Objects</th>
+                                            <th style="width: 120px;">Status</th>
+                                            <th style="width: 80px;">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $order = 1;
+                                        @endphp
+                                        @foreach ($booths as $booth)
                                         <tr>
-                                            <td>1</td>
-                                            <td>Brielle Williamson</td>
-                                            <td><img class="products-tables" src="./../asset/images/apps-1.jpg" alt="">
-                                            </td>
-                                            <td>150$</td>
+                                            <td>$order++</td>
+                                            <td>{{ $booth->name}}}</td>
                                             <td>
-                                                <a href="https://github.com/">https://github.com/</a>
+                                                <a href="https://github.com/">Nguyen Ngoc Khai</a>
                                             </td>
-                                            <td>SALE123</td>
+                                            <td>3</td>
+                                            <td>3</td>
                                             <td>Booth-01</td>
                                             <td>
-                                                <a class="btn btn-xs btn-info" href="#"><i class="fa fa-pen"></i></a>
-                                                <a class="btn btn-xs btn-danger" href="#"><i
-                                                        class="fa fa-trash"></i></a>
+                                                <a class="mr-2"><i class="fa fa-pen"></i></a>
+                                                <a class="mr-2"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Brielle Williamson</td>
-                                            <td><img class="products-tables" src="./../asset/images/apps-1.jpg" alt="">
-                                            </td>
-                                            <td>150$</td>
-                                            <td><a href="https://github.com/">https://github.com/</a></td>
-                                            <td>SALE123</td>
-                                            <td>Booth-01</td>
-                                            <td>
-                                                <a class="btn btn-xs btn-info" href="#"><i class="fa fa-pen"></i></a>
-                                                <a class="btn btn-xs btn-danger" href="#"><i
-                                                        class="fa fa-trash"></i></a>
-                                            </td>
-                                        </tr>
+                                        @endforeach
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -526,6 +530,12 @@
                 @endif
 
             }
+
+            function switchTag (tagName) {  
+                $('.objects-wrapper').hide();     
+                $('#'+tagName+'-wrapper').show();
+            }
+
         </script>
         <script>
             $(document).ready(function() {

@@ -61,11 +61,17 @@ class ZonesController extends Controller
 
         $zone = \App\Models\Zone::find($zoneId);
         $overview = \App\Models\Panorama::find($zone->overviewId);
-        $objects = \App\Models\Zone_Object::with('object')
+
+        $objects = DB::table('object')
+            ->join('zone_object', 'object.id', '=', 'zone_object.objectId')
             ->where('zoneId', '=', $zoneId)
+            ->select('object.*')
             ->get();
-        $booths = \App\Models\Zone_Booth::with('booth')
+
+        $booths =  DB::table('booth')
+            ->join('zone_booth', 'booth.id', '=', 'zone_booth.boothId')
             ->where('zoneId', '=', $zoneId)
+            ->select('booth.*')
             ->get();
 
         $types = DB::table('object')
