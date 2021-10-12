@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <h6 class="font-size-15 font-weight-normal">Project Details :</h6>
-                        <div class="text-muted" style="max-height: 4.5em;overflow: hidden;-webkit-mask-image: linear-gradient(180deg, #000 50%, transparent);">
+                        <div class="text-muted discription_tour_text" style="">
                             {{$tour->description != null ? $tour->description : 'N/A'}}
                         </div>
                         <div class="row" style="margin-top: 10px;">
