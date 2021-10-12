@@ -13,7 +13,7 @@
             </div>
             <div class="row" style="margin-bottom: 1.5rem;">
                 <div class="col-md-5">
-                    <div class="card" style="height: 300px;">
+                    <div class="card" style="height: 400px;">
                         <div class="card-body" style="color: #555; font-size: 14px;">
                             <div class="d-flex mb-2">
                                 <div class="flex-grow-1 overflow-hidden">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="col-md-7">
-                    <div class="card" style="width: 100%; height: 300px;padding: 20px;">
+                    <div class="card" style="width: 100%; height: 400px;padding: 20px;">
                         <div id="viewer-container" style="width: 100%; height: 100%;"></div>
                     </div>
                 </div>
@@ -70,8 +70,7 @@
                                         <div class="row" style="padding: 0 5px 5px 5px;">
                                             <div class="col-12">
                                                 <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                    <div style="width: 70%; height: 3px; background-color: rgb(84, 255, 84)"
-                                                        ></div>
+                                                     <div style="width: 20%; height: 3px; background-color: rgb(0, 168, 0)"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -101,7 +100,7 @@
                                         <div class="row" style="padding: 0 5px 5px 5px;">
                                             <div class="col-12">
                                                 <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                    <div style="width: 70%; height: 3px; background-color: rgb(0, 189, 0)"></div>
+                                                    <div style="width: 40%; height: 3px; background-color: rgb(0, 168, 0)"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -131,8 +130,7 @@
                                         <div class="row" style="padding: 0 5px 5px 5px;">
                                             <div class="col-12">
                                                 <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                    <div style="width: 70%; height: 3px; background-color: rgb(84, 255, 84)"
-                                                        ></div>
+                                                     <div style="width: 50%; height: 3px; background-color: rgb(0, 168, 0)"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -162,8 +160,7 @@
                                         <div class="row" style="padding: 0 5px 5px 5px;">
                                             <div class="col-12">
                                                 <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                    <div style="width: 70%; height: 3px; background-color: rgb(84, 255, 84)"
-                                                        ></div>
+                                                    <div style="width: 20%; height: 3px; background-color: rgb(0, 168, 0)"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -193,8 +190,7 @@
                                         <div class="row" style="padding: 0 5px 5px 5px;">
                                             <div class="col-12">
                                                 <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                    <div style="width: 70%; height: 3px; background-color: rgb(84, 255, 84)"
-                                                        ></div>
+                                                     <div style="width: 35%; height: 3px; background-color: rgb(0, 168, 0)"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -213,7 +209,7 @@
                                     <button class="btn float-right"><i class="fas fa-plus"></i> Add </button>
                                 </div>
                             </div>
-                            <div id="all-wrapper" class="objects-wrapper row" style="height: 320px; overflow-y: scroll;">
+                            <div id="all-wrapper" class="objects-wrapper row list_object">
                                 @foreach ($objects as $object)
                                     @if ($object->type == 'image')
                                     <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
@@ -249,7 +245,7 @@
                                         <div class="card">
                                             <div class="file">
                                                 <div class="icon">
-                                                    <i class="fab fa-soundcloud"></i>
+                                                    <i class="fab fa-soundcloud" style="color: #f46c00"></i>
                                                 </div>
                                                 <div class="file-name">
                                                     <p class="text-muted">{{$object->name}}</p> 

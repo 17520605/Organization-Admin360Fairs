@@ -14186,6 +14186,11 @@ img {
     border-radius: 5px;
 }
 
+.card_object_zone .card-body .list_object .col-lg-3 .file .icon {
+    padding: 0;
+    height: 110px;
+}
+
 .card_object_zone .card-body .list_object .col-lg-3 .file .file-name {
     padding: 2px;
     font-size: 13px;
@@ -14202,6 +14207,14 @@ img {
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: top;
+}
+
+.card_object_zone .card-body .list_object .col-lg-3 .file .image img {
+    height: 110px;
+}
+
+.card_object_zone .card-body .list_object .col-lg-3 .file .image model-viewer {
+    width: 100%;
 }
 
 .card_object_tour {
@@ -14241,6 +14254,11 @@ img {
     border-radius: 5px;
 }
 
+.card_object_tour .card-body .list_object .col-lg-3 .file .icon {
+    padding: 0;
+    height: 110px;
+}
+
 .card_object_tour .card-body .list_object .col-lg-3 .file .file-name {
     padding: 2px;
     font-size: 13px;
@@ -14257,6 +14275,14 @@ img {
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: top;
+}
+
+.card_object_tour .card-body .list_object .col-lg-3 .file .image img {
+    height: 110px;
+}
+
+.card_object_tour .card-body .list_object .col-lg-3 .file .image model-viewer {
+    width: 100%;
 }
 
 .discription_tour_text {
