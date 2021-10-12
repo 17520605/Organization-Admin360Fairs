@@ -18,10 +18,10 @@
                             <div class="flex-grow-1 overflow-hidden">
                                 <div class="row">
                                     <div class="col-4">
-                                        <h6 class="font-size-14 font-weight-bold"> ZONES : [<a style="color: #4e73df"> 7 / 8 </a>]</h6>
+                                        <h6 class="font-size-14 font-weight-bold">ZONES : (<a style="color: #4e73df">7 / 8</a>)</h6>
                                     </div>
                                     <div class="col-6">
-                                        <h6 class="font-size-14 font-weight-bold"> BOOTHS : [<a style="color: #4e73df"> 7 / 8 </a>]</h6>
+                                        <h6 class="font-size-14 font-weight-bold">BOOTHS : (<a style="color: #4e73df">7 / 8</a>)</h6>
                                     </div>
                                 </div>
                                 <p class="text-muted"><i class="fas fa-building"></i> Name organization : <span>CTTNHH ABCD</span></p>
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <h6 class="font-size-15 font-weight-normal">Project Details :</h6>
-                        <div class="text-muted">
+                        <div class="text-muted" style="max-height: 4.5em;overflow: hidden;-webkit-mask-image: linear-gradient(180deg, #000 50%, transparent);">
                             {{$tour->description != null ? $tour->description : 'N/A'}}
                         </div>
                         <div class="row" style="margin-top: 10px;">
