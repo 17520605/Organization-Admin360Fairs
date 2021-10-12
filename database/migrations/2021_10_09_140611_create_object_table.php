@@ -15,10 +15,17 @@ class CreateObjectTable extends Migration
     {
         Schema::create('object', function (Blueprint $table) {
             $table->id();
+            $table->integer('tourId');
             $table->string('type');
+            $table->string('source');
             $table->string('name');
-            $table->string('content');
+            $table->string('description');
+            $table->string('content')->nullable();
             $table->string('url');
+            $table->string('format');
+            $table->integer('width');
+            $table->integer('height');
+            $table->integer('size');
             $table->timestamps();
         });
     }

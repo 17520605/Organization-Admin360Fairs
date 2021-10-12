@@ -11,7 +11,6 @@ class ZonesController extends Controller
 {
     public function index($id)
     {
-        $user = Auth::user();
         $tour = DB::table('tour')->find($id);
 
         $zones = DB::table('zone')->where('tourId', $id)->get();
@@ -29,7 +28,7 @@ class ZonesController extends Controller
             ->whereRaw(" NOT EXISTS ( SELECT * FROM zone_booth  WHERE  zone_booth.boothId = booth.id )")
             ->get();
 
-        return view('zones.index', ['user' => $user, 'tour'=> $tour, 'zones'=> $zones, 'freeBooths' => $freeBooths ]);
+        return view('zones.index', ['user' => Auth::user(), 'tour'=> $tour, 'zones'=> $zones, 'freeBooths' => $freeBooths ]);
     }
 
     public function saveCreate($id, Request $request)
@@ -57,19 +56,33 @@ class ZonesController extends Controller
 
     public function zone ($id, $zoneId)
     {
-        
+
         $tour = DB::table('tour')->find($id);
+
         $zone = \App\Models\Zone::find($zoneId);
         $overview = \App\Models\Panorama::find($zone->overviewId);
         $objects = \App\Models\Zone_Object::with('object')
-            ->select('object.*')
-            ->where('zone.id', '=', $zoneId)
+            ->where('zoneId', '=', $zoneId)
             ->get();
         $booths = \App\Models\Zone_Booth::with('booth')
-            ->select('booth.*')
-            ->where('zone.id', '=', $zoneId)
+            ->where('zoneId', '=', $zoneId)
             ->get();
-        
-        return view('zones.zone', ['user' => $user, 'tour'=> $tour, 'overview'=> $overview, 'objects' => $objects, 'booths' => $booths]);
+
+        $types = DB::table('object')
+            ->join('zone_object', 'object.id', '=', 'zone_object.objectId')
+            ->where('zone_object.zoneId', $zoneId)
+            ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(object.id) as count'))
+            ->groupBy('type')
+            ->get();  
+
+        return view('zones.zone', [
+            'user' =>Auth::user(),
+            'tour'=> $tour,
+            'overview'=> $overview, 
+            'zone'=>$zone,
+            'objects' => $objects,
+            'booths' => $booths,
+            'types' => $types,
+        ]);
     }
 }
