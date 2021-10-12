@@ -6,7 +6,8 @@
             <div class="row mb-3">
                 <div class="col-md-12">
                     <div class="card p-3">
-                        <h1 class="h4 text-gray-800">{{ $zone->name }}</h1>
+                        <h1 class="h4 text-gray-800" style="margin: 0px">{{ $zone->name }}</h1>
+                        <a href="" class="btn btn-df" target="_blank" style="width: 180px; position: absolute ;top: 0.75rem; right: 1rem;"><i class="fas fa-cog"></i> Config Zone</a>
                     </div>
                 </div>
             </div>
@@ -100,8 +101,7 @@
                                         <div class="row" style="padding: 0 5px 5px 5px;">
                                             <div class="col-12">
                                                 <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                    <div style="width: 70%; height: 3px; background-color: rgb(84, 255, 84)"
-                                                        ></div>
+                                                    <div style="width: 70%; height: 3px; background-color: rgb(0, 189, 0)"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -205,8 +205,8 @@
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="card" style="width: 100%; padding: 0.25rem;">
-                        <div class="card-body" style="color: #555; font-size: 14px;">
+                    <div class="card card_object_zone" >
+                        <div class="card-body" >
                             <div class="row">
                                 <div class="col-12">
                                     <h6 class="font-weight-bold text-primary float-left">Objects</h6>

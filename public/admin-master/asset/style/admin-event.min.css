@@ -14148,3 +14148,113 @@ img {
 .image-checkbox-checked .fa {
     display: block !important;
 }
+
+.card_object_zone {
+    width: 100%;
+    padding: 0.25rem;
+}
+
+.card_object_zone .card-body {
+    color: #555;
+    font-size: 14px;
+}
+
+.card_object_zone .card-body .title button {
+    margin-top: -12px;
+    margin-right: -10px;
+    font-size: 14px!important;
+    padding: 3px 20px!important;
+    line-height: 28px!important;
+    color: #224abe;
+    font-weight: 600;
+}
+
+.card_object_zone .card-body .title button i {
+    margin-right: 10px;
+}
+
+.card_object_zone .card-body .list_object {
+    height: 320px;
+    overflow-y: scroll;
+}
+
+.card_object_zone .card-body .list_object .col-lg-3 {
+    padding: 5px;
+}
+
+.card_object_zone .card-body .list_object .col-lg-3 .file {
+    border-radius: 5px;
+}
+
+.card_object_zone .card-body .list_object .col-lg-3 .file .file-name {
+    padding: 2px;
+    font-size: 13px;
+    color: #111;
+    font-weight: 500;
+    height: 32px;
+    line-height: 30px;
+}
+
+.card_object_zone .card-body .list_object .col-lg-3 .file .image {
+    max-height: 180px;
+    width: 100%;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: top;
+}
+
+.card_object_tour {
+    width: 100%;
+    padding: 0.25rem;
+}
+
+.card_object_tour .card-body {
+    color: #555;
+    font-size: 14px;
+}
+
+.card_object_tour .card-body .title button {
+    margin-top: -12px;
+    margin-right: -10px;
+    font-size: 14px!important;
+    padding: 3px 20px!important;
+    line-height: 28px!important;
+    color: #224abe;
+    font-weight: 600;
+}
+
+.card_object_tour .card-body .title button i {
+    margin-right: 10px;
+}
+
+.card_object_tour .card-body .list_object {
+    height: 320px;
+    overflow-y: scroll;
+}
+
+.card_object_zone .card-body .list_object .col-lg-3 {
+    padding: 5px;
+}
+
+.card_object_tour .card-body .list_object .col-lg-3 .file {
+    border-radius: 5px;
+}
+
+.card_object_tour .card-body .list_object .col-lg-3 .file .file-name {
+    padding: 2px;
+    font-size: 13px;
+    color: #111;
+    font-weight: 500;
+    height: 32px;
+    line-height: 30px;
+}
+
+.card_object_tour .card-body .list_object .col-lg-3 .file .image {
+    max-height: 180px;
+    width: 100%;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: top;
+}
