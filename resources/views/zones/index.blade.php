@@ -3,9 +3,11 @@
 @section('content')
     <div class="container-fluid">
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="float-left m-0 font-weight-bold text-primary">Zones : ( {{count($zones)}}/{{$tour->maximumZone}})</h6>
-                <button class="btn" data-toggle="modal" data-target="#popup-create-zone" style="float: right; color: #fff; background-color: #224abe; border-color: #224abe;"><i class="fas fa-plus" ></i>Add New Booth</button>
+            <div class="card-header">
+                <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Zones : ( {{count($zones)}}/{{$tour->maximumZone}})</h1>
+                <div class="div_cardheader_btn" >
+                    <button class="mb-0 btn float-right active"  data-toggle="modal" data-target="#popup-create-zone"><i class="fas fa-plus"></i> Add New Booth </button>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

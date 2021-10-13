@@ -3,9 +3,11 @@
 @section('content')
     <div class="container-fluid">
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary float-left">Booths</h6>
-                <button class="btn float-right" data-toggle="modal" data-target="#popup-create-booth"><i class="fas fa-plus"></i> Add </button>
+            <div class="card-header">
+                <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Booths : </h1>
+                <div class="div_cardheader_btn" >
+                    <button class="mb-0 btn float-right active"  data-toggle="modal" data-target="#popup-create-booth"><i class="fas fa-plus"></i> Add New Booth </button>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -80,18 +82,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="fw-light">Create New Booth</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body p-3">
-                    <form action="/tours/{{$tour->id}}/booths/save-create" method="POST">
-                        @csrf
-                        <div class="row mb-3">
-                            <label class="small mb-1" for="">Name</label>
-                            <input class="form-control" type="text" name="name" placeholder="Enter Booth Name">
-                        </div>
-                        <div id="popup-create-booth__choose-zone-text" class="row row mb-3"> Choose zone </div>
-                        <div class="row mb-3 p-3 border zones-wrapper" style="display: none;">
+                <form action="/tours/{{$tour->id}}/booths/save-create" method="POST">
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            @csrf
+                            <div class="row mb-3">
+                                <label class="small mb-1" for="">Name</label>
+                                <input class="form-control" type="text" name="name" placeholder="Enter Booth Name">
+                            </div>
+                            <div id="popup-create-booth__choose-zone-text" class="row row mb-3" > Choose zone </div>
+                            <div class="row mb-3 p-3 border zones-wrapper" style="display: none;">
                             @if (count($zones) == 0)
                                 <center><span>No zone</span></center>
                             @else
@@ -99,15 +101,15 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" value="{{$zone->id}}" name="zoneId">
                                     <label class="form-check-label"> {{$zone->name}} </label>
-                                  </div>
+                                </div>
                                 @endforeach
                             @endif
                         </div>
-                        <div class="modal-footer">
-                            <button class="btn" type="submit">Create</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-block btn-df" type="submit">Create</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

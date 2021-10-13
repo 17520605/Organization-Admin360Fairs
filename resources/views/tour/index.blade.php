@@ -5,8 +5,8 @@
         <div class="row mb-3">
             <div class="col-md-12">
                 <div class="card p-3">
-                    <h1 class="h4 text-gray-800" style="margin: 0px">{{$tour->name}}</h1>
-                    <a href="" class="btn btn-df" target="_blank" style="width: 180px; position: absolute ;top: 0.75rem; right: 1rem;"><i class="fas fa-cog"></i> Config Zone</a>
+                    <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$tour->name}}</h1>
+                    <a href="" class="btn btn-configs-tour" target="_blank" style=""><i class="fas fa-cog"></i> Config Zone</a>
                 </div>
             </div>
         </div>

@@ -3,10 +3,12 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header">
-            <h6 class="mb-0 font-weight-bold text-primary float-left">Participants</h6>
-            <h6 class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-plus"></i> Add </h6>
-            <h6 class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-email"></i> Send Mail </h6>
-            <h6 class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-email"></i> Import </h6>
+            <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Participants</h1>
+            <div class="div_cardheader_btn" >
+                <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-plus"></i> Add </button>
+                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-paper-plane"></i> Send Mail </button>
+                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-upload"></i> Import </button>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">

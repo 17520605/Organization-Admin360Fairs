@@ -53,7 +53,7 @@
         <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Booths Manager</h6>
-                <a href="/tours/{{$tour->id}}/zones" class="collapse-item" >zones</a>
+                <a href="/tours/{{$tour->id}}/zones" class="collapse-item" >Zones</a>
                 <a href="/tours/{{$tour->id}}/booths" class="collapse-item" >Booths</a>
             </div>
         </div>

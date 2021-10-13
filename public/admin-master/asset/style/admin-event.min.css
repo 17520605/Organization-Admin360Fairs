@@ -14290,3 +14290,55 @@ img {
     overflow: hidden;
     -webkit-mask-image: linear-gradient(180deg, #000 50%, transparent);
 }
+
+.div_cardheader_btn {
+    position: absolute;
+    right: 1rem;
+    top: 0.5em
+}
+
+.div_cardheader_btn button {
+    margin-left: 8px;
+    border-radius: 3px;
+    background: none;
+    padding: 5px 28px;
+    color: #4e73df;
+    border: 1px solid #4e73df;
+    box-shadow: rgba(0, 0, 0, 0.21) 0px 2px 4px;
+}
+
+.div_cardheader_btn button i {
+    margin-right: 5px;
+}
+
+.div_cardheader_btn button.active {
+    background: #4e73df;
+    color: #FFF;
+    box-shadow: rgba(0, 0, 0, 0.21) 0px 2px 4px;
+}
+
+.div_cardheader_btn button:hover {
+    opacity: 1;
+    background: #4e73df;
+    color: #FFF;
+}
+
+.btn-configs-tour {
+    margin-left: 8px;
+    border-radius: 3px;
+    padding: 5px 28px;
+    background: #4e73df;
+    color: #FFF;
+    border: 1px solid #4e73df;
+    box-shadow: rgba(0, 0, 0, 0.21) 0px 2px 4px;
+    position: absolute;
+    right: 1rem;
+    top: 0.75rem;
+    opacity: 0.9;
+}
+
+.btn-configs-tour:hover {
+    background: #4e73df;
+    color: #FFF;
+    opacity: 1;
+}
