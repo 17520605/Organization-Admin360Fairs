@@ -14342,3 +14342,87 @@ img {
     color: #FFF;
     opacity: 1;
 }
+
+.partner_card .avatar-md {
+    height: 4.5rem;
+    width: 4.5rem;
+}
+
+.partner_card .me-4 {
+    margin-right: 1.5rem!important;
+}
+
+.partner_card .avatar-xs {
+    height: 2rem;
+    width: 2rem;
+}
+
+.partner_card .rounded-circle {
+    border-radius: 50%!important;
+}
+
+.font-size-16 {
+    font-size: 16px!important;
+}
+
+.partner_card .avatar-group,
+.partner_card .avatar-title {
+    display: -webkit-flex;
+    display: flex;
+}
+
+.partner_card .avatar-title {
+    -webkit-align-items: center;
+    align-items: center;
+    background-color: #556ee6;
+    color: #fff;
+    font-weight: 500;
+    height: 100%;
+    -webkit-justify-content: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.partner_card .rounded-circle {
+    border-radius: 50%!important;
+}
+
+.partner_card .bg-light {
+    --bs-bg-opacity: 1;
+    background-color: rgba(239, 242, 247, 1)!important;
+}
+
+.total_bar_object .progress .progress-bar {
+    -webkit-transition: width 3s ease;
+    -moz-transition: width 3s ease;
+    -ms-transition: width 3s ease;
+    -o-transition: width 3s ease;
+    transition: width 3s ease;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.total_bar_object .progress .progress-bar {
+    position: absolute;
+    overflow: hidden;
+    line-height: 20px;
+}
+
+.total_bar_object .progress-striped .progress-bar-warning {
+    background-image: -webkit-linear-gradient( 45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient( 45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+
+.total_bar_object .progress-bar-striped,
+.total_bar_object .progress-striped .progress-bar {
+    background-image: -webkit-linear-gradient( 45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient( 45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-size: 40px 40px;
+}
+
+.total_bar_object .progress-bar-warning {
+    background-color: #f3ad06;
+}
