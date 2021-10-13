@@ -6,7 +6,7 @@
             <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Participants</h1>
             <div class="div_cardheader_btn" >
                 <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-plus"></i> Add </button>
-                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-paper-plane"></i> Send Mail </button>
+                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-confirm-send-email""><i class="fas fa-paper-plane"></i> Send Mail </button>
                 <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-import-csv"><i class="fas fa-upload"></i> Import </button>
             </div>
         </div>
@@ -30,13 +30,13 @@
                         @foreach ($participants as $participant)
                         <tr>
                             <td>
-                                <input class="checkbox" type="checkbox" value="{{$participant->id}}" name="participantIds[]">
+                                <input class="checkbox" type="checkbox" value="{{$participant->id}}" name="participantIds[]" {{ $participant->status != \App\Models\Tour_Participant::UNCONFIRMED ? 'disabled' : '' }}>
                             </td>
                             <td>1</td>
                             <td>{{$participant->name}}</td>
                             <td>{{$participant->email}}</td>
                             <td>{{$participant->contact}}</td>
-                            <td>Joinded</td>
+                            <td>{{$participant->status}}</td>
                             <td>
                                 <a class="mr-2"><i class="fa fa-pen"></i></a>
                                 <a class="mr-0"><i class="fa fa-trash"></i></a>
@@ -122,6 +122,27 @@
         </div>
     </div>
 </div>
+{{-- POPUP CONFIRM SENT EMAIL --}}
+<div class="modal fade" id="popup-confirm-send-email" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="fw-light">Send Email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" style="padding: 30px">
+                <div class="form-group p-3">
+                    <span>You sure to send emails to participants</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" type="submit">Cancel</button>
+                <button id="popup-confirm-send-email__send-btn" class="btn btn-primary" type="submit">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     (function () {
         "use strict";
@@ -252,6 +273,49 @@
             });
         });
 
+        $('.checkbox-all').change(function () {
+            let checked = $(this).prop('checked');  
+            $('.checkbox').prop('checked', checked);
+        })
+
+        $('.checkbox').change(function () {
+            let totalCount = $('.checkbox').length;
+            let checkedCount = $('.checkbox:checked').length;
+
+            if(totalCount == checkedCount)
+            {
+                $('.checkbox-all').prop('checked', true);
+            }
+            else{
+                $('.checkbox-all').prop('checked', false);
+            }
+        })
+
+        $('#popup-confirm-send-email__send-btn').click(function () {  
+            
+            let data = new FormData();
+            let checkboxs = $('.checkbox:checked');
+            $.each(checkboxs, function (i, checkbox) {  
+                data.append('participantIds[]', checkbox.value);
+            });
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/tours/{{$tour->id}}/participants/send-emails",
+                method: 'post',
+                data: data,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function (res) {
+                    if(res == 1){
+                        location.reload();
+                    }
+                }
+            });
+        })
     });
 </script>
 @endsection

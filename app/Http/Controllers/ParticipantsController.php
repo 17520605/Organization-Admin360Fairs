@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use League\Csv\Reader;
+use App\Mail\MailService;
 
 class ParticipantsController extends Controller
 {
@@ -18,7 +20,7 @@ class ParticipantsController extends Controller
             ->where([
                 ['tour_participant.tourId', '=', $id],
             ])
-            ->select('profile.*')
+            ->select('profile.*', 'status')
             ->get();
 
         return view('participants.index', ['user' => Auth::user(), 'tour'=> $tour, 'participants' => $participants]);
@@ -34,11 +36,12 @@ class ParticipantsController extends Controller
         
         $check = $this->checkCreate($id, $name,  $email, $contact);
         if($check['success'] == true){
-            $profile = DB::table('profile')->where('email', $email)->first();
+            $profile = \App\Models\Profile::with('user')->where('email', $email)->first();
             if(!isset($profile )){ // chua có tài khoản
                 // tao user
                 $user = new \App\Models\User();
                 $user->type = 'participant';
+                $user->level = \App\Models\User::LEVEL_PARTICIPANT;
                 $user->email = $email;
                 $user->isRequiredChangePassword = true;
                 $user->save();
@@ -51,9 +54,16 @@ class ParticipantsController extends Controller
                 $profile->save();
             }
 
+            $user = \App\Models\User::find($profile->userId);
+            if($user->level < \App\Models\User::LEVEL_PARTICIPANT){
+                $user->level = \App\Models\User::LEVEL_PARTICIPANT;
+                $user->save();
+            }
+
             $participate = new \App\Models\Tour_Participant();
             $participate->tourId = $id;
             $participate->participantId = $profile->id;
+            $participate->status = \App\Models\Tour_Participant::UNCONFIRMED;
             $participate->save();
         }
         
@@ -62,51 +72,51 @@ class ParticipantsController extends Controller
 
     public function saveEdit($id, Request $request)
     {
-        $tour = DB::table('tour')->find($id);
+        // $tour = DB::table('tour')->find($id);
 
-        $name = $request->name;
-        $email = $request->email;
-        $contact = $request->contact;
+        // $name = $request->name;
+        // $email = $request->email;
+        // $contact = $request->contact;
 
-        $participantId = DB::table('tour_participant')
-            ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
-            ->where([
-                ['tour_participant.tourId', '=', $id],
-                ['profile.email', '=', $email]
-            ])
-            ->select('profile.id')
-            ->first();
+        // $participantId = DB::table('tour_participant')
+        //     ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+        //     ->where([
+        //         ['tour_participant.tourId', '=', $id],
+        //         ['profile.email', '=', $email]
+        //     ])
+        //     ->select('profile.id')
+        //     ->first();
         
-        if(!isset($participantId)){ // khong phai la doi tac
-            $profile = DB::table('profile')->where('email', $email)->first();
-            if(!isset($profile )){ // chua có tài khoản
-                // tao user
-                $user = new \App\Models\User();
-                $user->type = 'participant';
-                $user->email = $email;
-                $user->isRequiredChangePassword = true;
-                $user->save();
-                // tao profile
-                $profile = new \App\Models\Profile();
-                $profile->userId = $user->id;
-                $profile->name = $name;
-                $profile->email = $email;
-                $profile->contact = $contact;
-                $profile->save();
-            }
+        // if(!isset($participantId)){ // khong phai la doi tac
+        //     $profile = DB::table('profile')->where('email', $email)->first();
+        //     if(!isset($profile )){ // chua có tài khoản
+        //         // tao user
+        //         $user = new \App\Models\User();
+        //         $user->type = 'participant';
+        //         $user->email = $email;
+        //         $user->isRequiredChangePassword = true;
+        //         $user->save();
+        //         // tao profile
+        //         $profile = new \App\Models\Profile();
+        //         $profile->userId = $user->id;
+        //         $profile->name = $name;
+        //         $profile->email = $email;
+        //         $profile->contact = $contact;
+        //         $profile->save();
+        //     }
 
-            $participate = new \App\Models\Tour_Participant();
-            $participate->tourId = $id;
-            $participate->participantId = $profile->id;
-            $participate->save();
+        //     $participate = new \App\Models\Tour_Participant();
+        //     $participate->tourId = $id;
+        //     $participate->participantId = $profile->id;
+        //     $participate->save();
 
-            return true;
-        }
-        else{
-            return response("Da ton tai.");
-        }
+        //     return true;
+        // }
+        // else{
+        //     return response("Da ton tai.");
+        // }
         
-        return false;
+        // return false;
     }
 
     public function importCsv($id, Request $request)
@@ -155,6 +165,46 @@ class ParticipantsController extends Controller
         else{
             return json_encode($check);
         }
+    }
+
+    public function sendEmails($id, Request $request)
+    {
+        $participantIds = $request->participantIds;
+
+        foreach ($participantIds as $participantId) {
+
+            $participant = \App\Models\Profile::find($participantId);
+
+            $tour_participant = \App\Models\Tour_Participant::with('participant')
+                ->where([
+                    ['tourId', '=', $id],
+                    ['participantId', '=', $participantId],
+                ])->first();
+            $tour_participant->status = \App\Models\Tour_Participant::SENTEMAIL;
+            $tour_participant->code = Str::random(6);
+            $tour_participant->expiry = Carbon::now()->addMinute(5);
+            $tour_participant->save();
+
+            $model = DB::table('tour_participant')
+                ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+                ->where([
+                    ['tour_participant.tourId', '=', $id],
+                    ['tour_participant.participantId', '=', $participantId]
+                ])
+                ->select('tour_participant.*')
+                ->first();
+
+            $mailer = new MailService(
+                [$participant->email],
+                'Tieu de',
+                'default',
+                $model
+            );
+            $mailer->sendMail();
+        }
+
+        return true;
+        
     }
 
     public function checkImportCsv($id, Request $request)

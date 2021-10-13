@@ -15,6 +15,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
+    const LEVEL_VISITER = 10;
+    const LEVEL_SPEAKER = 20;
+    const LEVEL_PARTICIPANT = 30;
+    const LEVEL_TOURADMIN = 40;
+    const LEVEL_SUPERADMIN = 50;
+
     protected $table = 'users';
     public $timestamps = true;
 

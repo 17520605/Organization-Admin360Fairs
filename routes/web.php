@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function (){
         Route::post('/{id}/participants/save-create', 'ParticipantsController@saveCreate');
         Route::post('/{id}/participants/import-csv', 'ParticipantsController@importCsv');
         Route::post('/{id}/participants/check-import-csv', 'ParticipantsController@checkImportCsv');
+        Route::post('/{id}/participants/send-emails', 'ParticipantsController@sendEmails');
 
         // speakers
         Route::get('/{id}/speakers', 'SpeakersController@index');
@@ -59,6 +60,11 @@ Route::middleware('auth')->group(function (){
 
     Route::group(['prefix' => 'profile'], function(){
         Route::get('/', 'ProfileController@index');
+    });
+
+    Route::group(['prefix' => 'partner'], function(){
+        Route::get('/verification/{id}', 'PartnerController@verification');
+        Route::post('/confirmation', 'PartnerController@confirmation');
     });
 });
 

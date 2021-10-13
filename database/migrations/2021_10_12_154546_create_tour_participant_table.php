@@ -19,7 +19,8 @@ class CreateTourParticipantTable extends Migration
             $table->integer('participantId');
             $table->string('code');
             $table->dateTime('expiry');
-            $table->integer('incorrectCount');
+            $table->string('status');
+            $table->integer('incorrectCount')->default(0);
             $table->timestamps();
         });
     }
