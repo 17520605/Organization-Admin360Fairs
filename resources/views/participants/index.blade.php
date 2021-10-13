@@ -7,7 +7,7 @@
             <div class="div_cardheader_btn" >
                 <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-plus"></i> Add </button>
                 <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-paper-plane"></i> Send Mail </button>
-                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-upload"></i> Import </button>
+                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-import-csv"><i class="fas fa-upload"></i> Import </button>
             </div>
         </div>
         <div class="card-body">
@@ -49,6 +49,7 @@
         </div>
     </div>
 </div>
+{{-- POPUP CREATE PARTICIANT --}}
 <div class="modal fade" id="popup-create-participant" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -80,6 +81,8 @@
                             Please enter contact
                         </div>
                     </div>
+                    <div class="form-group messages-wrapper border" style="display: none">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="submit">Save Change</button>
@@ -89,6 +92,36 @@
     </div>
 </div>
 
+{{-- POPUP IMPORT CSV --}}
+<div class="modal fade" id="popup-import-csv" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="popup-import-csv__form">
+                <div class="modal-header">
+                    <h5 class="fw-light">Import Participant </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    @csrf
+                    <div class="form-group">
+                        <label class="form-label">File CSV</label>
+                        <input id="popup-import-csv__file-input" type="file" name="csv" accept=".csv"  class="form-control" required>
+                        <div class="invalid-feedback">
+                            Please choose file CSV
+                        </div>
+                    </div>
+                    <div class="form-group messages-wrapper border" style="display: none">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="popup-import-csv__check-btn" class="btn btn-primary" type="submit">Check</button>
+                    <button id="popup-import-csv__save-btn" class="btn btn-primary" type="submit" style="display: none">Save Change</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
     (function () {
         "use strict";
@@ -117,6 +150,7 @@
 <script>
     $(document).ready(function () {
         $('#popup-create-participant__form').submit(function (e) { 
+            if(this.checkValidity() == false) return;
             e.preventDefault();
             let data = $(this).serialize();
             $.ajax({
@@ -126,16 +160,98 @@
                 type: "POST",
                 url: "/tours/{{$tour->id}}/participants/save-create",
                 data: data,
+                dataType: 'json',
                 success: function (response) {
-                    if(response == true || response == "1"){
+                    if(response.success == 1){
                         location.reload();
                     }
                     else{
-                        alert(response);
+                        $('#popup-create-participant').find('.messages-wrapper').empty();
+                        $('#popup-create-participant').find('.messages-wrapper').show();
+                        let wrapper = $(
+                            `<div class="p-3">
+                                <span> `+response.error+` </span>
+                            </div>
+                        `);
+                        $('#popup-create-participant').find('.messages-wrapper').append(wrapper);
                     }
                 }
             });
         });
+
+        $('#popup-import-csv__check-btn').click(function (e) { 
+
+            let form = document.getElementById('popup-import-csv__form');
+            if(form.checkValidity() == false) return;
+
+            e.preventDefault();
+            let file = document.getElementById('popup-import-csv__file-input').files[0];
+            let data = new FormData();
+            data.append('csv', file);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/tours/{{$tour->id}}/participants/check-import-csv",
+                method: 'post',
+                processData: false,
+                contentType: false,
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    $('#popup-import-csv').find('.messages-wrapper').empty();
+                    $('#popup-import-csv').find('.messages-wrapper').show();
+                    if(res.success == 1){
+                        $('#popup-import-csv').find('.messages-wrapper').append(`
+                            <div> Success : `+ res.correctCount + ` / `+ res.totalCount +` lines </div>
+                        `);
+
+                        $('#popup-import-csv__check-btn').hide();
+                        $('#popup-import-csv__save-btn').show();
+                    }
+                    else{
+                        let wrapper = $(`<div class="p-3"> <ul></ul> </div>`);
+                        Object.keys(res.errors).forEach(line => {
+                            wrapper.find('ul').append(`
+                                <li> Line ` + line + ` : ` + res.errors[line] + `</li>
+                            `)
+                        });
+                        $('#popup-import-csv').find('.messages-wrapper').append(wrapper);
+                    }
+                }
+            });
+        });
+
+        $('#popup-import-csv__save-btn').click(function (e) { 
+
+            let form = document.getElementById('popup-import-csv__form');
+            if(form.checkValidity() == false) return;
+
+            e.preventDefault();
+            let file = document.getElementById('popup-import-csv__file-input').files[0];
+            let data = new FormData();
+            data.append('csv', file);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/tours/{{$tour->id}}/participants/import-csv",
+                method: 'post',
+                processData: false,
+                contentType: false,
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    if(res == 1){
+                        location.reload();
+                    }
+                    else{
+                        console.log(res);
+                    }
+                }
+            });
+        });
+
     });
 </script>
 @endsection

@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function (){
         // participants
         Route::get('/{id}/participants', 'ParticipantsController@index');
         Route::post('/{id}/participants/save-create', 'ParticipantsController@saveCreate');
+        Route::post('/{id}/participants/import-csv', 'ParticipantsController@importCsv');
+        Route::post('/{id}/participants/check-import-csv', 'ParticipantsController@checkImportCsv');
 
         // zones
         Route::get('/{id}/zones', 'ZonesController@index');
