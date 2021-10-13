@@ -5,13 +5,18 @@
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a href="/tours" class="nav-link" data-widget="fullscreen" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
-             <i class="fas fa-torii-gate" style="margin-right: 8px"></i>  Tours
+            <a href="/tours" class="nav-link" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
+                <i class="fas fa-torii-gate" style="margin-right: 8px"></i>  Tours
             </a>
         </li>
         <li class="nav-item">
-            <a href="/profile" class="nav-link" data-widget="fullscreen" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
-              <i class="fas fa-align-right" style="margin-right: 8px"></i>  Profile
+            <a href="/booths" class="nav-link" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
+            <i class="fab fa-flipboard"  style="margin-right: 8px"></i>  Booths
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/profile" class="nav-link" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
+                <i class="fas fa-align-right" style="margin-right: 8px"></i>  Profile
             </a>
         </li>
         <div class="topbar-divider d-none d-sm-block"></div>
