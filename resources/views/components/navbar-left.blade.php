@@ -67,7 +67,19 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Event types</h6>
                 <a class="collapse-item" href="/tours/{{$tour->id}}/events/webinars">Webinars</a>
-                <a class="collapse-item" href="buttons.html">...</a>
+                <a class="collapse-item" href="buttons.html"></a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsespeakers" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-calendar-week"></i>
+            <span>Speakers</span>
+        </a>
+        <div id="collapsespeakers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Event types</h6>
+                <a class="collapse-item" href="/tours/{{$tour->id}}/speakers/">Speakers</a>
             </div>
         </div>
     </li>

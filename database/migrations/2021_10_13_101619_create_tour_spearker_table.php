@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTourParticipantTable extends Migration
+class CreateTourSpearkerTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTourParticipantTable extends Migration
      */
     public function up()
     {
-        Schema::create('tour_participant', function (Blueprint $table) {
+        Schema::create('tour_speaker', function (Blueprint $table) {
             $table->id();
             $table->integer('tourId');
-            $table->integer('participantId');
+            $table->integer('speakerId');
             $table->string('code');
             $table->dateTime('expiry');
             $table->integer('incorrectCount');
@@ -31,6 +31,6 @@ class CreateTourParticipantTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tour_participant');
+        Schema::dropIfExists('tour_spearker');
     }
 }

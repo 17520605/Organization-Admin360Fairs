@@ -15,14 +15,10 @@ class EventsController extends Controller
         $webinars = \App\Models\Webinar::with('details')
             ->where('tourId', $id)
             ->get();
-        $speakers = DB::table('profile')
-            ->join('users', 'users.id', '=', 'profile.userId')
-            ->select('profile.*', )
-            ->where([
-                ['users.type', '=', 'speaker'],
-                ['profile.tourId', '=', $id]
-            ])
-            ->distinct()
+        $speakers = DB::table('tour_speaker')
+            ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
+            ->where('tour_speaker.tourId', $id)
+            ->select('profile.*')
             ->get();
 
         return view('events.webinars', ['user' => Auth::user(), 'tour'=>$tour, 'webinars' => $webinars,'speakers' => $speakers]);
@@ -46,7 +42,6 @@ class EventsController extends Controller
         $speakers = $request->speakers;
 
         $webinar = new \App\Models\Webinar();
-        $webinar->tourId = $id;
         $webinar->topic = $topic;
         $webinar->description = $description;
         $webinar->startAt = $start;
