@@ -6,8 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use League\Csv\Reader;
-
+use App\Mail\MailService;
 class SpeakersController extends Controller
 {
     public function index($id)
@@ -18,7 +19,7 @@ class SpeakersController extends Controller
             ->where([
                 ['tour_speaker.tourId', '=', $id],
             ])
-            ->select('profile.*')
+            ->select('profile.*','status')
             ->get();
 
         return view('speakers.index', ['user' => Auth::user(), 'tour'=> $tour, 'speakers' => $speakers]);
@@ -38,7 +39,7 @@ class SpeakersController extends Controller
             if(!isset($profile )){ // chua có tài khoản
                 // tao user
                 $user = new \App\Models\User();
-                $user->type = 'participant';
+                $user->type = 'speaker';
                 $user->email = $email;
                 $user->isRequiredChangePassword = true;
                 $user->save();
@@ -48,13 +49,15 @@ class SpeakersController extends Controller
                 $profile->name = $name;
                 $profile->email = $email;
                 $profile->contact = $contact;
+
                 $profile->save();
             }
 
-            $participate = new \App\Models\Tour_Participant();
-            $participate->tourId = $id;
-            $participate->participantId = $profile->id;
-            $participate->save();
+            $speaker = new \App\Models\Tour_Speaker();
+            $speaker->tourId = $id;
+            $speaker->speakerId = $profile->id;
+            $speaker->status = \App\Models\Tour_Speaker::UNCONFIRMED;
+            $speaker->save();
         }
         
         return json_encode($check);
@@ -82,7 +85,7 @@ class SpeakersController extends Controller
             if(!isset($profile )){ // chua có tài khoản
                 // tao user
                 $user = new \App\Models\User();
-                $user->type = 'participant';
+                $user->type = 'speaker';
                 $user->email = $email;
                 $user->isRequiredChangePassword = true;
                 $user->save();
@@ -95,10 +98,11 @@ class SpeakersController extends Controller
                 $profile->save();
             }
 
-            $participate = new \App\Models\Tour_Participant();
-            $participate->tourId = $id;
-            $participate->participantId = $profile->id;
-            $participate->save();
+            $speaker = new \App\Models\Tour_Speaker();
+            $speaker->tourId = $id;
+            $speaker->speakerId = $profile->id;
+            $speaker->status = \App\Models\Tour_Speaker::UNCONFIRMED;
+            $speaker->save();
 
             return true;
         }
@@ -131,7 +135,7 @@ class SpeakersController extends Controller
                 if(!isset($profile )){ // chua có tài khoản
                     // tao user
                     $user = new \App\Models\User();
-                    $user->type = 'participant';
+                    $user->type = 'speaker';
                     $user->email = $email;
                     $user->isRequiredChangePassword = true;
                     $user->save();
@@ -144,10 +148,10 @@ class SpeakersController extends Controller
                     $profile->save();
                 }
 
-                $participate = new \App\Models\Tour_Participant();
-                $participate->tourId = $id;
-                $participate->participantId = $profile->id;
-                $participate->save();
+                $speaker = new \App\Models\Tour_Speaker();
+                $speaker->tourId = $id;
+                $speaker->speakerId = $profile->id;
+                $speaker->save();
             }
 
             return true;
@@ -217,15 +221,15 @@ class SpeakersController extends Controller
             return $check;
         }
 
-        $participantId = DB::table('tour_participant')
-            ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+        $speakerId = DB::table('tour_speaker')
+            ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
             ->where([
-                ['tour_participant.tourId', '=', $id],
+                ['tour_speaker.tourId', '=', $id],
                 ['profile.email', '=', $email]
             ])->select('profile.id')
             ->first();
         
-        if(isset($participantId)){
+        if(isset($speakerId)){
             $check['error'] = "Email already exists";
         }
         else{

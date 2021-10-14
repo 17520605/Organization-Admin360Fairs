@@ -31,6 +31,10 @@ Route::middleware('auth')->group(function (){
 
         // speakers
         Route::get('/{id}/speakers', 'SpeakersController@index');
+        Route::post('/{id}/speakers/save-create', 'SpeakersController@saveCreate');
+        Route::post('/{id}/speakers/import-csv', 'SpeakersController@importCsv');
+        Route::post('/{id}/speakers/check-import-csv', 'SpeakersController@checkImportCsv');
+        Route::post('/{id}/speakers/send-emails', 'SpeakersController@sendEmails');
 
         // zones
         Route::get('/{id}/zones', 'ZonesController@index');
