@@ -13,7 +13,8 @@ class AuthController extends Controller
     {
         if ($request->getMethod() == 'GET') {
             $url = $request->get('url');
-            return view('auth.login', ['url' => $url]);
+            $email = $request->get('email');
+            return view('auth.login', ['url' => $url, 'email' => $email]);
         }
 
         $credentials = $request->only(['email', 'password']);
@@ -46,9 +47,35 @@ class AuthController extends Controller
         $user->level = 1;
         $user->save();
 
-        
-
         return redirect('/login');
+    }
+
+    public function initPassword(Request $request)
+    {
+        if ($request->getMethod() == 'GET') {
+            $email = $request->get('email');
+            $user = User::where('email', $email)->first();
+            if($user != null){
+                if ($user->password == null){
+                    return view('auth.init_password', ['email' => $email]);
+                }
+                else{
+                    return response("Tai khoan da duoc khoi tao mat khau. Khong the khoi tao lai mat khau");
+                }    
+            }
+            else{
+                return response("email khong ton tai");
+            }
+        }
+
+        $email = $request->get('email');
+        $password = $request->password;
+
+        $user = User::where('email', $email)->first();
+        $user->password = bcrypt($password);
+        $user->save();
+
+        return redirect('/login?email='.$email);
     }
 
     public function forgot()

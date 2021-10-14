@@ -30,7 +30,9 @@
                         @foreach ($participants as $participant)
                         <tr>
                             <td>
-                                <input class="checkbox" type="checkbox" value="{{$participant->id}}" name="participantIds[]" {{ $participant->status != \App\Models\Tour_Participant::UNCONFIRMED ? 'disabled' : '' }}>
+                                @if ($participant->status == \App\Models\Tour_Participant::UNCONFIRMED)
+                                    <input class="checkbox" type="checkbox" value="{{$participant->id}}" name="participantIds[]">
+                                @endif
                             </td>
                             <td>1</td>
                             <td>{{$participant->name}}</td>

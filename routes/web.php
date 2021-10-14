@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::match(['get', 'post'], '/login', 'AuthController@login')->name('login');
 Route::match(['get', 'post'], '/register', 'AuthController@register')->name('register');
+Route::match(['get', 'post'], '/init-password', 'AuthController@initPassword')->name('login');
 Route::get('/logout', 'AuthController@logout');
 Route::get('/mail/send', 'MailController@send');
 

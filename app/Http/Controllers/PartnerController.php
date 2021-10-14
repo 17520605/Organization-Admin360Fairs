@@ -18,11 +18,16 @@ class PartnerController extends Controller
             ->where([
                 ['tour_participant.id', '=', $id],
             ])
-            ->select('tour_participant.*')
+            ->select('tour_participant.*', 'email')
             ->first();
         
         if( $tour_participant->status == \App\Models\Tour_Participant::SENTEMAIL){
-            return view('partner.verification', ['user' => Auth::user(), 'tour_participant' => $tour_participant]);
+            if($tour_participant->incorrectCount <= 3){
+                return view('partner.verification', ['user' => Auth::user(), 'tour_participant' => $tour_participant]);
+            }
+            else{
+                return response("Ban da nhap qua so lan quy dinh");
+            }
         }
         else{
             return response("Ban k co loi moi verify");
@@ -63,4 +68,5 @@ class PartnerController extends Controller
             
         } 
     }
+    
 }

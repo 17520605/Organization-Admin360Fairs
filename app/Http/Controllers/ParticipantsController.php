@@ -157,6 +157,7 @@ class ParticipantsController extends Controller
                 $participate = new \App\Models\Tour_Participant();
                 $participate->tourId = $id;
                 $participate->participantId = $profile->id;
+                $participate->status = \App\Models\Tour_Participant::UNCONFIRMED;
                 $participate->save();
             }
 

@@ -54,7 +54,7 @@
                     dataType: 'json',
                     success: function (response) {
                         if(response.success == true){
-                            alert("Thang cong");
+                            window.location.href = "/init-password?email={{$tour_participant->email}}"
                         }
                         else{
                             if(response.incorrectCount <= 3){

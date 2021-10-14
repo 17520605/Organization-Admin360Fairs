@@ -13,16 +13,17 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Create New Password!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" action="/init-password?email={{$email}}" method="POST">
+                                        @csrf
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Create new password">
+                                            <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Create new password">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Re-enter password">
                                         </div>
-                                        <a href="#" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
                                              Create Password
-                                        </a>
+                                        </button>
                                     </form>
                                 </div>
                             </div>
