@@ -36,7 +36,7 @@
                             <td>{{$speaker->name}}</td>
                             <td>{{$speaker->email}}</td>
                             <td>{{$speaker->contact}}</td>
-                            <td>Joinded</td>
+                            <td>{{$speaker->status}}</td>
                             <td>
                                 <a class="mr-2"><i class="fa fa-pen"></i></a>
                                 <a class="mr-0"><i class="fa fa-trash"></i></a>
@@ -49,13 +49,13 @@
         </div>
     </div>
 </div>
-{{-- POPUP CREATE PARTICIANT --}}
+{{-- POPUP CREATE SPEAKER --}}
 <div class="modal fade" id="popup-create-speaker" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form id="popup-create-speaker__form" class="needs-validation" novalidate>
                 <div class="modal-header">
-                    <h5 class="fw-light">Create Participant </h5>
+                    <h5 class="fw-light">Create Speaker </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body" style="padding: 30px">
@@ -251,6 +251,50 @@
                 }
             });
         });
+
+        $('.checkbox-all').change(function () {
+            let checked = $(this).prop('checked');  
+            $('.checkbox').prop('checked', checked);
+        })
+
+        $('.checkbox').change(function () {
+            let totalCount = $('.checkbox').length;
+            let checkedCount = $('.checkbox:checked').length;
+
+            if(totalCount == checkedCount)
+            {
+                $('.checkbox-all').prop('checked', true);
+            }
+            else{
+                $('.checkbox-all').prop('checked', false);
+            }
+        })
+
+        $('#popup-confirm-send-email__send-btn').click(function () {  
+            
+            let data = new FormData();
+            let checkboxs = $('.checkbox:checked');
+            $.each(checkboxs, function (i, checkbox) {  
+                data.append('speakerIds[]', checkbox.value);
+            });
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/tours/{{$tour->id}}/speakers/send-emails",
+                method: 'post',
+                data: data,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function (res) {
+                    if(res == 1){
+                        location.reload();
+                    }
+                }
+            });
+        })
 
     });
 </script>
