@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\administrator;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ class SpeakersController extends Controller
 {
     public function index($id)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
         $speakers = DB::table('tour_speaker')
             ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
@@ -22,7 +24,7 @@ class SpeakersController extends Controller
             ->select('profile.*','status')
             ->get();
 
-        return view('speakers.index', ['user' => Auth::user(), 'tour'=> $tour, 'speakers' => $speakers]);
+        return view('speakers.index', ['profile' => $profile, 'tour'=> $tour, 'speakers' => $speakers]);
     }
     
     public function saveCreate($id, Request $request)

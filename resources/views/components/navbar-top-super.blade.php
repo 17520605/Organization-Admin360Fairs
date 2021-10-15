@@ -5,13 +5,17 @@
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a href="/tours" class="nav-link" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
-                <i class="fas fa-torii-gate" style="margin-right: 8px"></i>  Tours
-            </a>
+            @if (isset($roles))
+            <select id="nav-top__role-select">
+                @foreach ($roles as $key => $value)
+                    <option value="{{$key}}"> {{$value}} </option>
+                @endforeach
+            </select>
+            @endif
         </li>
         <li class="nav-item">
-            <a href="/booths" class="nav-link" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
-            <i class="fab fa-flipboard"  style="margin-right: 8px"></i>  Booths
+            <a href="/" class="nav-link" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
+                <i class="fas fa-torii-gate" style="margin-right: 8px"></i>  Tours
             </a>
         </li>
         <li class="nav-item">
@@ -21,9 +25,10 @@
         </li>
         <div class="topbar-divider d-none d-sm-block"></div>
         <li class="nav-item dropdown no-arrow">
+
             <a class="nav-link dropdown-toggle" href="#" id="user1Dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline" style="font-size:0.9rem; color: #fff;">{{$user->firstname}} {{$user->lastname}}</span>
-                <img class="img-profile rounded-circle" src="{{ $user->avatar != null ? $user->avatar : '/admin-master/asset/images/undraw_profile.svg' }}" />
+                <span class="mr-2 d-none d-lg-inline" style="font-size:0.9rem; color: #fff;">{{ isset($profile) ? $profile->name : ""}}</span>
+                <img class="img-profile rounded-circle" src="{{ isset($profile) ? ($profile->avatar != null ? $profile->avatar : '/admin-master/asset/images/undraw_profile.svg') : "" }}" />
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="user1Dropdown">
                 <a class="dropdown-item" href="#"> <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings </a>
@@ -34,3 +39,12 @@
         </li>
     </ul>
 </nav>
+<script>
+
+    $(document).ready(function () {
+        $("#nav-top__role-select").change(function (e) { 
+            location.href = '/' + $(this).val();
+        });
+    });
+    
+</script>

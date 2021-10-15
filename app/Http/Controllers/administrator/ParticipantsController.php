@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\administrator;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class ParticipantsController extends Controller
 {
     public function index($id)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
         $participants = DB::table('tour_participant')
             ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
@@ -23,11 +25,11 @@ class ParticipantsController extends Controller
             ->select('profile.*', 'status')
             ->get();
 
-        return view('participants.index', ['user' => Auth::user(), 'tour'=> $tour, 'participants' => $participants]);
+        return view('administrator.participants.index', ['profile' => $profile, 'tour'=> $tour, 'participants' => $participants]);
     }
     
     public function saveCreate($id, Request $request)
-    {
+    {   
         $tour = DB::table('tour')->find($id);
 
         $name = $request->name;

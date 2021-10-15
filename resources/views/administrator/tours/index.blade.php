@@ -23,7 +23,7 @@
                                     <span>Expires on {{$tour->endTime != null ? Carbon\Carbon::parse($tour->endTime)->format('Y-m-d') : 'N/A'}}</span>
                                 </div>
                                 <div class="col-auto" style="padding-left: 50px;">
-                                    <a href="{{env('APP_URL')}}/tours/{{$tour->id}}" class="btn btn-manage-tour"> Manage </a>
+                                    <a href="{{env('APP_URL')}}/administrator/tours/{{$tour->id}}" class="btn btn-manage-tour"> Manage </a>
                                 </div>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/tours/save-create" method="POST">
+                    <form action="/administrator/tours/save-create" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="small mb-1">Tour Name</label>

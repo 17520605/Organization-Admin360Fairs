@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\administrator;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -15,13 +16,15 @@ class TourController extends Controller
         // return view('tour.index', ['user' => Auth::user(), 'tour'=>$tour]);
 
         $tour = DB::table('tour')->find($id);
+        $user = Auth::user();
+        $profile = DB::table('profile')->where('userId', $user->id)->first();
 
         $zones = \App\Models\Zone::get();
 
         $overview = \App\Models\Panorama::find($tour->overviewId);
 
-        return view('tour.index', [
-            'user' =>Auth::user(),
+        return view('administrator.tour.index', [
+            'profile' => $profile,
             'tour'=> $tour,
             'overview'=> $overview, 
             'zones'=>$zones
@@ -30,8 +33,10 @@ class TourController extends Controller
 
     public function edit($id)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-        return view('tour.edit', ['user' => Auth::user(),'tour' => $tour]);
+        
+        return view('administrator.tour.edit', ['profile' => $profile,'tour' => $tour]);
     }
 
     public function saveEdit($id, Request $request)
@@ -54,7 +59,7 @@ class TourController extends Controller
                 'image' => $image,
             ]);
 
-        return redirect('/tours/'.$id.'/tour');
+        return redirect('administrator/tours/'.$id.'/tour');
     }
 
 }
