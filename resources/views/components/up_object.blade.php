@@ -18,7 +18,7 @@
                         </nav>
                     </div>
                     <div>
-                        <form class="form-step1 object__upload-box" action="/tours/{{$tour->id}}/objects/save-create" method="POST">
+                        <form class="form-step1 object__upload-box" action="/administrator/tours/{{$tour->id}}/objects/save-create" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <div class="form_upload">

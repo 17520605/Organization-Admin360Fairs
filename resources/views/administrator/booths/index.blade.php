@@ -84,7 +84,7 @@
                     <h5 class="fw-light">Create New Booth</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <form action="/tours/{{$tour->id}}/booths/save-create" method="POST">
+                <form action="/administrator/tours/{{$tour->id}}/booths/save-create" method="POST">
                     <div class="modal-body">
                         <div class="modal-body">
                             @csrf

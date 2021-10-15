@@ -29,7 +29,7 @@
                                 @endforeach
                             </ol>
                             <div class="widget-49-meeting-action">
-                                <a href="/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn btn-sm btn-flash-border-primary">View All</a>
+                                <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn btn-sm btn-flash-border-primary">View All</a>
                             </div>
                         </div>
                     </div>

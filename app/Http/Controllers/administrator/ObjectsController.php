@@ -15,7 +15,7 @@ class ObjectsController extends Controller
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
 
-        return view('tour.index', ['profile' => $profile, 'tour'=>$tour]);
+        return view('administrator.tour.index', ['profile' => $profile, 'tour'=>$tour]);
     }
 
     public function images ($id, Request $request)
@@ -28,7 +28,7 @@ class ObjectsController extends Controller
             ['type','=', 'image'],
         ])->get();
 
-        return view('objects.images', ['profile' => $profile, 'tour'=>$tour, 'images' => $images]);
+        return view('administrator.objects.images', ['profile' => $profile, 'tour'=>$tour, 'images' => $images]);
     }
 
     public function videos ($id, Request $request)
@@ -41,7 +41,7 @@ class ObjectsController extends Controller
             ['type','=', 'video'],
         ])->get();
 
-        return view('objects.videos', ['profile' => $profile , 'tour'=>$tour, 'videos' => $videos]);
+        return view('administrator.objects.videos', ['profile' => $profile , 'tour'=>$tour, 'videos' => $videos]);
     }
 
     public function audios ($id, Request $request)
@@ -53,7 +53,7 @@ class ObjectsController extends Controller
             ['tourId','=', $id],
             ['type','=', 'audio'],
         ])->get();
-        return view('objects.audios', ['profile' => $profile, 'tour'=>$tour, 'audios' => $audios]);
+        return view('administrator.objects.audios', ['profile' => $profile, 'tour'=>$tour, 'audios' => $audios]);
     }
 
     public function models ($id, Request $request)
@@ -65,7 +65,7 @@ class ObjectsController extends Controller
             ['tourId','=', $id],
             ['type','=', 'model'],
         ])->get();
-        return view('objects.models', ['profile' => $profile, 'tour'=>$tour,'models' => $models]);
+        return view('administrator.objects.models', ['profile' => $profile, 'tour'=>$tour,'models' => $models]);
     }
 
     public function documents ($id, Request $request)
@@ -73,7 +73,7 @@ class ObjectsController extends Controller
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
 
-        return view('objects.documents', ['profile' => $profile, 'tour'=>$tour]);
+        return view('administrator.objects.documents', ['profile' => $profile, 'tour'=>$tour]);
     }
 
     public function saveCreate($id, Request $request)

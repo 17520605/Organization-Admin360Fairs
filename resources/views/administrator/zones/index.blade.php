@@ -52,7 +52,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex flex-column" style="flex-grow: 1;">
-                        <form action="/tours/{{$tour->id}}/zones/save-create" method="POST">
+                        <form action="/administrator/tours/{{$tour->id}}/zones/save-create" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label class="small mb-1" for="">Name</label>

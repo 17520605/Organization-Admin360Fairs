@@ -527,7 +527,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex flex-column" style="flex-grow: 1;">
-                            <form action="/tours/{{$tour->id}}/zones/{{$zone->id}}/save-add-booths" method="POST">
+                            <form action="/administrator/tours/{{$tour->id}}/zones/{{$zone->id}}/save-add-booths" method="POST">
                                 @csrf
                                 <input type="hidden" name="zoneId" value="{{$zone->id}}">
                                 <div class="mb-3">

@@ -181,7 +181,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "POST",
-                url: "/tours/{{$tour->id}}/participants/save-create",
+                url: "/administrator/tours/{{$tour->id}}/participants/save-create",
                 data: data,
                 dataType: 'json',
                 success: function (response) {
@@ -215,7 +215,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "/tours/{{$tour->id}}/participants/check-import-csv",
+                url: "/administrator/tours/{{$tour->id}}/participants/check-import-csv",
                 method: 'post',
                 processData: false,
                 contentType: false,
@@ -258,7 +258,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "/tours/{{$tour->id}}/participants/import-csv",
+                url: "/administrator/tours/{{$tour->id}}/participants/import-csv",
                 method: 'post',
                 processData: false,
                 contentType: false,
@@ -305,7 +305,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "/tours/{{$tour->id}}/participants/send-emails",
+                url: "/administrator/tours/{{$tour->id}}/participants/send-emails",
                 method: 'post',
                 data: data,
                 processData: false,

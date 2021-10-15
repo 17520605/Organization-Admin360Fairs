@@ -12,6 +12,7 @@ class ZonesController extends Controller
 {
     public function index($id)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
 
         $zones = DB::table('zone')->where('tourId', $id)->get();
@@ -29,7 +30,7 @@ class ZonesController extends Controller
             ->whereRaw(" NOT EXISTS ( SELECT * FROM zone_booth  WHERE  zone_booth.boothId = booth.id )")
             ->get();
 
-        return view('zones.index', ['user' => Auth::user(), 'tour'=> $tour, 'zones'=> $zones, 'freeBooths' => $freeBooths ]);
+        return view('administrator.zones.index', ['profile' => $profile, 'tour'=> $tour, 'zones'=> $zones, 'freeBooths' => $freeBooths ]);
     }
 
     public function zone ($id, $zoneId)
@@ -51,7 +52,7 @@ class ZonesController extends Controller
             ->whereRaw(" NOT EXISTS ( SELECT * FROM zone_booth  WHERE  zone_booth.boothId = booth.id )")
             ->get();
 
-        return view('zones.zone', [
+        return view('administrator.zones.zone', [
             'profile' => $profile,
             'tour'=> $tour,
             'overview'=> $overview, 
