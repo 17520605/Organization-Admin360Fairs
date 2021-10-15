@@ -6,7 +6,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/tours/{{$tour->id}}/events/webinars/save-create" method="POST">
+                    <form action="/administrator/tours/{{$tour->id}}/events/webinars/save-create" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="small mb-1">Topic</label>
