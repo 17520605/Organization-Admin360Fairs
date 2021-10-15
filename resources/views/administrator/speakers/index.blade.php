@@ -158,7 +158,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "POST",
-                url: "/tours/{{$tour->id}}/speakers/save-create",
+                url: "/administrator/tours/{{$tour->id}}/speakers/save-create",
                 data: data,
                 dataType: 'json',
                 success: function (response) {
@@ -192,7 +192,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "/tours/{{$tour->id}}/speakers/check-import-csv",
+                url: "/administrator/tours/{{$tour->id}}/speakers/check-import-csv",
                 method: 'post',
                 processData: false,
                 contentType: false,
@@ -235,7 +235,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "/tours/{{$tour->id}}/speakers/import-csv",
+                url: "/administrator/tours/{{$tour->id}}/speakers/import-csv",
                 method: 'post',
                 processData: false,
                 contentType: false,
@@ -282,7 +282,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "/tours/{{$tour->id}}/speakers/send-emails",
+                url: "/administrator/tours/{{$tour->id}}/speakers/send-emails",
                 method: 'post',
                 data: data,
                 processData: false,

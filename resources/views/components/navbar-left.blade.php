@@ -1,6 +1,6 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/administrator/tours/{{$tour->id}}">
         <div class="sidebar-brand-icon">
             <i class="fab fa-korvue"></i>
         </div>
@@ -12,7 +12,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="/administrator/tours/{{$tour->id}}/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -41,7 +41,7 @@
         <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Participants:</h6>
-                <a class="collapse-item" href="/tours/{{$tour->id}}/participants">Participants</a>
+                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/participants">Participants</a>
             </div>
         </div>
     </li>
@@ -53,8 +53,8 @@
         <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Booths Manager</h6>
-                <a href="/tours/{{$tour->id}}/zones" class="collapse-item" >Zones</a>
-                <a href="/tours/{{$tour->id}}/booths" class="collapse-item" >Booths</a>
+                <a href="/administrator/tours/{{$tour->id}}/zones" class="collapse-item" >Zones</a>
+                <a href="/administrator/tours/{{$tour->id}}/booths" class="collapse-item" >Booths</a>
             </div>
         </div>
     </li>
@@ -66,8 +66,7 @@
         <div id="collapsewebina" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Event types</h6>
-                <a class="collapse-item" href="/tours/{{$tour->id}}/events/webinars">Webinars</a>
-                <a class="collapse-item" href="buttons.html"></a>
+                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/events/webinars">Webinars</a>
             </div>
         </div>
     </li>
@@ -79,7 +78,7 @@
         <div id="collapsespeakers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Event types</h6>
-                <a class="collapse-item" href="/tours/{{$tour->id}}/speakers/">Speakers</a>
+                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/speakers/">Speakers</a>
             </div>
         </div>
     </li>
@@ -97,10 +96,10 @@
         <div id="collapseresource" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"> Types </h6>
-                <a href="/tours/{{$tour->id}}/objects/images" class="collapse-item">Images</a>
-                <a href="/tours/{{$tour->id}}/objects/videos" class="collapse-item">Videos</a>
-                <a href="/tours/{{$tour->id}}/objects/audios" class="collapse-item">Audios</a>
-                <a href="/tours/{{$tour->id}}/objects/models" class="collapse-item">3D Model</a>
+                <a href="/administrator/tours/{{$tour->id}}/objects/images" class="collapse-item">Images</a>
+                <a href="/administrator/tours/{{$tour->id}}/objects/videos" class="collapse-item">Videos</a>
+                <a href="/administrator/tours/{{$tour->id}}/objects/audios" class="collapse-item">Audios</a>
+                <a href="/administrator/tours/{{$tour->id}}/objects/models" class="collapse-item">3D Model</a>
             </div>
         </div>
     </li>
@@ -112,7 +111,7 @@
         Persons
     </div>
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" href="/administrator/tours/{{$tour->id}}/viewer">
             <i class="fas fa-users"></i>
             <span>Viewer</span>
         </a>

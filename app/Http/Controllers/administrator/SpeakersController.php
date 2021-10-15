@@ -24,7 +24,7 @@ class SpeakersController extends Controller
             ->select('profile.*','status')
             ->get();
 
-        return view('speakers.index', ['profile' => $profile, 'tour'=> $tour, 'speakers' => $speakers]);
+        return view('administrator.speakers.index', ['profile' => $profile, 'tour'=> $tour, 'speakers' => $speakers]);
     }
     
     public function saveCreate($id, Request $request)
