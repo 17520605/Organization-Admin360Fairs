@@ -23,14 +23,15 @@ class EventsController extends Controller
             ->select('profile.*')
             ->get();
 
-        return view('events.webinars', ['profile' => $profile , 'tour'=>$tour, 'webinars' => $webinars,'speakers' => $speakers]);
+        return view('administrator.events.webinars', ['profile' => $profile , 'tour'=>$tour, 'webinars' => $webinars,'speakers' => $speakers]);
     }
 
     public function webinar($id, $webinarId)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
         $webinar = \App\Models\Webinar::with('details')->find($webinarId);
-        return view('events.webinar', ['user' => Auth::user(), 'webinar' => $webinar, 'tour'=>$tour]);
+        return view('administrator.events.webinar', ['profile' => $profile , 'webinar' => $webinar, 'tour'=>$tour]);
     }
 
     public function saveCreate($id, Request $request)
