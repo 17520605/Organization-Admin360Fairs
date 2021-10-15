@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\administrator;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class TourController extends Controller
 
         $overview = \App\Models\Panorama::find($tour->overviewId);
 
-        return view('tour.index', [
+        return view('administrator.tour.index', [
             'user' =>Auth::user(),
             'tour'=> $tour,
             'overview'=> $overview, 
@@ -31,7 +32,7 @@ class TourController extends Controller
     public function edit($id)
     {
         $tour = DB::table('tour')->find($id);
-        return view('tour.edit', ['user' => Auth::user(),'tour' => $tour]);
+        return view('administrator.tour.edit', ['user' => Auth::user(),'tour' => $tour]);
     }
 
     public function saveEdit($id, Request $request)
@@ -54,7 +55,7 @@ class TourController extends Controller
                 'image' => $image,
             ]);
 
-        return redirect('/tours/'.$id.'/tour');
+        return redirect('administrator/tours/'.$id.'/tour');
     }
 
 }

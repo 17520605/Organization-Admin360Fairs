@@ -20,11 +20,13 @@ class AuthController extends Controller
         $credentials = $request->only(['email', 'password']);
 
         if (Auth::attempt($credentials)) {
+            $role = $request->role;
+
             if($request->url != null){
                 return redirect($request->url);
             }
             else{
-                return redirect('/');
+                return redirect('/'.$role);
             }
         } else {
             return redirect()->back()->withInput();
