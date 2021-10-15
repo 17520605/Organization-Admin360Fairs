@@ -18,11 +18,9 @@
                         <div class="d-flex">
                             <div class="flex-grow-1 overflow-hidden">
                                 <div class="row">
-                                    <div class="col-4">
-                                        <h6 class="font-size-14 font-weight-bold">ZONES : (<a style="color: #4e73df">7 / 8</a>)</h6>
-                                    </div>
-                                    <div class="col-6">
-                                        <h6 class="font-size-14 font-weight-bold">BOOTHS : (<a style="color: #4e73df">7 / 8</a>)</h6>
+                                    <div class="col-12">
+                                        <h6 class="font-size-14 font-weight-bold" style="display: inline;">ZONES : (<a style="color: #4e73df">7 / 8</a>) - </h6>
+                                        <h6 class="font-size-14 font-weight-bold" style="display: inline">BOOTHS : (<a style="color: #4e73df">7 / 8</a>)</h6>
                                     </div>
                                 </div>
                                 <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-building"></i> Name organization :</span> <span>CTTNHH ABCD</span></p>
