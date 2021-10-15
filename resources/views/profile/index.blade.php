@@ -1,5 +1,8 @@
 @extends('layouts.super')
 @section('content')
+    @php
+        xdebug_break();
+    @endphp
     <div class="container card-tour">
         <div class="tour-mg-top">
             <div style="position: relative; margin-bottom: 3%;">
