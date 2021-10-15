@@ -20,8 +20,12 @@ class Controller extends BaseController
     {
         $this->middleware(function ($request, $next) {
             $user = Auth::user();
-            $profile = DB::table('profile')->where('userId', $user->id)->first();
-
+            $profile = null;
+            
+            if($user != null){
+                $profile = DB::table('profile')->where('userId', $user->id)->first();
+            }
+            
             $parameters = Route::getCurrentRoute()->parameters();
             $role = explode('/', Route::getCurrentRoute()->uri)[0];
 
