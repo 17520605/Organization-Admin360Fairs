@@ -15,6 +15,7 @@ class ParticipantsController extends Controller
 {
     public function index($id)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
         $participants = DB::table('tour_participant')
             ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
@@ -24,11 +25,11 @@ class ParticipantsController extends Controller
             ->select('profile.*', 'status')
             ->get();
 
-        return view('administrator.participants.index', ['user' => Auth::user(), 'tour'=> $tour, 'participants' => $participants]);
+        return view('administrator.participants.index', ['profile' => $profile, 'tour'=> $tour, 'participants' => $participants]);
     }
     
     public function saveCreate($id, Request $request)
-    {
+    {   
         $tour = DB::table('tour')->find($id);
 
         $name = $request->name;

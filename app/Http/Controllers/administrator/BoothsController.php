@@ -14,6 +14,8 @@ class BoothsController extends Controller
     public function index($id)
     {
         $user = Auth::user();
+        $profile = DB::table('profile')->where('userId', $user->id)->first();
+
         $tour = DB::table('tour')->find($id);
 
         $zones = \App\Models\Zone::get();
@@ -40,7 +42,7 @@ class BoothsController extends Controller
             ->whereRaw(" NOT EXISTS ( SELECT * FROM zone_booth  WHERE  zone_booth.boothId = booth.id )")
             ->get();
 
-        return view('booths.index', ['user' => $user, 'tour'=> $tour, 'zones' => $zones, 'groups' => $groups, 'freeBooths'=> $freeBooths]);
+        return view('booths.index', ['profile' => $profile, 'tour'=> $tour, 'zones' => $zones, 'groups' => $groups, 'freeBooths'=> $freeBooths]);
     }
 
     public function saveCreate($id, Request $request)

@@ -16,13 +16,15 @@ class TourController extends Controller
         // return view('tour.index', ['user' => Auth::user(), 'tour'=>$tour]);
 
         $tour = DB::table('tour')->find($id);
+        $user = Auth::user();
+        $profile = DB::table('profile')->where('userId', $user->id)->first();
 
         $zones = \App\Models\Zone::get();
 
         $overview = \App\Models\Panorama::find($tour->overviewId);
 
         return view('administrator.tour.index', [
-            'user' =>Auth::user(),
+            'profile' => $profile,
             'tour'=> $tour,
             'overview'=> $overview, 
             'zones'=>$zones
@@ -31,8 +33,10 @@ class TourController extends Controller
 
     public function edit($id)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-        return view('administrator.tour.edit', ['user' => Auth::user(),'tour' => $tour]);
+        
+        return view('administrator.tour.edit', ['profile' => $profile,'tour' => $tour]);
     }
 
     public function saveEdit($id, Request $request)

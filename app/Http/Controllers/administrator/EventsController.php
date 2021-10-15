@@ -12,6 +12,7 @@ class EventsController extends Controller
 {
     public function webinars($id)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
         $webinars = \App\Models\Webinar::with('details')
             ->where('tourId', $id)
@@ -22,7 +23,7 @@ class EventsController extends Controller
             ->select('profile.*')
             ->get();
 
-        return view('events.webinars', ['user' => Auth::user(), 'tour'=>$tour, 'webinars' => $webinars,'speakers' => $speakers]);
+        return view('events.webinars', ['profile' => $profile , 'tour'=>$tour, 'webinars' => $webinars,'speakers' => $speakers]);
     }
 
     public function webinar($id, $webinarId)
