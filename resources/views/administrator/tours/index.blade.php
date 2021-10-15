@@ -3,7 +3,7 @@
     <div class="container card-tour">
         <div class="tour-mg-top">
             <div style="position: relative; margin-bottom: 3%;">
-                <h3>Hi, <span>Khai</span> 👋 </h3>
+                <h3>Hi, <span> {{$profile->name}} </span> 👋 </h3>
                 <button class="btn btn-add-tour" data-toggle="modal" data-target="#popup-create-tour"><i class="fas fa-plus" style="margin-right: 10px;"></i> Add New Tour</button>
             </div>
             <div class="border_card">

@@ -3,7 +3,7 @@
     <div class="container card-tour">
         <div class="tour-mg-top">
             <div style="position: relative; margin-bottom: 3%;">
-                <h3>Hi, <span>Khai</span> 👋 </h3>
+                <h3>Hi, <span>{{$profile->name}}</span> 👋 </h3>
             </div>
             <div class="border_card">
                 <div class="card_header">
