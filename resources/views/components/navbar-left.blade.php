@@ -72,12 +72,12 @@
     </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsespeakers" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-calendar-week"></i>
+            <i class="fas fa-user-check"></i>
             <span>Speakers</span>
         </a>
         <div id="collapsespeakers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Event types</h6>
+                <h6 class="collapse-header">Speakers</h6>
                 <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/speakers/">Speakers</a>
             </div>
         </div>
@@ -96,6 +96,7 @@
         <div id="collapseresource" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"> Types </h6>
+                <a href="/administrator/tours/{{$tour->id}}/objects/dashboard" class="collapse-item">Dashboard</a>
                 <a href="/administrator/tours/{{$tour->id}}/objects/images" class="collapse-item">Images</a>
                 <a href="/administrator/tours/{{$tour->id}}/objects/videos" class="collapse-item">Videos</a>
                 <a href="/administrator/tours/{{$tour->id}}/objects/audios" class="collapse-item">Audios</a>

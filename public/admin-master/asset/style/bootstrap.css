@@ -1,0 +1,90 @@
+.badge {
+    display: inline-block;
+    padding: .25em .4em;
+    /* font-size: 75%; */
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.bg-danger,
+.bg-danger>a {
+    color: #fff!important;
+}
+
+.bg-danger {
+    background-color: #dc3545!important;
+}
+
+.bg-warning,
+.bg-warning>a {
+    color: #1f2d3d!important;
+}
+
+.bg-warning {
+    background-color: #ffc107!important;
+}
+
+.bg-primary,
+.bg-primary>a {
+    color: #fff!important;
+}
+
+.bg-primary {
+    background-color: #007bff!important;
+}
+
+.bg-success,
+.bg-success>a {
+    color: #fff!important;
+}
+
+.bg-success {
+    background-color: #28a745!important;
+}
+
+
+/* CHECKBOX */
+
+.form-check-input1:checked[type=checkbox] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+}
+
+.form-check-input1[type=checkbox] {
+    border-radius: .25em;
+}
+
+.form-check-input1:checked {
+    background-color: #727cf5;
+    border-color: #727cf5;
+}
+
+.form-check-input1 {
+    float: left;
+}
+
+.form-check-input1 {
+    width: 1.112em;
+    height: 1.112em;
+    margin-top: .194em;
+    vertical-align: top;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid #dee2e6;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    -webkit-transition: background-color .15s ease-in-out, background-position .15s ease-in-out, border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: background-color .15s ease-in-out, background-position .15s ease-in-out, border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    transition: background-color .15s ease-in-out, background-position .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: background-color .15s ease-in-out, background-position .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+}

@@ -31,17 +31,10 @@
                                 <td>nguyenhuuminhkhai@gmail.com</td>
                                 <td>UIT</td>
                                 <td>Hà nội</td>
-                                <td><a class="btn btn-xs btn-danger" href="#"><i class="fa fa-trash"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Brielle Williamson</td>
-                                <td><img class="avatar-tables" src="/asset/images/undraw_profile_2.svg" alt=""></td>
-                                <td>0969888999</td>
-                                <td>nguyenhuuminhkhai@gmail.com</td>
-                                <td>UIT</td>
-                                <td>HCM</td>
-                                <td><a class="btn btn-xs btn-danger" href="#"><i class="fa fa-trash"></i></a></td>
+                                <td class="btn-action-icon">
+                                    <i class="fas fa-pen edit"></i>
+                                    <i class="fas fa-trash-alt delete"></i>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

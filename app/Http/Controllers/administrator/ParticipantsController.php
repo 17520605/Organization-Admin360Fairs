@@ -199,7 +199,7 @@ class ParticipantsController extends Controller
 
             $mailer = new MailService(
                 [$participant->email],
-                'Tieu de',
+                'Lời mời tham gia quản lý gian hàng',
                 'default',
                 $model
             );

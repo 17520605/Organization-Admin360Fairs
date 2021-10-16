@@ -32,8 +32,9 @@
                                         <a href="booths/{{$booth->id}}">{{$booth->name}}</a> , 
                                     @endforeach
                                 </td>
-                                <td>
-                                    <i class="fa fa-trash">
+                                <td class="btn-action-icon">
+                                    <i class="fas fa-pen edit"></i>
+                                    <i class="fas fa-trash-alt delete"></i>
                                 </td>
                             </tr>
                             @endforeach
@@ -48,7 +49,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="fw-light">Create New Zone</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="d-flex flex-column" style="flex-grow: 1;">

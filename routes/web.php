@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function (){
 
             // objects
             Route::get('/{id}/objects', 'administrator\ObjectsController@index');
+            Route::get('/{id}/objects/dashboard', 'administrator\ObjectsController@dashboard');
             Route::get('/{id}/objects/images', 'administrator\ObjectsController@images');
             Route::get('/{id}/objects/videos', 'administrator\ObjectsController@videos');
             Route::get('/{id}/objects/audios', 'administrator\ObjectsController@audios');

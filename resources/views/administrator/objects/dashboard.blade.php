@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="filemanager-sidebar col-md-3 card">
+                <div class="filemanager-sidebar col-md-3 card" style="padding: 0">
                     <div class="card-body">
                         <div class="text-center">
                             <h5 class="font-size-15 mb-4">Storage</h5>
@@ -20,7 +20,7 @@
                         </div>
                         <div class="mt-4">
                             <div class="border shadow-none mb-2 card total_bar_object" style="padding: 0.5rem; ">
-                                <a class="text-body" href="/apps-filemanager">
+                                <a class="text-body" href="#">
                                     <div class="body">
                                         <h4>1TB <i class="fa fa-server float-right"></i></h4>
                                         <p class="mb-0">Storage <small class="text-muted float-right">of 1Tb</small></p>
@@ -31,7 +31,7 @@
                                 </a>
                             </div>
                             <div class="border shadow-none mb-2 card">
-                                <a class="text-body" href="/apps-filemanager">
+                                <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/images">
                                     <div class="p-2">
                                         <div class="d-flex">
                                             <div class="avatar-xs align-self-center me-2">
@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="card border shadow-none mb-2">
-                                <a class="text-body" href="/apps-filemanager">
+                                <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/videos">
                                     <div class="p-2">
                                         <div class="d-flex">
                                             <div class="avatar-xs align-self-center me-2">
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                             <div class="card border shadow-none mb-2">
-                                <a class="text-body" href="/apps-filemanager">
+                                <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/audios">
                                     <div class="p-2">
                                         <div class="d-flex">
                                             <div class="avatar-xs align-self-center me-2">
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             <div class="card border shadow-none mb-2">
-                                <a class="text-body" href="/apps-filemanager">
+                                <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/models">
                                     <div class="p-2">
                                         <div class="d-flex">
                                             <div class="avatar-xs align-self-center me-2">
@@ -115,7 +115,7 @@
                                 </div>
                             </div>
                             <div class="card border shadow-none mb-2">
-                                <a class="text-body" href="/apps-filemanager">
+                                <a class="text-body" href="#">
                                     <div class="p-2">
                                         <div class="d-flex">
                                             <div class="avatar-xs align-self-center me-2">
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                             <div class="card border shadow-none">
-                                <a class="text-body" href="/apps-filemanager">
+                                <a class="text-body" href="#">
                                     <div class="p-2">
                                         <div class="d-flex">
                                             <div class="avatar-xs align-self-center me-2">
@@ -154,7 +154,7 @@
                                     </div>
                                 </a>
                                 <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                    <div class="progress-bar bg-warning" data-transitiongoal="18" aria-valuenow="18" style="width: 18%;"></div>
+                                    <div class="progress-bar bg-warning" data-transitiongoal="18" aria-valuenow="18" style="width: 5%;"></div>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +163,7 @@
                 <div class="col-md-9">
                     <div class="d-md-flex">
                         <div class="w-100">
-                            <div class="card" style="height: 60vh;">
+                            <div class="card" style="">
                                 <div id='myDiv'>
                                     <!-- Plotly chart will be drawn inside this DIV -->
                                 </div>

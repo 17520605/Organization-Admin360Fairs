@@ -19,10 +19,10 @@
                                 <th>Company</th>
                                 <th>Status</th>
                                 <th>Date</th>
-                                <th style="width: 10%;">Action</th>
+                                <th style="width: 8%;">Action</th>
                             </tr>
                         </thead>
-                        <tr style="background-color: #ccc !important; border: 1px solid #ccc;" onclick="toggleGroup(0)">
+                        <tr style="background-color: #4e73dfcf !important; color:#fff;" onclick="toggleGroup(0)">
                             <td colspan="8">
                                 <span style="float: left">Free Booths</span>
                                 <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
@@ -37,19 +37,20 @@
                             @foreach ($freeBooths as $freeBooth)
                             <tr>
                                 <td>1</td>
-                                <td><a href="booths/{{$freeBooth->id}}">{{$freeBooth->name}}</a></td>
+                                <td><a style="font-weight: 600" href="booths/{{$freeBooth->id}}">{{$freeBooth->name}}</a></td>
                                 <td>Dinh phong</td>
                                 <td><span>In Process</span></td>
                                 <td>September 26, 2021</td>
-                                <td>
-                                    <i class="fa fa-trash"></i>
+                                <td class="btn-action-icon">
+                                    <i class="fas fa-pen edit"></i>
+                                    <i class="fas fa-trash-alt delete"></i>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                         @foreach ($groups as $group)
                         <div>
-                            <tr style="background-color: #ccc !important; border: 1px solid #ccc;" onclick="toggleGroup({{$group->id}})">
+                            <tr style="background-color: #4e73dfcf !important; color:#fff;" onclick="toggleGroup({{$group->id}})">
                                 <td colspan="8">
                                     <span style="float: left">{{$group->name}}</span>
                                     <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
@@ -59,12 +60,12 @@
                                 @foreach ($group->booths as $booth)
                                 <tr>
                                     <td>1</td>
-                                    <td><a href="booths/{{$booth->id}}">{{$booth->name}}</a></td>
+                                    <td><a style="font-weight: 600" href="booths/{{$booth->id}}">{{$booth->name}}</a></td>
                                     <td>Dinh phong</td>
                                     <td><span>In Process</span></td>
                                     <td>September 26, 2021</td>
-                                    <td>
-                                        <i class="fa fa-trash"></i>
+                                    <td class="btn-action-icon">
+                                       <i class="fas fa-trash-alt delete"  data-toggle="modal" data-target="#popup-delete-booth"></i>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -77,12 +78,12 @@
         </div>
     </div>
     {{-- POPUP CREATE BOOTH --}}
-    <div class="modal fade" id="popup-create-booth" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="popup-create-booth" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="fw-light">Create New Booth</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="/administrator/tours/{{$tour->id}}/booths/save-create" method="POST">
                     <div class="modal-body">
@@ -106,8 +107,8 @@
                             @endif
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-block btn-df" type="submit">Create</button>
+                    <div class="modal-footer" style="padding: 0.75rem 0;">
+                        <button class="btn btn-block btn-df" type="submit">Create new booths</button>
                     </div>
                 </form>
             </div>

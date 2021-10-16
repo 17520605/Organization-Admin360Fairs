@@ -162,7 +162,45 @@ class SpeakersController extends Controller
             return json_encode($check);
         }
     }
+    public function sendEmails($id, Request $request)
+    {
+        $speakerIds = $request->speakerIds;
 
+        foreach ($speakerIds as $speakerId) {
+
+            $speaker = \App\Models\Profile::find($speakerId);
+
+            $tour_speaker = \App\Models\Tour_Speaker::with('speaker')
+                ->where([
+                    ['tourId', '=', $id],
+                    ['speakerId', '=', $speakerId],
+                ])->first();
+            $tour_speaker->status = \App\Models\Tour_Speaker::SENTEMAIL;
+            $tour_speaker->code = Str::random(6);
+            $tour_speaker->expiry = Carbon::now()->addMinute(5);
+            $tour_speaker->save();
+
+            $model = DB::table('tour_speaker')
+                ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
+                ->where([
+                    ['tour_speaker.tourId', '=', $id],
+                    ['tour_speaker.speakerId', '=', $speakerId]
+                ])
+                ->select('tour_speaker.*')
+                ->first();
+
+            $mailer = new MailService(
+                [$speaker->email],
+                'Lời mời tham dự thuyết trình',
+                'speaker',
+                $model
+            );
+            $mailer->sendMail();
+        }
+
+        return true;
+        
+    }
     public function checkImportCsv($id, Request $request)
     {
         $file = $request->file('csv');

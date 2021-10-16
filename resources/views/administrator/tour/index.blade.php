@@ -12,7 +12,7 @@
         </div>
         <div class="row" style="margin-bottom: 1.5rem;">
             <div class="col-md-5">
-                <div class="card" style="height: 60vh;">
+                <div class="card" style="">
                     <button class="btn btn-default" style="text-align: center;  font-size: 20px;  position: absolute; right: 0; border-radius: 50%;"><i class="fas fa-pencil-alt" data-toggle="modal" data-target="#popup-update-tour"></i></button>
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="d-flex">
@@ -58,7 +58,7 @@
 
             </div>
             <div class="col-md-7">
-                <div class="card" style="width: 100%; height: 60vh;padding: 0.25rem;">
+                <div class="card" style="width: 100%; min-height: 400px padding: 0.25rem;">
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@
                                         <th>Link Products</th>
                                         <th>Code</th>
                                         <th>Tour</th>
-                                        <th style="width: 10%;">Action</th>
+                                        <th style="width: 8%;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -95,22 +95,9 @@
                                         </td>
                                         <td>SALE123</td>
                                         <td>Booth-01</td>
-                                        <td>
-                                            <a class="btn btn-xs btn-info" href="#"><i class="fa fa-pen"></i></a>
-                                            <a class="btn btn-xs btn-danger" href="#"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Brielle Williamson</td>
-                                        <td><img class="products-tables" src="./../asset/images/apps-1.jpg" alt=""></td>
-                                        <td>150$</td>
-                                        <td><a href="https://github.com/">https://github.com/</a></td>
-                                        <td>SALE123</td>
-                                        <td>Booth-01</td>
-                                        <td>
-                                            <a class="btn btn-xs btn-info" href="#"><i class="fa fa-pen"></i></a>
-                                            <a class="btn btn-xs btn-danger" href="#"><i class="fa fa-trash"></i></a>
+                                        <td class="btn-action-icon">
+                                            <i class="fas fa-pen edit"></i>
+                                            <i class="fas fa-trash-alt delete"></i>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -122,7 +109,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="popup-update-tour" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="popup-update-tour" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">

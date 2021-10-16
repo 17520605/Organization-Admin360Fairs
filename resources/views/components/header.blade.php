@@ -4,7 +4,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('admin-master/asset/images/logo-shortcut.svg')}}" />
     <link href="{{ asset('admin-master/asset/style/admin-event.min.css')}}" rel="stylesheet" />
-
+    <link href="{{ asset('admin-master/asset/style/bootstrap.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('admin-master/asset/plugins/summernote/summernote-bs4.min.css')}}">
     <link href="{{ asset('admin-master/asset/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
     <link href="{{ asset('admin-master/asset/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css" />

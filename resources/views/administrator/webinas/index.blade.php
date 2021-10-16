@@ -18,7 +18,7 @@
                                 <th>Link MSteam</th>
                                 <th>Start time</th>
                                 <th>Date</th>
-                                <th style="width: 10%;">Action</th>
+                                <th style="width: 8%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,9 +32,9 @@
                                 </td>
                                 <td>12:00 to 13.30</td>
                                 <td>Friday 1 Oct 2021</td>
-                                <td>
-                                    <a class="btn btn-xs btn-info" href="#"><i class="fa fa-pen"></i></a>
-                                    <a class="btn btn-xs btn-danger" href="#"><i class="fa fa-trash"></i></a>
+                                <td class="btn-action-icon">
+                                    <i class="fas fa-pen edit"></i>
+                                    <i class="fas fa-trash-alt delete"></i>
                                 </td>
                             </tr>
                         </tbody>

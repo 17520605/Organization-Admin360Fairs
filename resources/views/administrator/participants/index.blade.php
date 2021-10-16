@@ -6,24 +6,24 @@
             <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Participants</h1>
             <div class="div_cardheader_btn" >
                 <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#popup-create-participant"><i class="fas fa-plus"></i> Add </button>
-                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-confirm-send-email""><i class="fas fa-paper-plane"></i> Send Mail </button>
+                <button class="mb-0 btn float-right" id="btn-send-mail-participants" data-toggle="modal" data-target="#popup-confirm-send-email" style="display: none"><i class="fas fa-paper-plane"></i> Send Mail </button>
                 <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-import-csv"><i class="fas fa-upload"></i> Import </button>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="border: none !important;">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                        <tr>
+                        <tr style="background: #eef2f7">
                             <th style="width: 40px;">
-                                <input class="checkbox-all" type="checkbox" name="all">
+                                <input class="checkbox-all form-check-input1 dt-checkboxes" type="checkbox" name="all">
                             </th>
                             <th>#</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Contact</th>
-                            <th style="width: 80px;">Status</th>
-                            <th style="width: 80px;">Actions</th>
+                            <th style="width: 10%;">Status</th>
+                            <th style="width: 8%;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,17 +31,25 @@
                         <tr>
                             <td>
                                 @if ($participant->status == \App\Models\Tour_Participant::UNCONFIRMED)
-                                    <input class="checkbox" type="checkbox" value="{{$participant->id}}" name="participantIds[]">
+                                    <input class="checkbox form-check-input1 dt-checkboxes" type="checkbox" value="{{$participant->id}}" name="participantIds[]">
                                 @endif
                             </td>
                             <td>1</td>
                             <td>{{$participant->name}}</td>
                             <td>{{$participant->email}}</td>
                             <td>{{$participant->contact}}</td>
-                            <td>{{$participant->status}}</td>
                             <td>
-                                <a class="mr-2"><i class="fa fa-pen"></i></a>
-                                <a class="mr-0"><i class="fa fa-trash"></i></a>
+                                @if ($participant->status == "confirmed")
+                                    <span class="badge bg-danger">{{$participant->status}} </span>
+                                @elseif($participant->status == "unconfirmed")
+                                    <span class="badge bg-success">{{$participant->status}} </span>
+                                @elseif($participant->status == "sent email")
+                                    <span class="badge bg-warning">{{$participant->status}} </span>
+                                @endif
+                            </td>
+                            <td class="btn-action-icon">
+                                <i class="fas fa-pen edit" data-toggle="modal" data-target="#popup-edit-participant"></i>
+                                <i class="fas fa-trash-alt delete"></i>
                             </td>
                         </tr>
                         @endforeach
@@ -52,13 +60,13 @@
     </div>
 </div>
 {{-- POPUP CREATE PARTICIANT --}}
-<div class="modal fade" id="popup-create-participant" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="popup-create-participant" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form id="popup-create-participant__form" class="needs-validation" novalidate>
                 <div class="modal-header">
                     <h5 class="fw-light">Create Participant </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="padding: 30px">
                     @csrf
@@ -93,15 +101,56 @@
         </div>
     </div>
 </div>
-
+{{-- POPUP CREATE PARTICIANT --}}
+<div class="modal fade" id="popup-edit-participant" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="popup-edit-participant__form" class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h5 class="fw-light">Edit Participant </h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    @csrf
+                    <div class="form-group">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control form-control-user" id="name" placeholder="Enter participant name" aria-describedby="inputGroupPrepend" required>
+                        <div class="invalid-feedback">
+                            Please enter participant name
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control form-control-user" id="email" placeholder="Enter email" aria-describedby="inputGroupPrepend" required>
+                        <div class="invalid-feedback">
+                            Please enter email
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="form-label">Contact</label>
+                        <input type="tel" name="contact" class="form-control form-control-user" id="contact" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
+                        <div class="invalid-feedback">
+                            Please enter contact
+                        </div>
+                    </div>
+                    <div class="form-group messages-wrapper border" style="display: none">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Save Change</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {{-- POPUP IMPORT CSV --}}
-<div class="modal fade" id="popup-import-csv" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="popup-import-csv" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form id="popup-import-csv__form">
                 <div class="modal-header">
                     <h5 class="fw-light">Import Participant </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="padding: 30px">
                     @csrf
@@ -125,12 +174,12 @@
     </div>
 </div>
 {{-- POPUP CONFIRM SENT EMAIL --}}
-<div class="modal fade" id="popup-confirm-send-email" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="popup-confirm-send-email" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="fw-light">Send Email</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="padding: 30px">
                 <div class="form-group p-3">
@@ -278,12 +327,27 @@
         $('.checkbox-all').change(function () {
             let checked = $(this).prop('checked');  
             $('.checkbox').prop('checked', checked);
+            if(checked == true)
+            {
+                $('#btn-send-mail-participants').show();
+            }
+            else{
+                $('#btn-send-mail-participants').hide();
+            }
+            
         })
 
         $('.checkbox').change(function () {
             let totalCount = $('.checkbox').length;
             let checkedCount = $('.checkbox:checked').length;
+            if(checkedCount > 0)
+            {
+                $('#btn-send-mail-participants').show();
+            }
+            else if(checkedCount < 1){
 
+                $('#btn-send-mail-participants').hide();
+            }
             if(totalCount == checkedCount)
             {
                 $('.checkbox-all').prop('checked', true);

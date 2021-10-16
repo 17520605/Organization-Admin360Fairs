@@ -512,7 +512,7 @@ mark {
     max-height: 150px;
     width: 100%;
     max-width: 100%;
-    height: auto;
+    height: 150px;
 }
 
 .img-thumbnail {
@@ -1255,6 +1255,20 @@ pre code {
     }
     .offset-md-11 {
         margin-left: 91.66667%;
+    }
+}
+
+@media (max-width: 1350px) {
+    .col-lg-4 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+}
+
+@media (max-width: 850px) {
+    .col-lg-4 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
     }
 }
 
@@ -13919,11 +13933,13 @@ img {
     color: #fff;
     background-color: #2e59d9;
     border-color: #2653d4;
+    border-radius: 3px;
     margin-top: .5rem!important;
     margin-bottom: .5rem!important;
     font-size: 14px!important;
     padding: 5px 30px!important;
     line-height: 30px!important;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .tour-mg-top .card_body .btn-manage-tour:hover {
@@ -13956,6 +13972,7 @@ img {
     position: absolute;
     top: -15px;
     right: 10px;
+    border-radius: 3px;
     border: 2px solid #2653d4;
     margin-top: .5rem!important;
     margin-bottom: .5rem!important;
@@ -13964,6 +13981,7 @@ img {
     line-height: 30px!important;
     color: #224abe;
     font-weight: 600;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .tour-mg-top .btn-add-tour:hover {
@@ -14466,4 +14484,352 @@ img {
 .btn-close-white {
     -webkit-filter: invert(1) grayscale(100%) brightness(200%);
     filter: invert(1) grayscale(100%) brightness(200%)
+}
+
+#nav-top__role-select {
+    outline: none;
+    padding: 0.2rem 1.4rem;
+    margin-top: 20px;
+    margin-right: 15px;
+    background: none;
+    color: #FFF;
+    border: 2px solid #fff;
+    border-radius: 2px;
+}
+
+#nav-top__role-select:hover {
+    background: #FFF;
+    color: #4e73df;
+    border: 2px solid #fff;
+}
+
+.btn-action-icon {
+    text-align: center;
+}
+
+.btn-action-icon i {
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-action-icon i.edit {
+    color: #a3a3a3;
+    margin-right: 5px;
+}
+
+.btn-action-icon i.edit:hover {
+    transform: scale(1.2);
+    color: #0b7381;
+}
+
+.btn-action-icon i.delete {
+    color: #a3a3a3;
+}
+
+.btn-action-icon i.delete:hover {
+    transform: scale(1.2);
+    color: #a31624;
+}
+
+@media (max-width: 1320px) {
+    .col-md-5 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .col-md-7 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+
+/* DASHBOARD OBJECT */
+
+.manager_object .card {
+    margin-bottom: 16px;
+    box-shadow: 0 0.75rem 1.5rem rgb(18 38 63 / 3%);
+}
+
+.manager_object .border {
+    border: 1px solid #eff2f7!important;
+}
+
+.manager_object .shadow-none {
+    box-shadow: none!important;
+}
+
+.manager_object .row .col-sm-6.col-xl-4 {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.filemanager-sidebar {
+    padding: 0;
+}
+
+.manager_object .card {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid #f6f6f6;
+    border-radius: .25rem;
+}
+
+.manager_object .avatar-xs {
+    height: 2rem;
+    width: 2rem;
+}
+
+.manager_object .avatar-group,
+.manager_object .avatar-title {
+    display: -webkit-flex;
+    display: flex;
+}
+
+.manager_object .avatar-title {
+    -webkit-align-items: center;
+    align-items: center;
+    background-color: #556ee6;
+    color: #fff;
+    font-weight: 500;
+    height: 100%;
+    -webkit-justify-content: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.manager_object .rounded {
+    border-radius: .25rem!important;
+}
+
+.manager_object .font-size-24 {
+    font-size: 24px!important;
+}
+
+.manager_object .text-warning {
+    --bs-text-opacity: 1;
+    color: rgba(241, 180, 76, 1)!important;
+}
+
+.manager_object .bg-warning {
+    --bs-text-opacity: 1;
+    color: rgba(241, 180, 76, 1)!important;
+}
+
+.manager_object .text-models {
+    --bs-text-opacity: 1;
+    color: rgb(186, 0, 243)!important;
+}
+
+.bg-model1 {
+    --bs-text-opacity: 1;
+    background-color: rgb(186, 0, 243)!important;
+}
+
+.manager_object .me-auto {
+    margin-right: auto!important;
+}
+
+.manager_object .shadow-none.card {
+    background: #d1d2d449;
+    cursor: pointer;
+}
+
+.manager_object .shadow-none.card:hover {
+    background: #d1d2d486;
+    cursor: pointer;
+}
+
+.manager_object .overflow-hidden {
+    overflow: hidden!important;
+}
+
+.manager_object .ms-2 {
+    margin-left: .5rem!important;
+}
+
+.manager_object .align-self-end {
+    -webkit-align-self: flex-end!important;
+    align-self: flex-end!important;
+}
+
+.manager_object .mb-1 {
+    margin-bottom: .25rem!important;
+}
+
+.manager_object .text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.filemanager-sidebar .progress {
+    position: relative;
+    margin: 4px;
+    float: left;
+    text-align: center;
+}
+
+.filemanager-sidebar .barOverflow {
+    /* Wraps the rotating .bar */
+    position: relative;
+    overflow: hidden;
+    /* Comment this line to understand the trick */
+    width: 90px;
+    height: 45px;
+    /* Half circle (overflow) */
+    margin-bottom: -14px;
+    /* bring the numbers up */
+}
+
+.manager_object .filemanager-sidebar .bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90px;
+    height: 90px;
+    /* full circle! */
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: 5px solid #eee;
+    /* half gray, */
+    border-bottom-color: #0bf;
+    /* half azure */
+    border-right-color: #0bf;
+}
+
+.manager_object .table-responsive {
+    margin-bottom: 1.5rem;
+}
+
+.manager_object .table>:not(:last-child)>:last-child>* {
+    border-bottom-color: #eff2f7;
+}
+
+.manager_object .table-nowrap td,
+.manager_object .table-nowrap th {
+    white-space: nowrap;
+}
+
+.manager_object .table th {
+    font-weight: 600;
+}
+
+.manager_object .fw-medium {
+    font-weight: 500;
+}
+
+.manager_object .text-dark {
+    --bs-text-opacity: 1;
+    color: rgba(52, 58, 64, 1)!important;
+}
+
+.manager_object .font-size-16 {
+    font-size: 16px!important;
+}
+
+.manager_object .text-primary {
+    --bs-text-opacity: 1;
+    color: rgba(85, 110, 230, 1)!important;
+}
+
+.manager_object .me-2 {
+    margin-right: .5rem!important;
+}
+
+.manager_object .align-middle {
+    vertical-align: middle!important;
+}
+
+
+/* ========================================= */
+
+.partner_card .avatar-md {
+    height: 4.5rem;
+    width: 4.5rem;
+}
+
+.partner_card .me-4 {
+    margin-right: 1.5rem!important;
+}
+
+.partner_card .avatar-xs {
+    height: 2rem;
+    width: 2rem;
+}
+
+.partner_card .rounded-circle {
+    border-radius: 50%!important;
+}
+
+.font-size-16 {
+    font-size: 16px!important;
+}
+
+.partner_card .avatar-group,
+.partner_card .avatar-title {
+    display: -webkit-flex;
+    display: flex;
+}
+
+.partner_card .avatar-title {
+    -webkit-align-items: center;
+    align-items: center;
+    background-color: #556ee6;
+    color: #fff;
+    font-weight: 500;
+    height: 100%;
+    -webkit-justify-content: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.partner_card .rounded-circle {
+    border-radius: 50%!important;
+}
+
+.partner_card .bg-light {
+    --bs-bg-opacity: 1;
+    background-color: rgba(239, 242, 247, 1)!important;
+}
+
+.total_bar_object .progress .progress-bar {
+    -webkit-transition: width 3s ease;
+    -moz-transition: width 3s ease;
+    -ms-transition: width 3s ease;
+    -o-transition: width 3s ease;
+    transition: width 3s ease;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.total_bar_object .progress .progress-bar {
+    position: absolute;
+    overflow: hidden;
+    line-height: 20px;
+}
+
+.total_bar_object .progress-striped .progress-bar-warning {
+    background-image: -webkit-linear-gradient( 45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient( 45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+
+.total_bar_object .progress-bar-striped,
+.total_bar_object .progress-striped .progress-bar {
+    background-image: -webkit-linear-gradient( 45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient( 45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-size: 40px 40px;
+}
+
+.total_bar_object .progress-bar-warning {
+    background-color: #f3ad06;
 }

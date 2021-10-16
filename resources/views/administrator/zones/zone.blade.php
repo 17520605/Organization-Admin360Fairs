@@ -369,7 +369,7 @@
                                             <th style="width: 100px;"> Panoramas</th>
                                             <th style="width: 100px;">Objects</th>
                                             <th style="width: 120px;">Status</th>
-                                            <th style="width: 80px;">Actions</th>
+                                            <th style="width: 8%;">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -393,9 +393,9 @@
                                                 <td>3</td>
                                                 <td>3</td>
                                                 <td>Booth-01</td>
-                                                <td>
-                                                    <a class="mr-2"><i class="fa fa-pen"></i></a>
-                                                    <a class="mr-2"><i class="fa fa-trash"></i></a>
+                                                <td class="btn-action-icon">
+                                                    <i class="fas fa-pen edit"></i>
+                                                    <i class="fas fa-trash-alt delete"></i>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -408,7 +408,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -517,7 +517,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="popup-add-booth-to-zone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="popup-add-booth-to-zone" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
