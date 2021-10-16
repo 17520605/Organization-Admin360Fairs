@@ -16,9 +16,9 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
-                                <th>Company</th>
-                                <th>Status</th>
+                                <th>Owner</th>
                                 <th>Update At</th>
+                                <th>Status</th>
                                 <th style="width: 10%;">Action</th>
                             </tr>
                         </thead>
@@ -28,19 +28,19 @@
                                 <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
                             </td>
                         </tr>
-                        <tbody class="group-0">
+                        <tbody class="group-0" >
                             @if (count($freeBooths) == 0)
-                                <tr>
-                                    <td colspan="10"><center><span>No booths</span></center></td>
-                                </tr>
+                            <tr>
+                                <td colspan="10"><center><span>No booths</span></center></td>
+                            </tr>
                             @endif
                             @foreach ($freeBooths as $freeBooth)
                             <tr class="booth-{{$freeBooth->id}}">
                                 <td>1</td>
                                 <td><a href="/administrator/tours/{{$tour->id}}/booths/{{$freeBooth->id}}">{{$freeBooth->name}}</a></td>
-                                <td>Dinh phong</td>
-                                <td><span>In Process</span></td>
+                                <td>Dinh phong</td>  
                                 <td>September 26, 2021</td>
+                                <td><span>In Process</span></td>
                                 <td>
                                     <i onclick="onEditBooth(this)" data-name="{{$freeBooth->name}}" data-id="{{$freeBooth->id}}" class="fa fa-pen"></i>
                                     <i onclick="onDeleteBooth(this)" data-name="{{$freeBooth->name}}" data-id="{{$freeBooth->id}}" class="fa fa-trash"></i>
@@ -58,17 +58,17 @@
                             </tr>
                             <tbody class="group-{{$group->id}}">
                                 @if (count($group->booths) == 0)
-                                    <tr>
-                                        <td colspan="10"><center><span>No booths</span></center></td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="10"><center><span>No booths</span></center></td>
+                                </tr>
                                 @endif
                                 @foreach ($group->booths as $booth)
                                 <tr class="booth-{{$booth->id}}">
                                     <td>1</td>
                                     <td><a href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}">{{$booth->name}}</a></td>
                                     <td>Dinh phong</td>
-                                    <td><span>In Process</span></td>
                                     <td>September 26, 2021</td>
+                                    <td><span>In Process</span></td>
                                     <td>
                                         <i onclick="onEditBooth(this)" data-zoneId="{{$group->id}}" data-name="{{$booth->name}}" data-id="{{$booth->id}}" class="fa fa-pen"></i>
                                         <i onclick="onDeleteBooth(this)" data-name="{{$booth->name}}" data-id="{{$booth->id}}" class="fa fa-trash"></i>

@@ -20,14 +20,7 @@ class BoothsController extends Controller
 
         $zones = \App\Models\Zone::get();
 
-        $groups = DB::table('zone_booth')
-            ->join('zone', 'zone.id', '=', 'zone_booth.zoneId')
-            ->select('zone.*')
-            ->where('zone.tourId', $id)
-            ->distinct()
-            ->orderBy('zone.id', 'asc')
-            ->get();
-        
+        $groups = DB::table('zone')->get();
         foreach ($groups as $group) {
             $booth = DB::table('zone_booth')
                 ->join('booth', 'booth.id', '=', 'zone_booth.boothId')
