@@ -19,7 +19,6 @@
                                 <th>Owner</th>
                                 <th>Update At</th>
                                 <th>Status</th>
-                                <th>Date</th>
                                 <th style="width: 8%;">Action</th>
                             </tr>
                         </thead>
@@ -42,9 +41,9 @@
                                 <td>Dinh phong</td>  
                                 <td>September 26, 2021</td>
                                 <td><span>In Process</span></td>
-                                <td>
-                                    <i onclick="onEditBooth(this)" data-name="{{$freeBooth->name}}" data-id="{{$freeBooth->id}}" class="fa fa-pen"></i>
-                                    <i onclick="onDeleteBooth(this)" data-name="{{$freeBooth->name}}" data-id="{{$freeBooth->id}}" class="fa fa-trash"></i>
+                                <td class="btn-action-icon">
+                                    <i onclick="onEditBooth(this)" data-name="{{$freeBooth->name}}" data-id="{{$freeBooth->id}}" class="fa fa-pen edit"></i>
+                                    <i onclick="onDeleteBooth(this)" data-name="{{$freeBooth->name}}" data-id="{{$freeBooth->id}}" class="fa fa-trash-alt delete"></i>
                                 </td>
                             </tr>
                             @endforeach
@@ -71,8 +70,8 @@
                                     <td>September 26, 2021</td>
                                     <td><span>In Process</span></td>
                                     <td class="btn-action-icon">
-                                        <i onclick="onEditBooth(this)" data-zoneId="{{$group->id}}" data-name="{{$booth->name}}" data-id="{{$booth->id}}" class="fa fa-pen"></i>
-                                        <i onclick="onDeleteBooth(this)" data-name="{{$booth->name}}" data-id="{{$booth->id}}" class="fa fa-trash"></i>
+                                        <i onclick="onEditBooth(this)" data-zoneId="{{$group->id}}" data-name="{{$booth->name}}" data-id="{{$booth->id}}" class="fa fa-pen edit"></i>
+                                        <i onclick="onDeleteBooth(this)" data-name="{{$booth->name}}" data-id="{{$booth->id}}" class="fa fa-trash-alt delete"></i>
                                     </td>
                                 </tr>
                                 @endforeach
