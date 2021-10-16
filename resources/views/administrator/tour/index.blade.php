@@ -6,66 +6,59 @@
             <div class="col-md-12">
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$tour->name}}</h1>
-                    <a href="" class="btn btn-configs-tour" target="_blank" style=""><i class="fas fa-cog"></i> Config Zone</a>
+                    <div class="div_cardheader_btn">
+                        <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#"><i class="fas fa-globe"></i> Publish </button>
+                        <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-tour"><i class="fas fa-pen"></i> Edit</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row" style="margin-bottom: 1.5rem;">
-            <div class="col-md-5">
-                <div class="card" style="">
-                    <button class="btn btn-default" style="text-align: center;  font-size: 20px;  position: absolute; right: 0; border-radius: 50%;"><i class="fas fa-pencil-alt" data-toggle="modal" data-target="#popup-update-tour"></i></button>
+            <div class="col-md-5" style="height: 60vh;">
+                <div class="card" style="height: 48vh;">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="d-flex">
                             <div class="flex-grow-1 overflow-hidden">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h6 class="font-size-14 font-weight-bold" style="display: inline;">ZONES : (<a style="color: #4e73df">7 / 8</a>) - </h6>
-                                        <h6 class="font-size-14 font-weight-bold" style="display: inline">BOOTHS : (<a style="color: #4e73df">7 / 8</a>)</h6>
-                                    </div>
-                                </div>
-                                <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-building"></i> Name organization :</span> <span>CTTNHH ABCD</span></p>
-                                <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-envelope-square"></i> Email organization :</span> <span>ctytnhhabc@gmail.com</span></p>
-                                <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-phone-square-alt"></i> Hotline organization :</span> <span>0909909999</span></p>
-                                <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-map-marked"></i> Address organization :</span> <span>{{$tour->location}}</span></p>
+                                <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-building mr-3"></i></span> <span> {{$profile->name != null ? $profile->name : "N/A" }} </span></p>
+                                <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-map-marker-alt mr-3"></i></span> <span>{{$tour->location != null ? $tour->location : "N/A" }}</span></p>
                             </div>
                         </div>
-                        <h6 class="font-size-15 font-weight-bold">Project Details :</h6>
+                        <h6 class="font-size-15 font-weight-bold">Description: </h6>
                         <div class="text-muted discription_tour_text" style="">
                             {{$tour->description != null ? $tour->description : 'N/A'}}
                         </div>
-                        <div class="row" style="margin-top: 10px;">
-                            <div style="padding-left: 1rem;padding-right: 1rem;">
-                                <h6 class="font-size-15 font-weight-bold"><i class="fas fa-users"></i> Tour manager :</h6>
-                                <a href="javascript:void(0);">
-                                    <img src="http://admin.360fairs.com/admin-master/asset/images/undraw_profile.svg" style="width: 50px; height: 50px;margin-left: 5px;" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
-                                </a>
-                            </div>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 2vh; height: 10vh;">
+                    <div class="row">
+                        <div class="col-5" style="margin-left: 20px;margin-top: 10px;">
+                            <span style="font-size:12px">Start at</span>
+                            <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->startTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
                         </div>
-                        <div class="task-dates row">
-                            <div class="col-6">
-                                <div class="mt-4">
-                                    <h6 class="font-size-14"><i class="fas fa-calendar-alt" style="color: #4348dfb0;"></i> Start Date : <span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->startTime)->format('Y-m-d') : 'N/A'}}</span></h6>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mt-4">
-                                    <h6 class="font-size-14"><i class="fas fa-calendar-alt" style="color: #4348dfb0;"></i> Due Date : <span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->endTime)->format('Y-m-d') : 'N/A'}}</span></h6>
-                                </div>
-                            </div>
+                        <div class="col-5" style="margin-left: 20px;margin-top: 10px;">
+                            <span style="font-size:12px">End at</span>
+                            <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->endTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
                         </div>
                     </div>
                 </div>
-
             </div>
-            <div class="col-md-7">
-                <div class="card" style="width: 100%; min-height: 400px padding: 0.25rem;">
+            <div class="col-md-7" style="position: relative; height: 60vh;">
+                <div class="card" style="width: 100%; height: 100%; padding:20px;">
+                    <div id="viewer-container" style="width: 100%; height: 100%;">
+                    </div>
+                    <div style="position: absolute; width: 100%; height: 100%; top:0; left: 0;">
+                        <a href="https://360fairs.com/" style="margin-top: 200px; margin-left: 300px; padding: 5px 10px; background: white; border-radius: 50px; width: 100px;">
+                            <i class="fas fa-cog"></i>
+                            <span>Config</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <div class="card  shadow mb-4">
+                <div class="card mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Zones</h6>
                     </div>
@@ -76,30 +69,23 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Images</th>
-                                        <th>Price</th>
-                                        <th>Link Products</th>
-                                        <th>Code</th>
-                                        <th>Tour</th>
-                                        <th style="width: 8%;">Action</th>
+                                        <th style="width: 150px">Number of Booths</th>
+                                        <th>List Booths</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($zones as $zone)
                                     <tr>
                                         <td>1</td>
-                                        <td>Brielle Williamson</td>
-                                        <td><img class="products-tables" src="./../asset/images/apps-1.jpg" alt=""></td>
-                                        <td>150$</td>
+                                        <td><a href="zones/{{$zone->id}}">{{$zone->name}}</a></td>
+                                        <td>{{ count($zone->booths)}} </td>
                                         <td>
-                                            <a href="https://github.com/">https://github.com/</a>
-                                        </td>
-                                        <td>SALE123</td>
-                                        <td>Booth-01</td>
-                                        <td class="btn-action-icon">
-                                            <i class="fas fa-pen edit"></i>
-                                            <i class="fas fa-trash-alt delete"></i>
+                                            @foreach ($zone->booths as $booth)
+                                                <a href="booths/{{$booth->id}}">{{$booth->name}}</a> , 
+                                            @endforeach
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -108,40 +94,39 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="popup-update-tour" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="popup-edit-tour" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="fw-light">Update Edit Tour</h5>
+                <h5 class="fw-light"> Edit Tour</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST">
-                    <input type="hidden" name="_token" value="JO619zmf6ICpBudeuzQcIFM2ahSpiqJxxA91JLfe" />
+                <form action="/administrator/tours/{{$tour->id}}/tour/save-edit" method="POST">
+                    @csrf
                     <div class="mb-3">
                         <label class="small mb-1">Tour Name</label>
-                        <input class="form-control" name="name" type="text" placeholder="Enter email address" />
+                        <input class="form-control" name="name" type="text" value="{{$tour->name}}" placeholder="Enter tour name" />
                     </div>
                     <div class="row gx-3 mb-3">
                         <div class="col-md-6">
-                            <label class="small mb-1">Start time</label>
-                            <input class="form-control" name="start_at" type="date" />
+                            <label class="small mb-1">Start at</label>
+                            <input class="form-control" name="start" value="{{ Carbon\Carbon::parse($tour->startTime)->format('Y-m-d\TH:i')}}" type="datetime-local" />
                         </div>
                         <div class="col-md-6">
-                            <label class="small mb-1" for="inputLastName">End time</label>
-                            <input class="form-control" name="end_at" type="date" />
+                            <label class="small mb-1" for="inputLastName">End at</label>
+                            <input class="form-control" name="end" value="{{ Carbon\Carbon::parse($tour->startTime)->format('Y-m-d\TH:i')}}" type="datetime-local" />
                         </div>
                     </div>
                     <div class="row gx-3 mb-3">
                         <div class="col-md-12">
                             <label class="small mb-1">Location</label>
-                            <input class="form-control" name="location" type="text" placeholder="Enter your location" />
+                            <input class="form-control" name="location" value="{{$tour->location}}" type="text" placeholder="Enter your location" />
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="small mb-1">Tour Description</label>
-                        <textarea name="description" placeholder="Enter your tour description" class="form-control" rows="6"></textarea>
+                        <textarea name="description" placeholder="Enter your tour description" class="form-control" rows="6"> {{$tour->description}} </textarea>
                     </div>
                     <!-- Form Group (create account submit)-->
                     <button type="submit" class="btn btn-primary btn-block">Update Edit Tour</button>
@@ -150,5 +135,25 @@
         </div>
     </div>
 </div>
+<script>
+    function init() {
+        var container = document.getElementById('viewer-container');
+        var viewer = new PANOLENS.Viewer({
+            container: container,
+            autoRotate: true,
+            autoRotateSpeed: 1.0,
+        });
+        viewer.OrbitControls.noZoom = true;
 
+        @if ($overview != null)
+            let imagePanorama = new PANOLENS.ImagePanorama('{{ $overview->imageUrl }}');
+            viewer.add(imagePanorama);
+        @endif
+    }
+</script>
+<script>
+    $(document).ready(function() {
+        init();
+    });
+</script>
 @endsection

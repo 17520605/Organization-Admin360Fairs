@@ -561,6 +561,8 @@
                 var container = document.getElementById('viewer-container');
                 var viewer = new PANOLENS.Viewer({
                     container: container,
+                    autoRotate: true,
+                    autoRotateSpeed: 1.0,
                 });
                 viewer.OrbitControls.noZoom = true;
 

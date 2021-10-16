@@ -21,8 +21,8 @@ class CreateTourTable extends Migration
             $table->string('image')->nullable();
             $table->string('description')->nullable();
             $table->string('location')->nullable();
-            $table->date('startTime')->nullable();
-            $table->date('endTime')->nullable();
+            $table->dateTime('startTime')->nullable();
+            $table->dateTime('endTime')->nullable();
             $table->integer('maximumZone')->nullable()->default(10);
             $table->integer('maximumBooth')->nullable()->default(30);
             $table->integer('maximumPanorama')->nullable()->default(50);

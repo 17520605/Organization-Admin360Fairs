@@ -12,38 +12,36 @@ class TourController extends Controller
 {
     public function index($id)
     {
-        // $tour = DB::table('tour')->find($id);
-        // return view('tour.index', ['user' => Auth::user(), 'tour'=>$tour]);
 
         $tour = DB::table('tour')->find($id);
         $user = Auth::user();
         $profile = DB::table('profile')->where('userId', $user->id)->first();
 
-        $zones = \App\Models\Zone::get();
+        $zones = DB::table('zone')->where('tourId', $id)->get();
+        foreach ($zones as $zone) {
+            $booths = DB::table('booth')
+                ->join('zone_booth', 'booth.id', '=', 'zone_booth.boothId')
+                ->where('zone_booth.zoneId', $zone->id)
+                ->select('booth.*', )
+                ->get();
+            $zone->booths = $booths;
+        }
 
         $overview = \App\Models\Panorama::find($tour->overviewId);
 
         return view('administrator.tour.index', [
             'profile' => $profile,
             'tour'=> $tour,
-            'overview'=> $overview, 
+            'overview'=> $overview,
             'zones'=>$zones
         ]);
-    }
-
-    public function edit($id)
-    {
-        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
-        
-        return view('administrator.tour.edit', ['profile' => $profile,'tour' => $tour]);
     }
 
     public function saveEdit($id, Request $request)
     {
         $name = $request->name;
-        $start_at = $request->start_at;
-        $end_at = $request->end_at;
+        $start = $request->start;
+        $end = $request->end;
         $location = $request->location;
         $description = $request->description;
         $image = $request->image;
@@ -52,14 +50,14 @@ class TourController extends Controller
             ->where('id', $id)
             ->update([
                 'name' => $name,
-                'startTime' => $start_at,
-                'endTime' => $end_at,
+                'startTime' => $start,
+                'endTime' => $end,
                 'location' => $location,
                 'description' => $description,
                 'image' => $image,
             ]);
 
-        return redirect('administrator/tours/'.$id.'/tour');
+        return back();
     }
 
 }

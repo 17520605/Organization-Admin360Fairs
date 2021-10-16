@@ -28,7 +28,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" href="/administrator/tours/{{$tour->id}}">
             <i class="fas fa-torii-gate"></i>
             <span>Tour</span>
         </a>
