@@ -6,7 +6,7 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
             @if (isset($roles))
-            <select id="nav-top__role-select">
+            <select id="nav-top__role-select" >
                 @foreach ($roles as $key => $value)
                     <option value="{{$key}}"> {{$value}} </option>
                 @endforeach

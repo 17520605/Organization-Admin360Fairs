@@ -6,40 +6,48 @@
             <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Speakers</h1>
             <div class="div_cardheader_btn" >
                 <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#popup-create-speaker"><i class="fas fa-plus"></i> Add </button>
-                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-create-speaker"><i class="fas fa-paper-plane"></i> Send Mail </button>
+                <button class="mb-0 btn float-right" id="btn-send-mail-speaker"  data-toggle="modal" data-target="#popup-confirm-send-email" style="display: none"><i class="fas fa-paper-plane"></i> Send Mail </button>
                 <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-import-csv"><i class="fas fa-upload"></i> Import </button>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="border: none !important;">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                        <tr>
+                        <tr style="background: #eef2f7">
                             <th style="width: 40px;">
-                                <input class="checkbox-all" type="checkbox" name="all">
+                                <input class="checkbox-all form-check-input1 dt-checkboxes" type="checkbox" name="all">
                             </th>
                             <th>#</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Contact</th>
-                            <th style="width: 80px;">Status</th>
-                            <th style="width: 80px;">Actions</th>
+                            <th style="width: 10%;">Status</th>
+                            <th style="width: 8%;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($speakers as $speaker)
                         <tr>
                             <td>
-                                <input class="checkbox" type="checkbox" value="{{$speaker->id}}" name="speakerIds[]">
+                                <input class="checkbox form-check-input1 dt-checkboxes" type="checkbox" value="{{$speaker->id}}" name="speakerIds[]">
                             </td>
                             <td>1</td>
                             <td>{{$speaker->name}}</td>
                             <td>{{$speaker->email}}</td>
                             <td>{{$speaker->contact}}</td>
-                            <td>{{$speaker->status}}</td>
                             <td>
-                                <a class="mr-2"><i class="fa fa-pen"></i></a>
-                                <a class="mr-0"><i class="fa fa-trash"></i></a>
+                                @if ($speaker->status == "confirmed")
+                                    <span class="badge bg-danger">{{$speaker->status}} </span>
+                                @elseif($speaker->status == "unconfirmed")
+                                    <span class="badge bg-success">{{$speaker->status}} </span>
+                                @elseif($speaker->status == "sent email")
+                                    <span class="badge bg-warning">{{$speaker->status}} </span>
+                                @endif
+                            </td>
+                            <td class="btn-action-icon">
+                                <i class="fas fa-pen edit" data-toggle="modal" data-target="#popup-edit-speaker"></i>
+                                <i class="fas fa-trash-alt delete"></i>
                             </td>
                         </tr>
                         @endforeach
@@ -50,13 +58,13 @@
     </div>
 </div>
 {{-- POPUP CREATE SPEAKER --}}
-<div class="modal fade" id="popup-create-speaker" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="popup-create-speaker" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form id="popup-create-speaker__form" class="needs-validation" novalidate>
                 <div class="modal-header">
                     <h5 class="fw-light">Create Speaker </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="padding: 30px">
                     @csrf
@@ -91,15 +99,76 @@
         </div>
     </div>
 </div>
-
+{{-- POPUP CREATE SPEAKER --}}
+<div class="modal fade" id="popup-edit-speaker" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="popup-edit-speaker__form" class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h5 class="fw-light">Create Speaker </h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    @csrf
+                    <div class="form-group">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control form-control-user" id="name" placeholder="Enter speaker name" aria-describedby="inputGroupPrepend" required>
+                        <div class="invalid-feedback">
+                            Please enter speaker name
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control form-control-user" id="email" placeholder="Enter email" aria-describedby="inputGroupPrepend" required>
+                        <div class="invalid-feedback">
+                            Please enter email
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="form-label">Contact</label>
+                        <input type="tel" name="contact" class="form-control form-control-user" id="contact" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
+                        <div class="invalid-feedback">
+                            Please enter contact
+                        </div>
+                    </div>
+                    <div class="form-group messages-wrapper border" style="display: none">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Save Change</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{-- POPUP CONFIRM SENT EMAIL --}}
+<div class="modal fade" id="popup-confirm-send-email" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="fw-light">Send Email</h5>
+               <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding: 30px">
+                <div class="form-group p-3">
+                    <span>You sure to send emails to Speaker</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" type="submit">Cancel</button>
+                <button id="popup-confirm-send-email__send-btn" class="btn btn-primary" type="submit">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
 {{-- POPUP IMPORT CSV --}}
-<div class="modal fade" id="popup-import-csv" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="popup-import-csv" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form id="popup-import-csv__form">
                 <div class="modal-header">
                     <h5 class="fw-light">Import Participant </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="padding: 30px">
                     @csrf
@@ -255,12 +324,26 @@
         $('.checkbox-all').change(function () {
             let checked = $(this).prop('checked');  
             $('.checkbox').prop('checked', checked);
+            if(checked == true)
+            {
+                $('#btn-send-mail-speaker').show();
+            }
+            else{
+                $('#btn-send-mail-speaker').hide();
+            }
         })
 
         $('.checkbox').change(function () {
             let totalCount = $('.checkbox').length;
             let checkedCount = $('.checkbox:checked').length;
+            if(checkedCount > 0)
+            {
+                $('#btn-send-mail-speaker').show();
+            }
+            else if(checkedCount < 1){
 
+                $('#btn-send-mail-speaker').hide();
+            }
             if(totalCount == checkedCount)
             {
                 $('.checkbox-all').prop('checked', true);

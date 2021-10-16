@@ -50,7 +50,9 @@
                 });
             })
         </script> --}}
+
         <script src="{{ asset('admin-master/asset/js/sb-admin-2.min.js')}}"></script>
+
         <script>
             $(function() {
                 //Enable check and uncheck all functionality

@@ -18,6 +18,14 @@ class ObjectsController extends Controller
         return view('administrator.tour.index', ['profile' => $profile, 'tour'=>$tour]);
     }
 
+    public function dashboard ($id, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+        return view('administrator.objects.dashboard', ['profile' => $profile, 'tour'=>$tour]);
+    }
+
+
     public function images ($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();

@@ -20,7 +20,7 @@
                                         <button class="btn"><i class="fas fa-trash-alt"></i></button>
                                     </div>
                                     <div class="image">
-                                        <model-viewer src="{{$model->url}}"></model-viewer>
+                                        <model-viewer style="width: 100%;" src="{{$model->url}}"></model-viewer>
                                     </div>
                                     <div class="file-name">
                                         <p class="text-muted">{{$model->name != null ? $model->name : "n/a"}}</p>
@@ -38,4 +38,5 @@
             </div>
         </div>
     </div>
+    
 @endsection

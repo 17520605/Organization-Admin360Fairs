@@ -5,11 +5,11 @@
         <h1 class="h3 mb-2 text-gray-800">Booths</h1>
         <div class="row" style="margin-bottom: 1.5rem;">
             <div class="col-md-7">
-                <div class="card" style="width: 100%; height: 50vh;padding: 0.25rem;">
+                <div class="card" style="width: 100%; padding: 0.25rem;">
                 </div>
             </div>
             <div class="col-md-5">
-                <div class="card" style="height: 50vh;">
+                <div class="card" style="">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="d-flex">
                             <div class="flex-grow-1 overflow-hidden">
@@ -170,12 +170,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="fw-light">Choose Object for Booths</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="border-radius:0 ;">
                     <div class="d-flex flex-column" style="flex-grow: 1;">
