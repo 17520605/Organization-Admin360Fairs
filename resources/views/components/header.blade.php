@@ -15,11 +15,11 @@
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script src="{{ asset('admin-master/asset/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{ asset('admin-master/asset/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('admin-master/asset/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('admin-master/asset/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
     <script src="{{ asset('admin-master/asset/js/adminlte.min.js')}}"></script>
     <script src="{{ asset('admin-master/asset/js/fullcalendar.min.js')}}"></script>
-    <script src="{{ asset('admin-master/asset/js/vendor.min.js')}}"></script>
 
     <script src="{{ asset('admin-master/asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('admin-master/asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>

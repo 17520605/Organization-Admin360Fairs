@@ -46,6 +46,9 @@ Route::middleware('auth')->group(function (){
             // booths
             Route::get('/{id}/booths', 'administrator\BoothsController@index');
             Route::post('/{id}/booths/save-create', 'administrator\BoothsController@saveCreate');
+            Route::post('/{id}/booths/save-edit', 'administrator\BoothsController@saveEdit');
+            Route::get('/{id}/booths/{boothId}', 'administrator\BoothsController@booth');
+            Route::delete('/{id}/booths/{boothId}', 'administrator\BoothsController@saveDelete');
 
             // objects
             Route::get('/{id}/objects', 'administrator\ObjectsController@index');
