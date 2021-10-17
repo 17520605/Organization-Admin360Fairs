@@ -28,7 +28,7 @@
                                 <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
                             </td>
                         </tr>
-                        <tbody class="group-0" >
+                        <tbody class="group-0  style="display: none"" >
                             @if (count($freeBooths) == 0)
                             <tr>
                                 <td colspan="10"><center><span>No booths</span></center></td>
@@ -56,7 +56,7 @@
                                     <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
                                 </td>
                             </tr>
-                            <tbody class="group-{{$group->id}}">
+                            <tbody class="group-{{$group->id}}"  style="display: none">
                                 @if (count($group->booths) == 0)
                                 <tr>
                                     <td colspan="10"><center><span>No booths</span></center></td>
