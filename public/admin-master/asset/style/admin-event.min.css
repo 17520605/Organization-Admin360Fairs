@@ -2719,21 +2719,21 @@ fieldset:disabled a.btn {
 
 .btn-danger {
     color: #fff;
-    background-color: #e74a3b;
-    border-color: #e74a3b;
+    background-color: #dc3545;
+    border-color: #dc3545;
 }
 
 .btn-danger:hover {
     color: #fff;
-    background-color: #e02d1b;
-    border-color: #d52a1a;
+    background-color: #a81a28;
+    border-color: #a81a28;
 }
 
 .btn-danger.focus,
 .btn-danger:focus {
     color: #fff;
-    background-color: #e02d1b;
-    border-color: #d52a1a;
+    background-color: #a81a28;
+    border-color: #a81a28;
     box-shadow: 0 0 0 0.2rem rgba(235, 101, 88, 0.5);
 }
 

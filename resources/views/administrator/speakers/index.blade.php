@@ -51,7 +51,7 @@
                             </td>
                             <td class="btn-action-icon">
                                 <i class="fas fa-pen edit" data-toggle="modal" data-target="#popup-edit-speaker"></i>
-                                <i class="fas fa-trash-alt delete"></i>
+                                <i class="fas fa-trash-alt delete" data-toggle="modal" data-target="#popup-delete-speaker"></i>
                             </td>
                         </tr>
                         @endforeach
@@ -109,7 +109,7 @@
         <div class="modal-content">
             <form id="popup-edit-speaker__form" class="needs-validation" novalidate>
                 <div class="modal-header">
-                    <h5 class="fw-light">Create Speaker </h5>
+                    <h5 class="fw-light">Edit Speaker </h5>
                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="padding: 30px">
@@ -140,6 +140,27 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="submit">Save Change</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{-- POPUP DELETE PARTICIANT --}}
+<div class="modal fade" id="popup-delete-speaker" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <form id="popup-edit-participant__form" class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h5 class="fw-light">Delete Speaker </h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <p>Do you really want to delete it?</p>
+                </div>
+                <div class="modal-footer" style="padding: 0">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
                 </div>
             </form>
         </div>

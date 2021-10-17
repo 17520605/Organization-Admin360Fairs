@@ -37,8 +37,8 @@
                                     <a href="" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
                                 </td>
                                 <td class="btn-action-icon">
-                                    <i class="fas fa-pen edit"></i>
-                                    <i class="fas fa-trash-alt delete"></i>
+                                    <i class="fas fa-pen edit" data-zone-id="{{$zone->id}}" data-name="{{$zone->name}}" data-booths='@foreach ($zone->booths as $booth){"id":"{{$booth->id}}", "name":"{{$booth->name}}"};@endforeach' onclick="onOpenPopupEditZone(this);"></i>
+                                    <i class="fas fa-trash-alt delete" data-toggle="modal" data-target="#popup-delete-zone"></i>
                                 </td>
                             </tr>
                             @endforeach
@@ -48,7 +48,8 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="popup-create-zone" tabindex="-1" role="dialog" aria-hidden="true">
+    {{-- POPUP CREATE ZONE --}}
+    <div class="modal fade" id="popup-create-zone" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -85,6 +86,98 @@
             </div>
         </div>
     </div>
+    {{-- POPUP EDIT ZONE --}}
+    <div class="modal fade" id="popup-edit-zone" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Edit Zone</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-column" style="flex-grow: 1;">
+                        <form action="/administrator/tours/{{$tour->id}}/zones/save-edit" method="POST">
+                            @csrf
+                            <input id="popup-edit-zone__id-hidden-input" type="hidden" name="id">
+                            <div class="mb-3">
+                                <label class="small mb-1" for="">Name</label>
+                                <input class="form-control" id="popup-edit-zone__name-input" type="text" name="name" placeholder="Enter Name">
+                            </div>
+                            <div class="mb-3">
+                                <a class="link link-primary" id="popup-edit-zone__toggle-booths-wrapper-btn">Choose booths</a>
+                            </div>
+                            <div class="mb-3 p-3 border booths-wrapper" style="display: none">
+                                <div class="free-booths">
+                                    @foreach ($freeBooths as $freeBooth)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="boothIds[]" value="{{$freeBooth->id}}" >
+                                        <label class="form-check-label">
+                                            {{$freeBooth->name}}
+                                        </label>
+                                    </div>
+                                    @endforeach
+                                </div>  
+                                <div class="zone-booths">
+                                   
+                                </div>
+                            </div>
+                            <div class="modal-footer"  style="padding: 0.85rem 0px;">
+                                <button type="submit" id="popup-edit-zone__save-btn" data-zone-id="" class="btn btn-primary btn-block">Save Change</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- POPUP DELETE ZONE --}}
+    <div class="modal fade" id="popup-delete-zone" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="popup-edit-participant__form" class="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="fw-light">Delete Participant </h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <p>Do you really want to delete it?</p>
+                    </div>
+                    <div class="modal-footer" style="padding: 0">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function onOpenPopupEditZone(target){
+            debugger
+            let name = $(target).attr('data-name');
+            let booths = $(target).attr('data-booths');
+            let zoneId = $(target).attr('data-zone-id');
+            let arr = booths.split(';');
+            $('#popup-edit-zone__name-input').val(name);
+            $('#popup-edit-zone__id-hidden-input').val(zoneId);
+            $('#popup-edit-zone').find('.zone-booths').empty();
+            $('#popup-edit-zone').find('.booths-wrapper').hide();
+            arr.forEach(str => {
+                if(str != ""){
+                    $('#popup-edit-zone').find('.booths-wrapper').show();
+                    let item = JSON.parse(str);
+                    let element = $(`
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="boothIds[]" value="`+item.id+`" checked>
+                            <label class="form-check-label">`+item.name+`</label>
+                        </div>`
+                    );
+                    $('#popup-edit-zone').find('.zone-booths').append(element);
+                }
+            });
+            $('#popup-edit-zone').modal('show');
+        }
+    </script>
     <script>
         $(document).ready(function() {
             $('#popup-create-zone__toggle-booths-wrapper-btn').click(function (e) { 
@@ -97,6 +190,17 @@
                     $('#popup-create-zone').find('.booths-wrapper').find('input[type="checkbox"]').prop('checked', false);
                 }
             });
+            $('#popup-edit-zone__toggle-booths-wrapper-btn').click(function (e) { 
+                let hidden =  $('#popup-edit-zone').find('.booths-wrapper').is(":hidden");
+                if(hidden){
+                    $('#popup-edit-zone').find('.booths-wrapper').show('fast');
+                }
+                else{
+                    $('#popup-edit-zone').find('.booths-wrapper').hide('fast');
+                    $('#popup-edit-zone').find('.booths-wrapper').find('input[type="checkbox"]').prop('checked', false);
+                }
+            });
         });
+            
     </script>
 @endsection

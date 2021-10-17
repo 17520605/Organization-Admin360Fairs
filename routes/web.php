@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/zones/{zoneId}', 'administrator\ZonesController@zone');
             Route::post('/{id}/zones/{zoneId}/save-add-booths', 'administrator\ZonesController@saveAddBooths');
             Route::post('/{id}/zones/save-create', 'administrator\ZonesController@saveCreate');
+            Route::post('/{id}/zones/save-edit', 'administrator\ZonesController@saveEdit');
         
             // booths
             Route::get('/{id}/booths', 'administrator\BoothsController@index');

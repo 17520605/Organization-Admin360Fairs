@@ -85,6 +85,28 @@ class ZonesController extends Controller
         return back();
     }
 
+    public function saveEdit($id, Request $request)
+    {
+        $zoneId = $request->id;
+        $name = $request->name;
+        $boothIds = $request->boothIds;
+
+        // delete relation
+        \App\Models\Zone_Booth::where('zoneId', $zoneId)->delete();
+
+        // re create relation
+        if(isset($boothIds)){
+            foreach ($boothIds as $boothId) {
+                DB::table('zone_booth')->insert([
+                    'zoneId' => $zoneId,
+                    'boothId'=> $boothId
+                ]);
+            }
+        }
+
+        return back();
+    }
+
     public function saveAddBooths($id, $zoneId, Request $request)
     {
         $boothIds = $request->boothIds;
