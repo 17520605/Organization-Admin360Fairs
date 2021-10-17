@@ -30,7 +30,12 @@ class EventsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-        $webinar = \App\Models\Webinar::with('details')->find($webinarId);
+        $webinar = \App\Models\Webinar::with('details')
+            ->where('id',$webinarId)
+            ->first();
+        foreach ($webinar->details as $detail) {
+            $detail->speaker = DB::table('profile')->find($detail->speakerId);
+        }
         return view('administrator.events.webinar', ['profile' => $profile , 'webinar' => $webinar, 'tour'=>$tour]);
     }
 

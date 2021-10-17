@@ -56,7 +56,7 @@
                                                         </div>
                                                         <div class="event-content">
                                                             <div class="timeline-text">
-                                                                <h3 class="font-size-17"> {{$detail->speaker->name}}</h3>
+                                                                <h3 class="font-size-17"> {{$detail->speaker != null ? $detail->speaker->name : "N/A"}}</h3>
                                                                 <h3 class="font-size-14"><i class="fas fa-check"></i> {{$detail->title}}</h3>
                                                             </div>
                                                         </div>
