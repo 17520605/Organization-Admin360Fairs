@@ -33,342 +33,33 @@
                 <div class="col-md-7">
                     <div class="card" style="width: 100%; height: 400px;padding: 20px;">
                         <div id="viewer-container" style="width: 100%; height: 100%;"></div>
+                        <div class="bg-config-overview">
+                            <a href="https://360fairs.com/" class="btn-config-overview ">
+                                <i class="fas fa-cog"></i>
+                                <span>Config</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            {{-- <div class="row" style="margin-bottom: 1.5rem;">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h6 class="text-gray-600">Types :</h6>
-                                </div>
-                            </div> 
-                            <div class="row">
-                                <div class="col-sm-12" style="margin-bottom: 10px">
-                                    <div class="card">
-                                        <div class="card-body" style="padding: 10px;">
-                                            <div class="row">
-                                                <div class="col-2">
-                                                    <div class="avatar-title bg-transparent rounded"><i
-                                                            class="fas fa-folder"
-                                                            style="font-size:20px ;color: rgba(241,180,76,1)!important;"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" onclick="" >All</a></p>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="text-muted text-truncate mb-0">{{ $types->sum('count')}} Files</p>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p class="text-muted text-truncate mb-0">{{ number_format(floatval($types->sum('size'))/1048576, 1) }} MB</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="padding: 0 5px 5px 5px;">
-                                            <div class="col-12">
-                                                <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                     <div style="width: 20%; height: 3px; background-color: rgb(0, 168, 0)"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12" style="margin-bottom: 10px">
-                                    <div class="card">
-                                        <div class="card-body" style="padding: 10px;">
-                                            <div class="row">
-                                                <div class="col-2">
-                                                    <div class="avatar-title bg-transparent rounded"><i
-                                                            class="fas fa-folder"
-                                                            style="font-size:20px ;color: rgba(241,180,76,1)!important;"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" href="/apps-filemanager">Images</a></p>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'image')->first() != null ?$types->where('type', 'image')->first()->count : 0 }} Files</p>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'image')->first() != null ? number_format(floatval($types->where('type', 'image')->first()->size)/1048576, 1) : 0 }} MB</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="padding: 0 5px 5px 5px;">
-                                            <div class="col-12">
-                                                <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                    <div style="width: 40%; height: 3px; background-color: rgb(0, 168, 0)"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12" style="margin-bottom: 10px">
-                                    <div class="card">
-                                        <div class="card-body" style="padding: 10px;">
-                                            <div class="row">
-                                                <div class="col-2">
-                                                    <div class="avatar-title bg-transparent rounded"><i
-                                                            class="fas fa-folder"
-                                                            style="font-size:20px ;color: rgba(241,180,76,1)!important;"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" href="/apps-filemanager">Videos</a></p>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'video')->first() != null ?$types->where('type', 'video')->first()->count : 0 }} Files</p>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'video')->first() != null ? number_format(floatval($types->where('type', 'video')->first()->size)/1048576, 1) : 0 }} MB</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="padding: 0 5px 5px 5px;">
-                                            <div class="col-12">
-                                                <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                     <div style="width: 50%; height: 3px; background-color: rgb(0, 168, 0)"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12" style="margin-bottom: 10px">
-                                    <div class="card">
-                                        <div class="card-body" style="padding: 10px;">
-                                            <div class="row">
-                                                <div class="col-2">
-                                                    <div class="avatar-title bg-transparent rounded"><i
-                                                            class="fas fa-folder"
-                                                            style="font-size:20px ;color: rgba(241,180,76,1)!important;"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" href="/apps-filemanager">Audio</a></p>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'audio')->first() != null ?$types->where('type', 'audio')->first()->count : 0 }} Files</p>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'audio')->first() != null ? number_format(floatval($types->where('type', 'audio')->first()->size)/1048576, 1) : 0 }} MB</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="padding: 0 5px 5px 5px;">
-                                            <div class="col-12">
-                                                <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                    <div style="width: 20%; height: 3px; background-color: rgb(0, 168, 0)"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12" style="margin-bottom: 10px">
-                                    <div class="card">
-                                        <div class="card-body" style="padding: 10px;">
-                                            <div class="row">
-                                                <div class="col-2">
-                                                    <div class="avatar-title bg-transparent rounded"><i
-                                                            class="fas fa-folder"
-                                                            style="font-size:20px ;color: rgba(241,180,76,1)!important;"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p class="font-size-14 text-truncate mb-0"><a class="text-body" href="/apps-filemanager">Models</a></p>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'model')->first() != null ?$types->where('type', 'model')->first()->count : 0 }} Files</p>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p class="text-muted text-truncate mb-0">{{ $types->where('type', 'model')->first() != null ? number_format(floatval($types->where('type', 'model')->first()->size)/1048576, 1) : 0 }} MB</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="padding: 0 5px 5px 5px;">
-                                            <div class="col-12">
-                                                <div style="border: 1px rgb(177, 177, 177) solid; border-radius:20px;">
-                                                     <div style="width: 35%; height: 3px; background-color: rgb(0, 168, 0)"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="card card_object_zone" >
-                        <div class="card-body" >
-                            <div class="row">
-                                <div class="col-12 title">
-                                    <h6 class="text-gray-600 float-left"> Objects </h6>
-                                    <button class="btn float-right"><i class="fas fa-plus"></i> Add </button>
-                                </div>
-                            </div>
-                            <div id="all-wrapper" class="objects-wrapper row list_object">
-                                @foreach ($objects as $object)
-                                    @if ($object->type == 'image')
-                                    <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                        <div class="card">
-                                            <div class="file">
-                                                <div class="image">
-                                                    <img src="{{$object->url}}"
-                                                        alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <a href="" class="m-b-5 text-muted">{{$object->name}}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endif
-                                    @if ($object->type == 'video')
-                                    <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                        <div class="card">
-                                            <div class="file">
-                                                <div class="icon">
-                                                    <i class="fas fa-link text-info"></i>
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="text-muted">{{$object->name}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endif
-                                    @if ($object->type == 'audio')
-                                    <div class="col-lg-3 col-md-4 col-sm-12">
-                                        <div class="card">
-                                            <div class="file">
-                                                <div class="icon">
-                                                    <i class="fab fa-soundcloud" style="color: #f46c00"></i>
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="text-muted">{{$object->name}}</p> 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endif
-                                    @if ($object->type == 'model')
-                                    <div class="col-lg-3 col-md-4 col-sm-12">
-                                        <div class="card">
-                                            <div class="file">
-                                                <div class="image">
-                                                    <model-viewer src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="text-muted">{{$object->name}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                            <div id="images-wrapper" class="objects-wrapper row" style="display: none; height: 320px; overflow-y: scroll;">
-                                @php
-                                    $images =  $objects->where('type', 'image');
-                                @endphp
-                                @foreach ($images as $image)
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <div class="image">
-                                                <img src="{{$image->url}}"
-                                                    alt="img" class="img-fluid">
-                                            </div>
-                                            <div class="file-name">
-                                                <a href="" class="m-b-5 text-muted">{{$image->name}}</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                            <div id="videos-wrapper" class="objects-wrapper row" style="display: none; height: 320px; overflow-y: scroll;">
-                                @php
-                                    $videos =  $objects->where('type', 'video');
-                                @endphp
-                                @foreach ($videos as $video)
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <div class="icon">
-                                                <i class="fas fa-link text-info"></i>
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="text-muted">VIDEO 1</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                            <div id="audios-wrapper" class="objects-wrapper row" style="display: none; height: 320px; overflow-y: scroll;">
-                                @php
-                                    $audios =  $objects->where('type', 'audio');
-                                @endphp
-                                @foreach ($audios as $audio)
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <div class="card">
-                                        <div class="file">
-                                            <div class="icon">
-                                                <i class="fab fa-soundcloud"></i>
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="text-muted">{{$audio->name}}</p> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                            <div id="models-wrapper" class="objects-wrapper row" style="display: none; height: 320px; overflow-y: scroll;">
-                                @php
-                                    $models =  $objects->where('type', 'model');
-                                @endphp
-                                @foreach ($models as $model)
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    <div class="card">
-                                        <div class="file">
-                                            <div class="image">
-                                                <model-viewer src="{{$model->url}}" ar-status="not-presenting"></model-viewer>
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="text-muted">{{$model->name}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card mb-4">
                         <div class="card-header py-3">
                             <h6 class="font-weight-bold text-primary float-left">Booths</h6>
-                            <button class="btn float-right" data-toggle="modal" data-target="#popup-add-booth-to-zone"><i class="fas fa-plus"></i> Add </button>
+                            <button class="btn float-right btn-df" data-toggle="modal" data-target="#popup-add-booth-to-zone"><i class="fas fa-plus"></i> Add Booth </button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
-                                        <tr>
-                                            <th>#</th>
+                                        <tr style="background: #eef2f7;">
+                                            <th style="text-align: center ; width: 5%;">#</th>
                                             <th>Name</th>
                                             <th style="width: 25%;">Owner</th>
                                             <th style="width: 100px;"> Panoramas</th>
                                             <th style="width: 100px;">Objects</th>
-                                            <th style="width: 120px;">Status</th>
+                                            <th style="width: 135px;">Visit</th>
                                             <th style="width: 8%;">Actions</th>
                                         </tr>
                                     </thead>
@@ -392,7 +83,9 @@
                                                 </td>
                                                 <td>3</td>
                                                 <td>3</td>
-                                                <td>Booth-01</td>
+                                                <td>  
+                                                    <a href="" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
+                                                </td>
                                                 <td class="btn-action-icon">
                                                     <i class="fas fa-pen edit"></i>
                                                     <i class="fas fa-trash-alt delete"></i>

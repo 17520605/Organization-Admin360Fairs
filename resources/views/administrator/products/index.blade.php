@@ -11,8 +11,8 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <tr>
-                                <th>#</th>
+                            <tr style="background: #eef2f7;">
+                                <th style="text-align: center">#</th>
                                 <th>Name</th>
                                 <th>Images</th>
                                 <th>Price</th>
@@ -24,7 +24,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1</td>
+                                <td style="text-align: center">1</td>
                                 <td>Brielle Williamson</td>
                                 <td><img class="products-tables" src="./../asset/images/apps-1.jpg" alt=""></td>
                                 <td>150$</td>

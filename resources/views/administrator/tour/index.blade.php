@@ -17,6 +17,35 @@
             <div class="col-md-5" style="height: 60vh;">
                 <div class="card" style="height: 48vh;">
                     <div class="card-body" style="color: #555; font-size: 14px;">
+                        <div class="d-flex process-overview">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="row" style="margin-bottom: 0.5rem">
+                                    <div class="col-lg-3">
+                                        <span style="color: #555;font-weight: 600 ;" >Zones :  (3/10)</span> 
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <span>
+                                            <div id="progress-striped progress-xs" class="progress progress-striped mb-0">
+                                                <div class="progress-bar progress-bar-warning" data-transitiongoal="43" aria-valuenow="43" style="width: 43%;">43%</div>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 1rem">
+                                    <div class="col-lg-3">
+                                        <span style="color: #555;font-weight: 600 ;" >Booths : (3/10)</span> 
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <span>
+                                            <div id="progress-striped progress-xs" class="progress progress-striped mb-0">
+                                                <div class="progress-bar progress-bar-warning" data-transitiongoal="43" aria-valuenow="43" style="width: 43%;">43%</div>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h6 class="font-size-15 font-weight-bold">General information: </h6>
                         <div class="d-flex">
                             <div class="flex-grow-1 overflow-hidden">
                                 <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-building mr-3"></i></span> <span> {{$profile->name != null ? $profile->name : "N/A" }} </span></p>
@@ -24,7 +53,7 @@
                             </div>
                         </div>
                         <h6 class="font-size-15 font-weight-bold">Description: </h6>
-                        <div class="text-muted discription_tour_text" style="">
+                        <div class="text-muted discription_tour_text" style="max-height: 10rem">
                             {{$tour->description != null ? $tour->description : 'N/A'}}
                         </div>
                     </div>
@@ -46,8 +75,8 @@
                 <div class="card" style="width: 100%; height: 100%; padding:20px;">
                     <div id="viewer-container" style="width: 100%; height: 100%;">
                     </div>
-                    <div style="position: absolute; width: 100%; height: 100%; top:0; left: 0;">
-                        <a href="https://360fairs.com/" style="margin-top: 200px; margin-left: 300px; padding: 5px 10px; background: white; border-radius: 50px; width: 100px;">
+                    <div class="bg-config-overview">
+                        <a href="https://360fairs.com/" class="btn-config-overview ">
                             <i class="fas fa-cog"></i>
                             <span>Config</span>
                         </a>
@@ -66,23 +95,27 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th style="width: 150px">Number of Booths</th>
+                                    <tr style="background: #eef2f7;">
+                                        <th style="width: 5%;">#</th>
+                                        <th style="width: 20%">Name</th>
+                                        <th style="width: 15%">Number of Booths</th>
                                         <th>List Booths</th>
+                                        <th style="width: 135px;">Visit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($zones as $zone)
                                     <tr>
-                                        <td>1</td>
+                                        <td style="text-align: center">1</td>
                                         <td><a href="zones/{{$zone->id}}">{{$zone->name}}</a></td>
                                         <td>{{ count($zone->booths)}} </td>
                                         <td>
                                             @foreach ($zone->booths as $booth)
                                                 <a href="booths/{{$booth->id}}">{{$booth->name}}</a> , 
                                             @endforeach
+                                        </td>
+                                        <td>
+                                            <a href="" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

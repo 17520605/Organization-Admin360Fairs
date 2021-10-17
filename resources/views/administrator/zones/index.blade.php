@@ -13,24 +13,28 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Booths count</th>
+                            <tr style="background: #eef2f7;">
+                                <th style="text-align: center;width: 5%;">#</th>
+                                <th style="width: 20%;">Name</th>
+                                <th style="width: 15%;">Booths count</th>
                                 <th>Booths of zone</th>
-                                <th>Action</th>
+                                <th style="width: 130px;">Visit</th>
+                                <th style="width: 8%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($zones as $zone)
                             <tr>
-                                <td>1</td>
+                                <td style="text-align: center">1</td>
                                 <td><a href="zones/{{$zone->id}}">{{$zone->name}}</a></td>
                                 <td>{{ count($zone->booths)}} </td>
                                 <td>
                                     @foreach ($zone->booths as $booth)
                                         <a href="booths/{{$booth->id}}">{{$booth->name}}</a> , 
                                     @endforeach
+                                </td>
+                                <td>
+                                    <a href="" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
                                 </td>
                                 <td class="btn-action-icon">
                                     <i class="fas fa-pen edit"></i>

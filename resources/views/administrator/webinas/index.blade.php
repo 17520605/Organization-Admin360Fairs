@@ -10,8 +10,8 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                            <tr>
-                                <th>#</th>
+                            <tr style="background: #eef2f7;">
+                                <th style="text-align: center">#</th>
                                 <th>Events</th>
                                 <th>Baner</th>
                                 <th>Name</th>
@@ -23,7 +23,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1</td>
+                                <td style="text-align: center">1</td>
                                 <td>Event 279</td>
                                 <td><img style="width: 150px; max-height: 80px;" src="https://cdn.vn.garenanow.com/web/fo4vn/2019-Nov/VNDAU/KV-Adapt-1920x1080.jpg" alt=""></td>
                                 <td>Thuyết trình triển lãm</td>

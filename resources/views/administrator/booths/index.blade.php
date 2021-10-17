@@ -13,8 +13,8 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead class="group-head">
-                            <tr>
-                                <th>#</th>
+                            <tr style="background: #eef2f7;">
+                                <th style="text-align: center">#</th>
                                 <th>Name</th>
                                 <th>Owner</th>
                                 <th>Update At</th>
@@ -36,7 +36,7 @@
                             @endif
                             @foreach ($freeBooths as $freeBooth)
                             <tr class="booth-{{$freeBooth->id}}">
-                                <td>1</td>
+                                <td style="text-align: center">1</td>
                                 <td><a href="/administrator/tours/{{$tour->id}}/booths/{{$freeBooth->id}}">{{$freeBooth->name}}</a></td>
                                 <td>Dinh phong</td>  
                                 <td>September 26, 2021</td>
@@ -64,7 +64,7 @@
                                 @endif
                                 @foreach ($group->booths as $booth)
                                 <tr class="booth-{{$booth->id}}">
-                                    <td>1</td>
+                                    <td style="text-align: center">1</td>
                                     <td><a style="font-weight: 600" href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}">{{$booth->name}}</a></td>
                                     <td>Dinh phong</td>
                                     <td>September 26, 2021</td>

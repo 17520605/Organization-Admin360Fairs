@@ -18,7 +18,8 @@
                             <th style="width: 40px;">
                                 <input class="checkbox-all form-check-input1 dt-checkboxes" type="checkbox" name="all">
                             </th>
-                            <th>#</th>
+                            <th style="text-align: center">#</th>
+                            <th style="width: 8%;">Avatar</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Contact</th>
@@ -34,7 +35,10 @@
                                     <input class="checkbox form-check-input1 dt-checkboxes" type="checkbox" value="{{$participant->id}}" name="participantIds[]">
                                 @endif
                             </td>
-                            <td>1</td>
+                            <td style="text-align: center">1</td>
+                            <td style="text-align: center">
+                                <div><img class="rounded-circle avatar-xs" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634458558/icons/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529_ouili5.png" alt=""></div>
+                            </td>
                             <td>{{$participant->name}}</td>
                             <td>{{$participant->email}}</td>
                             <td>{{$participant->contact}}</td>

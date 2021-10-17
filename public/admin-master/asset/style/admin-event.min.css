@@ -12502,10 +12502,13 @@ body.sidebar-toggled footer.sticky-footer {
     background: #4e73df;
     padding: 5px 35px;
     color: #FFF;
+    box-shadow: rgb(0 0 0 / 21%) 0px 2px 4px;
+    border-radius: 3px;
 }
 
 .btn.btn-df:hover {
     background: #4666c7;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .btn.btn-df1 {
@@ -14832,4 +14835,46 @@ img {
 
 .total_bar_object .progress-bar-warning {
     background-color: #f3ad06;
+}
+
+.bg-config-overview {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    pointer-events: none;
+    left: 0;
+}
+
+.btn-config-overview {
+    pointer-events: all;
+    padding: 2px 8px;
+    background: white;
+    border-radius: 50px;
+    color: #4e73df;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: none;
+}
+
+.btn-config-overview:hover {
+    opacity: 0.75;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.btn-visit-now {
+    padding: 6px 10px;
+    background: none;
+    border: 1px solid #4e73df;
+    color: #4e73df;
+    border-radius: 3px
+}
+
+.btn-visit-now:hover {
+    border-radius: 3px;
+    background: #4e73df;
+    color: #FFF;
 }
