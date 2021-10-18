@@ -18,9 +18,9 @@
                                     </div>
                                     <form method="POST" action="{{env('APP_URL')}}/login" class="user">
                                         @csrf
-                                        <input type="hidden" name="url" value="{{$url}}">
+                                        <input type="hidden" name="url" value="{{isset($url) ? $url : ''}}">
                                         <div class="form-group">
-                                            <input type="email" name="email" value="{{$email}}" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                                            <input type="email" name="email" value="{{isset($email) ? $email : ''}}" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">

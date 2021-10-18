@@ -15,9 +15,9 @@
                                         <h1 class="h4 mb-4" style="color: #4e73df;">Information verification !</h1>
                                         <p class="text-muted font-size-14 mb-4">Enter your code to verify the account is correct. <br> The verification code we send in your email</p>
                                     </div>
-                                    <form id="form" class="user" action="confirmation" method="POST">
+                                    <form id="form">
                                         @csrf
-                                        <input type="hidden" name="id" value="{{$tour_participant->id}}">
+                                        <input type="hidden" name="id" value="{{$tour_speaker->id}}">
                                         <div class="form-group">
                                             <input type="text" name="code" class="form-control form-control-user" maxlength="6" placeholder="_ _ _ _ _ _" style="text-align: center;font-size: 20px;color: #222;">
                                         </div>
@@ -39,7 +39,6 @@
     </div>
     <script>
         $(document).ready(function () {
-
             $('#form').submit(function (e) {  
                 if(this.checkValidity() == false) return;
                 e.preventDefault();
@@ -49,12 +48,12 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "POST",
-                    url: "/partner/confirmation",
+                    url: "/confirmation?role=speaker",
                     data: data,
                     dataType: 'json',
                     success: function (response) {
                         if(response.success == true){
-                            window.location.href = "/init-password?email={{$tour_participant->email}}"
+                            window.location.href = "/init-password?email={{$tour_speaker->email}}"
                         }
                         else{
                             if(response.incorrectCount <= 3){

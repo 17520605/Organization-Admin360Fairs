@@ -371,13 +371,20 @@
                         let wrapper = $(`<div class="p-3"> <ul></ul> </div>`);
                         Object.keys(res.errors).forEach(line => {
                             wrapper.find('ul').append(`
-                                <li> Line ` + line + ` : ` + res.errors[line] + `</li>
+                                <li> Line ` + line + ` : ` + Object.values(res.errors[line]).join(", ") + `</li>
                             `)
                         });
                         $('#popup-import-csv').find('.messages-wrapper').append(wrapper);
                     }
                 }
             });
+        });
+
+        $('#popup-import-csv').on('hidden.bs.modal', function () {  
+            $('#popup-import-csv__file-input').val(null);
+            $('#popup-import-csv').find('.messages-wrapper').hide();
+            $('#popup-import-csv__check-btn').show();
+            $('#popup-import-csv__save-btn').hide();
         });
 
         $('#popup-import-csv__save-btn').click(function (e) { 

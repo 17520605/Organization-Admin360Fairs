@@ -198,7 +198,7 @@
         <div class="modal-content">
             <form id="popup-import-csv__form">
                 <div class="modal-header">
-                    <h5 class="fw-light">Import Participant </h5>
+                    <h5 class="fw-light">Import Speaker </h5>
                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="padding: 30px">
@@ -290,16 +290,19 @@
                     else{
                         $('#popup-create-speaker').find('.messages-wrapper').empty();
                         $('#popup-create-speaker').find('.messages-wrapper').show();
-                        let wrapper = $(
-                            `<div class="p-3">
-                                <span> `+response.error+` </span>
-                            </div>
-                        `);
-                        $('#popup-create-speaker').find('.messages-wrapper').append(wrapper);
+                        Object.keys(response.errors).forEach(key => {
+                            let wrapper = $(
+                                `<div class="p-3">
+                                    <span> `+response.errors[key]+` </span>
+                                </div>
+                            `);
+                            $('#popup-create-speaker').find('.messages-wrapper').append(wrapper);
+                        });
                     }
                 }
             });
         });
+        
         $('#popup-edit-speaker__form').submit(function (e) { 
             if(this.checkValidity() == false) return;
             e.preventDefault();
@@ -319,12 +322,14 @@
                     else{
                         $('#popup-edit-speaker').find('.messages-wrapper').empty();
                         $('#popup-edit-speaker').find('.messages-wrapper').show();
-                        let wrapper = $(
-                            `<div class="p-3">
-                                <span> `+response.error+` </span>
-                            </div>
-                        `);
-                        $('#popup-edit-speaker').find('.messages-wrapper').append(wrapper);
+                        Object.keys(response.errors).forEach(key => {
+                            let wrapper = $(
+                                `<div class="p-3">
+                                    <span> `+response.errors[key]+` </span>
+                                </div>
+                            `);
+                            $('#popup-edit-speaker').find('.messages-wrapper').append(wrapper);
+                        });
                     }
                 }
             });
@@ -364,13 +369,20 @@
                         let wrapper = $(`<div class="p-3"> <ul></ul> </div>`);
                         Object.keys(res.errors).forEach(line => {
                             wrapper.find('ul').append(`
-                                <li> Line ` + line + ` : ` + res.errors[line] + `</li>
+                                <li> Line ` + line + ` : ` + Object.values(res.errors[line]).join(", ") + `</li>
                             `)
                         });
                         $('#popup-import-csv').find('.messages-wrapper').append(wrapper);
                     }
                 }
             });
+        });
+
+        $('#popup-import-csv').on('hidden.bs.modal', function () {  
+            $('#popup-import-csv__file-input').val(null);
+            $('#popup-import-csv').find('.messages-wrapper').hide();
+            $('#popup-import-csv__check-btn').show();
+            $('#popup-import-csv__save-btn').hide();
         });
 
         $('#popup-import-csv__save-btn').click(function (e) { 

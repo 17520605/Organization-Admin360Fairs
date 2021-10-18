@@ -140,7 +140,7 @@
                                                         <tr>
                                                             <td align="center" style="color: #6a4bce; font-size: 14px; line-height: 20px; padding-bottom: 10px;">
                                                                 <div>
-                                                                    <a href="http://admin.360fairs.com/partner/verification/{{$model->id}}" style="
+                                                                    <a href="http://admin.360fairs.com/verification/{{$model->id}}?role=speaker&code={{$model->code}}" style="
                                                                         font-family: Verdana, Sans-Serif;
                                                                         background-color: #15b300;
                                                                         border-radius: 3px;

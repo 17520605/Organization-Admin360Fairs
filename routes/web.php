@@ -3,7 +3,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::match(['get', 'post'], '/login', 'AuthController@login')->name('login');
 Route::match(['get', 'post'], '/register', 'AuthController@register')->name('register');
-Route::match(['get', 'post'], '/verification', 'AuthController@verification');
+Route::match(['get', 'post'], '/init-password', 'AuthController@initPassword');
+Route::match(['get', 'post'], '/verification/{id}', 'AuthController@verification');
 Route::match(['get', 'post'], '/confirmation', 'AuthController@confirmation');
 Route::get('/logout', 'AuthController@logout');
 
@@ -75,8 +76,6 @@ Route::middleware('auth')->group(function (){
         Route::get('/', 'participant\ToursController@index');
         Route::get('/tours', 'participant\ToursController@index');
         Route::get('/tours/{id}', 'participant\TourController@index');
-        Route::get('/verification/{id}', 'PartnerController@verification');
-        Route::post('/confirmation', 'PartnerController@confirmation');
     });
 
     Route::group(['prefix' => 'speaker'], function(){

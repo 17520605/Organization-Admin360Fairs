@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -14,7 +15,19 @@ class AuthController extends Controller
         if ($request->getMethod() == 'GET') {
             $url = $request->get('url');
             $email = $request->get('email');
-            return view('auth.login', ['url' => $url, 'email' => $email]);
+
+            $user = \App\Models\User::where('email',  $email)->first();
+            if($user != null){
+                if($user->isRequiredChangePassword == true || $user->password == null){
+                    return view('auth.init_password', ['email' => $user->email]);
+                }
+                else{
+                    return view('auth.login', ['url' => $url, 'email' => $email]);
+                }
+            }
+            else{
+                return view('auth.login', ['url' => $url]);
+            }
         }
 
         $credentials = $request->only(['email', 'password']);
@@ -75,6 +88,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $email)->first();
         $user->password = bcrypt($password);
+        $user->isRequiredChangePassword = false;
         $user->save();
 
         return redirect('/login?email='.$email);
@@ -91,62 +105,130 @@ class AuthController extends Controller
         return redirect('/login');
     }
 
-    public function verification($id)
+    public function verification($id, Request $request)
     {
         $user = Auth::user();
-
-        $tour_participant = DB::table('tour_participant')
-            ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
-            ->where([
-                ['tour_participant.id', '=', $id],
-            ])
-            ->select('tour_participant.*', 'email')
-            ->first();
+        $role = $request->get('role');
+        $code = $request->get('code');
         
-        if( $tour_participant->status == \App\Models\Tour_Participant::SENTEMAIL){
-            if($tour_participant->incorrectCount <= 3){
-                return view('auth.verification', ['user' => Auth::user(), 'tour_participant' => $tour_participant]);
+        if($role == 'participant'){
+            $tour_participant = DB::table('tour_participant')
+                ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+                ->where([
+                    ['tour_participant.id', '=', $id],
+                ])
+                ->select('tour_participant.*', 'email')
+                ->first();
+            
+            if( $tour_participant->status == \App\Models\Tour_Participant::SENTEMAIL){
+                if($tour_participant->incorrectCount <= 3){
+                    return view('auth.verification', ['user' => Auth::user(), 'tour_participant' => $tour_participant]);
+                }
+                else{
+                    return response("Ban da nhap qua so lan quy dinh");
+                }
             }
             else{
-                return response("Ban da nhap qua so lan quy dinh");
+                return response("Ban k co loi moi verify");
             }
         }
-        else{
-            return response("Ban k co loi moi verify");
+        else
+        if($role == 'speaker'){
+            $tour_speaker = \App\Models\Tour_Speaker::with('speaker')->find($id);   
+            if( $tour_speaker != null)
+            {
+                if($tour_speaker->status == \App\Models\Tour_Speaker::SENTEMAIL){
+                    if( $tour_speaker->incorrectCount <= 3){
+                        if($tour_speaker->code == $code){
+                            $tour_speaker->status = \App\Models\Tour_Speaker::CONFIRMED;
+                            $tour_speaker->save();
+                            return redirect('/login?email='.$tour_speaker->speaker->email);
+                        }
+                        else{
+                            $tour_speaker->incorrectCount = $tour_speaker->incorrectCount + 1;
+                            $tour_speaker->save();
+                            return response("Xac nhan that bai");
+                        }
+                    }
+                    else{
+                        return response("Loi moi qua han");
+                    }
+                }
+                else{
+                    return response("Ban da xac nhan loi moi");
+                }
+            } 
+            else{
+                return response("Not found");
+            }
         }
+        
     }
 
     public function confirmation(Request $request)
     {
         $id = $request->id;
         $code = $request->code;
-
-        $tour_participant = \App\Models\Tour_Participant::find($id);
-        if(isset($tour_participant)){
-            if($tour_participant->incorrectCount <= 3){
-                if($tour_participant->code == $code){
-                    $tour_participant->status = \App\Models\Tour_Participant::CONFIRMED;
-                    $tour_participant->save();
-                    return json_encode(array(
-                        'success' => true
-                    ));
+        $role = $request->get('role');
+        if($role == 'participant'){
+            $tour_participant = \App\Models\Tour_Participant::find($id);
+            if(isset($tour_participant)){
+                if($tour_participant->incorrectCount <= 3){
+                    if($tour_participant->code == $code){
+                        $tour_participant->status = \App\Models\Tour_Participant::CONFIRMED;
+                        $tour_participant->save();
+                        return json_encode(array(
+                            'success' => true
+                        ));
+                    }
+                    else{
+                        $tour_participant->incorrectCount = $tour_participant->incorrectCount + 1;
+                        $tour_participant->save();
+                        return json_encode(array(
+                            'success' => false,
+                            'incorrectCount' => $tour_participant->incorrectCount
+                        ));
+                    } 
                 }
                 else{
-                    $tour_participant->incorrectCount = $tour_participant->incorrectCount + 1;
-                    $tour_participant->save();
                     return json_encode(array(
                         'success' => false,
-                        'incorrectCount' => $tour_participant->incorrectCount
+                        'incorrectCount' => $tour_participant->incorrectCount,
+                        'message' => 'Please check your email and re-send code'
                     ));
-                } 
-            }
-            else{
-                return json_encode(array(
-                    'success' => false,
-                    'incorrectCount' => $tour_participant->incorrectCount,
-                    'message' => 'Please check your email and re-send code'
-                ));
-            }
-        } 
+                }
+            } 
+        }
+        else
+        if($role == 'speaker'){
+            $tour_speaker = \App\Models\Tour_Speaker::find($id);
+            if(isset($tour_speaker)){
+                if($tour_speaker->incorrectCount <= 3){
+                    if($tour_speaker->code == $code){
+                        $tour_speaker->status = \App\Models\Tour_Speaker::CONFIRMED;
+                        $tour_speaker->save();
+                        return json_encode(array(
+                            'success' => true
+                        ));
+                    }
+                    else{
+                        $tour_speaker->incorrectCount = $tour_speaker->incorrectCount + 1;
+                        $tour_speaker->save();
+                        return json_encode(array(
+                            'success' => false,
+                            'incorrectCount' => $tour_speaker->incorrectCount
+                        ));
+                    } 
+                }
+                else{
+                    return json_encode(array(
+                        'success' => false,
+                        'incorrectCount' => $tour_speaker->incorrectCount,
+                        'message' => 'Please check your email and re-send code'
+                    ));
+                }
+            } 
+        }
+        
     }
 }

@@ -21,26 +21,28 @@ class SpeakersController extends Controller
             ->where([
                 ['tour_speaker.tourId', '=', $id],
             ])
-            ->select('profile.*','status')
+            ->select('profile.*', 'status')
             ->get();
 
         return view('administrator.speakers.index', ['profile' => $profile, 'tour'=> $tour, 'speakers' => $speakers]);
     }
     
     public function saveCreate($id, Request $request)
-    {
+    {   
         $tour = DB::table('tour')->find($id);
+
         $name = $request->name;
         $email = $request->email;
         $contact = $request->contact;
         
         $check = $this->checkCreate($id, $name,  $email, $contact);
         if($check['success'] == true){
-            $profile = DB::table('profile')->where('email', $email)->first();
+            $profile = \App\Models\Profile::with('user')->where('email', $email)->first();
             if(!isset($profile )){ // chua có tài khoản
                 // tao user
                 $user = new \App\Models\User();
                 $user->type = 'speaker';
+                $user->level = \App\Models\User::LEVEL_SPEAKER;
                 $user->email = $email;
                 $user->isRequiredChangePassword = true;
                 $user->save();
@@ -50,15 +52,20 @@ class SpeakersController extends Controller
                 $profile->name = $name;
                 $profile->email = $email;
                 $profile->contact = $contact;
-
                 $profile->save();
             }
 
-            $speaker = new \App\Models\Tour_Speaker();
-            $speaker->tourId = $id;
-            $speaker->speakerId = $profile->id;
-            $speaker->status = \App\Models\Tour_Speaker::UNCONFIRMED;
-            $speaker->save();
+            $user = \App\Models\User::find($profile->userId);
+            if($user->level < \App\Models\User::LEVEL_PARTICIPANT){
+                $user->level = \App\Models\User::LEVEL_PARTICIPANT;
+                $user->save();
+            }
+
+            $tour_speaker = new \App\Models\Tour_Speaker();
+            $tour_speaker->tourId = $id;
+            $tour_speaker->speakerId = $profile->id;
+            $tour_speaker->status = \App\Models\Tour_Speaker::UNCONFIRMED;
+            $tour_speaker->save();
         }
         
         return json_encode($check);
@@ -66,18 +73,21 @@ class SpeakersController extends Controller
 
     public function saveEdit($id, Request $request)
     {
-        $speakerId = $request->id;
+        $speakerId = $request->speakerId;
         $name = $request->name;
         $email = $request->email;
         $contact = $request->contact;
-        $profile = DB::table('profile')
-            ->where('id', $speakerId)
-            ->update([
-                'name' => $name,
-                'email' => $email,
-                'contact' => $contact,
-            ]);
-        return back();
+
+        $check = $this->checkEdit($id, $speakerId, $name,  $email, $contact);
+        if($check['success'] == true){
+            $profile = \App\Models\Profile::with('user')->where('id', $speakerId)->first();
+            $profile->name = $name;
+            $profile->email = $email;
+            $profile->contact = $contact;
+            $profile->save();
+        }
+
+        return json_encode($check);
     }
 
     public function importCsv($id, Request $request)
@@ -115,10 +125,11 @@ class SpeakersController extends Controller
                     $profile->save();
                 }
 
-                $speaker = new \App\Models\Tour_Speaker();
-                $speaker->tourId = $id;
-                $speaker->speakerId = $profile->id;
-                $speaker->save();
+                $participate = new \App\Models\Tour_Speaker();
+                $participate->tourId = $id;
+                $participate->speakerId = $profile->id;
+                $participate->status = \App\Models\Tour_Speaker::UNCONFIRMED;
+                $participate->save();
             }
 
             return true;
@@ -127,38 +138,30 @@ class SpeakersController extends Controller
             return json_encode($check);
         }
     }
+
     public function sendEmails($id, Request $request)
     {
         $speakerIds = $request->speakerIds;
 
         foreach ($speakerIds as $speakerId) {
-
-            $speaker = \App\Models\Profile::find($speakerId);
+            $speaker = \App\Models\Profile::find($speakerId);        
 
             $tour_speaker = \App\Models\Tour_Speaker::with('speaker')
-                ->where([
-                    ['tourId', '=', $id],
-                    ['speakerId', '=', $speakerId],
-                ])->first();
+            ->where([
+                ['tourId', '=', $id],
+                ['speakerId', '=', $speakerId],
+            ])->first();
+
             $tour_speaker->status = \App\Models\Tour_Speaker::SENTEMAIL;
             $tour_speaker->code = Str::random(6);
             $tour_speaker->expiry = Carbon::now()->addMinute(5);
             $tour_speaker->save();
 
-            $model = DB::table('tour_speaker')
-                ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
-                ->where([
-                    ['tour_speaker.tourId', '=', $id],
-                    ['tour_speaker.speakerId', '=', $speakerId]
-                ])
-                ->select('tour_speaker.*')
-                ->first();
-
             $mailer = new MailService(
                 [$speaker->email],
-                'Lời mời tham dự thuyết trình',
+                'Lời mời thuyết trình Webinar',
                 'speaker',
-                $model
+                $tour_speaker
             );
             $mailer->sendMail();
         }
@@ -166,6 +169,7 @@ class SpeakersController extends Controller
         return true;
         
     }
+
     public function checkImportCsv($id, Request $request)
     {
         $file = $request->file('csv');
@@ -189,7 +193,7 @@ class SpeakersController extends Controller
                 $correctCount ++;
             }
             else{
-                $errors[$line] = $check['error'];
+                $errors[$line] = $check['errors'];
             }
         }
 
@@ -212,47 +216,96 @@ class SpeakersController extends Controller
     public function checkCreate($id, $name, $email , $contact)
     {   
         $check = [];
-        $check['success'] = false;
-        $check['error'] = array();
+        $check['success'] = true;
+        $check['errors'] = array();
 
         if($name == "" && $email == "" && $email == "" ){
-            $check['error'] = "Incorrect values or format";
+            $check['errors'] = "Incorrect values or format";
             return $check;
         }
 
         if(!isset($name) || $name == "" || !isset($email) || $email == "" || !isset($contact) || $contact == "")
         {
-            $check['error'] = "Incorrect values or format";
+            $check['errors'] = "Incorrect values or format";
             return $check;
         }
 
-        $speakerId = DB::table('tour_speaker')
+        $profileByEmail = DB::table('tour_speaker')
             ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
             ->where([
                 ['tour_speaker.tourId', '=', $id],
-                ['profile.email', '=', $email]
-            ])->select('profile.id')
+                ['profile.email', '=', $email],
+            ])
+            ->select('profile.*')
+            ->first();
+    
+        $profileByContact = DB::table('tour_speaker')
+            ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
+            ->where([
+                ['tour_speaker.tourId', '=', $id],
+                ['profile.contact', '=', $contact],
+            ])
+            ->select('profile.*')
             ->first();
         
-        if(isset($speakerId)){
-            $check['error'] = "Email already exists";
+        if(isset($profileByEmail)){
+            $check['errors']['email'] = "Email already exists";
+            $check['success'] = false;
         }
-        else{
-            $check['success'] = true;
+        if(isset($profileByContact)){
+            $check['errors']['contact'] = "Contact already exists";
+            $check['success'] = false;
         }
 
         return $check;
     }
 
-    public function checkEdit($id, $name, $email , $contact)
+    public function checkEdit($id, $speakerId, $name, $email , $contact)
     {
-       
-    }
+        $check = [];
+        $check['success'] = true;
+        $check['errors'] = array();
 
-    public function saveDelete($id, $speakerId, Request $request)
-    {
-        $speaker = \App\Models\Zone::find($speakerId);
-        $speaker->delete();
-        return true;
+        if($name == "" && $email == "" && $email == "" ){
+            $check['errors'] = "Incorrect values or format";
+            return $check;
+        }
+
+        if(!isset($name) || $name == "" || !isset($email) || $email == "" || !isset($contact) || $contact == "")
+        {
+            $check['errors'] = "Incorrect values or format";
+            return $check;
+        }
+
+        $profile = DB::table('profile')->find($speakerId);
+            
+        $profileByEmail = DB::table('tour_speaker')
+            ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
+            ->where([
+                ['tour_speaker.tourId', '=', $id],
+                ['profile.email', '=', $email],
+            ])
+            ->select('profile.*')
+            ->first();
+        
+        $profileByContact = DB::table('tour_speaker')
+            ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
+            ->where([
+                ['tour_speaker.tourId', '=', $id],
+                ['profile.contact', '=', $contact],
+            ])
+            ->select('profile.*')
+            ->first();
+        
+        if(isset($profileByEmail) && $profileByEmail->email != $profile->email){
+            $check['errors']['email'] = "Email already exists";
+            $check['success'] = false;
+        }
+        if(isset($contact) && $profileByContact->contact != $profile->contact){
+            $check['errors']['contact'] = "Contact already exists";
+            $check['success'] = false;
+        }
+
+        return $check;
     }
 }
