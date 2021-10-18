@@ -118,7 +118,7 @@
                 </div>
                 <div class="modal-body" style="padding: 30px">
                     @csrf
-                    <input id="popup-edit-participant__id-hidden-input" type="hidden" name="id">
+                    <input id="popup-edit-participant__id-hidden-input" type="hidden" name="participantId">
                     <div class="form-group">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" name="name" class="form-control form-control-user" id="popup-edit-participant__name-input" placeholder="Enter participant name" aria-describedby="inputGroupPrepend" required>
@@ -287,12 +287,14 @@
                     else{
                         $('#popup-create-participant').find('.messages-wrapper').empty();
                         $('#popup-create-participant').find('.messages-wrapper').show();
-                        let wrapper = $(
-                            `<div class="p-3">
-                                <span> `+response.error+` </span>
-                            </div>
-                        `);
-                        $('#popup-create-participant').find('.messages-wrapper').append(wrapper);
+                        Object.keys(response.errors).forEach(key => {
+                            let wrapper = $(
+                                `<div class="p-3">
+                                    <span> `+response.errors[key]+` </span>
+                                </div>
+                            `);
+                            $('#popup-create-participant').find('.messages-wrapper').append(wrapper);
+                        });
                     }
                 }
             });
@@ -317,12 +319,14 @@
                     else{
                         $('#popup-edit-participant').find('.messages-wrapper').empty();
                         $('#popup-edit-participant').find('.messages-wrapper').show();
-                        let wrapper = $(
-                            `<div class="p-3">
-                                <span> `+response.error+` </span>
-                            </div>
-                        `);
-                        $('#popup-edit-participant').find('.messages-wrapper').append(wrapper);
+                        Object.keys(response.errors).forEach(key => {
+                            let wrapper = $(
+                                `<div class="p-3">
+                                    <span> `+response.errors[key]+` </span>
+                                </div>
+                            `);
+                            $('#popup-edit-participant').find('.messages-wrapper').append(wrapper);
+                        });
                     }
                 }
             });

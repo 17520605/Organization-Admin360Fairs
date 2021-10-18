@@ -74,19 +74,21 @@ class ParticipantsController extends Controller
 
     public function saveEdit($id, Request $request)
     {
-        $participantId = $request->id;
+        $participantId = $request->participantId;
         $name = $request->name;
         $email = $request->email;
         $contact = $request->contact;
 
-        $profile = DB::table('profile')
-            ->where('id', $participantId)
-            ->update([
-                'name' => $name,
-                'email' => $email,
-                'contact' => $contact,
-            ]);
-        return back();
+        $check = $this->checkEdit($id, $participantId, $name,  $email, $contact);
+        if($check['success'] == true){
+            $profile = \App\Models\Profile::with('user')->where('id', $participantId)->first();
+            $profile->name = $name;
+            $profile->email = $email;
+            $profile->contact = $contact;
+            $profile->save();
+        }
+
+        return json_encode($check);
     }
 
     public function importCsv($id, Request $request)
@@ -201,7 +203,7 @@ class ParticipantsController extends Controller
                 $correctCount ++;
             }
             else{
-                $errors[$line] = $check['error'];
+                $errors[$line] = $check['errors'];
             }
         }
 
@@ -224,40 +226,96 @@ class ParticipantsController extends Controller
     public function checkCreate($id, $name, $email , $contact)
     {   
         $check = [];
-        $check['success'] = false;
-        $check['error'] = array();
+        $check['success'] = true;
+        $check['errors'] = array();
 
         if($name == "" && $email == "" && $email == "" ){
-            $check['error'] = "Incorrect values or format";
+            $check['errors'] = "Incorrect values or format";
             return $check;
         }
 
         if(!isset($name) || $name == "" || !isset($email) || $email == "" || !isset($contact) || $contact == "")
         {
-            $check['error'] = "Incorrect values or format";
+            $check['errors'] = "Incorrect values or format";
             return $check;
         }
 
-        $participantId = DB::table('tour_participant')
+        $profileByEmail = DB::table('tour_participant')
             ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
             ->where([
                 ['tour_participant.tourId', '=', $id],
-                ['profile.email', '=', $email]
-            ])->select('profile.id')
+                ['profile.email', '=', $email],
+            ])
+            ->select('profile.*')
+            ->first();
+    
+        $profileByContact = DB::table('tour_participant')
+            ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+            ->where([
+                ['tour_participant.tourId', '=', $id],
+                ['profile.contact', '=', $contact],
+            ])
+            ->select('profile.*')
             ->first();
         
-        if(isset($participantId)){
-            $check['error'] = "Email already exists";
+        if(isset($profileByEmail)){
+            $check['errors']['email'] = "Email already exists";
+            $check['success'] = false;
         }
-        else{
-            $check['success'] = true;
+        if(isset($profileByContact)){
+            $check['errors']['contact'] = "Contact already exists";
+            $check['success'] = false;
         }
 
         return $check;
     }
 
-    public function checkEdit($id, $name, $email , $contact)
+    public function checkEdit($id, $participantId, $name, $email , $contact)
     {
-       
+        $check = [];
+        $check['success'] = true;
+        $check['errors'] = array();
+
+        if($name == "" && $email == "" && $email == "" ){
+            $check['errors'] = "Incorrect values or format";
+            return $check;
+        }
+
+        if(!isset($name) || $name == "" || !isset($email) || $email == "" || !isset($contact) || $contact == "")
+        {
+            $check['errors'] = "Incorrect values or format";
+            return $check;
+        }
+
+        $profile = DB::table('profile')->find($participantId);
+            
+        $profileByEmail = DB::table('tour_participant')
+            ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+            ->where([
+                ['tour_participant.tourId', '=', $id],
+                ['profile.email', '=', $email],
+            ])
+            ->select('profile.*')
+            ->first();
+        
+        $profileByContact = DB::table('tour_participant')
+            ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+            ->where([
+                ['tour_participant.tourId', '=', $id],
+                ['profile.contact', '=', $contact],
+            ])
+            ->select('profile.*')
+            ->first();
+        
+        if(isset($profileByEmail) && $profileByEmail->email != $profile->email){
+            $check['errors']['email'] = "Email already exists";
+            $check['success'] = false;
+        }
+        if(isset($contact) && $profileByContact->contact != $profile->contact){
+            $check['errors']['contact'] = "Contact already exists";
+            $check['success'] = false;
+        }
+
+        return $check;
     }
 }
