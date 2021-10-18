@@ -90,7 +90,6 @@ class ZonesController extends Controller
         $zoneId = $request->id;
         $name = $request->name;
         $boothIds = $request->boothIds;
-
         // delete relation
         \App\Models\Zone_Booth::where('zoneId', $zoneId)->delete();
 
@@ -103,14 +102,12 @@ class ZonesController extends Controller
                 ]);
             }
         }
-
         return back();
     }
 
     public function saveAddBooths($id, $zoneId, Request $request)
     {
         $boothIds = $request->boothIds;
-
         foreach ($boothIds as $boothId) {
             $zone_booth = new \App\Models\Zone_Booth();
             $zone_booth->zoneId = $zoneId;
@@ -118,5 +115,11 @@ class ZonesController extends Controller
             $zone_booth->save();
         }
         return back();
+    }
+    public function saveDelete($id, $zoneId, Request $request)
+    {
+        $zone = \App\Models\Zone::find($zoneId);
+        $zone->delete();
+        return true;
     }
 }

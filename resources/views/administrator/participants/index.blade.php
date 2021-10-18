@@ -33,11 +33,13 @@
                             <td>
                                 @if ($participant->status == \App\Models\Tour_Participant::UNCONFIRMED)
                                     <input class="checkbox form-check-input1 dt-checkboxes" type="checkbox" value="{{$participant->id}}" name="participantIds[]">
+                                @else
+                                    <input class="form-check-input1 dt-checkboxes" type="checkbox" style="opacity: 0.3" checked disabled>
                                 @endif
                             </td>
                             <td style="text-align: center">1</td>
                             <td style="text-align: center">
-                                <div><img class="rounded-circle avatar-xs" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634458558/icons/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529_ouili5.png" alt=""></div>
+                                <div><img class="rounded-circle avatar-xs" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634539139/icons/default_avatar_k3wxez.png" alt=""></div>
                             </td>
                             <td>{{$participant->name}}</td>
                             <td>{{$participant->email}}</td>
@@ -52,8 +54,8 @@
                                 @endif
                             </td>
                             <td class="btn-action-icon">
-                                <i class="fas fa-pen edit" data-toggle="modal" data-target="#popup-edit-participant"></i>
-                                <i class="fas fa-trash-alt delete"  data-toggle="modal" data-target="#popup-delete-participant"></i>
+                                <i class="fas fa-pen edit" data-participant-id="{{$participant->id}}" data-participant-name="{{$participant->name}}" data-participant-email="{{$participant->email}}" data-participant-contact="{{$participant->contact}}" onclick="onOpenPopupEditParticipant(this);"></i>
+                                <i class="fas fa-trash-alt delete" data-participant-id="{{$participant->id}}" onclick="onOpenPopupDeleteParticipant(this);"></i>
                             </td>
                         </tr>
                         @endforeach
@@ -116,23 +118,24 @@
                 </div>
                 <div class="modal-body" style="padding: 30px">
                     @csrf
+                    <input id="popup-edit-participant__id-hidden-input" type="hidden" name="id">
                     <div class="form-group">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control form-control-user" id="name" placeholder="Enter participant name" aria-describedby="inputGroupPrepend" required>
+                        <input type="text" name="name" class="form-control form-control-user" id="popup-edit-participant__name-input" placeholder="Enter participant name" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please enter participant name
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name" class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control form-control-user" id="email" placeholder="Enter email" aria-describedby="inputGroupPrepend" required>
+                        <input type="email" name="email" class="form-control form-control-user" id="popup-edit-participant__email-input" placeholder="Enter email" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please enter email
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name" class="form-label">Contact</label>
-                        <input type="tel" name="contact" class="form-control form-control-user" id="contact" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
+                        <input type="tel" name="contact" class="form-control form-control-user" id="popup-edit-participant__contact-input" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please enter contact
                         </div>
@@ -218,7 +221,26 @@
         </div>
     </div>
 </div>
+<script>
+    function onOpenPopupEditParticipant(target){
+        let participantId = $(target).attr('data-participant-id');
+        let name = $(target).attr('data-participant-name');
+        let email = $(target).attr('data-participant-email');
+        let contact = $(target).attr('data-participant-contact');
 
+        $('#popup-edit-participant__id-hidden-input').val(participantId);
+        $('#popup-edit-participant__name-input').val(name);
+        $('#popup-edit-participant__email-input').val(email);
+        $('#popup-edit-participant__contact-input').val(contact);
+        $('#popup-edit-participant').modal('show');
+    }
+
+    function onOpenPopupDeleteParticipant(target){
+        let participantId = $(target).attr('data-participant-id');
+        $('#popup-confirm-delete-participant__id-hidden-input').val(participantId);
+        $('#popup-confirm-delete-participant').modal('show');
+    }
+</script>
 <script>
     (function () {
         "use strict";
@@ -275,6 +297,37 @@
                 }
             });
         });
+
+        $('#popup-edit-participant__form').submit(function (e) { 
+            if(this.checkValidity() == false) return;
+            e.preventDefault();
+            let data = $(this).serialize();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: "/administrator/tours/{{$tour->id}}/participants/save-edit",
+                data: data,
+                dataType: 'json',
+                success: function (response) {
+                    if(response.success == 1){
+                        location.reload();
+                    }
+                    else{
+                        $('#popup-edit-participant').find('.messages-wrapper').empty();
+                        $('#popup-edit-participant').find('.messages-wrapper').show();
+                        let wrapper = $(
+                            `<div class="p-3">
+                                <span> `+response.error+` </span>
+                            </div>
+                        `);
+                        $('#popup-edit-participant').find('.messages-wrapper').append(wrapper);
+                    }
+                }
+            });
+        });
+
 
         $('#popup-import-csv__check-btn').click(function (e) { 
 
@@ -407,6 +460,8 @@
                 }
             });
         })
+
+
     });
 </script>
 @endsection

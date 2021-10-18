@@ -13684,6 +13684,11 @@ img {
     right: 20px;
 }
 
+.line-time .bg-primary {
+    background-color: #727cf5 !important;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 .line-time .rounded {
     border-radius: .25rem!important;
 }
@@ -14877,4 +14882,17 @@ img {
     border-radius: 3px;
     background: #4e73df;
     color: #FFF;
+}
+
+.btn-edit-webinars {
+    position: absolute;
+    font-size: 17px;
+    right: 1rem;
+    top: 1rem;
+    color: #4e73df;
+}
+
+.btn-edit-webinars:hover {
+    color: #264399;
+    transform: scale(1.02);
 }

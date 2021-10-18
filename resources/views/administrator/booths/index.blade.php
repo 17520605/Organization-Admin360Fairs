@@ -14,11 +14,11 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead class="group-head">
                             <tr style="background: #eef2f7;">
-                                <th style="text-align: center">#</th>
-                                <th>Name</th>
-                                <th>Owner</th>
-                                <th>Update At</th>
-                                <th>Status</th>
+                                <th style="text-align: center;width: 5%">#</th>
+                                <th style="width: 15%;">Name</th>
+                                <th style="width: 20%;">Owner</th>
+                                <th style="width: 15%;">Update At</th>
+                                <th style="width: 10%;">Status</th>
                                 <th style="width: 8%;">Action</th>
                             </tr>
                         </thead>
@@ -28,7 +28,7 @@
                                 <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
                             </td>
                         </tr>
-                        <tbody class="group-0  style="display: none"" >
+                        <tbody class="group-0" style="display: none" >
                             @if (count($freeBooths) == 0)
                             <tr>
                                 <td colspan="10"><center><span>No booths</span></center></td>
@@ -99,13 +99,13 @@
                                 <label class="small mb-1" for="">Name</label>
                                 <input class="form-control" type="text" name="name" placeholder="Enter Booth Name">
                             </div>
-                            <div id="popup-create-booth__choose-zone-text" class="row row mb-3" > Choose zone </div>
+                            <div id="popup-create-booth__choose-zone-text" class="row row mb-3" style="color: #4e73df ; cursor: pointer;"> Choose zone </div>
                             <div class="row mb-3 p-3 border zones-wrapper" style="display: none;">
                                 @if (count($zones) == 0)
                                     <center><span>No zone</span></center>
                                 @else
                                     @foreach ($zones as $zone)
-                                    <div class="form-check">
+                                    <div class="form-check" style="margin-right: 20px">
                                         <input class="form-check-input" type="radio" value="{{$zone->id}}" name="zoneId">
                                         <label class="form-check-label"> {{$zone->name}} </label>
                                     </div>
@@ -127,7 +127,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="fw-light">Edit Booth</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="/administrator/tours/{{$tour->id}}/booths/save-edit" method="POST">
                     <div class="modal-body">
@@ -144,7 +144,7 @@
                                     <center><span>No zone</span></center>
                                 @else
                                     @foreach ($zones as $zone)
-                                    <div class="form-check">
+                                    <div class="form-check" style="margin-right: 20px">
                                         <input class="form-check-input" type="radio" value="{{$zone->id}}" name="zoneId">
                                         <label class="form-check-label"> {{$zone->name}} </label>
                                     </div>
@@ -166,7 +166,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="fw-light">Detele Booth</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                       <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="modal-body">
@@ -184,11 +184,9 @@
         </div>
     </div>
     <script>
-
         function toggleGroup(id) {
             $('.group-' + id).toggle();
         }
-
         function onEditBooth(target) {  
             let id = $(target).attr('data-id');
             let name = $(target).attr('data-name');
@@ -206,7 +204,6 @@
 
             $('#popup-edit-booth').modal('show');
         }
-
         function onDeleteBooth(target) {  
             let id = $(target).attr('data-id');
             let name = $(target).attr('data-name');
@@ -223,7 +220,7 @@
                     $('#popup-create-booth').find('.zones-wrapper').find('input[type="radio"]').prop('checked', false)
                 }     
             });
-
+ 
             $('#popup-edit-booth__choose-zone-text').click(function () {  
                 $('#popup-edit-booth').find('.zones-wrapper').toggle();
                 if($('#popup-edit-booth').find('.zones-wrapper').is(':hidden')){

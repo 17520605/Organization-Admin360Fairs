@@ -6,12 +6,12 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">{{$webinar->topic}}</h4>
+                        <h4 class="card-title text-primary font-weight-bold">{{$webinar->topic}}</h4>
                         <h6 class="card-title">
                             <span>{{Carbon\Carbon::parse($webinar->startAt)->format('M d : h:m')}} </span>
                             to 
                             <span>{{Carbon\Carbon::parse($webinar->endAt)->format('M d : h:m')}} </span>
-                            <span style="float: right;">Edit</span>
+                            <span class="btn-edit-webinars" onclick="onOpenPopupEditWebinar(this)"><i class="fas fa-pen-square"></i> Edit</span>
                         </h6>
                     </div>
                     <div class="card-body">
@@ -74,8 +74,8 @@
                                         <div class="timeline-launch">
                                             <div class="timeline-box">
                                                 <div class="timeline-text">
-                                                    <h3 class="font-size-18">Launched our company on 21 June 2021</h3>
-                                                    <p class="text-muted mb-0">Pellentesque sapien ut est.</p>
+                                                    <h3 style="font-size: 17px" class="text-primary font-weight-bold">Launched our company on 21 June 2021</h3>
+                                                    <p class="text-muted mb-0">Copyright © by 360Fairs</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,4 +91,99 @@
             <!-- end col -->
         </div>
     </div>
+        <div class="modal fade" id="popup-edit-webinar" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Edit New Webinar</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/administrator/tours/{{$tour->id}}/events/webinars/save-edit" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="small mb-1">Topic</label>
+                            <input class="form-control" type="text" name="topic" placeholder="Enter topic">
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="start">Start time</label>
+                                <input class="form-control" id="start" name="start" type="datetime-local">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="end">End time</label>
+                                <input class="form-control" id="end" name="end" type="datetime-local">
+                            </div>
+                        </div>
+                        <label class="small mb-1" for="">Agenda</label>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" name="titles[]" placeholder="Title">
+                            </div>
+                            <div class="col-md-1" style="padding: 0;">
+                                <input class="form-control" type="number" name="durations[]" min="0" max="500" style="padding-right: 0!important;" placeholder="Duration">
+                            </div>
+                            <div class="col-md-4" style="padding-right:0px ;">
+                                <select class="form-control" name="speakers[]">
+                                    {{-- <option disabled selected>--Choose speaker--</option>
+                                    @foreach ($speakers as $speaker)
+                                        <option value="{{$speaker->id}}">{{$speaker->name}}</option>
+                                        <option value="{{$speaker->id}}">{{$speaker->name}}</option>
+                                    @endforeach --}}
+                                </select>
+                            </div>
+                            <div class="col-md-1" style="text-align: center;">
+                                <i class="fas fa-plus-circle add-agenda" onclick="addAgenda();" style="font-size: 25px;color: #4e73df;line-height: 38px;"></i>
+                                <i class="fas fa-minus-circle remove-agenda" onclick="removeAgenda(event);" style="font-size: 25px;color: #f32d2d;line-height: 38px; display: none;"></i>
+                            </div>
+                        </div>
+                        <div id="agenda-wrapper">
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="description">Tour Description</label>
+                            <textarea placeholder="Enter your tour description" class="form-control" name="description" rows="6"></textarea>
+                        </div>
+                        <!-- Form Group (create account submit)-->
+                        <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function onOpenPopupEditWebinar(target){
+            $('#popup-edit-webinar').modal('show');
+        }
+        function addAgenda() {
+            $('.add-agenda').hide();
+            $('.remove-agenda').show();
+            $("#agenda-wrapper").append( 
+                `<div class="row gx-3 mb-3 agenda-item">
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" name="titles[]" placeholder="Title">
+                    </div>
+                    <div class="col-md-1" style="padding: 0;">
+                        <input class="form-control" type="number" name="durations[]" min="0" max="500" style="padding-right: 0!important;" placeholder="Duration">
+                    </div>
+                    <div class="col-md-4" style="padding-right:0px ;">
+                        <select class="form-control" name="speakers[]">
+            
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="text-align: center;">
+                        <i class="fas fa-plus-circle add-agenda" onclick="addAgenda();" style="font-size: 25px;color: #4e73df;line-height: 38px;"></i>
+                        <i class="fas fa-minus-circle remove-agenda" onclick="removeAgenda(event);" style="font-size: 25px;color: #f32d2d;line-height: 38px; display: none;"></i>
+                    </div>
+                </div>`
+            );
+
+            let a = "{{$tour->id}}";
+        }
+
+        function removeAgenda(e) {
+            $(e.currentTarget).parent().parent().remove();
+        }
+    </script>
 @endsection

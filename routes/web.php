@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function (){
             // participants
             Route::get('/{id}/participants', 'administrator\ParticipantsController@index');
             Route::post('/{id}/participants/save-create', 'administrator\ParticipantsController@saveCreate');
+            Route::post('/{id}/participants/save-edit', 'administrator\ParticipantsController@saveEdit');
             Route::post('/{id}/participants/import-csv', 'administrator\ParticipantsController@importCsv');
             Route::post('/{id}/participants/check-import-csv', 'administrator\ParticipantsController@checkImportCsv');
             Route::post('/{id}/participants/send-emails', 'administrator\ParticipantsController@sendEmails');
@@ -33,9 +34,11 @@ Route::middleware('auth')->group(function (){
             // speakers
             Route::get('/{id}/speakers', 'administrator\SpeakersController@index');
             Route::post('/{id}/speakers/save-create', 'administrator\SpeakersController@saveCreate');
+            Route::post('/{id}/speakers/save-edit', 'administrator\SpeakersController@saveEdit');
             Route::post('/{id}/speakers/import-csv', 'administrator\SpeakersController@importCsv');
             Route::post('/{id}/speakers/check-import-csv', 'administrator\SpeakersController@checkImportCsv');
             Route::post('/{id}/speakers/send-emails', 'administrator\SpeakersController@sendEmails');
+            Route::delete('/{id}/speakers/{speakerId}', 'administrator\SpeakersController@saveDelete');
 
             // zones
             Route::get('/{id}/zones', 'administrator\ZonesController@index');
@@ -43,6 +46,7 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/zones/{zoneId}/save-add-booths', 'administrator\ZonesController@saveAddBooths');
             Route::post('/{id}/zones/save-create', 'administrator\ZonesController@saveCreate');
             Route::post('/{id}/zones/save-edit', 'administrator\ZonesController@saveEdit');
+            Route::delete('/{id}/zones/{zoneId}', 'administrator\ZonesController@saveDelete');
         
             // booths
             Route::get('/{id}/booths', 'administrator\BoothsController@index');

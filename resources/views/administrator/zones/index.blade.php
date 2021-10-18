@@ -24,7 +24,7 @@
                         </thead>
                         <tbody>
                             @foreach ($zones as $zone)
-                            <tr>
+                            <tr class="zone-{{$zone->id}}">
                                 <td style="text-align: center">1</td>
                                 <td><a href="zones/{{$zone->id}}">{{$zone->name}}</a></td>
                                 <td>{{ count($zone->booths)}} </td>
@@ -38,7 +38,7 @@
                                 </td>
                                 <td class="btn-action-icon">
                                     <i class="fas fa-pen edit" data-zone-id="{{$zone->id}}" data-name="{{$zone->name}}" data-booths='@foreach ($zone->booths as $booth){"id":"{{$booth->id}}", "name":"{{$booth->name}}"};@endforeach' onclick="onOpenPopupEditZone(this);"></i>
-                                    <i class="fas fa-trash-alt delete" data-toggle="modal" data-target="#popup-delete-zone"></i>
+                                    <i class="fas fa-trash-alt delete" data-zone-id="{{$zone->id}}" onclick="onOpenPopupDeleteZone(this);"></i>
                                 </td>
                             </tr>
                             @endforeach
@@ -131,7 +131,7 @@
         </div>
     </div>
     {{-- POPUP DELETE ZONE --}}
-    <div class="modal fade" id="popup-delete-zone" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal fade" id="popup-confirm-delete-zone" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <form id="popup-edit-participant__form" class="needs-validation" novalidate>
@@ -144,8 +144,9 @@
                         <p>Do you really want to delete it?</p>
                     </div>
                     <div class="modal-footer" style="padding: 0">
+                        <input id="popup-confirm-delete-zone__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <button id="popup-confirm-delete-zone__delete-btn" type="button" class="btn btn-danger">Delete</button>
                     </div>
                 </form>
             </div>
@@ -153,7 +154,6 @@
     </div>
     <script>
         function onOpenPopupEditZone(target){
-            debugger
             let name = $(target).attr('data-name');
             let booths = $(target).attr('data-booths');
             let zoneId = $(target).attr('data-zone-id');
@@ -176,6 +176,11 @@
                 }
             });
             $('#popup-edit-zone').modal('show');
+        }
+        function onOpenPopupDeleteZone(target){
+            let zoneId = $(target).attr('data-zone-id');
+            $('#popup-confirm-delete-zone__id-hidden-input').val(zoneId);
+            $('#popup-confirm-delete-zone').modal('show');
         }
     </script>
     <script>
@@ -200,7 +205,34 @@
                     $('#popup-edit-zone').find('.booths-wrapper').find('input[type="checkbox"]').prop('checked', false);
                 }
             });
-        });
-            
+            $('#popup-confirm-delete-zone__delete-btn').click(function (){
+                let id = $('#popup-confirm-delete-zone__id-hidden-input').val();
+                if(id != null && id != ""){
+                    let ajax = $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/zones/" + id,
+                        type: 'delete',
+                        dataType: 'json',
+                        success: function (res) { 
+                            if (res == 1) {
+                                $('#popup-confirm-delete-zone').modal('hide');
+                                let row = $('.zone-' + id);
+                                let wrapper = row.parent();
+                                row.remove();
+                                if(wrapper.children().length == 0){
+                                    wrapper.append(`
+                                        <tr>
+                                            <td colspan="10"><center><span>No zones</span></center></td>
+                                        </tr>
+                                    `);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        });  
     </script>
 @endsection

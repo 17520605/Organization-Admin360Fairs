@@ -35,7 +35,7 @@
                             </td>
                             <td style="text-align: center">1</td>
                             <td style="text-align: center">
-                                <div><img class="rounded-circle avatar-xs" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634458558/icons/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529_ouili5.png" alt=""></div>
+                                <div><img class="rounded-circle avatar-xs" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634539139/icons/default_avatar_k3wxez.png" alt=""></div>
                             </td>
                             <td>{{$speaker->name}}</td>
                             <td>{{$speaker->email}}</td>
@@ -50,8 +50,8 @@
                                 @endif
                             </td>
                             <td class="btn-action-icon">
-                                <i class="fas fa-pen edit" data-toggle="modal" data-target="#popup-edit-speaker"></i>
-                                <i class="fas fa-trash-alt delete" data-toggle="modal" data-target="#popup-delete-speaker"></i>
+                                <i class="fas fa-pen edit" data-speaker-id="{{$speaker->id}}" data-speaker-name="{{$speaker->name}}" data-speaker-email="{{$speaker->email}}" data-speaker-contact="{{$speaker->contact}}" onclick="onOpenPopupEditSpeaker(this);"></i>
+                                <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
                             </td>
                         </tr>
                         @endforeach
@@ -103,7 +103,7 @@
         </div>
     </div>
 </div>
-{{-- POPUP CREATE SPEAKER --}}
+{{-- POPUP EDIT SPEAKER --}}
 <div class="modal fade" id="popup-edit-speaker" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -114,23 +114,24 @@
                 </div>
                 <div class="modal-body" style="padding: 30px">
                     @csrf
+                    <input id="popup-edit-speaker__id-hidden-input" type="hidden" name="id">
                     <div class="form-group">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control form-control-user" id="name" placeholder="Enter speaker name" aria-describedby="inputGroupPrepend" required>
+                        <input type="text" name="name" class="form-control form-control-user" id="popup-edit-speaker__name-input" placeholder="Enter speaker name" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please enter speaker name
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name" class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control form-control-user" id="email" placeholder="Enter email" aria-describedby="inputGroupPrepend" required>
+                        <input type="email" name="email" class="form-control form-control-user" id="popup-edit-speaker__email-input" placeholder="Enter email" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please enter email
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name" class="form-label">Contact</label>
-                        <input type="tel" name="contact" class="form-control form-control-user" id="contact" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
+                        <input type="tel" name="contact" class="form-control form-control-user" id="popup-edit-speaker__contact-input" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please enter contact
                         </div>
@@ -146,10 +147,10 @@
     </div>
 </div>
 {{-- POPUP DELETE PARTICIANT --}}
-<div class="modal fade" id="popup-delete-speaker" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+<div class="modal fade" id="popup-confirm-delete-speaker" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
-            <form id="popup-edit-participant__form" class="needs-validation" novalidate>
+            <form id="popup-edit-speaker__form" class="needs-validation" novalidate>
                 <div class="modal-header">
                     <h5 class="fw-light">Delete Speaker </h5>
                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
@@ -159,8 +160,9 @@
                     <p>Do you really want to delete it?</p>
                 </div>
                 <div class="modal-footer" style="padding: 0">
+                    <input id="popup-confirm-delete-speaker__id-hidden-input" type="hidden">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button id="popup-confirm-delete-speaker__delete-btn" type="button" class="btn btn-danger">Delete</button>
                 </div>
             </form>
         </div>
@@ -216,6 +218,7 @@
         </div>
     </div>
 </div>
+
 <script>
     (function () {
         "use strict";
@@ -240,6 +243,27 @@
             false
         );
     })();
+</script>
+<script>
+    function onOpenPopupEditSpeaker(target){
+        let speakerId = $(target).attr('data-speaker-id');
+        let name = $(target).attr('data-speaker-name');
+        let email = $(target).attr('data-speaker-email');
+        let contact = $(target).attr('data-speaker-contact');
+
+        $('#popup-edit-speaker__id-hidden-input').val(speakerId);
+        $('#popup-edit-speaker__name-input').val(name);
+        $('#popup-edit-speaker__email-input').val(email);
+        $('#popup-edit-speaker__contact-input').val(contact);
+
+        $('#popup-edit-speaker').modal('show');
+    }
+
+    function onOpenPopupDeleteSpeaker(target){
+        let speakerId = $(target).attr('data-speaker-id');
+        $('#popup-confirm-delete-speaker__id-hidden-input').val(speakerId);
+        $('#popup-confirm-delete-speaker').modal('show');
+    }
 </script>
 <script>
     $(document).ready(function () {
@@ -268,6 +292,35 @@
                             </div>
                         `);
                         $('#popup-create-speaker').find('.messages-wrapper').append(wrapper);
+                    }
+                }
+            });
+        });
+        $('#popup-edit-speaker__form').submit(function (e) { 
+            if(this.checkValidity() == false) return;
+            e.preventDefault();
+            let data = $(this).serialize();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: "/administrator/tours/{{$tour->id}}/speakers/save-edit",
+                data: data,
+                dataType: 'json',
+                success: function (response) {
+                    if(response.success == 1){
+                        location.reload();
+                    }
+                    else{
+                        $('#popup-edit-speaker').find('.messages-wrapper').empty();
+                        $('#popup-edit-speaker').find('.messages-wrapper').show();
+                        let wrapper = $(
+                            `<div class="p-3">
+                                <span> `+response.error+` </span>
+                            </div>
+                        `);
+                        $('#popup-edit-speaker').find('.messages-wrapper').append(wrapper);
                     }
                 }
             });
@@ -317,7 +370,6 @@
         });
 
         $('#popup-import-csv__save-btn').click(function (e) { 
-
             let form = document.getElementById('popup-import-csv__form');
             if(form.checkValidity() == false) return;
 
@@ -403,6 +455,35 @@
                 }
             });
         })
+
+        $('#popup-confirm-delete-speaker__delete-btn').click(function (){
+                let id = $('#popup-confirm-delete-speaker__id-hidden-input').val();
+                if(id != null && id != ""){
+                    let ajax = $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/speakers/" + id,
+                        type: 'delete',
+                        dataType: 'json',
+                        success: function (res) { 
+                            if (res == 1) {
+                                $('#popup-confirm-delete-speaker').modal('hide');
+                                let row = $('.speaker-' + id);
+                                let wrapper = row.parent();
+                                row.remove();
+                                if(wrapper.children().length == 0){
+                                    wrapper.append(`
+                                        <tr>
+                                            <td colspan="10"><center><span>No speakers</span></center></td>
+                                        </tr>
+                                    `);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
 
     });
 </script>
