@@ -162,7 +162,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="description">Tour Description</label>
-                            <textarea placeholder="Enter your tour description" class="form-control" name="description" value="{{$webinar->description}}" rows="6"></textarea>
+                            <textarea placeholder="Enter your tour description" class="form-control" name="description" rows="6"> {{$webinar->description}} </textarea>
                         </div>
                         <!-- Form Group (create account submit)-->
                         <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
@@ -191,7 +191,7 @@
                         <select class="form-control" name="speakers[]">
                             <option>--Choose speaker--</option>
                             @foreach ($speakers as $key => $speaker)
-                                <option value="{{$speaker->id}}" {{$speaker->id == $detail->speakerId ? 'selected' : '' }}>{{$speaker->name}}</option>
+                                <option value="{{$speaker->id}}">{{$speaker->name}}</option>
                             @endforeach
                         </select>
                     </div>
