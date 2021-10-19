@@ -9,7 +9,7 @@
                 <div class="card card-margin">
                     <div class="card-header no-border">
                         <h5 class="card-title">MOM</h5>
-                        <button class="btn btn-default btn-remove-event-card"><i class="far fa-times-circle"></i></button>
+                        <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
                     </div>
                     <div class="card-body pt-0">
                         <div class="widget-49">
@@ -39,6 +39,61 @@
         </div>
     </div>
     @include('components.add_event')
+
+    {{-- POPUP DELETE PARTICIANT --}}
+    <div class="modal fade" id="popup-confirm-delete-webinar" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="popup-edit-webinar__form" class="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="fw-light">Delete Webinar </h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <p>Do you really want to delete it?</p>
+                    </div>
+                    <div class="modal-footer" style="padding: 0">
+                        <input id="popup-confirm-delete-webinar__id-hidden-input" type="hidden">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="popup-confirm-delete-webinar__delete-btn" type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function onOpenPopupDeleteWebinar(target){
+            let webinarId = $(target).attr('data-webinar-id');
+            $('#popup-confirm-delete-webinar__id-hidden-input').val(webinarId);
+            $('#popup-confirm-delete-webinar').modal('show');
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#popup-confirm-delete-webinar__delete-btn').click(function (){
+debugger;
+                let id = $('#popup-confirm-delete-webinar__id-hidden-input').val();
+                if(id != null && id != ""){
+                    let ajax = $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/" + id,
+                        type: 'delete',
+                        dataType: 'json',
+                        success: function (res) { 
+                            if (res == 1) {
+                                $('#popup-confirm-delete-webinar').modal('hide');
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
 @endsection
 
 

@@ -15,8 +15,11 @@ class EventsController extends Controller
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
         $webinars = \App\Models\Webinar::with('details')
-            ->where('tourId', $id)
-            ->get();
+            ->where([
+                ['tourId', '=', $id],
+                ['isDeleted', '=', false]
+            ])->get();
+
         $speakers = DB::table('tour_speaker')
             ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
             ->where('tour_speaker.tourId', $id)
@@ -67,7 +70,7 @@ class EventsController extends Controller
         $webinar->save();
 
         for ($i=0; $i < count($titles); $i++) { 
-            $detail = new \App\Models\WebinarDetail();
+            $detail = new \App\Models\Webinar_Detail();
             $detail->webinarId = $webinar->id;
             $detail->title = $titles[$i];
             $detail->duration = $durations[$i];
@@ -96,12 +99,12 @@ class EventsController extends Controller
         $webinar->description = $description;
         $webinar->save();
 
-        $details = \App\Models\WebinarDetail::where('webinarId', $webinarId);
+        $details = \App\Models\Webinar_Detail::where('webinarId', $webinarId);
         $details->delete();
 
         for ($i=0; $i < count($titles); $i++) { 
             if($titles[$i] != null ){
-                $detail = new \App\Models\WebinarDetail();
+                $detail = new \App\Models\Webinar_Detail();
                 $detail->webinarId = $webinarId;
                 $detail->title = $titles[$i];
                 $detail->duration = $durations[$i];
@@ -111,5 +114,15 @@ class EventsController extends Controller
         }
 
         return back();
+    }
+    public function saveDelete($id, $webinarId, Request $request)
+    {
+        $webinar = \App\Models\Webinar::find($webinarId);
+        $webinar->isDeleted = true ;
+        $webinar->save();
+
+        $webinar_speaker = \App\Models\Webinar_Detail::where('webinarId', $webinarId)->delete();
+
+        return true;
     }
 }

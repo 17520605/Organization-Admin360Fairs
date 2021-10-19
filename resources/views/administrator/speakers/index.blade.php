@@ -29,7 +29,7 @@
                     </thead>
                     <tbody>
                         @foreach ($speakers as $speaker)
-                        <tr>
+                        <tr class="speaker-{{$speaker->id}}">
                             <td>
                                 @if ($speaker->status == \App\Models\Tour_Speaker::UNCONFIRMED)
                                      <input class="checkbox form-check-input1 dt-checkboxes" type="checkbox" value="{{$speaker->id}}" name="speakerIds[]">

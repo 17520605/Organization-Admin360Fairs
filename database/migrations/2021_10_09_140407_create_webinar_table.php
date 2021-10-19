@@ -20,6 +20,7 @@ class CreateWebinarTable extends Migration
             $table->dateTime('startAt');
             $table->dateTime('endAt');
             $table->string('description');
+            $table->boolean('isDeleted')->default(0);
             $table->timestamps();
         });
     }

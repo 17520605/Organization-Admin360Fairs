@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\WebinarDetail;
+use App\Models\Webinar_Detail;
 
 class Webinar extends Model
 {
@@ -11,6 +11,6 @@ class Webinar extends Model
     public $timestamps = true;
 
     public function details() {
-        return $this->hasMany(WebinarDetail::class, 'webinarId');
+        return $this->hasMany(Webinar_Detail::class, 'webinarId');
     }
 }

@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Webinar;
 use App\Models\Profile;
 
-class WebinarDetail extends Model
+class Webinar_Speaker extends Model
 {
-    protected $table = 'webinar_detail';
-    public $timestamps = true;
+    protected $table = 'webinar_speaker';
 
     public function webinar() {
         return $this->belongsTo(Webinar::class, 'webinarId');
@@ -19,3 +18,4 @@ class WebinarDetail extends Model
         return $this->belongsTo(Profile::class, 'speakerId');
     }
 }
+

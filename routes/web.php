@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@webinar');
             Route::post('/{id}/events/webinars/save-create', 'administrator\EventsController@saveCreate');
             Route::post('/{id}/events/webinars/save-edit', 'administrator\EventsController@saveEdit');
+            Route::delete('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@saveDelete');
         }); 
     });
 

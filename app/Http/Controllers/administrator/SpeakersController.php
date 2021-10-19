@@ -308,4 +308,9 @@ class SpeakersController extends Controller
 
         return $check;
     }
+    public function saveDelete($id, $speakerId, Request $request)
+    {
+        $speaker = \App\Models\Tour_Speaker::where('speakerId',$speakerId)->delete();
+        return true;
+    }
 }
