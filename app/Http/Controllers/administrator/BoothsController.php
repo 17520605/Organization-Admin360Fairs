@@ -18,9 +18,9 @@ class BoothsController extends Controller
 
         $tour = DB::table('tour')->find($id);
 
-        $zones = \App\Models\Zone::get();
+        $zones = \App\Models\Zone::where('isDeleted', false)->get();
 
-        $groups = DB::table('zone')->get();
+        $groups = \App\Models\Zone::where('isDeleted', false)->get();
         foreach ($groups as $group) {
             $booth = DB::table('zone_booth')
                 ->join('booth', 'booth.id', '=', 'zone_booth.boothId')

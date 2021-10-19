@@ -17,6 +17,7 @@ class CreateZoneTable extends Migration
             $table->id();
             $table->integer('overviewId')->nullable();
             $table->integer('tourId')->nullable();
+            $table->boolean('isDeleted')->default(0);
             $table->string('name');
             $table->timestamps();
         });

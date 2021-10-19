@@ -15,7 +15,10 @@ class ZonesController extends Controller
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
 
-        $zones = DB::table('zone')->where('tourId', $id)->get();
+        $zones = DB::table('zone')->where([
+            ['tourId', '=', $id],
+            ['isDeleted', '=', false]
+        ])->get();
         foreach ($zones as $zone) {
             $booths = DB::table('booth')
                 ->join('zone_booth', 'booth.id', '=', 'zone_booth.boothId')
@@ -119,7 +122,11 @@ class ZonesController extends Controller
     public function saveDelete($id, $zoneId, Request $request)
     {
         $zone = \App\Models\Zone::find($zoneId);
-        $zone->delete();
+        $zone->isDeleted = true ;
+        $zone->save();
+
+        $zone_booths = \App\Models\Zone_Booth::where('zoneId', $zoneId)->delete();
+
         return true;
     }
 }
