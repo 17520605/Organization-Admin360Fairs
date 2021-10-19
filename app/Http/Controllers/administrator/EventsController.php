@@ -36,7 +36,17 @@ class EventsController extends Controller
         foreach ($webinar->details as $detail) {
             $detail->speaker = DB::table('profile')->find($detail->speakerId);
         }
-        return view('administrator.events.webinar', ['profile' => $profile , 'webinar' => $webinar, 'tour'=>$tour]);
+
+        $speakers = DB::table('tour_speaker')
+            ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
+            ->where([
+                ['tour_speaker.tourId','=', $id],
+                ['tour_speaker.status','=', \App\Models\Tour_Speaker::CONFIRMED],
+            ])
+            ->select('profile.*')
+            ->get();
+
+        return view('administrator.events.webinar', ['profile' => $profile , 'webinar' => $webinar, 'speakers'=> $speakers, 'tour'=>$tour]);
     }
 
     public function saveCreate($id, Request $request)
@@ -63,6 +73,41 @@ class EventsController extends Controller
             $detail->duration = $durations[$i];
             $detail->speakerId = $speakers[$i];
             $detail->save();
+        }
+
+        return back();
+    }
+
+    public function saveEdit( Request $request)
+    {
+        $webinarId = $request->webinarId;
+        $topic = $request->topic;
+        $start = $request->start;
+        $end = $request->end;
+        $description = $request->description;
+        $titles = $request->titles;
+        $durations = $request->durations;
+        $speakers = $request->speakers;
+
+        $webinar = \App\Models\Webinar::find($webinarId);
+        $webinar->topic = $topic;
+        $webinar->startAt = $start;
+        $webinar->endAt = $end;
+        $webinar->description = $description;
+        $webinar->save();
+
+        $details = \App\Models\WebinarDetail::where('webinarId', $webinarId);
+        $details->delete();
+
+        for ($i=0; $i < count($titles); $i++) { 
+            if($titles[$i] != null ){
+                $detail = new \App\Models\WebinarDetail();
+                $detail->webinarId = $webinarId;
+                $detail->title = $titles[$i];
+                $detail->duration = $durations[$i];
+                $detail->speakerId = $speakers[$i];
+                $detail->save();
+            }
         }
 
         return back();

@@ -35,7 +35,6 @@
                                     <option disabled selected>--Choose speaker--</option>
                                     @foreach ($speakers as $speaker)
                                         <option value="{{$speaker->id}}">{{$speaker->name}}</option>
-                                        <option value="{{$speaker->id}}">{{$speaker->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -73,9 +72,8 @@
                     </div>
                     <div class="col-md-4" style="padding-right:0px ;">
                         <select class="form-control" name="speakers[]">
-                            <option disabled selected>--Choose speaker--</option>
+                            <option>--Choose speaker--</option>
                             @foreach ($speakers as $speaker)
-                                <option value="{{$speaker->id}}">{{$speaker->name}}</option>
                                 <option value="{{$speaker->id}}">{{$speaker->name}}</option>
                             @endforeach
                         </select>
