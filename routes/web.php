@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/participants/import-csv', 'administrator\ParticipantsController@importCsv');
             Route::post('/{id}/participants/check-import-csv', 'administrator\ParticipantsController@checkImportCsv');
             Route::post('/{id}/participants/send-emails', 'administrator\ParticipantsController@sendEmails');
+            Route::delete('/{id}/participants/{participantId}', 'administrator\ParticipantsController@saveDelete');
 
             // speakers
             Route::get('/{id}/speakers', 'administrator\SpeakersController@index');

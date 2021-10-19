@@ -318,4 +318,10 @@ class ParticipantsController extends Controller
 
         return $check;
     }
+
+    public function saveDelete($id, $participantId, Request $request)
+    {
+        $participant = \App\Models\Tour_Participant::where('participantId',$participantId)->delete();
+        return true;
+    }
 }

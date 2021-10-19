@@ -31,7 +31,11 @@
                         @foreach ($speakers as $speaker)
                         <tr>
                             <td>
-                                <input class="checkbox form-check-input1 dt-checkboxes" type="checkbox" value="{{$speaker->id}}" name="speakerIds[]">
+                                @if ($speaker->status == \App\Models\Tour_Speaker::UNCONFIRMED)
+                                     <input class="checkbox form-check-input1 dt-checkboxes" type="checkbox" value="{{$speaker->id}}" name="speakerIds[]">
+                                @else
+                                    <input class="form-check-input1 dt-checkboxes"  type="checkbox" style="opacity: 0.3" checked disabled>
+                                @endif
                             </td>
                             <td style="text-align: center">1</td>
                             <td style="text-align: center">
@@ -53,11 +57,13 @@
                                 @if($speaker->status == "unconfirmed")
                                     <i class="fas fa-pen edit" data-speaker-id="{{$speaker->id}}" data-speaker-name="{{$speaker->name}}" data-speaker-email="{{$speaker->email}}" data-speaker-contact="{{$speaker->contact}}" onclick="onOpenPopupEditSpeaker(this);"></i>
                                     <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
-                                @elseif($speaker->status == "sent email" || $speaker->status == "confirmed")
+                                @elseif($speaker->status == "sent email")
+                                    <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
+                                    <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
+                                @elseif($speaker->status == "confirmed")
                                     <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
                                     <i class="fas fa-trash-alt delete"  style="opacity: 0.3;pointer-events: none"></i>
                                 @endif
-                                
                             </td>
                         </tr>
                         @endforeach
@@ -421,7 +427,13 @@
             $('.checkbox').prop('checked', checked);
             if(checked == true)
             {
-                $('#btn-send-mail-speaker').show();
+                if(checked > 0)
+                {
+                    $('#btn-send-mail-speaker').show();
+                }
+                else{
+                    $('#btn-send-mail-speaker').hide();
+                }
             }
             else{
                 $('#btn-send-mail-speaker').hide();
@@ -475,33 +487,33 @@
         })
 
         $('#popup-confirm-delete-speaker__delete-btn').click(function (){
-                let id = $('#popup-confirm-delete-speaker__id-hidden-input').val();
-                if(id != null && id != ""){
-                    let ajax = $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/speakers/" + id,
-                        type: 'delete',
-                        dataType: 'json',
-                        success: function (res) { 
-                            if (res == 1) {
-                                $('#popup-confirm-delete-speaker').modal('hide');
-                                let row = $('.speaker-' + id);
-                                let wrapper = row.parent();
-                                row.remove();
-                                if(wrapper.children().length == 0){
-                                    wrapper.append(`
-                                        <tr>
-                                            <td colspan="10"><center><span>No speakers</span></center></td>
-                                        </tr>
-                                    `);
-                                }
+            let id = $('#popup-confirm-delete-speaker__id-hidden-input').val();
+            if(id != null && id != ""){
+                let ajax = $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/speakers/" + id,
+                    type: 'delete',
+                    dataType: 'json',
+                    success: function (res) { 
+                        if (res == 1) {
+                            $('#popup-confirm-delete-speaker').modal('hide');
+                            let row = $('.speaker-' + id);
+                            let wrapper = row.parent();
+                            row.remove();
+                            if(wrapper.children().length == 0){
+                                wrapper.append(`
+                                    <tr>
+                                        <td colspan="10"><center><span>No speakers</span></center></td>
+                                    </tr>
+                                `);
                             }
                         }
-                    });
-                }
-            });
+                    }
+                });
+            }
+        });
 
     });
 </script>

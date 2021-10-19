@@ -29,12 +29,12 @@
                     </thead>
                     <tbody>
                         @foreach ($participants as $participant)
-                        <tr>
+                        <tr class="participant-{{$participant->id}}">
                             <td>
                                 @if ($participant->status == \App\Models\Tour_Participant::UNCONFIRMED)
                                     <input class="checkbox form-check-input1 dt-checkboxes" type="checkbox" value="{{$participant->id}}" name="participantIds[]">
                                 @else
-                                    <input class="form-check-input1 dt-checkboxes" type="checkbox" style="opacity: 0.3" checked disabled>
+                                    <input class="form-check-input1 dt-checkboxes"  type="checkbox" style="opacity: 0.3" checked disabled>
                                 @endif
                             </td>
                             <td style="text-align: center">1</td>
@@ -55,9 +55,12 @@
                             </td>
                             <td class="btn-action-icon">
                                 @if($participant->status == "unconfirmed")
-                                    <i class="fas fa-pen edit" data-participant-id="{{$participant->id}}" data-participant-name="{{$participant->name}}" data-participant-email="{{$participant->email}}" data-participant-contact="{{$participant->contact}}" onclick="onOpenPopupEditParticipant(this);"></i>
+                                    <i class="fas fa-pen edit"  data-participant-id="{{$participant->id}}" data-participant-name="{{$participant->name}}" data-participant-email="{{$participant->email}}" data-participant-contact="{{$participant->contact}}" onclick="onOpenPopupEditParticipant(this);"></i>
                                     <i class="fas fa-trash-alt delete" data-participant-id="{{$participant->id}}" onclick="onOpenPopupDeleteParticipant(this);"></i>
-                                @elseif($participant->status == "sent email" || $participant->status == "confirmed")
+                                @elseif($participant->status == "sent email")
+                                    <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
+                                    <i class="fas fa-trash-alt delete" data-participant-id="{{$participant->id}}" onclick="onOpenPopupDeleteParticipant(this);"></i>                           
+                                @elseif($participant->status == "confirmed")
                                     <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
                                     <i class="fas fa-trash-alt delete" style="opacity: 0.3;pointer-events: none"></i>
                                 @endif
@@ -156,7 +159,7 @@
     </div>
 </div>
 {{-- POPUP DELETE PARTICIANT --}}
-<div class="modal fade" id="popup-delete-participant" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+<div class="modal fade" id="popup-confirm-delete-participant" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <form id="popup-edit-participant__form" class="needs-validation" novalidate>
@@ -170,7 +173,7 @@
                 </div>
                 <div class="modal-footer" style="padding: 0">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-danger" id="popup-confirm-delete-participant__delete-btn">Delete</button>
                 </div>
             </form>
         </div>
@@ -220,6 +223,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <input id="popup-confirm-delete-participant__id-hidden-input" type="hidden">
                 <button class="btn" type="submit">Cancel</button>
                 <button id="popup-confirm-send-email__send-btn" class="btn btn-primary" type="submit">Send</button>
             </div>
@@ -423,7 +427,13 @@
             $('.checkbox').prop('checked', checked);
             if(checked == true)
             {
-                $('#btn-send-mail-participants').show();
+                if(checked > 0)
+                {
+                    $('#btn-send-mail-participants').show();
+                }
+                else{
+                    $('#btn-send-mail-participants').hide();
+                }
             }
             else{
                 $('#btn-send-mail-participants').hide();
@@ -476,8 +486,34 @@
                 }
             });
         })
-
-
+        $('#popup-confirm-delete-participant__delete-btn').click(function (){
+            let id = $('#popup-confirm-delete-participant__id-hidden-input').val();
+            if(id != null && id != ""){
+                let ajax = $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/participants/" + id,
+                    type: 'delete',
+                    dataType: 'json',
+                    success: function (res) { 
+                        if (res == 1) {
+                            $('#popup-confirm-delete-participant').modal('hide');
+                            let row = $('.participant-' + id);
+                            let wrapper = row.parent();
+                            row.remove();
+                            if(wrapper.children().length == 0){
+                                wrapper.append(`
+                                    <tr>
+                                        <td colspan="10"><center><span>No participants</span></center></td>
+                                    </tr>
+                                `);
+                            }
+                        }
+                    }
+                });
+            }
+        });
     });
 </script>
 @endsection

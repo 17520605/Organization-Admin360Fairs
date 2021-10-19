@@ -41,5 +41,10 @@
             $('#create_profile').find('.form-step2').show();
         });
     </script>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
     </body>
 </html>
