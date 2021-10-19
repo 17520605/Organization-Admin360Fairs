@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function (){
         
             // booths
             Route::get('/{id}/booths', 'administrator\BoothsController@index');
+            Route::get('/{id}/booths/booth', 'administrator\BoothsController@booth');
             Route::post('/{id}/booths/save-create', 'administrator\BoothsController@saveCreate');
             Route::post('/{id}/booths/save-edit', 'administrator\BoothsController@saveEdit');
             Route::get('/{id}/booths/{boothId}', 'administrator\BoothsController@booth');

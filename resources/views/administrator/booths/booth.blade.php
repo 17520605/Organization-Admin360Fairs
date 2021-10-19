@@ -1,39 +1,105 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="container-fluid" style="margin-bottom: 3rem;">
-        <h1 class="h3 mb-2 text-gray-800">Booths</h1>
-        <div class="row" style="margin-bottom: 1.5rem;">
-            <div class="col-md-7">
-                <div class="card" style="width: 100%; padding: 0.25rem;">
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card p-3">
+                    <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$tour->name}}</h1>
+                    <div class="div_cardheader_btn">
+                        <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#"><i class="fas fa-globe"></i> Publish </button>
+                        <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-tour"><i class="fas fa-pen"></i> Edit</button>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="row mb-3">
             <div class="col-md-5">
-                <div class="card" style="">
+                <div class="card" style="min-height: 300px;">
                     <div class="card-body" style="color: #555; font-size: 14px;">
-                        <div class="d-flex">
-                            <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="text-truncate font-size-15">TÊN BOOTHS</h5>
-                                <p class="text-muted"><i class="fas fa-trophy"></i> Loại Booths</p>
-                                <p class="text-muted"><i class="fas fa-dice-d6"></i> Tên đại diện : Nguyễn Hữu Minh Khai</p>
+                        <div class="flex-grow-1 overflow-hidden">
+                            <h6 class="font-size-15 font-weight-bold">General information: </h6>
+                            <p class="text-muted"><i class="fas fa-building"></i> Name organization : <span>CTTNHH ABCD</span></p>
+                            <p class="text-muted"><i class="fas fa-envelope-square"></i> Email organization : <span>ctytnhhabc@gmail.com</span></p>
+                            <p class="text-muted"><i class="fas fa-phone-square-alt"></i> Hotline organization : <span>0909909999</span></p>
+                        </div>
+                        <div class="flex-grow-1 overflow-hidden">
+                            <h6 class="font-size-15 font-weight-bold">Description: </h6>
+                            <div class="text-muted discription_tour_text" style="max-height: 10rem">
+                                Paragraph development begins with the formulation of the controlling idea. This idea directs the paragraph’s development. Often, the controlling idea of a paragraph will appear in the form of a topic sentence. In some cases, you may need more than one
+                                sentence to express a paragraph’s controlling idea.
                             </div>
                         </div>
-                        <h6 class="font-size-15 mt-1" style="font-weight: 700;">Contact Details :</h6>
-                        <p class="text-muted"><i class="fas fa-phone-square-alt"></i> Phone Number : <span>0969-888-999</span></p>
-                        <p class="text-muted"><i class="fas fa-envelope-square"></i> Email Booth : <span>Nguyenhuuminhkhai@gmail.com</span></p>
-                        <p class="text-muted"><i class="fas fa-map-marked"></i> Address : <span>Trường đại học công nghệ thông tin HCM</span></p>
-                        <div class="row">
-                            <div style="padding-left: 1rem;padding-right: 1rem;">
-                                <h6 style="font-weight: 700;">Booth Manager:</h6>
-                                <a href="javascript:void(0);">
-                                    <img src="./../asset/images/undraw_profile_1.svg" style="width: 55px; height: 55px;" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
-                                </a>
-                                <a href="javascript:void(0);">
-                                    <img src="./../asset/images/undraw_profile_1.svg" style="width: 55px; height: 55px;" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
-                                </a>
-                                <a href="javascript:void(0);">
-                                    <img src="./../asset/images/undraw_profile_1.svg" style="width: 55px; height: 55px;" class="rounded-circle img-thumbnail avatar-sm" alt="friend">
-                                </a>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <div class="upload-box" style="display: block;max-height: 200px; height: 100%;">
+                        <div class="upload-text text-center">
+                            <div class="upload-form border-dashed">
+                                <div class="m-4">
+                                    <h4 style="font-weight: 900;">LOGO</h4>
+                                    <button type="button" id="add_image_upload" class="btn btn-outline-primary"> <i class="fas fa-upload " style="margin-right: 8px; "></i>
+                                        Upload Logo
+                                    </button>
+                                    <input type="file" id="" style="display: none" accept="video/*">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: none;max-height: 200px;">
+                        <img style="height: 100%;" src="https://lh3.googleusercontent.com/proxy/6tMLql0HIGOwuQ0M1OdfwR8kbq3u5T_CFZ10gRKhOyxk7y78OrchCy4PfmMlB3OUVknpMaiEFpslFne1ndzTlMJtkOFD8lHZ7ocnmxnQdUBcGjNAzLSxGQtyyP99qdNv" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 view_booth_panoles">
+                <div class="card" style="width: 100% ;height: 69%; padding:20px;">
+                    <div id="viewer-container" style="width: 100%; height: 100%;">
+                    </div>
+                    <div class="bg-config-overview">
+                        <a href="https://360fairs.com/" class="btn-config-overview ">
+                            <i class="fas fa-cog"></i>
+                            <span>Config</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="card mt-3" style="width: 100%; height: 132px; padding:12px 8px;">
+                    <div id="container">
+                        <div class="tour__bottom-bar-slider-outer" id="booth-track">
+                            <div class="tour__bottom-bar-slider" style="width: 100%; position: relative;">
+                                <i class="fas fa-angle-left" id="left-button-scroll"></i>
+                                <div id="slider-track" class="tour__bottom-bar-slider-track" style=" overflow-x: hidden;margin-left: 4%;max-width: 92%; height: 100%; display: flex;">
+                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="436">
+                                        <div class="slide_track__body active">
+                                            <img src="https://res.cloudinary.com/virtual-tour/image/upload/c_thumb,w_350,g_face/v1632648128/fkawozf7qkaif1vadqfy.jpg" onclick="onGoToPanorama(436)" data-panorama-id="436" class="slide_track__image panorama-thumbnail__image">
+                                            <span class="span-booth-name">view 11-min</span>
+                                        </div>
+                                    </div>
+                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="436">
+                                        <div class="slide_track__body">
+                                            <img src="https://res.cloudinary.com/virtual-tour/image/upload/c_thumb,w_350,g_face/v1632648128/fkawozf7qkaif1vadqfy.jpg" onclick="onGoToPanorama(436)" data-panorama-id="436" class="slide_track__image panorama-thumbnail__image">
+                                            <span class="span-booth-name">view 12-min</span>
+                                        </div>
+                                    </div>
+                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="436">
+                                        <div class="slide_track__body">
+                                            <img src="https://res.cloudinary.com/virtual-tour/image/upload/c_thumb,w_350,g_face/v1632648128/fkawozf7qkaif1vadqfy.jpg" onclick="onGoToPanorama(436)" data-panorama-id="436" class="slide_track__image panorama-thumbnail__image">
+                                            <span class="span-booth-name">view 13-min</span>
+                                        </div>
+                                    </div>
+                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="436">
+                                        <div class="slide_track__body">
+                                            <img src="https://res.cloudinary.com/virtual-tour/image/upload/c_thumb,w_350,g_face/v1632648128/fkawozf7qkaif1vadqfy.jpg" onclick="onGoToPanorama(436)" data-panorama-id="436" class="slide_track__image panorama-thumbnail__image">
+                                            <span class="span-booth-name">view 14-min</span>
+                                        </div>
+                                    </div>
+                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="436">
+                                        <div class="slide_track__body">
+                                            <img src="https://res.cloudinary.com/virtual-tour/image/upload/c_thumb,w_350,g_face/v1632648128/fkawozf7qkaif1vadqfy.jpg" onclick="onGoToPanorama(436)" data-panorama-id="436" class="slide_track__image panorama-thumbnail__image">
+                                            <span class="span-booth-name">view 15-min</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <i class="fas fa-angle-right" id="right-button-scroll"></i>
                             </div>
                         </div>
                     </div>
@@ -41,126 +107,301 @@
             </div>
         </div>
         <div class="row" style="margin-bottom: 1.5rem;">
-            <div class="col-md-12">
-                <div class="card" style="width: 100%; height: 80vh;padding: 0.25rem;">
-                    <div class="col-md-12">
-                        <div class="card-body" style="color: #555; font-size: 14px;">
-                            <div class="d-flex">
-                                <div class="flex-grow-1 overflow-hidden">
-                                    <h5 class="text-truncate font-size-15">Object Zone <button class="btn btn-df" onclick="openPopupCreateObject('audio')" style="position: absolute; right: 1.5rem;top: 1rem;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new file</button></h5>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body" style="color: #555; font-size: 14px;">
+                        <div class="d-flex">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <h5 class="text-truncate font-size-15">Object Zone</h5>
+                            </div>
+                        </div>
+                        <div class="border shadow-none mb-2 card total_bar_object" style="padding: 0.5rem; ">
+                            <a class="text-body" href="#">
+                                <div class="body">
+                                    <h4>1TB <i class="fa fa-server float-right"></i></h4>
+                                    <p class="mb-0">Storage <small class="text-muted float-right">of 1Tb</small></p>
+                                    <div class="progress progress-striped" style="width: 100%; padding: 0; height: 20px;background: #bbbbbb77;">
+                                        <div class="progress-bar progress-bar-warning" data-transitiongoal="43" aria-valuenow="43" style="width: 43%;">43%</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="border shadow-none mb-2 card">
+                            <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/images">
+                                <div class="p-2">
+                                    <div class="d-flex">
+                                        <div class="avatar-xs align-self-center me-2">
+                                            <div class="avatar-title rounded bg-transparent text-success font-size-20"><i class="fas fa-image"></i></div>
+                                        </div>
+                                        <div class="overflow-hidden me-auto">
+                                            <h5 class="font-size-13 text-truncate mb-1">Images</h5>
+                                            <p class="text-muted text-truncate mb-0">176 Files</p>
+                                        </div>
+                                        <div class="ml-2">
+                                            <p class="text-muted">6 GB</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                                <div class="progress-bar bg-success" data-transitiongoal="18" aria-valuenow="18" style="width: 28%;"></div>
+                            </div>
+                        </div>
+                        <div class="card border shadow-none mb-2">
+                            <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/videos">
+                                <div class="p-2">
+                                    <div class="d-flex">
+                                        <div class="avatar-xs align-self-center me-2">
+                                            <div class="avatar-title rounded bg-transparent text-danger font-size-20"><i class="far fa-play-circle"></i></div>
+                                        </div>
+                                        <div class="overflow-hidden me-auto">
+                                            <h5 class="font-size-13 text-truncate mb-1">Video</h5>
+                                            <p class="text-muted text-truncate mb-0">45 Files</p>
+                                        </div>
+                                        <div class="ml-2">
+                                            <p class="text-muted">4.1 GB</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                                <div class="progress-bar bg-danger" data-transitiongoal="18" aria-valuenow="18" style="width: 18%;"></div>
+                            </div>
+                        </div>
+                        <div class="card border shadow-none mb-2">
+                            <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/audios">
+                                <div class="p-2">
+                                    <div class="d-flex">
+                                        <div class="avatar-xs align-self-center me-2">
+                                            <div class="avatar-title rounded bg-transparent text-info font-size-20"><i class="fas fa-music"></i></div>
+                                        </div>
+                                        <div class="overflow-hidden me-auto">
+                                            <h5 class="font-size-13 text-truncate mb-1">Music</h5>
+                                            <p class="text-muted text-truncate mb-0">21 Files</p>
+                                        </div>
+                                        <div class="ml-2">
+                                            <p class="text-muted">3.2 GB</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                                <div class="progress-bar bg-info" data-transitiongoal="18" aria-valuenow="18" style="width: 18%;"></div>
+                            </div>
+                        </div>
+                        <div class="card border shadow-none mb-2">
+                            <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/models">
+                                <div class="p-2">
+                                    <div class="d-flex">
+                                        <div class="avatar-xs align-self-center me-2">
+                                            <div class="avatar-title rounded bg-transparent text-models font-size-20"><i class="fab fa-unity"></i></div>
+                                        </div>
+                                        <div class="overflow-hidden me-auto">
+                                            <h5 class="font-size-13 text-truncate mb-1">Model</h5>
+                                            <p class="text-muted text-truncate mb-0">21 Files</p>
+                                        </div>
+                                        <div class="ml-2">
+                                            <p class="text-muted">2 GB</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                                <div class="progress-bar bg-model1" data-transitiongoal="18" aria-valuenow="18" style="width: 18%;"></div>
+                            </div>
+                        </div>
+                        <div class="card border shadow-none mb-2">
+                            <a class="text-body" href="#">
+                                <div class="p-2">
+                                    <div class="d-flex">
+                                        <div class="avatar-xs align-self-center me-2">
+                                            <div class="avatar-title rounded bg-transparent text-primary font-size-20"><i class="fas fa-file-alt"></i></div>
+                                        </div>
+                                        <div class="overflow-hidden me-auto">
+                                            <h5 class="font-size-13 text-truncate mb-1">Documents</h5>
+                                            <p class="text-muted text-truncate mb-0">21 Files</p>
+                                        </div>
+                                        <div class="ml-2">
+                                            <p class="text-muted">2 GB</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                                <div class="progress-bar bg-primary" data-transitiongoal="18" aria-valuenow="18" style="width: 18%;"></div>
+                            </div>
+                        </div>
+                        <div class="card border shadow-none">
+                            <a class="text-body" href="#">
+                                <div class="p-2">
+                                    <div class="d-flex">
+                                        <div class="avatar-xs align-self-center me-2">
+                                            <div class="avatar-title rounded bg-transparent text-warning font-size-20"><i class="fas fa-folder"></i></div>
+                                        </div>
+                                        <div class="overflow-hidden me-auto">
+                                            <h5 class="font-size-13 text-truncate mb-1">Others</h5>
+                                            <p class="text-muted text-truncate mb-0">20 Files</p>
+                                        </div>
+                                        <div class="ml-2">
+                                            <p class="text-muted ">1.4 GB</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                            <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                                <div class="progress-bar bg-warning" data-transitiongoal="18" aria-valuenow="18" style="width: 5%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card" style="width: 100%; height: 647px;padding: 0.25rem;">
+                    <div class="card-body" style="color: #555; font-size: 14px;">
+                        <div class="d-flex">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <h5 class="text-truncate font-size-15">Object Zone <button class="btn btn-df" onclick="openPopupCreateObject('audio')" style="position: absolute; right: 1.5rem;top: 1rem;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new file</button></h5>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 570px; overflow-y: scroll;">
+                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row" style="height: 65vh; margin-top: 20px; overflow-y: scroll;">
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card">
-                                        <div class="file">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                                </div>
-                                            </a>
-                                        </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="card">
+                                    <div class="file">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
