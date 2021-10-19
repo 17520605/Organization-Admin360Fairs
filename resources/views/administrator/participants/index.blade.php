@@ -56,10 +56,11 @@
                             <td class="btn-action-icon">
                                 @if($participant->status == "unconfirmed")
                                     <i class="fas fa-pen edit" data-participant-id="{{$participant->id}}" data-participant-name="{{$participant->name}}" data-participant-email="{{$participant->email}}" data-participant-contact="{{$participant->contact}}" onclick="onOpenPopupEditParticipant(this);"></i>
+                                    <i class="fas fa-trash-alt delete" data-participant-id="{{$participant->id}}" onclick="onOpenPopupDeleteParticipant(this);"></i>
                                 @elseif($participant->status == "sent email" || $participant->status == "confirmed")
                                     <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
+                                    <i class="fas fa-trash-alt delete" style="opacity: 0.3;pointer-events: none"></i>
                                 @endif
-                                <i class="fas fa-trash-alt delete" data-participant-id="{{$participant->id}}" onclick="onOpenPopupDeleteParticipant(this);"></i>
                             </td>
                         </tr>
                         @endforeach
