@@ -40,7 +40,11 @@ class BoothsController extends Controller
 
     public function booth($id, $boothId, Request $request)
     {
-        
+        $user = Auth::user();
+        $profile = DB::table('profile')->where('userId', $user->id)->first();
+        $tour = DB::table('tour')->find($id);
+
+        return view('administrator.booths.booth', ['profile' => $profile, 'tour'=> $tour]);
     }
 
     public function saveCreate($id, Request $request)
