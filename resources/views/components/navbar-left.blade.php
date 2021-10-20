@@ -101,6 +101,7 @@
                 <a href="/administrator/tours/{{$tour->id}}/objects/videos" class="collapse-item">Videos</a>
                 <a href="/administrator/tours/{{$tour->id}}/objects/audios" class="collapse-item">Audios</a>
                 <a href="/administrator/tours/{{$tour->id}}/objects/models" class="collapse-item">3D Model</a>
+                <a href="/administrator/tours/{{$tour->id}}/objects/documents" class="collapse-item">Documents</a>
             </div>
         </div>
     </li>

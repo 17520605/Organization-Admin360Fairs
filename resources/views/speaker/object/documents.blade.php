@@ -18,25 +18,13 @@
                                 <div class="hover">
                                     <button class="btn"><i class="fas fa-trash-alt"></i></button>
                                 </div>
-                                @if ($document->format == 'docx' || $document->format == 'doc')
+                                @if ($document->source == 'local')
                                     <div class="icon">
-                                        <i class="fas fa-file-word" style="color: #2B5796" ></i>
+                                        <i class="fas fa-film"></i>
                                     </div>
-                                @elseif($document->format == 'PPT' || $document->format == 'PPS' || $document->format == 'PPTX' || $document->format == 'PPSX' )
+                                @elseif($document->source == 'link')
                                     <div class="icon">
-                                        <i class="fas fa-file-powerpoint" style="color: #D04526" ></i>
-                                    </div>
-                                @elseif($document->format == 'xls' || $document->format == 'xlsx' || $document->format == 'xlsm')
-                                    <div class="icon">
-                                        <i class="fas fa-file-excel" style="color: #1E7145" ></i>
-                                    </div>
-                                @elseif($document->format == 'pdf')
-                                    <div class="icon">
-                                        <i class="fas fa-file-pdf" style="color: #B11B1E" ></i>
-                                    </div>
-                                @else
-                                    <div class="icon">
-                                        <i class="fas fa-file-alt" style="color: #6F357D" ></i>
+                                        <i class="fas fa-link text-info"></i>
                                     </div>
                                 @endif
                                 <div class="file-name">
@@ -54,4 +42,5 @@
             @endforeach
         </div>
     </div>
+    
 @endsection

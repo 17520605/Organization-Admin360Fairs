@@ -23,6 +23,7 @@
                                         <i class="fas fa-volume-up"></i>
                                     </div>
                                 @elseif($audio->source == 'link')
+                                    <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                     <div class="icon">
                                        <i class="fab fa-soundcloud"></i>
                                     </div>

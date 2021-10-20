@@ -80,8 +80,11 @@ class ObjectsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-
-        return view('administrator.objects.documents', ['profile' => $profile, 'tour'=>$tour]);
+        $documents = DB::table('object')->where([
+            ['tourId','=', $id],
+            ['type','=', 'document'],
+        ])->get();
+        return view('administrator.objects.documents', ['profile' => $profile, 'tour'=>$tour ,'documents' => $documents]);
     }
 
     public function saveCreate($id, Request $request)

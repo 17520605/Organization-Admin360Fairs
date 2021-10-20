@@ -23,10 +23,12 @@
                                         <i class="fas fa-film"></i>
                                     </div>
                                 @elseif($video->source == 'link')
+                                    <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                     <div class="icon">
-                                        <i class="fas fa-link text-info"></i>
+                                        <i class="fas fa-film"></i>
                                     </div>
                                 @elseif($video->source == 'youtube')
+                                    <i class="fas fa-link" style="font-size: 15px; position: absolute;top: 10px;left: 10px;"></i>
                                     <div class="icon">
                                         <i class="fab fa-youtube text-danger"></i>
                                     </div>

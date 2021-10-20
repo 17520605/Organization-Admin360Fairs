@@ -20,7 +20,12 @@
                                         <button class="btn"><i class="fas fa-trash-alt"></i></button>
                                     </div>
                                     <div class="image">
-                                        <model-viewer style="width: 100%;" src="{{$model->url}}"></model-viewer>
+                                        @if ($model->source == 'local')
+                                            <model-viewer style="width: 100%;" src="{{$model->url}}"></model-viewer>
+                                        @elseif($model->source == 'link')
+                                            <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
+                                            <model-viewer style="width: 100%;" src="{{$model->url}}"></model-viewer>
+                                        @endif
                                     </div>
                                     <div class="file-name">
                                         <p class="text-muted">{{$model->name != null ? $model->name : "n/a"}}</p>

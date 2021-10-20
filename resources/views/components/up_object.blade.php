@@ -38,6 +38,7 @@
                                     <video id="popup-create-object__local-preview-video" controls src="" style="border-radius: 5px; display: none" ></video>
                                     <audio id="popup-create-object__local-preview-audio" controls src="" style="border-radius: 5px; display: none"></audio>
                                     <model-viewer id="popup-create-object__local-preview-model"  src="" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls style="border-radius: 5px; display: none"></model-viewer>
+                                    <div id="popup-create-object__local-preview-document" style="border-radius: 5px; display: none ;color: #2B5796; text-align: center; font-size: 150px;" ><i class="fas fa-file-alt"></i></div>
                                     <div class="remove_item_object">
                                         <div id="popup-create-object__local-remove-btn" class="btn_remove ">Remove</div>
                                     </div>
@@ -75,7 +76,7 @@
                                     <iframe id="popup-create-object__link-preview-video-ytb" style="display: none" width="100%" height="400px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     <audio id="popup-create-object__link-preview-audio" controls src="" style="border-radius: 5px; display: none"></audio>
                                     <model-viewer id="popup-create-object__link-preview-model" src="" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls style="border-radius: 5px; display: none"></model-viewer>
-
+                                          <div id="popup-create-object__link-preview-document" style="border-radius: 5px; display: none ;color: #2B5796; text-align: center; font-size: 150px;" ><i class="fas fa-file-alt"></i></div>
                                     <div class="remove_item_object">
                                         <div id="popup-create-object__link-remove-btn" class="btn_remove ">Remove</div>
                                     </div>
@@ -148,6 +149,10 @@
                 {
                     $('#popup-create-object__local-preview-model').attr('src', URL.createObjectURL(this.files[0]));
                 }
+                else if(type=='document')
+                {
+                    $('#popup-create-object__local-preview-document').attr('src', URL.createObjectURL(this.files[0]));
+                }
                
                 $('#popup-create-object').find(".form_upload").hide();
                 $('#popup-create-object').find(".form_preview").show();
@@ -199,7 +204,7 @@
         $('#popup-create-object__link-url-input').change( async function () { 
 
             let type =$('#popup-create-object').find('input[name="type"]').val();
-debugger;
+
             let url = $(this).val();
             let slipt = url.split(".")[0];
             let correct = false;
@@ -323,6 +328,7 @@ debugger;
 
 <script>
     function openPopupCreateObject(type) {   
+debugger;
         if(type == 'image'){
             $('#popup-create-object__link-preview-img').show();
             $('#popup-create-object__link-preview-video').hide();
@@ -332,6 +338,8 @@ debugger;
             $('#popup-create-object__local-preview-audio').hide();
             $('#popup-create-object__local-preview-model').hide();
             $('#popup-create-object__link-preview-model').hide();
+            $('#popup-create-object__local-preview-document').hide();
+            $('#popup-create-object__link-preview-document').hide();
             $('#popup-create-object__local-file-hidden-input').attr('accept','image/*');
 
         }
@@ -344,6 +352,8 @@ debugger;
             $('#popup-create-object__local-preview-audio').hide();
             $('#popup-create-object__local-preview-model').hide();
             $('#popup-create-object__link-preview-model').hide();
+            $('#popup-create-object__local-preview-document').hide();
+            $('#popup-create-object__link-preview-document').hide();
             $('#popup-create-object__local-file-hidden-input').attr('accept','video/*');
         } 
         else if(type == 'audio'){
@@ -355,6 +365,8 @@ debugger;
             $('#popup-create-object__local-preview-audio').show();
             $('#popup-create-object__local-preview-model').hide();
             $('#popup-create-object__link-preview-model').hide();
+            $('#popup-create-object__local-preview-document').hide();
+            $('#popup-create-object__link-preview-document').hide();
             $('#popup-create-object__local-file-hidden-input').attr('accept','audio/*');
         }
         else if(type == 'model'){
@@ -366,7 +378,23 @@ debugger;
             $('#popup-create-object__local-preview-audio').hide();
             $('#popup-create-object__local-preview-model').show();
             $('#popup-create-object__link-preview-model').show();
+            $('#popup-create-object__local-preview-document').hide();
+            $('#popup-create-object__link-preview-document').hide();
             $('#popup-create-object__local-file-hidden-input').attr('accept','.glb');
+        }
+        else if(type == 'document'){
+
+            $('#popup-create-object__link-preview-img').hide();
+            $('#popup-create-object__link-preview-video').hide();
+            $('#popup-create-object__link-preview-audio').hide();
+            $('#popup-create-object__local-preview-img').hide();
+            $('#popup-create-object__local-preview-video').hide();
+            $('#popup-create-object__local-preview-audio').hide();
+            $('#popup-create-object__local-preview-model').hide();
+            $('#popup-create-object__link-preview-model').hide();
+            $('#popup-create-object__local-preview-document').show();
+            $('#popup-create-object__link-preview-document').show();
+            $('#popup-create-object__local-file-hidden-input').attr('docx','doc','PPT','PPS','PPTX','PPSX','xls','xlsx','xlsm','pdf','txt');
         }
         $('#popup-create-object').find('input[name="type"]').val(type);
         $('#popup-create-object').modal('show');

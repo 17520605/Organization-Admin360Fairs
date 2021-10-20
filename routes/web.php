@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/objects/videos', 'administrator\ObjectsController@videos');
             Route::get('/{id}/objects/audios', 'administrator\ObjectsController@audios');
             Route::get('/{id}/objects/models', 'administrator\ObjectsController@models');
+            Route::get('/{id}/objects/documents', 'administrator\ObjectsController@documents');
             Route::post('/{id}/objects/save-create', 'administrator\ObjectsController@saveCreate');
 
             // event

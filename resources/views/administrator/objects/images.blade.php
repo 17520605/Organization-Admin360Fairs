@@ -17,10 +17,16 @@
                             <div class="file">
                                 <a href="javascript:void(0);">
                                     <div class="hover">
-                                        <button class="btn"><i class="fas fa-trash-alt"></i></button>
+                                        <button class="btn"  data-image-id="{{$image->id}}" onclick="onOpenPopupDeleteImage(this);"><i class="fas fa-trash-alt"></i></button>
                                     </div>
                                     <div class="image">
-                                        <img src="{{$image->url}}" alt="img" class="img-fluid1">
+                                        @if ($image->source == 'local')
+                                            <img src="{{$image->url}}" alt="img" class="img-fluid1">
+                                        @elseif($image->source == 'link')
+                                            <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px; color:#727cf5 "></i>
+                                            <img src="{{$image->url}}" alt="img" class="img-fluid1">
+                                        @endif
+                                        
                                     </div>
                                     <div class="file-name">
                                         <p class="text-muted">{{$image->name != null ? $image->name : "n/a"}}</p>
