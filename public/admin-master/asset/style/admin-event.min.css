@@ -14842,6 +14842,14 @@ img {
     background-color: #f3ad06;
 }
 
+.total_bar_object .progress-bar-danger {
+    background-color: #dc3545!important;
+}
+
+.total_bar_object .progress-bar-success {
+    background-color: #28a745!important;
+}
+
 .bg-config-overview {
     position: absolute;
     width: 100%;
@@ -15060,4 +15068,49 @@ img {
 #viewer-container canvas {
     width: 100% !important;
     height: 100% !important;
+}
+
+.btn-item-object-hover {
+    cursor: pointer;
+}
+
+.btn-set-active-object-type:hover {
+    background: #3f86e917;
+}
+
+.avatar-xs-icon {
+    height: 2.2rem;
+    width: 3.2rem;
+    text-align: center;
+}
+
+.avatar-xs-icon i {
+    line-height: 40px;
+    font-size: 22px;
+}
+
+.font-black-555 {
+    font-size: 18px;
+    color: #555;
+}
+
+.object-file-booth .file .image {
+    height: 120px;
+}
+
+.object-file-booth .file .image img {
+    height: 100%;
+}
+
+.object-file-booth .file .file-name {
+    padding: 1px 10px !important;
+    border-top: 1px solid #f7f7f7;
+}
+
+.object-file-booth .file .file-name p {
+    padding: 0;
+    margin: 0;
+    font-weight: 400;
+    color: #555;
+    text-align: center;
 }
