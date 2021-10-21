@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/booths/save-create', 'administrator\BoothsController@saveCreate');
             Route::post('/{id}/booths/save-edit', 'administrator\BoothsController@saveEdit');
             Route::get('/{id}/booths/{boothId}', 'administrator\BoothsController@booth');
+            Route::post('/{id}/booths/{boothId}/change-logo', 'administrator\BoothsController@changeLogo');
             Route::delete('/{id}/booths/{boothId}', 'administrator\BoothsController@saveDelete');
 
             // objects

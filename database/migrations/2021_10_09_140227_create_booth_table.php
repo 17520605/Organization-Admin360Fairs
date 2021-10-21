@@ -17,8 +17,10 @@ class CreateBoothTable extends Migration
             $table->id();
             $table->integer('tourId');
             $table->integer('ownerId')->nullable();
-            $table->string('name');
-            $table->string('accessCode')->nullable();
+            $table->integer('sceneId')->nullable();
+            $table->integer('storageLimit')->nullable();
+            $table->string('storageLimit')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

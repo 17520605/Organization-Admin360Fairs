@@ -5,54 +5,52 @@
         <div class="row mb-3">
             <div class="col-md-12">
                 <div class="card p-3">
-                    <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$tour->name}}</h1>
-                    <div class="div_cardheader_btn">
-                        <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#"><i class="fas fa-globe"></i> Publish </button>
-                        <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-tour"><i class="fas fa-pen"></i> Edit</button>
-                    </div>
+                    <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$booth->name}}</h1>
                 </div>
             </div>
         </div>
         <div class="row mb-3">
             <div class="col-md-5">
-                <div class="card" style="min-height: 300px;">
+                <div class="card" style="height: 270px">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="flex-grow-1 overflow-hidden">
                             <h6 class="font-size-15 font-weight-bold">General information: </h6>
-                            <p class="text-muted"><i class="fas fa-building"></i> Name organization : <span>CTTNHH ABCD</span></p>
-                            <p class="text-muted"><i class="fas fa-envelope-square"></i> Email organization : <span>ctytnhhabc@gmail.com</span></p>
-                            <p class="text-muted"><i class="fas fa-phone-square-alt"></i> Hotline organization : <span>0909909999</span></p>
+                            <p class="text-muted"><i class="fas fa-building"></i> <a  class="ml-3"> <ins> {{$booth->owner->name != null ? $booth->owner->name : "N/A"}} </ins></a></p>
+                            <p class="text-muted"><i class="fas fa-envelope"></i> <span class="ml-3"> {{$booth->owner->email != null ? $booth->owner->email : "N/A"}} </span></p>
+                            <p class="text-muted"><i class="fas fa-phone-alt"></i> <span class="ml-3"> {{$booth->owner->contact != null ? $booth->owner->contact : "N/A"}}</span></p>
                         </div>
-                        <div class="flex-grow-1 overflow-hidden">
-                            <h6 class="font-size-15 font-weight-bold">Description: </h6>
-                            <div class="text-muted discription_tour_text" style="max-height: 10rem">
-                                Paragraph development begins with the formulation of the controlling idea. This idea directs the paragraph’s development. Often, the controlling idea of a paragraph will appear in the form of a topic sentence. In some cases, you may need more than one
-                                sentence to express a paragraph’s controlling idea.
-                            </div>
+                        <div class="flex-grow-1 overflow-hidden border rounded" style="height: 100px">
+                            @if ($booth->description != null)
+                            <div class="text-muted discription_tour_text" style="max-height: 105px">{{$booth->description}} </div>
+                            @else
+                            <div class="text-muted discription_tour_text border" style="width: 100%;">No description</div>
+                            @endif
+                            
                         </div>
                     </div>
                 </div>
                 <div class="card mt-3">
-                    <div class="upload-box" style="display: block;max-height: 200px; height: 100%;">
+                    <div class="upload-box" style="display: {{$booth->logo == null ? 'block' : 'none'}}; max-height: 200px; height: 200px">
                         <div class="upload-text text-center">
-                            <div class="upload-form border-dashed">
-                                <div class="m-4">
-                                    <h4 style="font-weight: 900;">LOGO</h4>
-                                    <button type="button" id="add_image_upload" class="btn btn-outline-primary"> <i class="fas fa-upload " style="margin-right: 8px; "></i>
+                            <div class="upload-form border-dashed" style="height: 165px;">
+                                <div class="m-4"> No Logo
+                                    {{-- <button type="button" id="upload-logo-btn" class="btn btn-outline-primary"> <i class="fas fa-upload " style="margin-right: 8px; "></i>
                                         Upload Logo
                                     </button>
-                                    <input type="file" id="" style="display: none" accept="video/*">
+                                    <input type="file" id="upload-logo-file-input" style="display: none" accept="image/*"> --}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div style="display: none;max-height: 200px;">
-                        <img style="height: 100%;" src="https://lh3.googleusercontent.com/proxy/6tMLql0HIGOwuQ0M1OdfwR8kbq3u5T_CFZ10gRKhOyxk7y78OrchCy4PfmMlB3OUVknpMaiEFpslFne1ndzTlMJtkOFD8lHZ7ocnmxnQdUBcGjNAzLSxGQtyyP99qdNv" alt="">
+                    <div class="preview-box" style="display: {{$booth->logo == null ? 'none' : 'block'}}; max-height: 200px; height: 200px; padding:1rem;">
+                        <div class="upload-text text-center">
+                            <img id="preview-logo-img" src="{{$booth->logo}}" style="height: 100%; width:100%"  alt="">
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-7 view_booth_panoles">
-                <div class="card" style="width: 100% ;height: 69%; padding:20px;">
+                <div class="card" style="width: 100% ;height: 75%; padding:20px;">
                     <div id="viewer-container" style="width: 100%; height: 100%;">
                     </div>
                     <div class="bg-config-overview">
@@ -62,44 +60,22 @@
                         </a>
                     </div>
                 </div>
-                <div class="card mt-3" style="width: 100%; height: 132px; padding:12px 8px;">
+                <div class="card mt-3" style="width: 100%; height: 105px; padding:12px 8px;">
                     <div id="container">
                         <div class="tour__bottom-bar-slider-outer" id="booth-track">
                             <div class="tour__bottom-bar-slider" style="width: 100%; position: relative;">
-                                <i class="fas fa-angle-left" id="left-button-scroll"></i>
-                                <div id="slider-track" class="tour__bottom-bar-slider-track" style=" overflow-x: hidden;margin-left: 4%;max-width: 92%; height: 100%; display: flex;">
-                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="436">
-                                        <div class="slide_track__body active">
-                                            <img src="https://res.cloudinary.com/virtual-tour/image/upload/c_thumb,w_350,g_face/v1632648128/fkawozf7qkaif1vadqfy.jpg" onclick="onGoToPanorama(436)" data-panorama-id="436" class="slide_track__image panorama-thumbnail__image">
-                                            <span class="span-booth-name">view 11-min</span>
+                                {{-- <i class="fas fa-angle-left" id="left-button-scroll"></i> --}}
+                                <div id="slider-track" class="tour__bottom-bar-slider-track" style=" overflow-x: hidden; height: 100%; display: flex;">
+                                    @foreach ($panoramas as $panorama)
+                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
+                                        <div style="width: 135px; height: 80px;">
+                                            <img src="{{$panorama->imageUrl}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
+                                            <span class="span-booth-name">{{$panorama->name}}</span>
                                         </div>
                                     </div>
-                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="436">
-                                        <div class="slide_track__body">
-                                            <img src="https://res.cloudinary.com/virtual-tour/image/upload/c_thumb,w_350,g_face/v1632648128/fkawozf7qkaif1vadqfy.jpg" onclick="onGoToPanorama(436)" data-panorama-id="436" class="slide_track__image panorama-thumbnail__image">
-                                            <span class="span-booth-name">view 12-min</span>
-                                        </div>
-                                    </div>
-                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="436">
-                                        <div class="slide_track__body">
-                                            <img src="https://res.cloudinary.com/virtual-tour/image/upload/c_thumb,w_350,g_face/v1632648128/fkawozf7qkaif1vadqfy.jpg" onclick="onGoToPanorama(436)" data-panorama-id="436" class="slide_track__image panorama-thumbnail__image">
-                                            <span class="span-booth-name">view 13-min</span>
-                                        </div>
-                                    </div>
-                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="436">
-                                        <div class="slide_track__body">
-                                            <img src="https://res.cloudinary.com/virtual-tour/image/upload/c_thumb,w_350,g_face/v1632648128/fkawozf7qkaif1vadqfy.jpg" onclick="onGoToPanorama(436)" data-panorama-id="436" class="slide_track__image panorama-thumbnail__image">
-                                            <span class="span-booth-name">view 14-min</span>
-                                        </div>
-                                    </div>
-                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="436">
-                                        <div class="slide_track__body">
-                                            <img src="https://res.cloudinary.com/virtual-tour/image/upload/c_thumb,w_350,g_face/v1632648128/fkawozf7qkaif1vadqfy.jpg" onclick="onGoToPanorama(436)" data-panorama-id="436" class="slide_track__image panorama-thumbnail__image">
-                                            <span class="span-booth-name">view 15-min</span>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                                <i class="fas fa-angle-right" id="right-button-scroll"></i>
+                                {{-- <i class="fas fa-angle-right" id="right-button-scroll"></i> --}}
                             </div>
                         </div>
                     </div>
@@ -110,24 +86,29 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body" style="color: #555; font-size: 14px;">
-                        <div class="d-flex">
-                            <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="text-truncate font-size-15">Object Zone</h5>
-                            </div>
-                        </div>
-                        <div class="border shadow-none mb-2 card total_bar_object" style="padding: 0.5rem; ">
-                            <a class="text-body" href="#">
+                        <div class="border shadow-none mb-2 card total_bar_object" style="padding: 0.5rem" onclick="switchObjectTypeTag('all')">
+                            <a class="text-body">
                                 <div class="body">
-                                    <h4>1TB <i class="fa fa-server float-right"></i></h4>
-                                    <p class="mb-0">Storage <small class="text-muted float-right">of 1Tb</small></p>
+                                    @php
+                                        $storageLimit = floatval($booth->storageLimit);
+                                        $totalSize = floatval($types->sum('size'))/(1048576);
+                                        $totalPercent = number_format($totalSize * 100 / $storageLimit, 1);
+                                    @endphp
+                                    <h4>{{ number_format($totalSize, 1)}} MB used <i class="fa fa-server float-right"></i></h4>
+                                    <p class="mb-0">Storage <small class="text-muted float-right">of {{ $storageLimit}}MB</small></p>
                                     <div class="progress progress-striped" style="width: 100%; padding: 0; height: 20px;background: #bbbbbb77;">
-                                        <div class="progress-bar progress-bar-warning" data-transitiongoal="43" aria-valuenow="43" style="width: 43%;">43%</div>
+                                        <div class="progress-bar progress-bar-warning" data-transitiongoal="{{$totalPercent}}" aria-valuenow="{{$totalPercent}}" style="width: {{$totalPercent}}%;">{{$totalPercent}}%</div>
                                     </div>
                                 </div>
                             </a>
                         </div>
-                        <div class="border shadow-none mb-2 card">
-                            <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/images">
+                        <div class="border shadow-none mb-2 card" onclick="switchObjectTypeTag('images')">
+                            @php
+                                $imageCount = $types->where('type', 'image')->first()->count;
+                                $imageSize =  number_format(floatval($types->where('type', 'image')->first()->size) / 1048576 , 1);
+                                $imagePercent = number_format($imageSize * 100 / $totalSize, 1);;
+                            @endphp
+                            <a class="text-body">
                                 <div class="p-2">
                                     <div class="d-flex">
                                         <div class="avatar-xs align-self-center me-2">
@@ -135,20 +116,25 @@
                                         </div>
                                         <div class="overflow-hidden me-auto">
                                             <h5 class="font-size-13 text-truncate mb-1">Images</h5>
-                                            <p class="text-muted text-truncate mb-0">176 Files</p>
+                                            <p class="text-muted text-truncate mb-0">{{$imageCount}} Files</p>
                                         </div>
                                         <div class="ml-2">
-                                            <p class="text-muted">6 GB</p>
+                                            <p class="text-muted">{{ $imageSize }} MB</p>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                             <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                <div class="progress-bar bg-success" data-transitiongoal="18" aria-valuenow="18" style="width: 28%;"></div>
+                                <div class="progress-bar bg-success" data-transitiongoal="{{$imagePercent}}" aria-valuenow="{{$imagePercent}}" style="width: {{$imagePercent}}%;"></div>
                             </div>
                         </div>
-                        <div class="card border shadow-none mb-2">
-                            <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/videos">
+                        <div class="card border shadow-none mb-2" onclick="switchObjectTypeTag('videos')">
+                            @php
+                                $videoCount = $types->where('type', 'video')->first()->count;
+                                $videoSize =  number_format(floatval($types->where('type', 'video')->first()->size) / 1048576 , 1);
+                                $videoPercent = number_format($videoSize * 100 / $totalSize, 1);;
+                            @endphp
+                            <a class="text-body">
                                 <div class="p-2">
                                     <div class="d-flex">
                                         <div class="avatar-xs align-self-center me-2">
@@ -156,41 +142,51 @@
                                         </div>
                                         <div class="overflow-hidden me-auto">
                                             <h5 class="font-size-13 text-truncate mb-1">Video</h5>
-                                            <p class="text-muted text-truncate mb-0">45 Files</p>
+                                            <p class="text-muted text-truncate mb-0">{{$videoCount}} Files</p>
                                         </div>
                                         <div class="ml-2">
-                                            <p class="text-muted">4.1 GB</p>
+                                            <p class="text-muted">{{$videoSize}} MB</p>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                             <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                <div class="progress-bar bg-danger" data-transitiongoal="18" aria-valuenow="18" style="width: 18%;"></div>
+                                <div class="progress-bar bg-danger" data-transitiongoal="{{$videoPercent}}" aria-valuenow="{{$videoPercent}}" style="width: {{$videoPercent}}%;"></div>
                             </div>
                         </div>
-                        <div class="card border shadow-none mb-2">
-                            <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/audios">
+                        <div class="card border shadow-none mb-2" onclick="switchObjectTypeTag('audios')">
+                            @php
+                                $audioCount = $types->where('type', 'audio')->first()->count;
+                                $audioSize =  number_format(floatval($types->where('type', 'audio')->first()->size) / 1048576 , 1);
+                                $audioPercent = number_format($audioSize * 100 / $totalSize, 1);;
+                            @endphp
+                            <a class="text-body">
                                 <div class="p-2">
                                     <div class="d-flex">
                                         <div class="avatar-xs align-self-center me-2">
                                             <div class="avatar-title rounded bg-transparent text-info font-size-20"><i class="fas fa-music"></i></div>
                                         </div>
                                         <div class="overflow-hidden me-auto">
-                                            <h5 class="font-size-13 text-truncate mb-1">Music</h5>
-                                            <p class="text-muted text-truncate mb-0">21 Files</p>
+                                            <h5 class="font-size-13 text-truncate mb-1">Audios</h5>
+                                            <p class="text-muted text-truncate mb-0">{{$audioCount}} Files</p>
                                         </div>
                                         <div class="ml-2">
-                                            <p class="text-muted">3.2 GB</p>
+                                            <p class="text-muted">{{ $audioSize }} MB</p>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                             <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                <div class="progress-bar bg-info" data-transitiongoal="18" aria-valuenow="18" style="width: 18%;"></div>
+                                <div class="progress-bar bg-info" data-transitiongoal="{{$audioPercent}}" aria-valuenow="{{ $audioPercent }}" style="width: {{$audioPercent}}%;"></div>
                             </div>
                         </div>
-                        <div class="card border shadow-none mb-2">
-                            <a class="text-body" href="/administrator/tours/{{$tour->id}}/objects/models">
+                        <div class="card border shadow-none mb-2" onclick="switchObjectTypeTag('models')">
+                            @php
+                                $modelCount = $types->where('type', 'model')->first()->count;
+                                $modelSize =  number_format(floatval($types->where('type', 'model')->first()->size) / 1048576 , 1);
+                                $modelPercent = number_format($modelSize * 100 / $totalSize, 1);;
+                            @endphp
+                            <a class="text-body">
                                 <div class="p-2">
                                     <div class="d-flex">
                                         <div class="avatar-xs align-self-center me-2">
@@ -198,213 +194,249 @@
                                         </div>
                                         <div class="overflow-hidden me-auto">
                                             <h5 class="font-size-13 text-truncate mb-1">Model</h5>
-                                            <p class="text-muted text-truncate mb-0">21 Files</p>
+                                            <p class="text-muted text-truncate mb-0">{{$modelCount}} Files</p>
                                         </div>
                                         <div class="ml-2">
-                                            <p class="text-muted">2 GB</p>
+                                            <p class="text-muted">{{$modelSize}} MB</p>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                             <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                <div class="progress-bar bg-model1" data-transitiongoal="18" aria-valuenow="18" style="width: 18%;"></div>
-                            </div>
-                        </div>
-                        <div class="card border shadow-none mb-2">
-                            <a class="text-body" href="#">
-                                <div class="p-2">
-                                    <div class="d-flex">
-                                        <div class="avatar-xs align-self-center me-2">
-                                            <div class="avatar-title rounded bg-transparent text-primary font-size-20"><i class="fas fa-file-alt"></i></div>
-                                        </div>
-                                        <div class="overflow-hidden me-auto">
-                                            <h5 class="font-size-13 text-truncate mb-1">Documents</h5>
-                                            <p class="text-muted text-truncate mb-0">21 Files</p>
-                                        </div>
-                                        <div class="ml-2">
-                                            <p class="text-muted">2 GB</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                <div class="progress-bar bg-primary" data-transitiongoal="18" aria-valuenow="18" style="width: 18%;"></div>
-                            </div>
-                        </div>
-                        <div class="card border shadow-none">
-                            <a class="text-body" href="#">
-                                <div class="p-2">
-                                    <div class="d-flex">
-                                        <div class="avatar-xs align-self-center me-2">
-                                            <div class="avatar-title rounded bg-transparent text-warning font-size-20"><i class="fas fa-folder"></i></div>
-                                        </div>
-                                        <div class="overflow-hidden me-auto">
-                                            <h5 class="font-size-13 text-truncate mb-1">Others</h5>
-                                            <p class="text-muted text-truncate mb-0">20 Files</p>
-                                        </div>
-                                        <div class="ml-2">
-                                            <p class="text-muted ">1.4 GB</p>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </a>
-                            <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                <div class="progress-bar bg-warning" data-transitiongoal="18" aria-valuenow="18" style="width: 5%;"></div>
+                                <div class="progress-bar bg-model1" data-transitiongoal="{{$modelPercent}}" aria-valuenow="{{$modelPercent}}" style="width: {{$modelPercent}}%;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card" style="width: 100%; height: 647px;padding: 0.25rem;">
+                <div class="card objects-card all-card" style="width: 100%; height: 647px;padding: 0.25rem;">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="d-flex">
-                            <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="text-truncate font-size-15">Object Zone <button class="btn btn-df" onclick="openPopupCreateObject('audio')" style="position: absolute; right: 1.5rem;top: 1rem;" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new file</button></h5>
+                            <div class="overflow-hidden">
+                                <h5 class="font-size-15 font-weight-bold text-primary">Objects</h5>
                             </div>
                         </div>
                         <div class="row" style="height: 570px; overflow-y: scroll;">
+                            @foreach ($objects as $object)
+                                @if ($object->type == 'image')
+                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                    <div class="card">
+                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                            <a href="javascript:void(0);">
+                                                <div class="image">
+                                                    <img src="{{$object->url}}" alt="img" class="img-fluid">
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                                @if ($object->type == 'video')
+                                <div class="col-lg-3 col-md-4 col-sm-12">
+                                    @if ($object->source == 'local')
+                                    <div class="card">
+                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                            <a href="javascript:void(0);">
+                                                <div class="image">
+                                                    <img src="" alt="img" class="img-fluid">
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @endif
+                                    @if ($object->source == 'link')
+                                    <div class="card">
+                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                            <a href="javascript:void(0);">
+                                                <div class="image">
+                                                    <img src="" alt="img" class="img-fluid">
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+                                @endif
+                                @if ($object->type == 'audio')
+                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                    <div class="card">
+                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                            <a href="javascript:void(0);">
+                                                <div class="image">
+                                                    <img src="" alt="img" class="img-fluid">
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                                @if ($object->type == 'model')
+                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                    <div class="card">
+                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                            <a href="javascript:void(0);">
+                                                <div class="image">
+                                                    <model-viewer style="width: 100%;" src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
+                                                </div>
+                                                <div class="file-name">
+                                                    <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                                
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="card objects-card images-card" style="width: 100%; height: 647px;padding: 0.25rem; display: none">
+                    <div class="card-body" style="color: #555; font-size: 14px;">
+                        <div class="d-flex">
+                            <div class="overflow-hidden">
+                                <h5 class="font-size-15 font-weight-bold text-primary">Images</h5>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 570px; overflow-y: scroll;">
+                            @php
+                                $images = $objects->where('type', 'image')->all();
+                            @endphp
+                            @foreach ($images as $image)
                             <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
                                 <div class="card">
-                                    <div class="file">
+                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                         <a href="javascript:void(0);">
                                             <div class="image">
-                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
+                                                <img src="{{$image->url}}" alt="img" class="img-fluid">
                                             </div>
                                             <div class="file-name">
-                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                                <p class="m-b-5 text-muted">{{$image->name}}</p>
                                             </div>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="card objects-card videos-card" style="width: 100%; height: 647px;padding: 0.25rem; display: none">
+                    <div class="card-body" style="color: #555; font-size: 14px;">
+                        <div class="d-flex">
+                            <div class="overflow-hidden">
+                                <h5 class="font-size-15 font-weight-bold text-primary">Videos</h5>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 570px; overflow-y: scroll;">
+                            @php
+                                $videos = $objects->where('type', 'video')->all();
+                            @endphp
+                            @foreach ($videos as $video)
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                @if ($video->source == 'local')
                                 <div class="card">
-                                    <div class="file">
+                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                         <a href="javascript:void(0);">
                                             <div class="image">
-                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
+                                                <img src="" alt="img" class="img-fluid">
                                             </div>
                                             <div class="file-name">
-                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                                <p class="m-b-5 text-muted">{{$video->name}}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                @endif
+                                @if ($video->source == 'link')
+                                <div class="card">
+                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">{{$video->name}}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="card objects-card audios-card" style="width: 100%; height: 647px;padding: 0.25rem; display: none">
+                    <div class="card-body" style="color: #555; font-size: 14px;">
+                        <div class="d-flex">
+                            <div class="overflow-hidden">
+                                <h5 class="font-size-15 font-weight-bold text-primary">Audios</h5>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 570px; overflow-y: scroll;">
+                            @php
+                                $audios = $objects->where('type', 'audio')->all();
+                            @endphp
+                            @foreach ($audios as $audio)
+                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="card">
+                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                        <a href="javascript:void(0);">
+                                            <div class="image">
+                                                <img src="" alt="img" class="img-fluid">
+                                            </div>
+                                            <div class="file-name">
+                                                <p class="m-b-5 text-muted">{{$audio->name}}</p>
                                             </div>
                                         </a>
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="card objects-card models-card" style="width: 100%; height: 647px;padding: 0.25rem; display: none">
+                    <div class="card-body" style="color: #555; font-size: 14px;">
+                        <div class="d-flex">
+                            <div class="overflow-hidden">
+                                <h5 class="font-size-15 font-weight-bold text-primary">Models</h5>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 570px; overflow-y: scroll;">
+                            @php
+                                $models = $objects->where('type', 'model')->all();
+                            @endphp
+                            @foreach ($models as $model)
                             <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
                                 <div class="card">
-                                    <div class="file">
+                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                         <a href="javascript:void(0);">
                                             <div class="image">
-                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
+                                                <model-viewer style="width: 100%;" src="{{$model->url}}" ar-status="not-presenting"></model-viewer>
                                             </div>
                                             <div class="file-name">
-                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
+                                                <p class="m-b-5 text-muted">{{$model->name}}</p>
                                             </div>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                <div class="card">
-                                    <div class="file">
-                                        <a href="javascript:void(0);">
-                                            <div class="image">
-                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                <div class="card">
-                                    <div class="file">
-                                        <a href="javascript:void(0);">
-                                            <div class="image">
-                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                <div class="card">
-                                    <div class="file">
-                                        <a href="javascript:void(0);">
-                                            <div class="image">
-                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                <div class="card">
-                                    <div class="file">
-                                        <a href="javascript:void(0);">
-                                            <div class="image">
-                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                <div class="card">
-                                    <div class="file">
-                                        <a href="javascript:void(0);">
-                                            <div class="image">
-                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                <div class="card">
-                                    <div class="file">
-                                        <a href="javascript:void(0);">
-                                            <div class="image">
-                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/8.jpg" alt="img" class="img-fluid">
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                <div class="card">
-                                    <div class="file">
-                                        <a href="javascript:void(0);">
-                                            <div class="image">
-                                                <img src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg" alt="img" class="img-fluid">
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -504,4 +536,93 @@
             </div>
         </div>
     </div>
+    <script>
+        var viewer;
+        var container = document.getElementById('viewer-container');
+
+        function switchObjectTypeTag(type) {  
+            $('.objects-card').hide();
+            $('.' + type + '-card').show();
+        }
+
+        function onGoToPanorama(target) {  
+            let imageUrl = $(target).attr('src');
+            viewer.destroy();
+            container.innerHTML = "";
+            viewer = new PANOLENS.Viewer({
+                container: container,
+                autoRotate: true,
+                autoRotateSpeed: 1.0,
+            });
+            viewer.OrbitControls.noZoom = true;
+            let imagePanorama = new PANOLENS.ImagePanorama(imageUrl);
+            viewer.add(imagePanorama);
+        }
+
+        function initViewer() {
+            let container = document.getElementById('viewer-container');
+            viewer = new PANOLENS.Viewer({
+                container: container,
+                autoRotate: true,
+                autoRotateSpeed: 1.0,
+            });
+            viewer.OrbitControls.noZoom = true;
+
+            @if ($scene != null && $scene->defaultPanoramaId != null)
+                let imagePanorama = new PANOLENS.ImagePanorama("{{$panoramas->where('id', $scene->defaultPanoramaId)->first()->imageUrl}}");
+                viewer.add(imagePanorama);
+            @endif
+        }
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            initViewer();
+
+            // $('#upload-logo-btn').click(function () { $('#upload-logo-file-input').trigger('click')});
+
+            // $('#upload-logo-file-input').change(function () {  
+            //     let file = this.files[0];
+            //     if(file != null){
+            //         $('#preview-logo-img').attr('src', URL.createObjectURL(file));
+            //         $('.upload-box').hide();
+            //         $('.preview-box').show();
+
+            //         let data = new FormData();
+            //         data.append('file', file);
+            //         let ajax = $.ajax({
+            //             headers: {
+            //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //             },
+            //             url: "{{env('APP_URL')}}/storage/upload",
+            //             method: 'post',
+            //             processData: false,
+            //             contentType: false,
+            //             data: data,
+            //             dataType: 'json',
+            //             success: function (url) { 
+            //                 if (url != null) {
+            //                     let ajax = $.ajax({
+            //                         headers: {
+            //                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //                         },
+            //                         url: "/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}/change-logo",
+            //                         method: 'post',
+            //                         data: {
+            //                             logo: url
+            //                         },
+            //                         dataType: 'json',
+            //                         success: function (res) { 
+            //                             if (res != null) {
+            //                                 alert("upload done");
+            //                             }
+            //                         }
+            //                     });
+            //                 }
+            //             }
+            //         });
+            //     }
+            // })
+        });
+    </script>
 @endsection

@@ -11,6 +11,9 @@ class Booth extends Model
     const STATUS_CONFIGDONE = 'Config Done';
 
     protected $table = 'booth';
-    
+
+    public function owner() {
+        return $this->belongsTo(Profile::class, 'ownerId');
+    }
 }
 
