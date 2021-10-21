@@ -28,7 +28,7 @@
 
             <a class="nav-link dropdown-toggle" href="#" id="user1Dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline" style="font-size:0.9rem; color: #fff;">{{ isset($profile) ? $profile->name : ""}}</span>
-                <img class="img-profile rounded-circle" src="{{ isset($profile) ? ($profile->avatar != null ? $profile->avatar : '/admin-master/asset/images/undraw_profile.svg') : "" }}" />
+                <img class="img-profile rounded-circle" src="{{ isset($profile) ? ($profile->avatar != null ? $profile->avatar : 'https://res.cloudinary.com/virtual-tour/image/upload/v1634823839/icons/default_avatar_jeqa4w.png') : "" }}" />
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="user1Dropdown">
                 <a class="dropdown-item" href="#"> <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings </a>

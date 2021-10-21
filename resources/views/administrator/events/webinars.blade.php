@@ -8,7 +8,7 @@
             <div class="col-lg-4 ">
                 <div class="card card-margin">
                     <div class="card-header no-border">
-                        <h5 class="card-title">MOM</h5>
+                        <h6 class="card-title" style="font-weight: 400">360 EVENT</h6>
                         <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
                     </div>
                     <div class="card-body pt-0">

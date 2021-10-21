@@ -15114,3 +15114,22 @@ img {
     color: #555;
     text-align: center;
 }
+
+.change-avatar-profile {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    font-size: 18px;
+    text-align: center;
+    padding-left: 10px;
+    background: #FFF;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    color: #4666c7;
+}
+
+.change-avatar-profile:hover {
+    transform: scale(1.2);
+    color: #294596;
+}
