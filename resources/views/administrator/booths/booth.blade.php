@@ -14,18 +14,16 @@
                 <div class="card" style="height: 270px">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="flex-grow-1 overflow-hidden">
-                            <h6 class="font-size-15 font-weight-bold">General information: </h6>
-                            <p class="text-muted"><i class="fas fa-building"></i> <a  class="ml-3"> <ins> {{$booth->owner->name != null ? $booth->owner->name : "N/A"}} </ins></a></p>
-                            <p class="text-muted"><i class="fas fa-envelope"></i> <span class="ml-3"> {{$booth->owner->email != null ? $booth->owner->email : "N/A"}} </span></p>
-                            <p class="text-muted"><i class="fas fa-phone-alt"></i> <span class="ml-3"> {{$booth->owner->contact != null ? $booth->owner->contact : "N/A"}}</span></p>
-                        </div>
-                        <div class="flex-grow-1 overflow-hidden border rounded" style="height: 100px">
+                            <h6 class="font-size-15 font-weight-bold">General information : </h6>
+                            <p class="text-muted mb-2"><i class="fas fa-building"></i> <a  class="ml-2 font-weight-bold" > <ins style="text-decoration: none"> {{$booth->owner->name != null ? $booth->owner->name : "N/A"}} </ins></a></p>
+                            <p class="text-muted mb-2"><i class="fas fa-envelope"></i> <span class="ml-2"> {{$booth->owner->email != null ? $booth->owner->email : "N/A"}} </span></p>
+                            <p class="text-muted mb-2"><i class="fas fa-phone-alt"></i> <span class="ml-2"> {{$booth->owner->contact != null ? $booth->owner->contact : "N/A"}}</span></p>
+                            <p class="font-size-15 font-weight-bold">Description : </p>
                             @if ($booth->description != null)
-                            <div class="text-muted discription_tour_text" style="max-height: 105px">{{$booth->description}} </div>
+                                <div class="text-muted discription_tour_text" style="max-height: 105px ">{{$booth->description}} </div>
                             @else
-                            <div class="text-muted discription_tour_text border" style="width: 100%;">No description</div>
+                                <div class="text-muted" style="width: 100%; text-align: center ;">No description</div>
                             @endif
-                            
                         </div>
                     </div>
                 </div>
@@ -60,7 +58,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="card mt-3" style="width: 100%; height: 105px; padding:12px 8px;">
+                <div class="card mt-3" style="width: 100%; height: 105px; padding:8px;">
                     <div id="container">
                         <div class="tour__bottom-bar-slider-outer" id="booth-track">
                             <div class="tour__bottom-bar-slider" style="width: 100%; position: relative;">
@@ -68,9 +66,9 @@
                                 <div id="slider-track" class="tour__bottom-bar-slider-track" style=" overflow-x: hidden; height: 100%; display: flex;">
                                     @foreach ($panoramas as $panorama)
                                     <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
-                                        <div style="width: 135px; height: 80px;">
+                                        <div style="width: 135px; height: 90px;">
                                             <img src="{{$panorama->imageUrl}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
-                                            <span class="span-booth-name">{{$panorama->name}}</span>
+                                            <span class="span-booth-name" style="font-weight: 600">{{$panorama->name}}</span>
                                         </div>
                                     </div>
                                     @endforeach
@@ -86,7 +84,7 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body" style="color: #555; font-size: 14px;">
-                        <div class="border shadow-none mb-2 card total_bar_object" style="padding: 0.5rem" onclick="switchObjectTypeTag('all')">
+                        <div class="border shadow-none mb-2 card total_bar_object" style="padding: 0.5rem" >
                             <a class="text-body">
                                 <div class="body">
                                     @php
@@ -97,10 +95,35 @@
                                     <h4>{{ number_format($totalSize, 1)}} MB used <i class="fa fa-server float-right"></i></h4>
                                     <p class="mb-0">Storage <small class="text-muted float-right">of {{ $storageLimit}}MB</small></p>
                                     <div class="progress progress-striped" style="width: 100%; padding: 0; height: 20px;background: #bbbbbb77;">
-                                        <div class="progress-bar progress-bar-warning" data-transitiongoal="{{$totalPercent}}" aria-valuenow="{{$totalPercent}}" style="width: {{$totalPercent}}%;">{{$totalPercent}}%</div>
+                                        <div class="progress-bar progress-bar-warning" style="border-radius: 5px;" data-transitiongoal="{{$totalPercent}}" aria-valuenow="{{$totalPercent}}" style="width: {{$totalPercent}}%;">{{$totalPercent}}%</div>
                                     </div>
                                 </div>
                             </a>
+                        </div>
+                        <div class="border shadow-none mb-2 card" onclick="switchObjectTypeTag('all')">
+                            @php
+                                $totalSize = floatval($types->sum('size'))/(1048576);
+                                $totalPercent = number_format($totalSize * 100 / $storageLimit, 1);
+                            @endphp
+                            <a class="text-body">
+                                <div class="p-2">
+                                    <div class="d-flex">
+                                        <div class="avatar-xs align-self-center me-2">
+                                            <div class="avatar-title rounded bg-transparent text-warning font-size-20"><i class="fas fa-th-list"></i></div>
+                                        </div>
+                                        <div class="overflow-hidden me-auto">
+                                            <h5 class="font-size-13 text-truncate mb-1">All</h5>
+                                            <p class="text-muted text-truncate mb-0">All Files</p>
+                                        </div>
+                                        <div class="ml-2">
+                                            <p class="text-muted">{{ $totalSize }} MB</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                                <div class="progress-bar bg-warning" data-transitiongoal="{{$totalPercent}}" aria-valuenow="{{$totalPercent}}" style="width: {{$totalPercent}}%;"></div>
+                            </div>
                         </div>
                         <div class="border shadow-none mb-2 card" onclick="switchObjectTypeTag('images')">
                             @php
