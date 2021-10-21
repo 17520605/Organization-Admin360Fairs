@@ -38,14 +38,52 @@ class BoothsController extends Controller
         return view('administrator.booths.index', ['profile' => $profile, 'tour'=> $tour, 'zones' => $zones, 'groups' => $groups, 'freeBooths'=> $freeBooths]);
     }
 
+    public function changeLogo($id, $boothId, Request $request)
+    {
+        $logo = $request->logo;
+        $booth = \App\Models\Booth::find($boothId);
+        $booth->logo =  $logo;
+        $booth->save();
+        return true;
+    }
+
     public function booth($id, $boothId, Request $request)
     {
         $user = Auth::user();
         $profile = DB::table('profile')->where('userId', $user->id)->first();
         $tour = DB::table('tour')->find($id);
 
-        return view('administrator.booths.booth', ['profile' => $profile, 'tour'=> $tour]);
-    }
+        $booth = \App\Models\Booth::with('owner')->find($boothId);
+        $scene = DB::table('scene')->find($booth->sceneId);
+        $panoramas = [];
+        if($scene != null){
+            $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
+        }
+
+        $objects = DB::table('object')
+            ->join('booth_object', 'booth_object.objectId', '=', 'object.Id')
+            ->where('booth_object.boothId', '=', $boothId)
+            ->select('object.*')
+            ->get();
+
+        $types = DB::table('object')
+            ->join('booth_object', 'object.id', '=', 'booth_object.objectId')
+            ->where('booth_object.boothId', $boothId)
+            ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(object.id) as count'))
+            ->groupBy('type')
+            ->get();
+        
+        return view('administrator.booths.booth', [
+            'profile' => $profile, 
+            'tour'=> $tour, 
+            'booth' => $booth,
+            'panoramas' => $panoramas,
+            'scene' => $scene,
+            'objects' => $objects,
+            'types' => $types
+        ]);
+
+    } 
 
     public function saveCreate($id, Request $request)
     {
