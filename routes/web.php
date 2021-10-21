@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function (){
 
             // speakers
             Route::get('/{id}/speakers', 'administrator\SpeakersController@index');
+            Route::get('/{id}/speakers/{speakerId}', 'administrator\SpeakersController@speaker');
             Route::post('/{id}/speakers/save-create', 'administrator\SpeakersController@saveCreate');
             Route::post('/{id}/speakers/save-edit', 'administrator\SpeakersController@saveEdit');
             Route::post('/{id}/speakers/import-csv', 'administrator\SpeakersController@importCsv');
@@ -86,6 +87,7 @@ Route::middleware('auth')->group(function (){
 
     Route::group(['prefix' => 'speaker'], function(){
         Route::get('/', 'speaker\ToursController@index');
+        Route::get('/calendar', 'speaker\CalendarController@index');
         Route::get('/tours', 'speaker\ToursController@index');
     });
    

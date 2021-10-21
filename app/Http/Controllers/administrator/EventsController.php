@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use MacsiDigital\Zoom\Support\Entry;
+use MacsiDigital\Zoom\Facades\Zoom;
 use Carbon\Carbon;
 
 class EventsController extends Controller
@@ -78,6 +80,9 @@ class EventsController extends Controller
             $detail->save();
         }
 
+        $zoom = new \MacsiDigital\Zoom\Support\Entry;
+        $user = new \MacsiDigital\Zoom\User($zoom);
+
         return back();
     }
 
@@ -115,6 +120,7 @@ class EventsController extends Controller
 
         return back();
     }
+
     public function saveDelete($id, $webinarId, Request $request)
     {
         $webinar = \App\Models\Webinar::find($webinarId);
@@ -125,4 +131,6 @@ class EventsController extends Controller
 
         return true;
     }
+
+    
 }
