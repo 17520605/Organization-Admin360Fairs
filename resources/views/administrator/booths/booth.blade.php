@@ -90,7 +90,7 @@
                                     @php
                                         $storageLimit = floatval($booth->storageLimit);
                                         $totalSize = floatval($types->sum('size'))/(1048576);
-                                        $totalPercent = ($totalSize != 0) ? (number_format($audioSize * 100 / $totalSize, 1)) : 0;
+                                        $totalPercent = ($storageLimit != 0) ? (number_format($totalSize * 100 / $storageLimit, 1)) : 0;
                                     @endphp
                                     <h4>{{ number_format($totalSize, 1)}} MB used <i class="fa fa-server float-right"></i></h4>
                                     <p class="mb-0">Storage <small class="text-muted float-right">of {{ $storageLimit}}MB</small></p>
@@ -129,7 +129,7 @@
                             @php
                                 $imageCount = ($types->where('type', 'image')->first() != null) ? ($types->where('type', 'image')->first()->count) : 0;
                                 $imageSize =  ($types->where('type', 'image')->first() != null) ? (number_format(floatval($types->where('type', 'image')->first()->size) / 1048576 , 1)) : 0;
-                                $imagePercent = ($totalSize != 0) ? (number_format($audioSize * 100 / $totalSize, 1)) : 0;
+                                $imagePercent = ($totalSize != 0) ? (number_format($imageSize * 100 / $totalSize, 1)) : 0;
                             @endphp
                             <a class="text-body">
                                 <div class="p-2">
@@ -155,7 +155,7 @@
                             @php
                                 $videoCount = ($types->where('type', 'video')->first() != null) ? ($types->where('type', 'video')->first()->count) : 0;
                                 $videoSize =  ($types->where('type', 'video')->first() != null) ? (number_format(floatval($types->where('type', 'video')->first()->size) / 1048576 , 1)) : 0;
-                                $videoPercent = ($totalSize != 0) ? (number_format($audioSize * 100 / $totalSize, 1)) : 0;
+                                $videoPercent = ($totalSize != 0) ? (number_format($videoSize * 100 / $totalSize, 1)) : 0;
                             @endphp
                             <a class="text-body">
                                 <div class="p-2">
@@ -207,7 +207,7 @@
                             @php
                                 $modelCount = ($types->where('type', 'model')->first() != null) ? ($types->where('type', 'model')->first()->count) : 0;
                                 $modelSize =  ($types->where('type', 'model')->first() != null) ? (number_format(floatval($types->where('type', 'model')->first()->size) / 1048576 , 1)) : 0;
-                                $modelPercent = ($totalSize != 0) ? (number_format($audioSize * 100 / $totalSize, 1)) : 0;
+                                $modelPercent = ($totalSize != 0) ? (number_format($modelSize * 100 / $totalSize, 1)) : 0;
                             @endphp
                             <a class="text-body">
                                 <div class="p-2">
