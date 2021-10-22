@@ -93,6 +93,8 @@ Route::middleware('auth')->group(function (){
    
     Route::group(['prefix' => 'profile'], function(){
         Route::get('/', 'ProfileController@index');
+        Route::post('/save-edit', 'ProfileController@saveEdit');
+        Route::post('/save-avatar', 'ProfileController@saveAvatar');
     });
 
 });
