@@ -95,6 +95,8 @@ Route::middleware('auth')->group(function (){
         Route::get('/', 'ProfileController@index');
         Route::post('/save-edit', 'ProfileController@saveEdit');
         Route::post('/save-avatar', 'ProfileController@saveAvatar');
+        Route::post('/save-cv', 'ProfileController@saveCv');
+        Route::post('/delete-cv', 'ProfileController@deleteCv');
     });
 
 });

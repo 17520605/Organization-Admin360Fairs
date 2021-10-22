@@ -45,4 +45,30 @@ class ProfileController extends Controller
         }
         return back();
     }
+    public function deleteCv(Request $request)
+    {
+        $profileId = $request->id;
+        $url = $request->url;
+        $profile = \App\Models\Profile::find($profileId);
+        if($profile != null)
+        {
+            $profile->profile = $url ;
+            $profile->save();
+        }
+        return true;
+    }
+
+    public function saveCv(Request $request)
+    {
+        $profileId = $request->id;
+        $url = $request->url;
+        $profile = \App\Models\Profile::find($profileId);
+        if($profile != null)
+        {
+            $profile->profile = $url;
+            $profile->save();
+        }
+        return true;
+    }
+
 }
