@@ -24,7 +24,7 @@
                             <th>Email</th>
                             <th>Contact</th>
                             <th style="width: 10%;">Status</th>
-                            <th style="width: 8%;">Actions</th>
+                            <th style="width: 10%;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,15 +55,16 @@
                             </td>
                             <td class="btn-action-icon">
                                 @if($speaker->status == "unconfirmed")
-                                    <i class="fas fa-pen edit" data-speaker-id="{{$speaker->id}}" data-speaker-name="{{$speaker->name}}" data-speaker-email="{{$speaker->email}}" data-speaker-contact="{{$speaker->contact}}" onclick="onOpenPopupEditSpeaker(this);"></i>
-                                    <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
+                                <i class="fas fa-pen edit" data-speaker-id="{{$speaker->id}}" data-speaker-name="{{$speaker->name}}" data-speaker-email="{{$speaker->email}}" data-speaker-contact="{{$speaker->contact}}" onclick="onOpenPopupEditSpeaker(this);"></i>
+                                <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
                                 @elseif($speaker->status == "sent email")
-                                    <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
-                                    <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
+                                <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
+                                <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
                                 @elseif($speaker->status == "confirmed")
-                                    <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
-                                    <i class="fas fa-trash-alt delete"  style="opacity: 0.3;pointer-events: none"></i>
+                                <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
+                                <i class="fas fa-trash-alt delete"  style="opacity: 0.3;pointer-events: none"></i>
                                 @endif
+                                <a href="/administrator/tours/1/speakers/{{$speaker->id}}/calendar"><i class="fas fa-calendar-alt" ></i></a>
                             </td>
                         </tr>
                         @endforeach

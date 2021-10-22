@@ -15,20 +15,28 @@
                                 </div>
                                 <div id="external-events" class="m-t-20">
                                     <br>
-                                    @foreach ($webinars as $webinar)
-                                        @if (Carbon\Carbon::now()->gt(Carbon\Carbon::parse($webinar->endAt)))
-                                            <div class="external-event bg-secondary-lighten text-secondary"
-                                                data-class="bg-success"> {{ $webinar->topic }}</div>
-                                        @else
-                                        @if (Carbon\Carbon::now()->lt(Carbon\Carbon::parse($webinar->startAt)))
-                                            <div class="external-event bg-success-lighten text-success"
-                                                data-class="bg-success"> {{ $webinar->topic }}</div>
-                                        @else
-                                            <div class="external-event bg-danger-lighten text-danger"
-                                                data-class="bg-success"> {{ $webinar->topic }}</div>
-                                        @endif
-                                        @endif
-                                    @endforeach
+                                    @if (count($webinars) == 0)
+                                        <div class="border rounded" style="width: 100%; height: 400px">
+                                            <span>No webinar</span>
+                                        </div>
+                                    @else
+                                        @foreach ($webinars as $webinar)
+                                            @if (Carbon\Carbon::now()->gt(Carbon\Carbon::parse($webinar->endAt)))
+                                                <div class="external-event bg-secondary-lighten text-secondary"
+                                                    data-class="bg-success"> {{ $webinar->topic }}</div>
+                                            @else
+                                            @if (Carbon\Carbon::now()->lt(Carbon\Carbon::parse($webinar->startAt)))
+                                                <div class="external-event bg-success-lighten text-success"
+                                                    data-class="bg-success"> {{ $webinar->topic }}</div>
+                                            @else
+                                                <div class="external-event bg-danger-lighten text-danger"
+                                                    data-class="bg-success"> {{ $webinar->topic }}</div>
+                                            @endif
+                                            @endif
+                                        @endforeach
+                                    @endif
+
+                                    
                                 </div>
                             </div>
                             <div class="col-lg-9">
@@ -102,25 +110,29 @@
             "use strict";
 
             function e() {
-                this.$body = l("body"), this.$modal = new bootstrap.Modal(document.getElementById("event-modal"), {
-                        backdrop: "static"
-                    }),
-                    this.$calendar = l("#calendar"), this.$formEvent = l("#form-event"), this.$btnNewEvent = l(
-                        "#btn-new-event"), this.$btnDeleteEvent = l("#btn-delete-event"), this.$btnSaveEvent = l(
-                        "#btn-save-event"), this.$modalTitle = l("#modal-title"), this.$calendarObj = null, this
-                    .$selectedEvent = null, this.$newEventData = null
+                this.$body = l("body"), 
+                this.$modal = new bootstrap.Modal(document.getElementById("event-modal"), {  backdrop: "static"}),
+                this.$calendar = l("#calendar"), 
+                this.$formEvent = l("#form-event"), 
+                this.$btnNewEvent = l("#btn-new-event"), 
+                this.$btnDeleteEvent = l("#btn-delete-event"),
+                this.$btnSaveEvent = l( "#btn-save-event"),
+                this.$modalTitle = l("#modal-title"), 
+                this.$calendarObj = null,
+                this.$selectedEvent = null, 
+                this.$newEventData = null
             }
 
             e.prototype.onEventClick = function(e) {
-                    this.$formEvent[0].reset(),
-                        this.$formEvent.removeClass("was-validated"),
-                        this.$newEventData = null,
-                        this.$btnDeleteEvent.show(),
-                        this.$modalTitle.text("Edit Event"),
-                        this.$modal.show(),
-                        this.$selectedEvent = e.event,
-                        l("#event-title").val(this.$selectedEvent.title),
-                        l("#event-category").val(this.$selectedEvent.classNames[0])
+                    // this.$formEvent[0].reset(),
+                    // this.$formEvent.removeClass("was-validated"),
+                    // this.$newEventData = null,
+                    // this.$btnDeleteEvent.show(),
+                    // this.$modalTitle.text("Edit Event"),
+                    // this.$modal.show(),
+                    // this.$selectedEvent = e.event,
+                    // l("#event-title").val(this.$selectedEvent.title),
+                    // l("#event-category").val(this.$selectedEvent.classNames[0])
                 },
                 e.prototype.onSelect = function(e) {
                     this.$formEvent[0].reset(),

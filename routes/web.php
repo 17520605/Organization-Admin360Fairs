@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function (){
 
             // speakers
             Route::get('/{id}/speakers', 'administrator\SpeakersController@index');
-            Route::get('/{id}/speakers/{speakerId}', 'administrator\SpeakersController@speaker');
+            Route::get('/{id}/speakers/{speakerId}/calendar', 'administrator\SpeakersController@calendar');
             Route::post('/{id}/speakers/save-create', 'administrator\SpeakersController@saveCreate');
             Route::post('/{id}/speakers/save-edit', 'administrator\SpeakersController@saveEdit');
             Route::post('/{id}/speakers/import-csv', 'administrator\SpeakersController@importCsv');

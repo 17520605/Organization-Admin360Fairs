@@ -27,7 +27,7 @@ class SpeakersController extends Controller
         return view('administrator.speakers.index', ['profile' => $profile, 'tour'=> $tour, 'speakers' => $speakers]);
     }
     
-    public function speaker($id, $speakerId, Request $request)
+    public function calendar($id, $speakerId, Request $request)
     {
         $webinars = DB::table('webinar_detail')
             ->join('webinar', 'webinar.id', '=', 'webinar_detail.webinarId')
@@ -40,23 +40,11 @@ class SpeakersController extends Controller
         $profile = DB::table('profile')->where('userId', $user->id)->first();
         $tour = DB::table('tour')->find(1);
 
-        return view('administrator.speakers.speaker', [
+        return view('administrator.speakers.calendar', [
             'profile' => $profile,
             'tour' => $tour,
             'webinars' => $webinars
         ]);
-    }
-
-    public function getCalendarOfSpeaker($id, $speakerId, Request $request)
-    {
-        $webinars = DB::table('webinar_detail')
-            ->join('webinar', 'webinar.id', '=', 'webinar_detail.webinarId')
-            ->where('webinar_detail.speakerId', $speakerId)
-            ->select('webinar.*')
-            ->distinct()
-            ->get();
-        
-        return json_encode($webinars);
     }
 
     public function saveCreate($id, Request $request)
