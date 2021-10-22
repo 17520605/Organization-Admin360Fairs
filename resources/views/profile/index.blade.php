@@ -30,48 +30,35 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> <!-- end col-->
-
+                        </div>
                         <div class="col-sm-4">
                             <div class="text-center mt-sm-0 mt-3 text-sm-end">
                                 <button class="btn btn-edit-profile" onclick="onOpenPopupEditProfile(this);"><i class="fas fa-user-cog"></i></button>
                             </div>
-                        </div> <!-- end col-->
-                    </div> <!-- end row -->
-
-                </div> <!-- end card-body/ profile-user-box-->
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row mt-4 mb-4">
-                <div class="col-12 upload-box-cv" style="display: none">
+            <div class="row mt-4 mb-4" id="box-cv-up">
+                <div class="col-12" id="upload-box-cv" style="display: {{$profile->profile == '' ? 'block' : 'none'}}">
                     <div class="dropify-wrapper">
                         <div class="dropify-message">
                             <i class="fas fa-upload" style="font-size: 40px;"></i>
-                            <p>Drag and drop a file here or click</p>
-                            <p class="dropify-error">Ooops, something wrong appended.</p>
+                            <p>Drag and drop a file CV here or click</p>
                         </div>
                         <div class="dropify-loader"></div>
-                        <div class="dropify-errors-container">
-                            <ul></ul>
-                        </div><input type="file" class="dropify"><button type="button" class="dropify-clear">Remove</button>
-                        <div class="dropify-preview"><span class="dropify-render"></span>
-                            <div class="dropify-infos">
-                                <div class="dropify-infos-inner">
-                                    <p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p>
-                                    <p class="dropify-infos-message">Drag and drop or click to replace</p>
-                                </div>
-                            </div>
-                        </div>
+                        <input type="hidden" id="popup-upload-cv__url-hidden-input">
+                        <input type="file" class="dropify" id="upload-cv__local-file-hidden-input">
                     </div>
-                    <div class="mt-3"></div>
                 </div>
-                <div class="col-12 preview-box-cv">
-                    <button class="btn btn-edit-cv" data-toggle="modal" data-target="#create_profile"><i class="far fa-trash-alt"></i></button>
-                    <img style="width: 100%; border-radius: 5px;" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634802979/6a41bbc0ff3b5f81168190e86b5f2a10_hqwkdk.jpg" alt="">
+                <div class="col-12" id="preview-box-cv" style="display: {{$profile->profile == '' ? 'none' : 'block'}}"> 
+                    <button class="btn btn-edit-cv" data-cv-id="{{$profile->id}}" onclick="onOpenPopupDeleteCV(this)"><i class="far fa-trash-alt"></i></button>
+                    <img id="preview-box-cv-img" style="width: 100%; border-radius: 5px;" src="{{$profile->profile == '' ? '':$profile->profile}}" alt="">
                 </div>
-            </div> <!-- end row -->
+            </div>
         </div>
     </div>
-
+    {{-- POPUP UPLOAD INFO --}}
     <div class="modal fade" id="popup_create_profile"  tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -188,12 +175,13 @@
             </div>
         </div>
     </div>
+    {{-- POPUP UPLOAD AVATAR --}}
     <div class="modal fade" id="popup-upload-avatar" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="fw-light">Upload Avatar</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="d-flex flex-column" style="flex-grow: 1;">
@@ -225,6 +213,28 @@
             </div>
         </div>
     </div>
+
+    {{-- POPUP DELETE CV --}}
+    <div class="modal fade" id="popup-confirm-delete-cv" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="popup-edit-participant__form" class="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="fw-light">Delete Participant </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <p>Do you really want to delete it?</p>
+                    </div>
+                    <div class="modal-footer" style="padding: 0">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="popup-confirm-delete-cv__delete-btn" type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script>
         function onOpenPopupEditProfile(target){
             let profileId = $(target).attr('data-profile-id');
@@ -234,58 +244,120 @@
             let profileId = $(target).attr('data-profile-id');
             $('#popup-upload-avatar').modal('show');
         }
+        function onOpenPopupDeleteCV(target){
+            let cvId = $(target).attr('data-cv-id');
+            $('#popup-confirm-delete-cv').modal('show');
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#popup-upload-avatar__local-upload-btn').click(function (e) {  
+                $('#popup-upload-avatar__local-file-hidden-input').trigger('click');
+            });
+            $('#popup-upload-avatar__local-file-hidden-input').change(function () { 
+                let type =$('#popup-upload-avatar').find('input[name="type"]').val();
+                let file = this.files[0];
+                if(file != null){
+                    $('#popup-upload-avatar__local-preview-img').attr('src', URL.createObjectURL(this.files[0]));
+                    $('#popup-upload-avatar').find(".form_upload").hide();
+                    $('#popup-upload-avatar').find(".form_preview").show();
+                    $('#popup-create-upload-avatar-save-btn').prop('disabled', true);
+                    $('#popup-create-upload-avatar-remove-btn').hide();
+                    
+                    let data = new FormData();
+                    data.append('file', file);
+                    let ajax = $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{env('APP_URL')}}/storage/upload",
+                        method: 'post',
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        dataType: 'json',
+                        success: function (res) { 
+                            if (res != null) {
+                                $('#popup-upload-avatar__local-save-btn').prop('disabled', false);
+                                $('#popup-upload-avatar__url-hidden-input').val(res.url);
+                                $('#popup-upload-avatar__local-remove-btn').show();
+                            }
+                        }
+                    });
+                }
+            });
 
-    </script>   
-<script>
-    $(document).ready(function () {
-        $('#popup-upload-avatar__local-upload-btn').click(function (e) {  
-            $('#popup-upload-avatar__local-file-hidden-input').trigger('click');
-        });
-        $('#popup-upload-avatar__local-file-hidden-input').change(function () { 
-            let type =$('#popup-upload-avatar').find('input[name="type"]').val();
-            let file = this.files[0];
-            if(file != null){
-                $('#popup-upload-avatar__local-preview-img').attr('src', URL.createObjectURL(this.files[0]));
-                $('#popup-upload-avatar').find(".form_upload").hide();
-                $('#popup-upload-avatar').find(".form_preview").show();
-                $('#popup-create-upload-avatar-save-btn').prop('disabled', true);
-                $('#popup-create-upload-avatar-remove-btn').hide();
-                
-                let data = new FormData();
-                data.append('file', file);
-                let ajax = $.ajax({
+            $('#upload-cv__local-file-hidden-input').change(function () { 
+                let file = this.files[0];
+                if(file != null){
+                    $('#box-cv-up').find("#preview-box-cv-img").attr('src', URL.createObjectURL(this.files[0]));
+                    $('#box-cv-up').find("#upload-box-cv").hide();
+                    $('#box-cv-up').find("#preview-box-cv").show();
+
+                    let data = new FormData();
+                    data.append('file', file);
+                    let ajax = $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{env('APP_URL')}}/storage/upload",
+                        method: 'post',
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        dataType: 'json',
+                        success: function (res) { 
+                            if (res != null) {
+                                $('#popup-upload-cv__url-hidden-input').val(res.url);
+                                $.ajax({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    url: "{{env('APP_URL')}}/profile/save-cv",
+                                    type: 'POST',
+                                    data : { id: {{$profile->id}} , url: res.url} ,
+                                    dataType: 'json',
+                                    success: function (res) { 
+                                        if (res == 1) {
+                                            location.reload();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+
+            $('#popup-upload-avatar__local-remove-btn').click(function (e) { 
+                $('#popup-upload-avatar__local-preview-img').attr('src', null);
+                $('#popup-upload-avatar').find(".form_upload").show();
+                $('#popup-upload-avatar').find(".form_preview").hide();
+                $('#popup-upload-avatar__local-save-btn').prop('disabled', true);
+                $('#popup-upload-avatar__local-remove-btn').hide();
+                $('#popup-upload-avatar').find('input[name="url"]').val(null);
+
+            });
+
+            $('#popup-confirm-delete-cv__delete-btn').click(function (){
+                $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{env('APP_URL')}}/storage/upload",
-                    method: 'post',
-                    processData: false,
-                    contentType: false,
-                    data: data,
+                    url: "{{env('APP_URL')}}/profile/delete-cv",
+                    type: 'POST',
+                    data :{ id: {{$profile->id}} , url:''} ,
                     dataType: 'json',
                     success: function (res) { 
-                        if (res != null) {
-                            $('#popup-upload-avatar__local-save-btn').prop('disabled', false);
-                            $('#popup-upload-avatar__url-hidden-input').val(res.url);
-                            $('#popup-upload-avatar__local-remove-btn').show();
+                        if (res == 1) {
+                            location.reload();
                         }
-                       
                     }
                 });
-            }
+            });
         });
-
-        $('#popup-upload-avatar__local-remove-btn').click(function (e) { 
-            $('#popup-upload-avatar__local-preview-img').attr('src', null);
-            $('#popup-upload-avatar').find(".form_upload").show();
-            $('#popup-upload-avatar').find(".form_preview").hide();
-            $('#popup-upload-avatar__local-save-btn').prop('disabled', true);
-            $('#popup-upload-avatar__local-remove-btn').hide();
-            $('#popup-upload-avatar').find('input[name="url"]').val(null);
-
-        });
-    });
-</script>
+    </script>
 
 @endsection
 

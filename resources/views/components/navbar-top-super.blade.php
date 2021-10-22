@@ -40,11 +40,9 @@
     </ul>
 </nav>
 <script>
-
     $(document).ready(function () {
         $("#nav-top__role-select").change(function (e) { 
             location.href = '/' + $(this).val();
         });
     });
-    
 </script>
