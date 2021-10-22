@@ -16,11 +16,11 @@
                                 <div id="external-events" class="m-t-20">
                                     <br>
                                     @foreach ($webinars as $webinar)
-                                        @if (Carbon\Carbon::now()->lt(Carbon\Carbon::parse($webinar->startAt)))
+                                        @if (Carbon\Carbon::now()->gt(Carbon\Carbon::parse($webinar->endAt)))
                                             <div class="external-event bg-secondary-lighten text-secondary"
                                                 data-class="bg-success"> {{ $webinar->topic }}</div>
                                         @else
-                                        @if (Carbon\Carbon::now()->gt(Carbon\Carbon::parse($webinar->endAt)))
+                                        @if (Carbon\Carbon::now()->lt(Carbon\Carbon::parse($webinar->startAt)))
                                             <div class="external-event bg-success-lighten text-success"
                                                 data-class="bg-success"> {{ $webinar->topic }}</div>
                                         @else
@@ -141,7 +141,7 @@
                                     title: "{{$webinar->topic}}",
                                     start: '{{$webinar->startAt}}',
                                     end: '{{$webinar->endAt}}',
-                                    className: "webinar webinar-{{$webinar->id}} {{ Carbon\Carbon::now()->lt(Carbon\Carbon::parse($webinar->startAt)) ? 'bg-secondary' : (Carbon\Carbon::now()->gt(Carbon\Carbon::parse($webinar->startAt)) ? 'bg-success' : 'bg-danger') }}"
+                                    className: "webinar webinar-{{$webinar->id}} {{ Carbon\Carbon::now()->gt(Carbon\Carbon::parse($webinar->endAt)) ? 'bg-secondary' : (Carbon\Carbon::now()->lt(Carbon\Carbon::parse($webinar->startAt)) ? 'bg-success' : 'bg-danger') }}"
                                 }
                                 @if ($i < count($webinars) - 1) , @endif
                             @endfor
@@ -149,8 +149,8 @@
                         a = this;
                     a.$calendarObj = new FullCalendar.Calendar(a.$calendar[0], {
                             slotDuration: "00:15:00",
-                            slotMinTime: "08:00:00",
-                            slotMaxTime: "19:00:00",
+                            slotMinTime: "06:00:00",
+                            slotMaxTime: "23:00:00",
                             themeSystem: "bootstrap",
                             bootstrapFontAwesome: !1,
                             buttonText: {
@@ -167,7 +167,7 @@
                             headerToolbar: {
                                 left: "prev,next today",
                                 center: "title",
-                                right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+                                right: "dayGridMonth,timeGridWeek,timeGridDay"
                             },
                             initialEvents: t,
                             editable: !0,
