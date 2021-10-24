@@ -21,6 +21,8 @@ class CreateBoothTable extends Migration
             $table->integer('storageLimit')->nullable();
             $table->string('storageLimit')->nullable();
             $table->string('logo')->nullable();
+            $table->dateTime('lastChangeAt');
+            $table->string('status')->default('No owner');
             $table->timestamps();
         });
     }

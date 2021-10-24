@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/partners/check-import-csv', 'administrator\PartnersController@checkImportCsv');
             Route::post('/{id}/partners/send-emails', 'administrator\PartnersController@sendEmails');
             Route::delete('/{id}/partners/{partnerId}', 'administrator\PartnersController@saveDelete');
-
+            
             // speakers
             Route::get('/{id}/speakers', 'administrator\SpeakersController@index');
             Route::get('/{id}/speakers/{speakerId}/calendar', 'administrator\SpeakersController@calendar');
@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/booths/booth', 'administrator\BoothsController@booth');
             Route::post('/{id}/booths/save-create', 'administrator\BoothsController@saveCreate');
             Route::post('/{id}/booths/save-edit', 'administrator\BoothsController@saveEdit');
+            Route::post('/{id}/booths/grant-owner', 'administrator\BoothsController@grantOwner');
             Route::get('/{id}/booths/{boothId}', 'administrator\BoothsController@booth');
             Route::post('/{id}/booths/{boothId}/change-logo', 'administrator\BoothsController@changeLogo');
             Route::delete('/{id}/booths/{boothId}', 'administrator\BoothsController@saveDelete');

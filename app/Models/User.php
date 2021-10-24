@@ -21,7 +21,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     const LEVEL_TOURADMIN = 40;
     const LEVEL_SUPERADMIN = 50;
 
+    const TYPE_SPEAKER = 'speaker';
+    const TYPE_PARTNER = 'partner';
+    const TYPE_TOURADMIN = 'touradmin';
+
     protected $table = 'users';
+
     public $timestamps = true;
 
     public function profile()
