@@ -36,12 +36,12 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-building"></i>
-            <span>Participants</span>
+            <span>Partners</span>
         </a>
         <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Participants:</h6>
-                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/participants">Participants</a>
+                <h6 class="collapse-header">Partners:</h6>
+                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/partners">Partners</a>
             </div>
         </div>
     </li>

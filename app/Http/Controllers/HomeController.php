@@ -17,8 +17,8 @@ class HomeController extends Controller
 
         $myTours = DB::table('tour')->where('organizerId', '=', $profile->id)->get();
         
-        $participantTours = DB::table('tour_participant')->where([
-            ['participantId', '=', $profile->id]
+        $partnerTours = DB::table('tour_partner')->where([
+            ['partnerId', '=', $profile->id]
         ])->get();
 
         $speakerTours = DB::table('tour_speaker')->where([
@@ -29,8 +29,8 @@ class HomeController extends Controller
             return redirect('/administrator/tours');
         }
 
-        if(count($participantTours) > 0){
-            return redirect('/participant/tours');
+        if(count($partnerTours) > 0){
+            return redirect('/partner/tours');
         }
 
         if(count($speakerTours) > 0){

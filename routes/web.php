@@ -24,14 +24,14 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/tour/edit', 'administrator\TourController@edit');
             Route::post('/{id}/tour/save-edit', 'administrator\TourController@saveEdit');
 
-            // participants
-            Route::get('/{id}/participants', 'administrator\ParticipantsController@index');
-            Route::post('/{id}/participants/save-create', 'administrator\ParticipantsController@saveCreate');
-            Route::post('/{id}/participants/save-edit', 'administrator\ParticipantsController@saveEdit');
-            Route::post('/{id}/participants/import-csv', 'administrator\ParticipantsController@importCsv');
-            Route::post('/{id}/participants/check-import-csv', 'administrator\ParticipantsController@checkImportCsv');
-            Route::post('/{id}/participants/send-emails', 'administrator\ParticipantsController@sendEmails');
-            Route::delete('/{id}/participants/{participantId}', 'administrator\ParticipantsController@saveDelete');
+            // partners
+            Route::get('/{id}/partners', 'administrator\PartnersController@index');
+            Route::post('/{id}/partners/save-create', 'administrator\PartnersController@saveCreate');
+            Route::post('/{id}/partners/save-edit', 'administrator\PartnersController@saveEdit');
+            Route::post('/{id}/partners/import-csv', 'administrator\PartnersController@importCsv');
+            Route::post('/{id}/partners/check-import-csv', 'administrator\PartnersController@checkImportCsv');
+            Route::post('/{id}/partners/send-emails', 'administrator\PartnersController@sendEmails');
+            Route::delete('/{id}/partners/{partnerId}', 'administrator\PartnersController@saveDelete');
 
             // speakers
             Route::get('/{id}/speakers', 'administrator\SpeakersController@index');
@@ -79,10 +79,10 @@ Route::middleware('auth')->group(function (){
         }); 
     });
 
-    Route::group(['prefix' => 'participant'], function(){
-        Route::get('/', 'participant\ToursController@index');
-        Route::get('/tours', 'participant\ToursController@index');
-        Route::get('/tours/{id}', 'participant\TourController@index');
+    Route::group(['prefix' => 'partner'], function(){
+        Route::get('/', 'partner\ToursController@index');
+        Route::get('/tours', 'partner\ToursController@index');
+        Route::get('/tours/{id}', 'partner\TourController@index');
     });
 
     Route::group(['prefix' => 'speaker'], function(){

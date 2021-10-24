@@ -111,18 +111,18 @@ class AuthController extends Controller
         $role = $request->get('role');
         $code = $request->get('code');
         
-        if($role == 'participant'){
-            $tour_participant = DB::table('tour_participant')
-                ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+        if($role == 'partner'){
+            $tour_partner = DB::table('tour_partner')
+                ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')
                 ->where([
-                    ['tour_participant.id', '=', $id],
+                    ['tour_partner.id', '=', $id],
                 ])
-                ->select('tour_participant.*', 'email')
+                ->select('tour_partner.*', 'email')
                 ->first();
             
-            if( $tour_participant->status == \App\Models\Tour_Participant::SENTEMAIL){
-                if($tour_participant->incorrectCount <= 3){
-                    return view('auth.verification', ['user' => Auth::user(), 'tour_participant' => $tour_participant]);
+            if( $tour_partner->status == \App\Models\Tour_Partner::SENTEMAIL){
+                if($tour_partner->incorrectCount <= 3){
+                    return view('auth.verification', ['user' => Auth::user(), 'tour_partner' => $tour_partner]);
                 }
                 else{
                     return response("Ban da nhap qua so lan quy dinh");
@@ -170,30 +170,30 @@ class AuthController extends Controller
         $id = $request->id;
         $code = $request->code;
         $role = $request->get('role');
-        if($role == 'participant'){
-            $tour_participant = \App\Models\Tour_Participant::find($id);
-            if(isset($tour_participant)){
-                if($tour_participant->incorrectCount <= 3){
-                    if($tour_participant->code == $code){
-                        $tour_participant->status = \App\Models\Tour_Participant::CONFIRMED;
-                        $tour_participant->save();
+        if($role == 'partner'){
+            $tour_partner = \App\Models\Tour_Partner::find($id);
+            if(isset($tour_partner)){
+                if($tour_partner->incorrectCount <= 3){
+                    if($tour_partner->code == $code){
+                        $tour_partner->status = \App\Models\Tour_Partner::CONFIRMED;
+                        $tour_partner->save();
                         return json_encode(array(
                             'success' => true
                         ));
                     }
                     else{
-                        $tour_participant->incorrectCount = $tour_participant->incorrectCount + 1;
-                        $tour_participant->save();
+                        $tour_partner->incorrectCount = $tour_partner->incorrectCount + 1;
+                        $tour_partner->save();
                         return json_encode(array(
                             'success' => false,
-                            'incorrectCount' => $tour_participant->incorrectCount
+                            'incorrectCount' => $tour_partner->incorrectCount
                         ));
                     } 
                 }
                 else{
                     return json_encode(array(
                         'success' => false,
-                        'incorrectCount' => $tour_participant->incorrectCount,
+                        'incorrectCount' => $tour_partner->incorrectCount,
                         'message' => 'Please check your email and re-send code'
                     ));
                 }

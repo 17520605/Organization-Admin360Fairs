@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\participant;
+namespace App\Http\Controllers\partner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +16,7 @@ class TourController extends Controller
         $tour = DB::table('tour')->find($id);
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         
-        return view('participant.tour.index', [
+        return view('partner.tour.index', [
             'profile' => $profile,
             'tour'=> $tour
         ]);

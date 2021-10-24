@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\participant;
+namespace App\Http\Controllers\partner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -16,15 +16,15 @@ class ToursController extends Controller
         $user = Auth::user();
         $profile = DB::table('profile')->where('userId', $user->id)->first();
 
-        $role = "participant";
+        $role = "partner";
         $roles = array();
 
-        $roles['participant'] = 'Participant';
+        $roles['partner'] = 'Partner';
         $tours = DB::table('tour')
-            ->join('tour_participant', 'tour.id', '=', 'tour_participant.tourId')
+            ->join('tour_partner', 'tour.id', '=', 'tour_partner.tourId')
             ->where([
-                ['participantId', '=', $profile->id],
-                ['status', '!=', \App\Models\Tour_Participant::UNCONFIRMED],
+                ['partnerId', '=', $profile->id],
+                ['status', '!=', \App\Models\Tour_Partner::UNCONFIRMED],
             ])
             ->select('tour.*')
             ->get();
@@ -43,7 +43,7 @@ class ToursController extends Controller
             $roles['speaker'] = 'Speaker';
         }
         
-        return view('participant.tours.index', [
+        return view('partner.tours.index', [
             'profile' => $profile, 
             'tours'=> $tours,
             'role' => $role,

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Zone_Booth;
-use App\Models\Tour_Participant;
+use App\Models\Tour_Partner;
 use App\Models\User;
 
 class Profile extends Model

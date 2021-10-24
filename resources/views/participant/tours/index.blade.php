@@ -22,7 +22,7 @@
                                     <span>Expires on {{$tour->endTime != null ? Carbon\Carbon::parse($tour->endTime)->format('Y-m-d') : 'N/A'}}</span>
                                 </div>
                                 <div class="col-auto" style="padding-left: 50px;">
-                                    <a href="{{env('APP_URL')}}/participant/tours/{{$tour->id}}" class="btn btn-manage-tour"> Manage </a>
+                                    <a href="{{env('APP_URL')}}/partner/tours/{{$tour->id}}" class="btn btn-manage-tour"> Manage </a>
                                 </div>
                             </div>
                         </div>

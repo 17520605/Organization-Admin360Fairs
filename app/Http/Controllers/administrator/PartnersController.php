@@ -11,21 +11,21 @@ use Illuminate\Support\Str;
 use League\Csv\Reader;
 use App\Mail\MailService;
 
-class ParticipantsController extends Controller
+class PartnersController extends Controller
 {
     public function index($id)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-        $participants = DB::table('tour_participant')
-            ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+        $partners = DB::table('tour_partner')
+            ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')
             ->where([
-                ['tour_participant.tourId', '=', $id],
+                ['tour_partner.tourId', '=', $id],
             ])
             ->select('profile.*', 'status')
             ->get();
 
-        return view('administrator.participants.index', ['profile' => $profile, 'tour'=> $tour, 'participants' => $participants]);
+        return view('administrator.partners.index', ['profile' => $profile, 'tour'=> $tour, 'partners' => $partners]);
     }
     
     public function saveCreate($id, Request $request)
@@ -42,7 +42,7 @@ class ParticipantsController extends Controller
             if(!isset($profile )){ // chua có tài khoản
                 // tao user
                 $user = new \App\Models\User();
-                $user->type = 'participant';
+                $user->type = 'partner';
                 $user->level = \App\Models\User::LEVEL_PARTICIPANT;
                 $user->email = $email;
                 $user->isRequiredChangePassword = true;
@@ -62,10 +62,10 @@ class ParticipantsController extends Controller
                 $user->save();
             }
 
-            $participate = new \App\Models\Tour_Participant();
+            $participate = new \App\Models\Tour_Partner();
             $participate->tourId = $id;
-            $participate->participantId = $profile->id;
-            $participate->status = \App\Models\Tour_Participant::UNCONFIRMED;
+            $participate->partnerId = $profile->id;
+            $participate->status = \App\Models\Tour_Partner::UNCONFIRMED;
             $participate->save();
         }
         
@@ -74,14 +74,14 @@ class ParticipantsController extends Controller
 
     public function saveEdit($id, Request $request)
     {
-        $participantId = $request->participantId;
+        $partnerId = $request->partnerId;
         $name = $request->name;
         $email = $request->email;
         $contact = $request->contact;
 
-        $check = $this->checkEdit($id, $participantId, $name,  $email, $contact);
+        $check = $this->checkEdit($id, $partnerId, $name,  $email, $contact);
         if($check['success'] == true){
-            $profile = \App\Models\Profile::with('user')->where('id', $participantId)->first();
+            $profile = \App\Models\Profile::with('user')->where('id', $partnerId)->first();
             $profile->name = $name;
             $profile->email = $email;
             $profile->contact = $contact;
@@ -113,7 +113,7 @@ class ParticipantsController extends Controller
                 if(!isset($profile )){ // chua có tài khoản
                     // tao user
                     $user = new \App\Models\User();
-                    $user->type = 'participant';
+                    $user->type = 'partner';
                     $user->email = $email;
                     $user->isRequiredChangePassword = true;
                     $user->save();
@@ -126,10 +126,10 @@ class ParticipantsController extends Controller
                     $profile->save();
                 }
 
-                $participate = new \App\Models\Tour_Participant();
+                $participate = new \App\Models\Tour_Partner();
                 $participate->tourId = $id;
-                $participate->participantId = $profile->id;
-                $participate->status = \App\Models\Tour_Participant::UNCONFIRMED;
+                $participate->partnerId = $profile->id;
+                $participate->status = \App\Models\Tour_Partner::UNCONFIRMED;
                 $participate->save();
             }
 
@@ -142,33 +142,33 @@ class ParticipantsController extends Controller
 
     public function sendEmails($id, Request $request)
     {
-        $participantIds = $request->participantIds;
+        $partnerIds = $request->partnerIds;
 
-        foreach ($participantIds as $participantId) {
+        foreach ($partnerIds as $partnerId) {
 
-            $participant = \App\Models\Profile::find($participantId);
+            $partner = \App\Models\Profile::find($partnerId);
 
-            $tour_participant = \App\Models\Tour_Participant::with('participant')
+            $tour_partner = \App\Models\Tour_Partner::with('partner')
                 ->where([
                     ['tourId', '=', $id],
-                    ['participantId', '=', $participantId],
+                    ['partnerId', '=', $partnerId],
                 ])->first();
-            $tour_participant->status = \App\Models\Tour_Participant::SENTEMAIL;
-            $tour_participant->code = Str::random(6);
-            $tour_participant->expiry = Carbon::now()->addMinute(5);
-            $tour_participant->save();
+            $tour_partner->status = \App\Models\Tour_Partner::SENTEMAIL;
+            $tour_partner->code = Str::random(6);
+            $tour_partner->expiry = Carbon::now()->addMinute(5);
+            $tour_partner->save();
 
-            $model = DB::table('tour_participant')
-                ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+            $model = DB::table('tour_partner')
+                ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')
                 ->where([
-                    ['tour_participant.tourId', '=', $id],
-                    ['tour_participant.participantId', '=', $participantId]
+                    ['tour_partner.tourId', '=', $id],
+                    ['tour_partner.partnerId', '=', $partnerId]
                 ])
-                ->select('tour_participant.*')
+                ->select('tour_partner.*')
                 ->first();
 
             $mailer = new MailService(
-                [$participant->email],
+                [$partner->email],
                 'Lời mời tham gia quản lý gian hàng',
                 'default',
                 $model
@@ -240,19 +240,19 @@ class ParticipantsController extends Controller
             return $check;
         }
 
-        $profileByEmail = DB::table('tour_participant')
-            ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+        $profileByEmail = DB::table('tour_partner')
+            ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')
             ->where([
-                ['tour_participant.tourId', '=', $id],
+                ['tour_partner.tourId', '=', $id],
                 ['profile.email', '=', $email],
             ])
             ->select('profile.*')
             ->first();
     
-        $profileByContact = DB::table('tour_participant')
-            ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+        $profileByContact = DB::table('tour_partner')
+            ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')
             ->where([
-                ['tour_participant.tourId', '=', $id],
+                ['tour_partner.tourId', '=', $id],
                 ['profile.contact', '=', $contact],
             ])
             ->select('profile.*')
@@ -270,7 +270,7 @@ class ParticipantsController extends Controller
         return $check;
     }
 
-    public function checkEdit($id, $participantId, $name, $email , $contact)
+    public function checkEdit($id, $partnerId, $name, $email , $contact)
     {
         $check = [];
         $check['success'] = true;
@@ -287,21 +287,21 @@ class ParticipantsController extends Controller
             return $check;
         }
 
-        $profile = DB::table('profile')->find($participantId);
+        $profile = DB::table('profile')->find($partnerId);
             
-        $profileByEmail = DB::table('tour_participant')
-            ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+        $profileByEmail = DB::table('tour_partner')
+            ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')
             ->where([
-                ['tour_participant.tourId', '=', $id],
+                ['tour_partner.tourId', '=', $id],
                 ['profile.email', '=', $email],
             ])
             ->select('profile.*')
             ->first();
         
-        $profileByContact = DB::table('tour_participant')
-            ->join('profile', 'profile.id', '=', 'tour_participant.participantId')
+        $profileByContact = DB::table('tour_partner')
+            ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')
             ->where([
-                ['tour_participant.tourId', '=', $id],
+                ['tour_partner.tourId', '=', $id],
                 ['profile.contact', '=', $contact],
             ])
             ->select('profile.*')
@@ -319,9 +319,9 @@ class ParticipantsController extends Controller
         return $check;
     }
 
-    public function saveDelete($id, $participantId, Request $request)
+    public function saveDelete($id, $partnerId, Request $request)
     {
-        $participant = \App\Models\Tour_Participant::where('participantId',$participantId)->delete();
+        $partner = \App\Models\Tour_Partner::where('partnerId',$partnerId)->delete();
         return true;
     }
 }

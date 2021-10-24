@@ -34,13 +34,13 @@ class ToursController extends Controller
             $roles['administrator'] = 'Administrator';
         }
 
-        // check Participant
-        $participantTours = DB::table('tour_participant')->where([
-            ['participantId', '=', $user->id],
-            ['status', '!=', \App\Models\Tour_Participant::UNCONFIRMED]
+        // check Partner
+        $partnerTours = DB::table('tour_partner')->where([
+            ['partnerId', '=', $user->id],
+            ['status', '!=', \App\Models\Tour_Partner::UNCONFIRMED]
         ])->get();
-        if(count($participantTours) > 0){
-            $roles['participant'] = 'Participant';
+        if(count($partnerTours) > 0){
+            $roles['partner'] = 'Partner';
         }
         
         return view('speaker.tours.index', [

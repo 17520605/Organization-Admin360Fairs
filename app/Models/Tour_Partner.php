@@ -8,21 +8,21 @@ use App\Models\Zone_Booth;
 use App\Models\User;
 use App\Models\Tour;
 
-class Tour_Participant extends Model
+class Tour_Partner extends Model
 {
     const UNCONFIRMED = 'unconfirmed';
     const SENTEMAIL = 'sent email';
     const CONFIRMED = 'confirmed';
     const JOINED = 'joined';
 
-    protected $table = 'tour_participant';
+    protected $table = 'tour_partner';
     public $timestamps = true;
 
     public function tour() {
         return $this->belongsTo(Tour::class, 'tourId');
     }
 
-    public function participant() {
-        return $this->belongsTo(Profile::class, 'participantId');
+    public function partner() {
+        return $this->belongsTo(Profile::class, 'partnerId');
     }
 }

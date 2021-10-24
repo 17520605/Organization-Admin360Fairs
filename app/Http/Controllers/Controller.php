@@ -33,7 +33,7 @@ class Controller extends BaseController
                 return response(view('others.permission_denied'));
             }
             else
-            if($role == 'participant' && $user->level < User::LEVEL_PARTICIPANT){
+            if($role == 'partner' && $user->level < User::LEVEL_PARTICIPANT){
                 return response(view('others.permission_denied'));
             }
             else
@@ -57,16 +57,16 @@ class Controller extends BaseController
                                 }
                             } 
                             else
-                            if($role == 'participant'){
-                                $tour_participant = DB::table('tour_participant')
+                            if($role == 'partner'){
+                                $tour_partner = DB::table('tour_partner')
                                 ->where([
-                                    ['tour_participant.tourId', '=', $tourId],
-                                    ['tour_participant.participantId', '=', $profile->id],
-                                    ['tour_participant.status', '!=', \App\Models\Tour_Participant::UNCONFIRMED]
+                                    ['tour_partner.tourId', '=', $tourId],
+                                    ['tour_partner.partnerId', '=', $profile->id],
+                                    ['tour_partner.status', '!=', \App\Models\Tour_Partner::UNCONFIRMED]
                                 ])
                                 ->first();
     
-                                if($tour_participant != null){
+                                if($tour_partner != null){
                                     return $next($request);
                                 }else{
                                     return response(view('others.permission_denied'));

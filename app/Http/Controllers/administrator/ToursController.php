@@ -21,13 +21,13 @@ class ToursController extends Controller
         $tours = DB::table('tour')->where('organizerId', '=', $profile->id)->get();
         $roles['administrator'] = 'Administrator';
 
-        // check Participant
-        $participantTours = DB::table('tour_participant')->where([
-            ['participantId', '=', $profile->id],
-            ['status', '!=', \App\Models\Tour_Participant::UNCONFIRMED]
+        // check Partner
+        $partnerTours = DB::table('tour_partner')->where([
+            ['partnerId', '=', $profile->id],
+            ['status', '!=', \App\Models\Tour_Partner::UNCONFIRMED]
         ])->get();
-        if(count($participantTours) > 0){
-            $roles['participant'] = 'Participant';
+        if(count($partnerTours) > 0){
+            $roles['partner'] = 'Partner';
         }
 
         // check Speaker

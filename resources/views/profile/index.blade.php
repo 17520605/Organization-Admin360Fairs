@@ -218,9 +218,9 @@
     <div class="modal fade" id="popup-confirm-delete-cv" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
-                <form id="popup-edit-participant__form" class="needs-validation" novalidate>
+                <form id="popup-edit-partner__form" class="needs-validation" novalidate>
                     <div class="modal-header">
-                        <h5 class="fw-light">Delete Participant </h5>
+                        <h5 class="fw-light">Delete Partner </h5>
                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
