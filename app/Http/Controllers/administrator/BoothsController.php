@@ -73,6 +73,8 @@ class BoothsController extends Controller
             ->groupBy('type')
             ->get();
         
+        $views = \App\Models\View::with('visitor')->where('boothId', $boothId)->get();
+
         return view('administrator.booths.booth', [
             'profile' => $profile, 
             'tour'=> $tour, 
@@ -80,7 +82,8 @@ class BoothsController extends Controller
             'panoramas' => $panoramas,
             'scene' => $scene,
             'objects' => $objects,
-            'types' => $types
+            'types' => $types,
+            'views' => $views
         ]);
 
     } 
