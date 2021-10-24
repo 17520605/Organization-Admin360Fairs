@@ -15,9 +15,9 @@
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="flex-grow-1 overflow-hidden">
                             <h6 class="font-size-15 font-weight-bold">General information : </h6>
-                            <p class="text-muted mb-2"><i class="fas fa-building"></i> <a  class="ml-2 font-weight-bold" > <ins style="text-decoration: none"> {{$booth->owner->name != null ? $booth->owner->name : "N/A"}} </ins></a></p>
-                            <p class="text-muted mb-2"><i class="fas fa-envelope"></i> <span class="ml-2"> {{$booth->owner->email != null ? $booth->owner->email : "N/A"}} </span></p>
-                            <p class="text-muted mb-2"><i class="fas fa-phone-alt"></i> <span class="ml-2"> {{$booth->owner->contact != null ? $booth->owner->contact : "N/A"}}</span></p>
+                            <p class="text-muted mb-2"><i class="fas fa-building"></i> <a  class="ml-2 font-weight-bold" > <ins style="text-decoration: none"> {{ $booth->owner != null ? ($booth->owner->name != null ? $booth->owner->name : "N/A") : "N/A"}} </ins></a></p>
+                            <p class="text-muted mb-2"><i class="fas fa-envelope"></i> <span class="ml-2"> {{ $booth->owner != null ? ($booth->owner->email != null ? $booth->owner->email : "N/A") : "N/A"}} </span></p>
+                            <p class="text-muted mb-2"><i class="fas fa-phone-alt"></i> <span class="ml-2"> {{ $booth->owner != null ? ($booth->owner->contact != null ? $booth->owner->contact : "N/A") : "N/A"}}</span></p>
                             <p class="font-size-15 font-weight-bold">Description : </p>
                             @if ($booth->description != null)
                                 <div class="text-muted discription_tour_text" style="max-height: 105px ">{{$booth->description}} </div>
@@ -507,20 +507,20 @@
                 </div>
             </div>
         </div>
-        <div id="view-area" class="row mb-3">
+        <div class="row mb-3 tags-area">
             <div class="col-md-12">
                 <div class="card mb-4" style="height: 500px;">
                     <div class="card-header">
                         <span class="h5 font-weight-bold text-primary" style="margin: 0px">Views</span>
                         <div class="div_cardheader_btn">
-                            <span class="mb-0 btn float-right"><i class="fas fa-eye"></i> 25 </span>
-                            <span id="view-tootbar-chart-btn" class="mb-0 btn float-right"><i class="fas fa-chart-line"></i></span>
-                            <span id="view-tootbar-table-btn" class="mb-0 btn float-right"><i class="fas fa-list-ul"></i> </span>
+                            <span class="mb-0 btn float-right"><i class="fas fa-eye"></i> {{ count($views)}} </span>
+                            <span class="mb-0 btn float-right tootbar-chart-btn"><i class="fas fa-chart-line"></i></span>
+                            <span class="mb-0 btn float-right tootbar-table-btn"><i class="fas fa-list-ul"></i> </span>
                         </div>
                     </div>
-                    <div id="view-table-wrapper" class="card-body">
+                    <div class="card-body tag-wrapper tag-table-wrapper">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="views-table" width="100%" cellspacing="0">
                                 <thead>
                                     <tr style="background: #eef2f7;">
                                         <th style="text-align: center;width: 5%;">#</th>
@@ -550,7 +550,7 @@
                             </table>
                         </div>
                     </div>
-                    <div id="view-chart-wrapper" class="card-body" style="display: none; height: 100%; width:100%;">
+                    <div class="card-body tag-wrapper tag-chart-wrapper" style="display: none; height: 100%; width:100%;">
                         <div id="view-chart-container" style="height: 100%; width:100%;">
                             
                         </div>
@@ -560,45 +560,43 @@
         </div>
         <div class="row" style="margin-bottom: 1.5rem;">
             <div class="col-md-12">
-                <div class="card mb-4">
+                <div class="card mb-4" style="height: 500px;">
                     <div class="card-header">
-                        <span class="h5 font-weight-bold text-primary" style="margin: 0px">Followings</span>
+                        <span class="h5 font-weight-bold text-primary" style="margin: 0px">Interest</span>
                         <div class="div_cardheader_btn">
-                          
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="interest-table" width="100%" cellspacing="0">
                                 <thead>
                                     <tr style="background: #eef2f7;">
                                         <th style="text-align: center;width: 5%;">#</th>
                                         <th style="width: 20%;">Name</th>
                                         <th style="width: 20%;">Email</th>
                                         <th style="width: 12%;">Contact</th>
-                                        <th style="width: 170px;">Follow at</th>
+                                        <th style="width: 170px;">Interest at</th>
                                         <th>Message</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($interests as $interest)
                                     <tr class="zone-1">
                                         <td style="text-align: center">1</td>
-                                        <td>Vistor 1</td>
-                                        <td>email@gmail.co</td>
-                                        <td>09422358378</td>
-                                        <td> Oct 12 2020 08:30:12 </td>
-                                        <td> I viewl asfsd sd gs dhdf dghd fghj fjf </td>
+                                        <td>{{$interest->visitor->name}}</td>
+                                        <td>{{$interest->visitor->email}}</td>
+                                        <td>{{$interest->visitor->contact}}</td>
+                                        <td>{{$interest->datetime}}</td>
+                                        <td>{{$interest->message}}</td>
                                     </tr>
-                                    <tr class="zone-1">
-                                        <td style="text-align: center">2</td>
-                                        <td>Anonymous</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        <td> Oct 12 2020 08:30:12 </td>
-                                        <td> dgdf fgh dfgj fhjgjf g</td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: none; height: 100%; width:100%;">
+                        <div id="interest-chart-container" style="height: 100%; width:100%;">
+                            
                         </div>
                     </div>
                 </div>
@@ -824,14 +822,18 @@
             initViewer();
             initViewChart();
 
-            $('#view-tootbar-chart-btn').click(function (e) { 
-               $('#view-area').find('.card-body').hide();
-               $('#view-chart-wrapper').show();
+            // $('.table').DataTable({
+            //     "searching": false
+            // });
+
+            $('.tootbar-chart-btn').click(function (e) { 
+                $(this).parents('.tags-area').find('.tag-wrapper').hide();
+                $(this).parents('.tags-area').find('.tag-chart-wrapper').show();
             });
 
-            $('#view-tootbar-table-btn').click(function (e) { 
-               $('#view-area').find('.card-body').hide();
-               $('#view-table-wrapper').show();
+            $('.tootbar-table-btn').click(function (e) { 
+                $(this).parents('.tags-area').find('.tag-wrapper').hide();
+                $(this).parents('.tags-area').find('.tag-table-wrapper').show();
             });
 
             // $('#upload-logo-btn').click(function () { $('#upload-logo-file-input').trigger('click')});

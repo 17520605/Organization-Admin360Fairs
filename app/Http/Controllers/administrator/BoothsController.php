@@ -22,20 +22,46 @@ class BoothsController extends Controller
 
         $groups = \App\Models\Zone::where('isDeleted', false)->get();
         foreach ($groups as $group) {
-            $booth = DB::table('zone_booth')
-                ->join('booth', 'booth.id', '=', 'zone_booth.boothId')
-                ->select('booth.*')
-                ->where('zone_booth.zoneId', '=', $group->id)
-                ->get();
+            $zoneId = $group->id;
+            $booths = \App\Models\Booth::whereHas('zone_booths', function ($q) use($zoneId){
+                    $q->where('zoneId', '=', $zoneId);
+                })->get();
 
-            $group->booths = $booth;
+            $group->booths = $booths;
         }
 
-        $freeBooths = DB::table('booth')
-            ->whereRaw(" NOT EXISTS ( SELECT * FROM zone_booth  WHERE  zone_booth.boothId = booth.id )")
-            ->get();
+        $freeBooths = \App\Models\Booth::with('owner')->doesntHave('zone_booths')->get();
 
-        return view('administrator.booths.index', ['profile' => $profile, 'tour'=> $tour, 'zones' => $zones, 'groups' => $groups, 'freeBooths'=> $freeBooths]);
+        $partners = DB::table('tour_partner')
+            ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')
+            ->where([
+                ['tour_partner.tourId', '=', $id],
+                ['tour_partner.status', '!=', \App\Models\Tour_Partner::UNCONFIRMED],
+            ])
+            ->select('profile.*', 'status')
+            ->get(); 
+
+        return view('administrator.booths.index', [
+            'profile' => $profile, 
+            'tour'=> $tour, 
+            'zones' => $zones, 
+            'groups' => $groups, 
+            'freeBooths'=> $freeBooths,
+            'partners'=> $partners,
+        ]);
+    }
+
+    public function grantOwner($id, Request $request)
+    {
+        $boothId = $request->boothId;
+        $partnerId = $request->partnerId;
+        
+        $booth = \App\Models\Booth::find($boothId);
+        $booth->ownerId = $partnerId;
+        $booth->status = \App\Models\Booth::STATUS_INPROCESS;
+        $booth->save();
+
+        return back();
     }
 
     public function changeLogo($id, $boothId, Request $request)
@@ -74,6 +100,7 @@ class BoothsController extends Controller
             ->get();
         
         $views = \App\Models\View::with('visitor')->where('boothId', $boothId)->get();
+        $interests = \App\Models\Interest::with('visitor')->where('boothId', $boothId)->get();
 
         return view('administrator.booths.booth', [
             'profile' => $profile, 
@@ -83,7 +110,8 @@ class BoothsController extends Controller
             'scene' => $scene,
             'objects' => $objects,
             'types' => $types,
-            'views' => $views
+            'views' => $views,
+            'interests' => $interests
         ]);
 
     } 
