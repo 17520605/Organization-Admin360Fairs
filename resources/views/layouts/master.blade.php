@@ -111,5 +111,13 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="popover"]').popover({
+                placement: 'top',
+                trigger: 'hover'
+            });
+        });
+    </script>
     </body>
 </html>

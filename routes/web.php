@@ -82,13 +82,24 @@ Route::middleware('auth')->group(function (){
     Route::group(['prefix' => 'partner'], function(){
         Route::get('/', 'partner\ToursController@index');
         Route::get('/tours', 'partner\ToursController@index');
-        Route::get('/tours/{id}', 'partner\TourController@index');
+        Route::get('/tour/{id}', 'partner\TourController@index');
     });
 
     Route::group(['prefix' => 'speaker'], function(){
         Route::get('/', 'speaker\ToursController@index');
         Route::get('/calendar', 'speaker\CalendarController@index');
         Route::get('/tours', 'speaker\ToursController@index');
+        Route::group(['prefix' => 'tour'], function(){
+            // tour
+            Route::get('/{id}', 'speaker\TourController@index');
+            Route::get('/tours', 'speaker\ToursController@index');
+            Route::get('/tour/{id}', 'speaker\TourController@index');
+
+            // event
+            Route::get('/{id}/events/webinars', 'speaker\EventsController@webinars');
+            Route::get('/{id}/events/webinars/{webinarId}', 'speaker\EventsController@webinar');
+            Route::delete('/{id}/events/webinars/{webinarId}', 'speaker\EventsController@saveDelete');
+        }); 
     });
    
     Route::group(['prefix' => 'profile'], function(){

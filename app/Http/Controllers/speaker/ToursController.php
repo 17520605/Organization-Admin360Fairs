@@ -22,11 +22,12 @@ class ToursController extends Controller
         $roles['speaker'] = 'Speaker';
         $tours = DB::table('tour')
             ->join('tour_speaker', 'tour.id', '=', 'tour_speaker.tourId')
+            ->join('profile', 'profile.id', '=', 'tour.organizerId')
             ->where([
                 ['speakerId', '=', $profile->id],
                 ['status', '!=', \App\Models\Tour_Speaker::UNCONFIRMED],
             ])
-            ->select('tour.*')
+            ->select('tour.*','profile.name AS organizer')
             ->get();
         
         // check Admin
@@ -50,4 +51,5 @@ class ToursController extends Controller
             'roles' => $roles
         ]);
     }
+
 }

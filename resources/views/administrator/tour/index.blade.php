@@ -20,10 +20,10 @@
                         <div class="d-flex process-overview">
                             <div class="flex-grow-1 overflow-hidden">
                                 <div class="row" style="margin-bottom: 0.5rem">
-                                    <div class="col-lg-3">
-                                        <span style="color: #555;font-weight: 600 ;" >Zones :  (3/10)</span> 
+                                    <div class="col-lg-2">
+                                        <span style="color: #555;font-weight: 600 ;" >Zones : </span> 
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-9">
                                         <span>
                                             <div id="progress-striped progress-xs" class="progress progress-striped mb-0">
                                                 <div class="progress-bar progress-bar-warning" data-transitiongoal="43" aria-valuenow="43" style="width: 43%;">43%</div>
@@ -32,10 +32,10 @@
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 1rem">
-                                    <div class="col-lg-3">
-                                        <span style="color: #555;font-weight: 600 ;" >Booths : (3/10)</span> 
+                                    <div class="col-lg-2">
+                                        <span style="color: #555;font-weight: 600 ;" >Booths :</span> 
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-9">
                                         <span>
                                             <div id="progress-striped progress-xs" class="progress progress-striped mb-0">
                                                 <div class="progress-bar progress-bar-warning" data-transitiongoal="43" aria-valuenow="43" style="width: 43%;">43%</div>
