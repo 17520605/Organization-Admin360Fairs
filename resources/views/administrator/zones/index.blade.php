@@ -151,7 +151,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> 
     <script>
         function onOpenPopupEditZone(target){
             let name = $(target).attr('data-name');

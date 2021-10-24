@@ -14539,6 +14539,16 @@ img {
     color: #a31624;
 }
 
+.btn-action-icon a i.event {
+    margin-right: 7px;
+    color: #437ac7;
+}
+
+.btn-action-icon a i.event:hover {
+    transform: scale(1.2);
+    color: #143f7c;
+}
+
 @media (max-width: 1320px) {
     .col-md-5 {
         flex: 0 0 100%;
@@ -15055,6 +15065,29 @@ img {
 
 .btn-edit-cv:hover {
     color: #9b0505;
+    background-color: #FFF;
+    border-color: #FFFF;
+    opacity: 0.8;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.btn-save-cv {
+    position: absolute;
+    top: 5px;
+    right: 85px;
+    border-radius: 3px;
+    margin-top: .5rem!important;
+    margin-bottom: .5rem!important;
+    font-size: 14px!important;
+    font-weight: 600;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: #4666c7;
+    background-color: #FFF;
+    border-color: #FFFF;
+}
+
+.btn-save-cv:hover {
+    color: #1d306b;
     background-color: #FFF;
     border-color: #FFFF;
     opacity: 0.8;
