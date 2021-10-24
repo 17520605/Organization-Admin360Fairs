@@ -14539,6 +14539,16 @@ img {
     color: #a31624;
 }
 
+.btn-action-icon a i.event {
+    margin-right: 7px;
+    color: #437ac7;
+}
+
+.btn-action-icon a i.event:hover {
+    transform: scale(1.2);
+    color: #143f7c;
+}
+
 @media (max-width: 1320px) {
     .col-md-5 {
         flex: 0 0 100%;
