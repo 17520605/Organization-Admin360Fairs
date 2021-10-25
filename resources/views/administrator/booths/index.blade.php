@@ -17,8 +17,8 @@
                                 <th style="text-align: center;width: 5%">#</th>
                                 <th style="width: 15%;">Name</th>
                                 <th style="width: 20%;">Owner</th>
-                                <th style="width: 15%;">Last change at</th>
                                 <th style="width: 10%;">Status</th>
+                                <th style="width: 15%;">Last change at</th>
                                 <th style="width: 8%;">Action</th>
                             </tr>
                         </thead>
@@ -40,17 +40,23 @@
                                 <td><a href="/administrator/tours/{{$tour->id}}/booths/{{$freeBooth->id}}">{{$freeBooth->name}}</a></td>
                                 <td>
                                     @if ($freeBooth->owner == null || $freeBooth->owner->id == $profile->id)
-                                        {{$freeBooth->owner->name}} 
+                                        Host
                                     @else
-                                        {{$freeBooth->owner->name}}
+                                        <span class="text-primary font-weight-bold">{{$freeBooth->owner->name}}</span>
                                     @endif
                                 </td>  
+                                <td>
+                                    @if ($freeBooth->status == 'No owner')
+                                        <span class="badge bg-warning">{{$freeBooth->status}}</span>
+                                    @elseif ($freeBooth->status == 'Granted owner')
+                                        <span class="badge bg-danger">{{$freeBooth->status}}</span>
+                                    @endif
+                                </td>
                                 <td>{{$freeBooth->lastChangeAt}}</td>
-                                <td><span>{{$freeBooth->status}}</span></td>
                                 <td class="btn-action-icon">
+                                    <i onclick="onGrantOwner({{$freeBooth->id}}, '{{$freeBooth->name}}', {{$freeBooth->owner->id}})" class="fa fa-user-shield user"></i>
                                     <i onclick="onEditBooth(this)" data-name="{{$freeBooth->name}}" data-id="{{$freeBooth->id}}" class="fa fa-pen edit"></i>
                                     <i onclick="onDeleteBooth(this)" data-name="{{$freeBooth->name}}" data-id="{{$freeBooth->id}}" class="fa fa-trash-alt delete"></i>
-                                    <i onclick="onGrantOwner({{$freeBooth->id}}, '{{$freeBooth->name}}', {{$freeBooth->owner->id}})" class="fa fa-user-shield"></i>
                                 </td>
                             </tr>
                             @endforeach
@@ -75,18 +81,24 @@
                                     <td><a style="font-weight: 600" href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}">{{$booth->name}}</a></td>
                                     <td>
                                         @if ($booth->owner == null || $booth->owner->id == $profile->id)
-                                            {{$booth->owner->name}} 
+                                            Host
                                         @else
-                                            {{$booth->owner->name}}
+                                            <span class="text-primary font-weight-bold">{{$booth->owner->name}}</span>
                                         @endif
 
                                     </td>
+                                    <td>
+                                        @if ($booth->status == 'No owner')
+                                            <span class="badge bg-warning">{{$booth->status}}</span>
+                                        @elseif ($booth->status == 'Granted owner')
+                                            <span class="badge bg-danger">{{$booth->status}}</span>
+                                        @endif
+                                    </td>
                                     <td>{{$booth->lastChangeAt}}</td>
-                                    <td><span>{{$booth->status}}</span></td>
                                     <td class="btn-action-icon">
+                                        <i onclick="onGrantOwner({{$booth->id}}, '{{$booth->name}}', {{$booth->owner->id}})" class="fa fa-user-shield user"></i>
                                         <i onclick="onEditBooth(this)" data-zoneId="{{$group->id}}" data-name="{{$booth->name}}" data-id="{{$booth->id}}" class="fa fa-pen edit"></i>
                                         <i onclick="onDeleteBooth(this)" data-name="{{$booth->name}}" data-id="{{$booth->id}}" class="fa fa-trash-alt delete"></i>
-                                        <i onclick="onGrantOwner({{$booth->id}}, '{{$booth->name}}', {{$booth->owner->id}})" class="fa fa-user-shield"></i>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -203,27 +215,24 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="fw-light">Grant owner for "<span id="popup-grant-owner__booth-name"></span>"</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="fw-light">Grant owner for "<span class="text-primary font-weight-bold" id="popup-grant-owner__booth-name"></span>"</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="/administrator/tours/{{$tour->id}}/booths/grant-owner" method="POST">
                     <div class="modal-body">
                         <div class="modal-body">
                             @csrf
                             <input type="hidden" name="boothId">
-                            <div class="row row mb-3"> Partners </div>
-                            <div class="row mb-3 p-3 border partners-wrapper">
-                                @if (count($partners) == 0)
-                                    <center><span>No zone</span></center>
-                                @else
+                            <div class="row mb-3"> Partners Manager Booths:</div>
+                            @if (count($partners) == 0)
+                                <center><span>No zone</span></center>
+                            @else
+                                <select name="partnerId" id="popup-grant-owner__select-owner" class="form-control">
                                     @foreach ($partners as $partner)
-                                    <div class="form-check" style="margin-right: 20px">
-                                        <input id="popup-grant-owner__parter-{{$partner->id}}" class="form-check-input" type="radio" value="{{$partner->id}}" name="partnerId">
-                                        <label class="form-check-label" for="popup-grant-owner__parter-{{$partner->id}}"> {{$partner->name}} </label>
-                                    </div>
+                                        <option id="popup-grant-owner__parter-{{$partner->id}}" value="{{$partner->id}}">{{$partner->name}}</option>
                                     @endforeach
-                                @endif
-                            </div>
+                                </select>
+                            @endif
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -258,10 +267,8 @@
 
         function onGrantOwner(boothId, boothName, oldOwnerId) { 
             $('#popup-grant-owner').find('input[type="hidden"][name="boothId"]').val(boothId);
-            $('#popup-grant-owner').find('input[type="radio"]').prop('checked', false);
-            $('#popup-grant-owner').find('input[type="radio"][value="'+oldOwnerId+'"]').prop('checked', true);
+            $('#popup-grant-owner__select-owner').val(oldOwnerId);
             $('#popup-grant-owner__booth-name').text(boothName);
-            
             $('#popup-grant-owner').modal('show');
         }
 

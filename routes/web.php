@@ -8,6 +8,8 @@ Route::match(['get', 'post'], '/verification/{id}', 'AuthController@verification
 Route::match(['get', 'post'], '/confirmation', 'AuthController@confirmation');
 Route::get('/logout', 'AuthController@logout');
 
+Route::get('/resume/{id}', 'ResumeController@index');
+
 Route::middleware('auth')->group(function (){
     Route::get('/', 'HomeController@index');
     Route::post('storage/upload', 'StorageController@upload');
@@ -77,6 +79,9 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/events/webinars/save-create', 'administrator\EventsController@saveCreate');
             Route::post('/{id}/events/webinars/save-edit', 'administrator\EventsController@saveEdit');
             Route::delete('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@saveDelete');
+
+            // noti
+            Route::get('/{id}/notification/compose', 'administrator\NotificationController@index');
         }); 
     });
 
@@ -145,6 +150,8 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/events/webinars/save-create', 'partner\EventsController@saveCreate');
             Route::post('/{id}/events/webinars/save-edit', 'partner\EventsController@saveEdit');
             Route::delete('/{id}/events/webinars/{webinarId}', 'partner\EventsController@saveDelete');
+
+           
         }); 
 
     });

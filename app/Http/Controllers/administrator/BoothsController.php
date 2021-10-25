@@ -118,14 +118,16 @@ class BoothsController extends Controller
 
     public function saveCreate($id, Request $request)
     {
+        $user = Auth::user();
         $tour = DB::table('tour')->find($id);
-
+        $profile = DB::table('profile')->where('userId', $user->id)->first();
         $name = $request->name;
         $zoneId = $request->zoneId;
 
         $booth = new \App\Models\Booth(); 
         $booth->name =  $name;
         $booth->tourId =  $id;
+        $booth->ownerId =  $profile->id;
         $booth->save();
 
         if(isset($zoneId)){
