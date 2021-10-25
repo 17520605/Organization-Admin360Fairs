@@ -147,7 +147,7 @@
         <div id="collapse8" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Notifications:</h6>
-                <a class="collapse-item" href="buttons.html">Notifications</a>
+                <a class="collapse-item"  href="/administrator/tours/{{$tour->id}}/notification/compose">Notifications</a>
             </div>
         </div>
     </li>

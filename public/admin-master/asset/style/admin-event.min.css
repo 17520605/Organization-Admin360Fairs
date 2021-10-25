@@ -14560,6 +14560,16 @@ img {
     color: #a31624;
 }
 
+.btn-action-icon i.user {
+    margin-right: 5px;
+    color: #a3a3a3;
+}
+
+.btn-action-icon i.user:hover {
+    transform: scale(1.2);
+    color: #437ac7;
+}
+
 .btn-action-icon a i.event {
     margin-right: 7px;
     color: #437ac7;
@@ -15092,6 +15102,29 @@ img {
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
+.btn-download-cv {
+    position: absolute;
+    top: 5px;
+    right: 25px;
+    border-radius: 3px;
+    margin-top: .5rem!important;
+    margin-bottom: .5rem!important;
+    font-size: 14px!important;
+    font-weight: 600;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: #4785db;
+    background-color: #FFF;
+    border-color: #FFFF;
+}
+
+.btn-download-cv:hover {
+    color: #437ac7;
+    background-color: #FFF;
+    border-color: #FFFF;
+    opacity: 0.8;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
 .btn-save-cv {
     position: absolute;
     top: 5px;
@@ -15186,4 +15219,24 @@ img {
 .change-avatar-profile:hover {
     transform: scale(1.2);
     color: #294596;
+}
+
+.note-editable.card-block {
+    min-height: 320px;
+}
+
+.icon-social-network a {
+    cursor: pointer;
+    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    line-height: 40px;
+    color: #FFF;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.icon-social-network a:hover {
+    font-size: 25px;
+    transform: scale(1.15);
 }
