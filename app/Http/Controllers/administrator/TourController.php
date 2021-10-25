@@ -31,12 +31,17 @@ class TourController extends Controller
         }
 
         $overview = \App\Models\Panorama::find($tour->overviewId);
+          
+        $views = \App\Models\View::with('visitor')->where('tourId', $id)->get();
+        $interests = \App\Models\Interest::with('visitor')->where('tourId', $id)->get();
 
         return view('administrator.tour.index', [
             'profile' => $profile,
             'tour'=> $tour,
             'overview'=> $overview,
-            'zones'=>$zones
+            'zones'=>$zones,
+            'views'=>$views,
+            'interests'=>$interests
         ]);
     }
 

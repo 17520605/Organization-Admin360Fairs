@@ -25,6 +25,23 @@ class ObjectsController extends Controller
         return view('administrator.objects.dashboard', ['profile' => $profile, 'tour'=>$tour]);
     }
 
+    public function object($id, $objectId, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+
+        $object = \App\Models\TObject::find($objectId);
+        $views = \App\Models\View::with('visitor')->where('objectId', $objectId)->get();
+        $interests = \App\Models\Interest::with('visitor')->where('objectId', $objectId)->get();
+
+        return view('administrator.objects.object', [
+            'profile' => $profile, 
+            'tour'=>$tour,
+            'object' => $object,
+            'views' => $views,
+            'interests' => $interests,
+        ]);
+    }
 
     public function images ($id, Request $request)
     {
