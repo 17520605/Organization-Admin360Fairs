@@ -110,27 +110,33 @@ class AuthController extends Controller
         $user = Auth::user();
         $role = $request->get('role');
         $code = $request->get('code');
-        
         if($role == 'partner'){
-            $tour_partner = DB::table('tour_partner')
-                ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')
-                ->where([
-                    ['tour_partner.id', '=', $id],
-                ])
-                ->select('tour_partner.*', 'email')
-                ->first();
-            
-            if( $tour_partner->status == \App\Models\Tour_Partner::SENTEMAIL){
-                if($tour_partner->incorrectCount <= 3){
-                    return view('auth.verification', ['user' => Auth::user(), 'tour_partner' => $tour_partner]);
+            $tour_partner = \App\Models\Tour_Partner::with('partner')->where('id', $id)->first();;
+            if($tour_partner != null){
+                if( $tour_partner->status == \App\Models\Tour_Partner::SENTEMAIL){
+                    if($tour_partner->incorrectCount <= 3){
+                        if($tour_partner->code == $code){
+                            $tour_partner->status = \App\Models\Tour_Partner::CONFIRMED;
+                            $tour_partner->save();
+                            return redirect(env('APP_URL')."/login?email=".$tour_partner->partner->email);
+                        }
+                        else{
+                            $tour_partner->incorrectCount = $tour_partner->incorrectCount + 1;
+                            $tour_partner->save();
+                            return response("Ma code khong chinh xac");
+                        } 
+                    }
+                    else{
+                        return response("Ban da nhap qua so lan quy dinh");
+                    }
                 }
                 else{
-                    return response("Ban da nhap qua so lan quy dinh");
+                    return response("Ban k co loi moi verify");
                 }
             }
             else{
-                return response("Ban k co loi moi verify");
-            }
+                return response("khong tim thay loi moi");
+            } 
         }
         else
         if($role == 'speaker'){

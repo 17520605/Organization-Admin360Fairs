@@ -170,7 +170,7 @@ class PartnersController extends Controller
             $mailer = new MailService(
                 [$partner->email],
                 'Lời mời tham gia quản lý gian hàng',
-                'default',
+                'partner',
                 $model
             );
             $mailer->sendMail();

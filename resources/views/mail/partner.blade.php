@@ -140,34 +140,9 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td align="left" style="padding-bottom: 10px; padding-left: 60px; padding-right: 60px; padding-top: 0px;">
-                                                                <div>
-                                                                    <p class="m_1805024013170923873font-size-small-device" style="
-                                                                        width: 540px;
-                                                                        text-align: left;
-                                                                        font-family: Verdana, Sans-Serif;
-                                                                        font-size: 14px;
-                                                                        line-height: 1.5;
-                                                                        padding-top: 0;
-                                                                        padding-left: 0;
-                                                                        padding-bottom: 29px;
-                                                                        padding-right: 0;
-                                                                        margin-left: 0;
-                                                                        margin-top: 0;
-                                                                        margin-bottom: 0;
-                                                                        margin-right: 0;
-                                                                        color: #1e1f4e;
-                                                                    ">
-                                                                        Mã code xác thực là : <span style="font-weight: 600;color: #6a4bce;">{{$model->code}}</span>
-                                                                        </a>
-                                                                    </p>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
                                                             <td align="center" style="color: #6a4bce; font-size: 14px; line-height: 20px; padding-bottom: 10px;">
                                                                 <div>
-                                                                    <a href="{{env('APP_URL')}}/verification/{{$model->id}}" style="
+                                                                    <a href="{{env('APP_URL')}}/verification/{{$model->id}}?role=partner&code={{$model->code}}" style="
                                                                         font-family: Verdana, Sans-Serif;
                                                                         background-color: #6a4bce;
                                                                         border-radius: 3px;
@@ -179,7 +154,7 @@
                                                                         text-decoration: none;
                                                                         width: 220px;
                                                                     " target="_blank">
-                                                                        <strong>TỚI CONTROL PANEL</strong>
+                                                                        <strong>Xác nhận tham gia</strong>
                                                                     </a>
                                                                 </div>
                                                             </td>
