@@ -70,6 +70,7 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/objects/models', 'administrator\ObjectsController@models');
             Route::get('/{id}/objects/documents', 'administrator\ObjectsController@documents');
             Route::post('/{id}/objects/save-create', 'administrator\ObjectsController@saveCreate');
+            Route::get('/{id}/objects/{objectId}', 'administrator\ObjectsController@object');
 
             // event
             Route::get('/{id}/events/webinars', 'administrator\EventsController@webinars');
