@@ -1,4 +1,4 @@
-@extends('layouts.speaker')
+@extends('layouts.partner')
 
 @section('content')
     <div class="container-fluid line-time">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\administrator;
+namespace App\Http\Controllers\speaker;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -14,12 +14,11 @@ class TourController extends Controller
     {
 
         $tour = DB::table('tour')->find($id);
-        $user = Auth::user();
-        $profile = DB::table('profile')->where('userId', $user->id)->first();
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        
         return view('speaker.tour.index', [
             'profile' => $profile,
-            'tour'=> $tour,
-            
+            'tour'=> $tour
         ]);
     }
 }

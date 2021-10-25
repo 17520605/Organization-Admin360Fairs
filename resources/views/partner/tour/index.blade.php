@@ -1,215 +1,153 @@
-@extends('layouts.chart')
-@section('content')
-     <div class="container-fluid">
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-    </div>
-    <!-- Content Row -->
-    <div class="row">
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Earnings (Monthly)
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Earnings (Annual)
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+@extends('layouts.partner')
 
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
-                            <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+@section('content')
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card p-3">
+                    <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$tour->name}}</h1>
+                    <div class="div_cardheader_btn">
+                        <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#"><i class="fas fa-globe"></i> Publish </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 1.5rem;">
+            <div class="col-md-5" style="height: 60vh;">
+                <div class="card" style="height: 48vh;">
+                    <div class="card-body" style="color: #555; font-size: 14px;">
+                        <div class="d-flex process-overview">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="row" style="margin-bottom: 0.5rem">
+                                    <div class="col-lg-2">
+                                        <span style="color: #555;font-weight: 600 ;" >Zones : </span> 
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <span>
+                                            <div id="progress-striped progress-xs" class="progress progress-striped mb-0">
+                                                <div class="progress-bar progress-bar-warning" data-transitiongoal="43" aria-valuenow="43" style="width: 43%;">43%</div>
+                                            </div>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <div class="progress progress-sm mr-2">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="row" style="margin-bottom: 1rem">
+                                    <div class="col-lg-2">
+                                        <span style="color: #555;font-weight: 600 ;" >Booths :</span> 
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <span>
+                                            <div id="progress-striped progress-xs" class="progress progress-striped mb-0">
+                                                <div class="progress-bar progress-bar-warning" data-transitiongoal="43" aria-valuenow="43" style="width: 43%;">43%</div>
+                                            </div>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pending Requests Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Pending Requests
+                        <h6 class="font-size-15 font-weight-bold">General information: </h6>
+                        <div class="d-flex">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-building mr-3"></i></span> <span> {{$profile->name != null ? $profile->name : "N/A" }} </span></p>
+                                <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-map-marker-alt mr-3"></i></span> <span>{{$tour->location != null ? $tour->location : "N/A" }}</span></p>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        <h6 class="font-size-15 font-weight-bold">Description: </h6>
+                        <div class="text-muted discription_tour_text" style="max-height: 10rem">
+                            {{$tour->description != null ? $tour->description : 'N/A'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 2vh; height: 10vh;">
+                    <div class="row">
+                        <div class="col-5" style="margin-left: 20px;margin-top: 10px;">
+                            <span style="font-size:12px">Start at</span>
+                            <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->startTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
+                        </div>
+                        <div class="col-5" style="margin-left: 20px;margin-top: 10px;">
+                            <span style="font-size:12px">End at</span>
+                            <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->endTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Content Row -->
-
-    <div class="row">
-        <!-- Area Chart -->
-        <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+            <div class="col-md-7" style="position: relative; height: 60vh;">
+                <div class="card" style="width: 100%; height: 100%; padding:20px;">
+                    <div id="viewer-container" style="width: 100%; height: 100%;">
+                    </div>
+                    <div class="bg-config-overview">
+                        <a href="https://360fairs.com/" class="btn-config-overview ">
+                            <i class="fas fa-cog"></i>
+                            <span>Config</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="myAreaChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Pie Chart -->
-        <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
-                        <canvas id="myPieChart"></canvas>
-                    </div>
-                    <div class="mt-4 text-center small">
-                        <span class="mr-2"> <i class="fas fa-circle text-primary"></i> Direct </span>
-                        <span class="mr-2"> <i class="fas fa-circle text-success"></i> Social </span>
-                        <span class="mr-2"> <i class="fas fa-circle text-info"></i> Referral </span>
-                    </div>
-                </div>
+        <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="group-head">
+                        <tr style="background: #eef2f7;">
+                            <th style="text-align: center;width: 5%">#</th>
+                            <th style="width: 15%;">Name</th>
+                            <th style="width: 20%;">Owner</th>
+                            <th style="width: 15%;">Last change at</th>
+                            <th style="width: 10%;">Status</th>
+                            <th style="width: 8%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tr style="background-color: #4e73dfcf !important; color:#fff;">
+                        <td colspan="8">
+                            <span style="float: left">*</span>
+                            <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
+                        </td>
+                    </tr>
+                    <tbody class="group-0" style="display: none" >
+                        <tr>
+                            <td colspan="10"><center><span>No booths</span></center></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
     </div>
-
-    <!-- Content Row -->
-    <div class="row">
-        <!-- Content Column -->
-        <div class="col-lg-6 mb-4">
-            <!-- Project Card Example -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
-                </div>
-                <div class="card-body">
-                    <h4 class="small font-weight-bold">Server Migration <span class="float-right">20%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Sales Tracking <span class="float-right">40%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Customer Database <span class="float-right">60%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Payout Details <span class="float-right">80%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>
-                    <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
+    <div class="modal fade" id="popup-edit-tour" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="fw-light"> Edit Tour</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
-        </div>
-
-        <div class="col-lg-6 mb-4">
-            <!-- Illustrations -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
-                </div>
-                <div class="card-body">
-                    <div class="text-center">
-                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="asset/images/undraw_posting_photo.svg" alt="..." />
+            <div class="modal-body">
+                <form action="/administrator/tours/{{$tour->id}}/tour/save-edit" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="small mb-1">Tour Name</label>
+                        <input class="form-control" name="name" type="text" value="{{$tour->name}}" placeholder="Enter tour name" />
                     </div>
-                    <p>
-                        Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images that you can use completely
-                        free and without attribution!
-                    </p>
-                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on unDraw &rarr;</a>
-                </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="small mb-1">Start at</label>
+                            <input class="form-control" name="start" value="{{ Carbon\Carbon::parse($tour->startTime)->format('Y-m-d\TH:i')}}" type="datetime-local" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="inputLastName">End at</label>
+                            <input class="form-control" name="end" value="{{ Carbon\Carbon::parse($tour->startTime)->format('Y-m-d\TH:i')}}" type="datetime-local" />
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
+                            <label class="small mb-1">Location</label>
+                            <input class="form-control" name="location" value="{{$tour->location}}" type="text" placeholder="Enter your location" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="small mb-1">Tour Description</label>
+                        <textarea name="description" placeholder="Enter your tour description" class="form-control" rows="6"> {{$tour->description}} </textarea>
+                    </div>
+                    <!-- Form Group (create account submit)-->
+                    <button type="submit" class="btn btn-primary btn-block">Update Edit Tour</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 @endsection
-
-

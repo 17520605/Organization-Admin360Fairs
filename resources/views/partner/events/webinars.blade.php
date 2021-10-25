@@ -1,4 +1,4 @@
-@extends('layouts.speaker')
+@extends('layouts.partner')
 
 @section('content')
     <div class="container-fluid card-event">
@@ -16,7 +16,7 @@
                         <div class="widget-49">
                             <div class="widget-49-title-wrapper">
                                 <div class="widget-49-date-primary">
-                                    <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('m')}}</span>
+                                    <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
                                     <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
                                 </div>
                                 <div class="widget-49-meeting-info">
