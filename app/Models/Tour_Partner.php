@@ -4,8 +4,7 @@ namespace App\Models;
 
 use BenSampo\Enum\Enum;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Zone_Booth;
-use App\Models\User;
+use App\Models\Profile;
 use App\Models\Tour;
 
 class Tour_Partner extends Model
