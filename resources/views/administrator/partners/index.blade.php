@@ -341,7 +341,6 @@
             });
         });
 
-
         $('#popup-import-csv__check-btn').click(function (e) { 
 
             let form = document.getElementById('popup-import-csv__form');
@@ -425,9 +424,10 @@
         $('.checkbox-all').change(function () {
             let checked = $(this).prop('checked');  
             $('.checkbox').prop('checked', checked);
+            let checkedCount = $('.checkbox:enabled:checked');
             if(checked == true)
             {
-                if(checked > 0)
+                if(checkedCount > 0)
                 {
                     $('#btn-send-mail-partners').show();
                 }
@@ -464,7 +464,7 @@
         $('#popup-confirm-send-email__send-btn').click(function () {  
             
             let data = new FormData();
-            let checkboxs = $('.checkbox:checked');
+            let checkboxs = $('.checkbox:enabled:checked');
             $.each(checkboxs, function (i, checkbox) {  
                 data.append('partnerIds[]', checkbox.value);
             });
@@ -486,6 +486,7 @@
                 }
             });
         })
+
         $('#popup-confirm-delete-partner__delete-btn').click(function (){
             let id = $('#popup-confirm-delete-partner__id-hidden-input').val();
             if(id != null && id != ""){
