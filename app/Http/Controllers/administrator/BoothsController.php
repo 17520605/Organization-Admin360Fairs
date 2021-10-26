@@ -114,7 +114,7 @@ class BoothsController extends Controller
             'interests' => $interests
         ]);
 
-    } 
+    }
 
     public function saveCreate($id, Request $request)
     {

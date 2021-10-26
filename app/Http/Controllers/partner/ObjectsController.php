@@ -14,8 +14,15 @@ class ObjectsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
+        $objects = \App\Models\TObject::where([
+            ['tourId','=', $id]
+        ])->get();
 
-        return view('partner.tour.index', ['profile' => $profile, 'tour'=>$tour]);
+        return view('partner.objects.index', [
+            'profile' => $profile, 
+            'tour'=>$tour,
+            'objects'=>$objects,
+        ]);
     }
 
     public function dashboard ($id, Request $request)
@@ -25,67 +32,25 @@ class ObjectsController extends Controller
         return view('partner.objects.dashboard', ['profile' => $profile, 'tour'=>$tour]);
     }
 
-
-    public function images ($id, Request $request)
+    
+    public function object($id, $objectId, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
 
-        $images = DB::table('object')->where([
-            ['tourId','=', $id],
-            ['type','=', 'image'],
-        ])->get();
+        $object = \App\Models\TObject::find($objectId);
+        $views = \App\Models\View::with('visitor')->where('objectId', $objectId)->get();
+        $interests = \App\Models\Interest::with('visitor')->where('objectId', $objectId)->get();
 
-        return view('partner.objects.images', ['profile' => $profile, 'tour'=>$tour, 'images' => $images]);
+        return view('partner.objects.object', [
+            'profile' => $profile, 
+            'tour'=>$tour,
+            'object' => $object,
+            'views' => $views,
+            'interests' => $interests,
+        ]);
     }
-
-    public function videos ($id, Request $request)
-    {
-        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
-
-        $videos = DB::table('object')->where([
-            ['tourId','=', $id],
-            ['type','=', 'video'],
-        ])->get();
-
-        return view('partner.objects.videos', ['profile' => $profile , 'tour'=>$tour, 'videos' => $videos]);
-    }
-
-    public function audios ($id, Request $request)
-    {
-        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
- 
-        $audios = DB::table('object')->where([
-            ['tourId','=', $id],
-            ['type','=', 'audio'],
-        ])->get();
-        return view('partner.objects.audios', ['profile' => $profile, 'tour'=>$tour, 'audios' => $audios]);
-    }
-
-    public function models ($id, Request $request)
-    {
-        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
-
-        $models = DB::table('object')->where([
-            ['tourId','=', $id],
-            ['type','=', 'model'],
-        ])->get();
-        return view('partner.objects.models', ['profile' => $profile, 'tour'=>$tour,'models' => $models]);
-    }
-
-    public function documents ($id, Request $request)
-    {
-        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
-        $documents = DB::table('object')->where([
-            ['tourId','=', $id],
-            ['type','=', 'document'],
-        ])->get();
-        return view('partner.objects.documents', ['profile' => $profile, 'tour'=>$tour ,'documents' => $documents]);
-    }
+    
 
     public function saveCreate($id, Request $request)
     {

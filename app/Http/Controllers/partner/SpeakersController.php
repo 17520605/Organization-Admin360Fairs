@@ -6,25 +6,43 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use League\Csv\Reader;
 use App\Mail\MailService;
+
 class SpeakersController extends Controller
 {
     public function index($id)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-        $speakers = DB::table('tour_speaker')
-            ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
-            ->where([
-                ['tour_speaker.tourId', '=', $id],
-            ])
-            ->select('profile.*', 'status')
+        $invitations = \App\Models\Tour_Speaker::with('speaker', 'inviter')
+            ->where('tourId', $id)
             ->get();
 
-        return view('administrator.speakers.index', ['profile' => $profile, 'tour'=> $tour, 'speakers' => $speakers]);
+        $speakers = DB::table('webinar')
+            ->join('webinar_detail', 'webinar.id', '=', 'webinar_detail.webinarId')
+            ->where('webinar.registerBy', $profile->id)
+            ->select('webinar_detail.speakerId as id')
+            ->distinct()
+            ->get();
+
+        $myInvitations = collect();
+        foreach ($speakers as $speaker) {
+            $invitation = \App\Models\Tour_Speaker::with('speaker', 'inviter')
+                ->where('speakerId', $speaker->id)
+                ->first();
+            $myInvitations->push($invitation);
+        }
+         
+        return view('partner.speakers.index', [
+            'profile' => $profile, 
+            'tour'=> $tour, 
+            'invitations' => $invitations,
+            'myInvitations' => $myInvitations,
+        ]);
     }
     
     public function calendar($id, $speakerId, Request $request)

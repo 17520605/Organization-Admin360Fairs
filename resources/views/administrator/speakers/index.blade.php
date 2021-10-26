@@ -18,11 +18,11 @@
                             <th style="width: 40px;">
                                 <input class="checkbox-all form-check-input1 dt-checkboxes" type="checkbox" name="all">
                             </th>
-                            <th style="text-align: center">#</th>
-                            <th style="width: 8%;">Avatar</th>
+                            <th style="width: 6%;">Avatar</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Contact</th>
+                            <th>Invited by</th>
                             <th style="width: 10%;">Status</th>
                             <th style="width: 10%;">Actions</th>
                         </tr>
@@ -37,13 +37,13 @@
                                     <input class="form-check-input1 dt-checkboxes"  type="checkbox" style="opacity: 0.3" checked disabled>
                                 @endif
                             </td>
-                            <td style="text-align: center">1</td>
                             <td style="text-align: center">
-                                <div><img class="rounded-circle avatar-xs" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634539139/icons/default_avatar_k3wxez.png" alt=""></div>
+                                <div><img class="rounded-circle avatar-xs" src="{{$speaker->speaker->avatar != null ? $speaker->speaker->avatar : 'https://res.cloudinary.com/virtual-tour/image/upload/v1634539139/icons/default_avatar_k3wxez.png' }}" alt=""></div>
                             </td>
-                            <td>{{$speaker->name}}</td>
-                            <td>{{$speaker->email}}</td>
-                            <td>{{$speaker->contact}}</td>
+                            <td>{{$speaker->speaker->name}}</td>
+                            <td>{{$speaker->speaker->email}}</td>
+                            <td>{{$speaker->speaker->contact}}</td>
+                            <td>{{$speaker->inviter != null ? $speaker->inviter->name : 'N/A'}}</td>
                             <td>
                                 @if ($speaker->status == "confirmed")
                                     <span class="badge bg-danger">{{$speaker->status}} </span>
@@ -54,13 +54,13 @@
                                 @endif
                             </td>
                             <td class="btn-action-icon">
-                                <a href="/administrator/tours/1/speakers/{{$speaker->id}}/calendar"><i class="fas fa-calendar-week event"></i></a>
+                                <a href="/administrator/tours/1/speakers/{{$speaker->speaker->id}}/calendar"><i class="fas fa-calendar-week event"></i></a>
                                 @if($speaker->status == "unconfirmed")
-                                <i class="fas fa-pen edit" data-speaker-id="{{$speaker->id}}" data-speaker-name="{{$speaker->name}}" data-speaker-email="{{$speaker->email}}" data-speaker-contact="{{$speaker->contact}}" onclick="onOpenPopupEditSpeaker(this);"></i>
+                                <i class="fas fa-pen edit" data-speaker-id="{{$speaker->speaker->id}}" data-speaker-name="{{$speaker->speaker->name}}" data-speaker-email="{{$speaker->speaker->email}}" data-speaker-contact="{{$speaker->speaker->contact}}" onclick="onOpenPopupEditSpeaker(this);"></i>
                                 <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
                                 @elseif($speaker->status == "sent email")
                                 <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
-                                <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
+                                <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
                                 @elseif($speaker->status == "confirmed")
                                 <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
                                 <i class="fas fa-trash-alt delete"  style="opacity: 0.3;pointer-events: none"></i>

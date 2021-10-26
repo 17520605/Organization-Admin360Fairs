@@ -1,6 +1,6 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/speaker/tours/{{$tour->id}}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/partner/tours/{{$tour->id}}">
         <div class="sidebar-brand-icon">
             <i class="fab fa-korvue"></i>
         </div>
@@ -12,7 +12,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/speaker/tours/{{$tour->id}}/dashboard">
+        <a class="nav-link" href="/partner/tours/{{$tour->id}}/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -25,31 +25,11 @@
     <div class="sidebar-heading">
         Interface
     </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-building"></i>
-            <span>Partners</span>
-        </a>
-        <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Partners:</h6>
-                <a class="collapse-item" href="/partner/tours/{{$tour->id}}/partners">Partners</a>
-            </div>
-        </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="/partner/tours/{{$tour->id}}/booths">
             <i class="fas fa-store"></i>
             <span>Booths</span>
         </a>
-        <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Booths Manager</h6>
-                <a href="/partner/tours/{{$tour->id}}/booths" class="collapse-item" >Booths</a>
-            </div>
-        </div>
     </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsewebina" aria-expanded="true" aria-controls="collapseTwo">
@@ -90,30 +70,12 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"> Types </h6>
                 <a href="/partner/tours/{{$tour->id}}/objects/dashboard" class="collapse-item">Dashboard</a>
-                <a href="/partner/tours/{{$tour->id}}/objects/images" class="collapse-item">Images</a>
-                <a href="/partner/tours/{{$tour->id}}/objects/videos" class="collapse-item">Videos</a>
-                <a href="/partner/tours/{{$tour->id}}/objects/audios" class="collapse-item">Audios</a>
-                <a href="/partner/tours/{{$tour->id}}/objects/models" class="collapse-item">3D Model</a>
-                <a href="/partner/tours/{{$tour->id}}/objects/documents" class="collapse-item">Documents</a>
+                <a href="/partner/tours/{{$tour->id}}/objects" class="collapse-item">Objects</a>
             </div>
         </div>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider" />
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Persons
-    </div>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="/partner/tours/{{$tour->id}}/viewer">
-            <i class="fas fa-users"></i>
-            <span>Viewer</span>
-        </a>
-    </li>
-    <!-- Divider -->
-    <hr class="sidebar-divider" />
-
     <!-- Heading -->
     <div class="sidebar-heading">
         Notifications
