@@ -16,6 +16,7 @@ class CreateTourSpearkerTable extends Migration
         Schema::create('tour_speaker', function (Blueprint $table) {
             $table->id();
             $table->integer('tourId');
+            $table->integer('inviterId');
             $table->integer('speakerId');
             $table->string('code');
             $table->dateTime('expiry');

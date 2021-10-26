@@ -22,6 +22,10 @@ class Tour_Speaker extends Model
         return $this->belongsTo(Tour::class, 'tourId');
     }
 
+    public function inviter() {
+        return $this->belongsTo(Profile::class, 'inviterId');
+    }
+
     public function speaker() {
         return $this->belongsTo(Profile::class, 'speakerId');
     }

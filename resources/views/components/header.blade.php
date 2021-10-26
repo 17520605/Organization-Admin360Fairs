@@ -26,8 +26,8 @@
 
     <script src="{{ asset('admin-master/asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('admin-master/asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-    <script src="{{ asset('admin-master/asset/plugins/filterizr/jquery.filterizr.min.js')}}"></script>
     <script src="{{ asset('admin-master/asset/plugins/summernote/summernote-bs4.min.js')}}"></script>
     <script src="{{ asset('admin-master/asset/vendor/panolens/three.min.js')}}"></script>
     <script src="{{ asset('admin-master/asset/vendor/panolens/panolens.min.js')}}"></script>
+    
 </head>

@@ -103,15 +103,6 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/tour', 'partner\TourController@index');
             Route::get('/{id}/tour/edit', 'partner\TourController@edit');
             Route::post('/{id}/tour/save-edit', 'partner\TourController@saveEdit');
-
-            // partners
-            Route::get('/{id}/partners', 'partner\PartnersController@index');
-            Route::post('/{id}/partners/save-create', 'partner\PartnersController@saveCreate');
-            Route::post('/{id}/partners/save-edit', 'partner\PartnersController@saveEdit');
-            Route::post('/{id}/partners/import-csv', 'partner\PartnersController@importCsv');
-            Route::post('/{id}/partners/check-import-csv', 'partner\PartnersController@checkImportCsv');
-            Route::post('/{id}/partners/send-emails', 'partner\PartnersController@sendEmails');
-            Route::delete('/{id}/partners/{partnerId}', 'partner\PartnersController@saveDelete');
             
             // speakers
             Route::get('/{id}/speakers', 'partner\SpeakersController@index');
@@ -122,34 +113,18 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/speakers/check-import-csv', 'partner\SpeakersController@checkImportCsv');
             Route::post('/{id}/speakers/send-emails', 'partner\SpeakersController@sendEmails');
             Route::delete('/{id}/speakers/{speakerId}', 'partner\SpeakersController@saveDelete');
-
-            // zones
-            Route::get('/{id}/zones', 'partner\ZonesController@index');
-            Route::get('/{id}/zones/{zoneId}', 'partner\ZonesController@zone');
-            Route::post('/{id}/zones/{zoneId}/save-add-booths', 'partner\ZonesController@saveAddBooths');
-            Route::post('/{id}/zones/save-create', 'partner\ZonesController@saveCreate');
-            Route::post('/{id}/zones/save-edit', 'partner\ZonesController@saveEdit');
-            Route::delete('/{id}/zones/{zoneId}', 'partner\ZonesController@saveDelete');
-        
+            
             // booths
             Route::get('/{id}/booths', 'partner\BoothsController@index');
             Route::get('/{id}/booths/booth', 'partner\BoothsController@booth');
-            Route::post('/{id}/booths/save-create', 'partner\BoothsController@saveCreate');
             Route::post('/{id}/booths/save-edit', 'partner\BoothsController@saveEdit');
-            Route::post('/{id}/booths/grant-owner', 'partner\BoothsController@grantOwner');
             Route::get('/{id}/booths/{boothId}', 'partner\BoothsController@booth');
-            Route::post('/{id}/booths/{boothId}/change-logo', 'partner\BoothsController@changeLogo');
-            Route::delete('/{id}/booths/{boothId}', 'partner\BoothsController@saveDelete');
 
             // objects
             Route::get('/{id}/objects', 'partner\ObjectsController@index');
             Route::get('/{id}/objects/dashboard', 'partner\ObjectsController@dashboard');
-            Route::get('/{id}/objects/images', 'partner\ObjectsController@images');
-            Route::get('/{id}/objects/videos', 'partner\ObjectsController@videos');
-            Route::get('/{id}/objects/audios', 'partner\ObjectsController@audios');
-            Route::get('/{id}/objects/models', 'partner\ObjectsController@models');
-            Route::get('/{id}/objects/documents', 'partner\ObjectsController@documents');
             Route::post('/{id}/objects/save-create', 'partner\ObjectsController@saveCreate');
+            Route::get('/{id}/objects/{objectId}', 'partner\ObjectsController@object');
 
             // event
             Route::get('/{id}/events/webinars', 'partner\EventsController@webinars');

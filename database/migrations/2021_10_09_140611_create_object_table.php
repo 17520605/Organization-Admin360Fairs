@@ -16,6 +16,7 @@ class CreateObjectTable extends Migration
         Schema::create('object', function (Blueprint $table) {
             $table->id();
             $table->integer('tourId');
+            $table->integer('ownerId')->nullable();
             $table->string('type');
             $table->string('source');
             $table->string('name');

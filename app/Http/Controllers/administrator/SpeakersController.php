@@ -16,12 +16,9 @@ class SpeakersController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-        $speakers = DB::table('tour_speaker')
-            ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
-            ->where([
-                ['tour_speaker.tourId', '=', $id],
-            ])
-            ->select('profile.*', 'status')
+       
+        $speakers = \App\Models\Tour_Speaker::with('speaker', 'inviter')
+            ->where('tourId', $id)
             ->get();
 
         return view('administrator.speakers.index', ['profile' => $profile, 'tour'=> $tour, 'speakers' => $speakers]);
