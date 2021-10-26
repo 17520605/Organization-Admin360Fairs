@@ -96,7 +96,7 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr style="background: #eef2f7;">
-                                        <th style="width: 5%;">#</th>
+                                        <th style="width: 5%;text-align: center">#</th>
                                         <th style="width: 20%">Name</th>
                                         <th style="width: 15%">Number of Booths</th>
                                         <th>List Booths</th>
@@ -126,11 +126,11 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-3 tags-area">
+        <div class="row tags-area">
             <div class="col-md-12">
-                <div class="card mb-4" style="height: 500px;">
+                <div class="card mb-4" style="max-height: 500px;">
                     <div class="card-header">
-                        <span class="h5 font-weight-bold text-primary" style="margin: 0px">Views</span>
+                        <span class="h6 font-weight-bold text-primary" style="margin: 0px">Views</span>
                         <div class="div_cardheader_btn">
                             <span class="mb-0 btn float-right"><i class="fas fa-eye"></i> {{ count($views)}} </span>
                             <span class="mb-0 btn float-right tootbar-chart-btn"><i class="fas fa-chart-line"></i></span>
@@ -144,8 +144,8 @@
                                     <tr style="background: #eef2f7;">
                                         <th style="text-align: center;width: 5%;">#</th>
                                         <th >Name</th>
-                                        <th style="width: 20%;">Email</th>
-                                        <th style="width: 15%;">Contact</th>
+                                        <th style="width: 25%;">Email</th>
+                                        <th style="width: 20%;">Contact</th>
                                         <th style="width: 180px;">Visit at</th>
                                     </tr>
                                 </thead>
@@ -177,11 +177,11 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-bottom: 1.5rem;">
+        <div class="row">
             <div class="col-md-12">
-                <div class="card mb-4" style="height: 500px;">
+                <div class="card mb-4" style="max-height: 500px;">
                     <div class="card-header">
-                        <span class="h5 font-weight-bold text-primary" style="margin: 0px">Interest</span>
+                        <span class="h6 font-weight-bold text-primary" style="margin: 0px">Interest</span>
                         <div class="div_cardheader_btn">
                         </div>
                     </div>

@@ -13,4 +13,13 @@ class Interest extends Model
     public function visitor() {
         return $this->belongsTo(Visitor::class, 'visitorId');
     }
+    public function tour() {
+        return $this->belongsTo(Tour::class, 'tourId');
+    }
+    public function booth() {
+        return $this->belongsTo(Booth::class, 'boothId');
+    }  
+    public function object() {
+        return $this->belongsTo(TObject::class, 'objectId');
+    }
 }

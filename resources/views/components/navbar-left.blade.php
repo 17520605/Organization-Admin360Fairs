@@ -118,6 +118,18 @@
             <span>Viewer</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse10" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-star"></i>
+            <span>Interest</span>
+        </a>
+        <div id="collapse10" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Custom Interest:</h6>
+                <a class="collapse-item"  href="/administrator/tours/{{$tour->id}}/interest">Interest</a>
+            </div>
+        </div>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider" />
 

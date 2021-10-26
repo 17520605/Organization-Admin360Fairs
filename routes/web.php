@@ -82,8 +82,13 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/events/webinars/save-edit', 'administrator\EventsController@saveEdit');
             Route::delete('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@saveDelete');
 
-            // noti
+            // interest
+            Route::get('/{id}/interest', 'administrator\InterestController@index');
+
+            // notification
             Route::get('/{id}/notification/compose', 'administrator\NotificationController@index');
+
+
         }); 
     });
 

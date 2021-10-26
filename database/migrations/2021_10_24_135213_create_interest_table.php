@@ -20,6 +20,7 @@ class CreateInterestTable extends Migration
             $table->integer('boothId');
             $table->integer('objectId');
             $table->string('message');
+            $table->boolean('status')->default(0);
             $table->dateTime('datetime');
             $table->timestamps();
         });
