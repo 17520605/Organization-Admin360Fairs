@@ -30,6 +30,17 @@ class EventsController extends Controller
 
         return view('administrator.events.webinars', ['profile' => $profile , 'tour'=>$tour, 'webinars' => $webinars,'speakers' => $speakers]);
     }
+    public function webinarscase($id)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+        $webinars = \App\Models\Webinar::with('details') 
+            ->where([
+                ['tourId', '=', $id],
+                ['isDeleted', '=', false]
+            ])->get();
+        return view('administrator.events.webinarcase', ['profile' => $profile , 'tour'=>$tour, 'webinars' => $webinars]);
+    }
 
     public function webinar($id, $webinarId)
     {
@@ -65,6 +76,7 @@ class EventsController extends Controller
         $speakers = $request->speakers;
 
         $webinar = new \App\Models\Webinar();
+        $webinar->tourId = $id ;
         $webinar->topic = $topic;
         $webinar->description = $description;
         $webinar->startAt = $start;
@@ -79,10 +91,6 @@ class EventsController extends Controller
             $detail->speakerId = $speakers[$i];
             $detail->save();
         }
-
-        $zoom = new \MacsiDigital\Zoom\Support\Entry;
-        $user = new \MacsiDigital\Zoom\User($zoom);
-
         return back();
     }
 

@@ -73,7 +73,6 @@
     <script>
         $(document).ready(function () {
             $('#popup-confirm-delete-webinar__delete-btn').click(function (){
-debugger;
                 let id = $('#popup-confirm-delete-webinar__id-hidden-input').val();
                 if(id != null && id != ""){
                     let ajax = $.ajax({

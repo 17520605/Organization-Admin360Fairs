@@ -12032,18 +12032,18 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .col-lg-4:nth-child(6) .card-body .widget-49 .widget-49-title-wrapper .widget-49-date-primary {
-    background-color: #fefeff;
+    background-color: #6bb1d46e;
 }
 
 .col-lg-4:nth-child(6) .card-body .widget-49 .widget-49-title-wrapper .widget-49-date-primary .widget-49-date-day {
-    color: #f7f9fa;
+    color: #6bb1d4;
     font-weight: 500;
     font-size: 1.5rem;
     line-height: 1;
 }
 
 .col-lg-4:nth-child(6) .card-body .widget-49 .widget-49-title-wrapper .widget-49-date-primary .widget-49-date-month {
-    color: #f7f9fa;
+    color: #6bb1d4;
     line-height: 1;
     font-size: 1rem;
     text-transform: uppercase;
@@ -15239,4 +15239,29 @@ img {
 .icon-social-network a:hover {
     font-size: 25px;
     transform: scale(1.15);
+}
+
+.text-detail-webinar {
+    color: #686869;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.text-detail-webinar:hover {
+    color: #1e70e4;
+    font-weight: 500;
+}
+
+.hover-a-webinar {
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 800 !important;
+    line-height: 10px;
+    color: #6c6e72;
+}
+
+.hover-a-webinar:hover {
+    font-weight: 800 !important;
+    line-height: 10px;
+    color: #1e70e4;
 }
