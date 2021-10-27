@@ -14,8 +14,15 @@ class ObjectsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
+        $objects = \App\Models\TObject::where([
+            ['tourId','=', $id]
+        ])->get();
 
-        return view('administrator.tour.index', ['profile' => $profile, 'tour'=>$tour]);
+        return view('administrator.objects.index', [
+            'profile' => $profile, 
+            'tour'=>$tour,
+            'objects'=>$objects,
+        ]);
     }
 
     public function dashboard ($id, Request $request)

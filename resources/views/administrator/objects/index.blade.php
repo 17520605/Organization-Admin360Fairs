@@ -1,4 +1,4 @@
-@extends('layouts.partner')
+@extends('layouts.master')
 
 @section('content')
 <div class="container-fluid gallery">
@@ -33,7 +33,7 @@
                             <div class="filtr-item" data-category="image" style="width: 25%; padding: 10px">
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                        <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                        <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                             <div class="image" style="height: 150px">
                                                 @if ($object->url != null || $object->url !='')
                                                     <img class="border-image-bt" src="{{$object->url}}" alt="img" class="img-fluid">
@@ -54,7 +54,7 @@
                                 @if ($object->source == 'local')
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                        <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                        <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                             <div class="image" style="height: 150px">
                                                 <img src="" alt="img" class="img-fluid">
                                             </div>
@@ -68,7 +68,7 @@
                                 @if ($object->source == 'link')
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                        <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                        <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                             <div class="image" style="height: 150px">
                                                 <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                                 <div class="icon">
@@ -88,7 +88,7 @@
                             <div  class="filtr-item" data-category="audio" style="width: 25%; padding: 10px">
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                        <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                        <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                             <div class="image" style="height: 150px">
                                                 <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                                 <div class="icon">
@@ -107,7 +107,7 @@
                             <div class="filtr-item" data-category="model" style="width: 25%; padding: 10px">
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                        <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                        <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                             <div class="image" style="height: 150px">
                                                 <model-viewer style="width: 100%; height: 150px;" src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
                                             </div>
@@ -166,15 +166,15 @@
                                                     </td>
                                                     <td>
                                                         @if ($object->type == 'image')
-                                                            <a class="text-primary" href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
+                                                            <a class="text-primary" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
                                                         @elseif($object->type == 'video')
-                                                            <a class="text-primary" href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
+                                                            <a class="text-primary" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
                                                         @elseif($object->type == 'audio')
-                                                            <a class="text-primary" href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
+                                                            <a class="text-primary" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
                                                         @elseif($object->type == 'model')
-                                                            <a class="text-primary" href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
+                                                            <a class="text-primary" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
                                                         @else 
-                                                            <a class="text-primary" href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
+                                                            <a class="text-primary" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
                                                         @endif
                                                     </td>
                                                     <td>{{$object->source}}</td>
@@ -207,7 +207,7 @@
                                                     @if ($object->type == 'image')
                                                     <tr>
                                                         <td style="width: 4%; text-align: center"><i class="fas fa-image font-size-16 text-success"></i></td>
-                                                        <td><a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a></td>
+                                                        <td><a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a></td>
                                                         <td>{{$object->source}}</td>
                                                         <td>{{$object->type}}</td>
                                                         <td>{{$object->format != null ? $object->format : 'N/A'}}</td>
@@ -239,7 +239,7 @@
                                                     @if ($object->type == 'video')
                                                     <tr>
                                                         <td style="width: 4%; text-align: center"> <i class="far fa-play-circle font-size-16 text-danger"></i></td>
-                                                        <td><a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="far fa-play-circle font-size-16 mr-2"></i> {{$object->name}}</a></td>
+                                                        <td><a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="far fa-play-circle font-size-16 mr-2"></i> {{$object->name}}</a></td>
                                                         <td>{{$object->source}}</td>
                                                         <td>{{$object->type}}</td>
                                                         <td>{{$object->format != null ? $object->format : 'N/A'}}</td>
@@ -271,7 +271,7 @@
                                                     @if ($object->type == 'audio')
                                                     <tr>
                                                         <td style="width: 4%; text-align: center"><i class="fas fa-music font-size-16 text-info"></i></td>
-                                                        <td><a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fas fa-music font-size-16 mr-2"></i> {{$object->name}}</a></td>
+                                                        <td><a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fas fa-music font-size-16 mr-2"></i> {{$object->name}}</a></td>
                                                         <td>{{$object->source}}</td>
                                                         <td>{{$object->type}}</td>
                                                         <td>{{$object->format != null ? $object->format : 'N/A'}}</td>
@@ -303,7 +303,7 @@
                                                     @if ($object->type == 'model')
                                                     <tr>
                                                         <td style="width: 4%; text-align: center"><i class="fab fa-unity font-size-16 text-models"></i></td>
-                                                        <td><a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fab fa-unity font-size-16 mr-2"></i> {{$object->name}}</a></td>
+                                                        <td><a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fab fa-unity font-size-16 mr-2"></i> {{$object->name}}</a></td>
                                                         <td>{{$object->source}}</td>
                                                         <td>{{$object->type}}</td>
                                                         <td>{{$object->format != null ? $object->format : 'N/A'}}</td>
