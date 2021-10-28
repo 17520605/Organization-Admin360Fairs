@@ -82,12 +82,14 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/events/webinars/save-edit', 'administrator\EventsController@saveEdit');
             Route::delete('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@saveDelete');
 
+            // views
+            Route::get('/{id}/viewer', 'administrator\ViewerController@index');
+
             // interest
             Route::get('/{id}/interest', 'administrator\InterestController@index');
 
             // notification
             Route::get('/{id}/notification/compose', 'administrator\NotificationController@index');
-
 
         }); 
     });
