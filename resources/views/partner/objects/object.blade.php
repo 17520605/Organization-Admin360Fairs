@@ -68,7 +68,6 @@
                                 <div class="col-4">
                                     <p class="text-muted mb-2"> Name:  </p>
                                     <p class="text-muted mb-2"> Source: </p>
-                                    <p class="text-muted mb-2"> Duration: </p>
                                     <p class="text-muted mb-2"> Format: </p>
                                     <p class="text-muted mb-2"> size: </p>
                                     <p class="text-muted mb-2"> Update at: </p>
@@ -95,7 +94,11 @@
             <div class="col-md-8 view_booth_panoles">
                 <div class="card" style="width: 100% ; padding:20px;">
                     <div style="width: 100%;">
+                        @if ($object->source == 'youtube')
+                        <iframe src="{{$object->url}}" width="100%" height="400px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        @else
                         <video src="{{$object->url}}" alt="" controls style="width: 100%">
+                        @endif
                     </div>
                     <div class="bg-config-overview">
                         
@@ -396,6 +399,8 @@
             </div>
         </div>
     </div>
+    
+
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
         var viewer;
@@ -504,4 +509,5 @@
             });
         });
     </script>
+
 @endsection
