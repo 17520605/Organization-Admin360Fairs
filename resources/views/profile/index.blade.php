@@ -120,7 +120,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer" style="padding: 0.85rem 0px;">
-                                        <button class="btn btn-primary btn-block" type="submit">Save Organization Profile</button>
+                                        <button class="btn btn-primary btn-block icon-loader-show" type="submit"> <span class="loader-icon-btn"></span>  Save Organization Profile</button>
                                     </div>
                                 </form>
                             </div>
@@ -165,7 +165,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer" style="padding: 0.85rem 0px;">
-                                        <button class="btn btn-primary btn-block" type="submit">Save Personal Profile</button>
+                                        <button class="btn btn-primary btn-block icon-loader-show" type="submit"> <span class="loader-icon-btn"></span>  Save Personal Profile</button>
                                     </div>
                                 </form>
                             </div>
@@ -204,7 +204,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer"  style="padding: 0.85rem 0px;">
-                                    <button type="submit" id="popup-upload-avatar__local-save-btn" class="btn btn-primary btn-block" disabled>Save New Avatar</button>
+                                    <button id="popup-upload-avatar__local-save-btn" class="btn btn-primary btn-block" disabled><span class="loader-icon-btn"></span> Save New Avatar</button>
                                 </div>
                             </form>
                         </div>
@@ -228,8 +228,9 @@
                         <p>Do you really want to delete it?</p>
                     </div>
                     <div class="modal-footer" style="padding: 0">
+                        <span class="loader-delete-icon-btn" style="left: 10px; margin-left: 2px; margin-top: 6px;"></span>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-delete-cv__delete-btn" type="button" class="btn btn-danger">Delete</button>
+                        <button id="popup-confirm-delete-cv__delete-btn" type="button" class="btn btn-danger icon-loader-show"> Delete</button>
                     </div>
                 </form>
             </div>
@@ -341,6 +342,7 @@
             });
 
             $('#popup-confirm-delete-cv__delete-btn').click(function (){
+debugger;
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -358,6 +360,23 @@
             });
         });
     </script>
-
+    {{-- AJAX UPLOAD AVATAR --}}
+    <script>
+        $('#popup-upload-avatar__local-save-btn').click(function(){
+            $('#popup-upload-avatar').find('.loader-icon-btn').show();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/profile/save-avatar",
+                type: 'POST',
+                dataType: 'json',
+                success: function () { 
+                    $('#popup-upload-avatar').find('.loader-icon-btn').hide();
+                    location.reload();
+                }
+            });
+        });
+    </script>
 @endsection
 

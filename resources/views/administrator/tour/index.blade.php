@@ -170,9 +170,7 @@
                         </div>
                     </div>
                     <div class="card-body tag-wrapper tag-chart-wrapper" style="display: none; height: 100%; width:100%;">
-                        <div id="view-chart-container" style="height: 100%; width:100%;">
-                            
-                        </div>
+                        <div id="view-chart-container" style="height: 100%; width:100%;"></div>
                     </div>
                 </div>
             </div>
@@ -214,9 +212,7 @@
                         </div>
                     </div>
                     <div class="card-body" style="display: none; height: 100%; width:100%;">
-                        <div id="interest-chart-container" style="height: 100%; width:100%;">
-                            
-                        </div>
+                        <div id="interest-chart-container" style="height: 100%; width:100%;"></div>
                     </div>
                 </div>
             </div>
@@ -259,7 +255,7 @@
                         <textarea name="description" placeholder="Enter your tour description" class="form-control" rows="6"> {{$tour->description}} </textarea>
                     </div>
                     <!-- Form Group (create account submit)-->
-                    <button type="submit" class="btn btn-primary btn-block">Update Edit Tour</button>
+                    <button type="submit" class="btn btn-primary btn-block icon-loader-show">  <span class="loader-icon-btn"></span> Update Edit Tour</button>
                 </form>
             </div>
         </div>

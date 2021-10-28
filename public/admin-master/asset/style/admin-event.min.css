@@ -15276,3 +15276,50 @@ img {
 .card.object-file-booth {
     margin-bottom: 10px;
 }
+
+.loader-icon-btn {
+    display: none;
+    position: absolute;
+    border: 5px solid #ffffff;
+    border-top: 5px solid #9b9b9b44;
+    margin-left: -35px;
+    margin-top: -2px;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    animation: spin 2s linear infinite;
+}
+
+.loader-delete-icon-btn {
+    display: none;
+    position: absolute;
+    border: 5px solid #dd2828;
+    border-top: 5px solid #9b9b9b44;
+    margin-left: -35px;
+    margin-top: -2px;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+select:focus {
+    outline: none !important;
+}
+
+.custom-select {
+    outline: none !important;
+}
+
+#dataTable_length .custom-select:focus {
+    outline: none !important;
+}

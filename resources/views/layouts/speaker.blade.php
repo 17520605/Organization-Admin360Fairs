@@ -118,5 +118,11 @@
             });
         });
     </script>
+    <script>
+        $('.icon-loader-show').click(function(){
+            $('.loader-icon-btn').show();
+            $('.loader-delete-icon-btn').show();
+        });
+    </script>
     </body>
 </html>
