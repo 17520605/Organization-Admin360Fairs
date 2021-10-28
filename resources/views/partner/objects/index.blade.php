@@ -512,10 +512,13 @@
 
 <script>
     $(document).ready(function () {
-        var filterizr = $('#card-object-wrapper').filterizr({
-            gutterPixels: 0
-        });
-
+        var filterizr = null;
+        if($('#card-object-wrapper').children().length > 0){
+            filterizr = $('#card-object-wrapper').filterizr({
+                gutterPixels: 0
+            });
+        }
+        
         $('.btn[data-filter]').on('click', function() {
             $('.btn[data-filter]').removeClass('active');
             $(this).addClass('active');
@@ -536,8 +539,10 @@
 
         $('#tab-header-btn-card').on('click', function () {  
             $('#card-object-wrapper').show();
-            let filter = $('.btn[data-filter].active').data('filter');
-            filterizr.filterizr('filter', filter);
+            if(filterizr != null){
+                let filter = $('.btn[data-filter].active').data('filter');
+                filterizr.filterizr('filter', filter);
+            }
         })
 
         $('#tab-header-btn-table').on('click', function () {  
@@ -619,7 +624,7 @@
         $('#popup-create-object__link-url-input').change( async function () { 
             let type = $('#popup-create-object__link-type-input').val();
             let url = $(this).val();
-            let ext = (url.substr(1 + url.lastIndexOf("/")).split('?')[0]).split('#')[0].substr(url.lastIndexOf("."));
+            let ext = url.split(/[#?]/)[0].split('.').pop().trim();
             let correct = false;
             if( url.startsWith("https://youtu.be/")){
                 $('#popup-create-object__link-preview-video-ytb').show();

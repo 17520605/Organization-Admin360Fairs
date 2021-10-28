@@ -24,6 +24,9 @@
                                 <td colspan="10"><center><span>No booths</span></center></td>
                             </tr>
                             @endif
+                            @php
+                                $number = 1;
+                            @endphp
                             @foreach ($booths as $booth)
                             <tr class="booth-{{$booth->id}}">
                                 <td style="text-align: center">{{$number++}}</td>
