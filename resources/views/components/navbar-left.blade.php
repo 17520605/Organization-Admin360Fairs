@@ -97,6 +97,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"> Types </h6>
                 <a href="/administrator/tours/{{$tour->id}}/objects/dashboard" class="collapse-item">Dashboard</a>
+                <a href="/administrator/tours/{{$tour->id}}/objects" class="collapse-item">Object</a>
                 <a href="/administrator/tours/{{$tour->id}}/objects/images" class="collapse-item">Images</a>
                 <a href="/administrator/tours/{{$tour->id}}/objects/videos" class="collapse-item">Videos</a>
                 <a href="/administrator/tours/{{$tour->id}}/objects/audios" class="collapse-item">Audios</a>

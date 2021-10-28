@@ -15265,3 +15265,14 @@ img {
     line-height: 10px;
     color: #1e70e4;
 }
+
+.border-image-bt {
+    width: 100%;
+    height: 130px;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
+.card.object-file-booth {
+    margin-bottom: 10px;
+}

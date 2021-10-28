@@ -37,11 +37,11 @@
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                         <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                            <div class="image">
+                                            <div class="image" style="height: 150px">
                                                 @if ($object->url != null || $object->url !='')
-                                                    <img src="{{$object->url}}" alt="img" class="img-fluid">
+                                                    <img class="border-image-bt" src="{{$object->url}}" alt="img" class="img-fluid">
                                                 @else
-                                                    <img src="https://res.cloudinary.com/virtual-tour/image/upload/v1634815623/error-404_ghj2tk.png" alt="img" class="img-fluid">
+                                                    <img class="border-image-bt" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634815623/error-404_ghj2tk.png" alt="img" class="img-fluid">
                                                 @endif
                                             </div>
                                             <div class="file-name">
@@ -58,7 +58,7 @@
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                         <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                            <div class="image">
+                                            <div class="image" style="height: 150px">
                                                 <img src="" alt="img" class="img-fluid">
                                             </div>
                                             <div class="file-name">
@@ -72,7 +72,7 @@
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                         <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                            <div class="image">
+                                            <div class="image" style="height: 150px">
                                                 <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                                 <div class="icon">
                                                     <i class="fab fa-soundcloud"></i>
@@ -92,7 +92,7 @@
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                         <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                            <div class="image">
+                                            <div class="image" style="height: 150px">
                                                 <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                                 <div class="icon">
                                                     <i class="fab fa-soundcloud"></i>
@@ -111,8 +111,8 @@
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                         <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                            <div class="image">
-                                                <model-viewer style="width: 100%; height: 120px;" src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
+                                            <div class="image" style="height: 150px">
+                                                <model-viewer style="width: 100%; height: 150px;" src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
                                             </div>
                                             <div class="file-name">
                                                 <p class="m-b-5 text-muted">{{$object->name}}</p>
@@ -131,28 +131,53 @@
                                         <table class="table align-middle table-nowrap table-hover mb-0 table">
                                             <thead>
                                                 <tr>
+                                                    <th scope="col"></th>
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Source</th>
                                                     <th scope="col">Type</th>
                                                     <th scope="col">Format</th>
                                                     <th scope="col">Size</th>
-                                                    <th scope="col">Date modified</th>
+                                                    <th scope="col" style="width:15%">Date modified</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($objects as $object)
                                                 <tr>
+                                                    <td style="width: 4%; text-align: center">
+                                                        @if ($object->type == 'image')
+                                                            <i class="fas fa-image font-size-16 text-success"></i>
+                                                        @elseif($object->type == 'video')
+                                                            <i class="far fa-play-circle font-size-16 text-danger"></i>
+                                                        @elseif($object->type == 'audio')
+                                                            <i class="fas fa-music font-size-16 text-info"></i>
+                                                        @elseif($object->type == 'model')
+                                                            <i class="fab fa-unity font-size-16 text-models"></i>
+                                                        @else 
+                                                            @if ($object->format == 'pdf')
+                                                                <i class="fas fa-file-pdf font-size-16 text-danger"></i>
+                                                            @elseif ($object->format == 'doc' || $object->format == 'docx')
+                                                                <i class="fas fa-file-word font-size-16 text-primary" ></i>
+                                                            @elseif ($object->format == 'xlsx' || $object->format == 'xlsm' || $object->format == 'csv')
+                                                                <i class="fas fa-file-csv font-size-16 text-success"></i>
+                                                            @elseif ($object->format == 'txt' || $object->format == 'html' || $object->format == 'php')
+                                                                <i class="fas fa-file-alt font-size-16 text-primary"></i>
+                                                            @else
+                                                                <i class="fas fa-file font-size-16 text-warning"></i>
+                                                            @endif
+                                                            
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         @if ($object->type == 'image')
-                                                            <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fas fa-image font-size-16 mr-2"></i> {{$object->name}}</a>
+                                                            <a class="text-primary" href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
                                                         @elseif($object->type == 'video')
-                                                            <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="far fa-play-circle font-size-16 mr-2"></i> {{$object->name}}</a>
+                                                            <a class="text-primary" href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
                                                         @elseif($object->type == 'audio')
-                                                            <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fas fa-music font-size-16 mr-2"></i> {{$object->name}}</a>
+                                                            <a class="text-primary" href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
                                                         @elseif($object->type == 'model')
-                                                            <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fab fa-unity font-size-16 mr-2"></i> {{$object->name}}</a>
+                                                            <a class="text-primary" href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
                                                         @else 
-                                                            <a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fas fa-file-code font-size-16 mr-2"></i> {{$object->name}}</a>
+                                                            <a class="text-primary" href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
                                                         @endif
                                                     </td>
                                                     <td>{{$object->source}}</td>
@@ -171,19 +196,21 @@
                                         <table class="table align-middle table-nowrap table-hover mb-0 table">
                                             <thead>
                                                 <tr>
+                                                    <th scope="col"></th>   
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Source</th>
                                                     <th scope="col">Type</th>
                                                     <th scope="col">Format</th>
                                                     <th scope="col">Size</th>
-                                                    <th scope="col">Date modified</th>
+                                                    <th scope="col" style="width:15%">Date modified</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($objects as $object)
                                                     @if ($object->type == 'image')
                                                     <tr>
-                                                        <td><a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fas fa-file-code font-size-16 mr-2"></i> {{$object->name}}</a></td>
+                                                        <td style="width: 4%; text-align: center"><i class="fas fa-image font-size-16 text-success"></i></td>
+                                                        <td><a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a></td>
                                                         <td>{{$object->source}}</td>
                                                         <td>{{$object->type}}</td>
                                                         <td>{{$object->format != null ? $object->format : 'N/A'}}</td>
@@ -201,18 +228,20 @@
                                         <table class="table align-middle table-nowrap table-hover mb-0 table">
                                             <thead>
                                                 <tr>
+                                                    <th scope="col"></th>  
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Source</th>
                                                     <th scope="col">Type</th>
                                                     <th scope="col">Format</th>
                                                     <th scope="col">Size</th>
-                                                    <th scope="col">Date modified</th>
+                                                    <th scope="col" style="width:15%">Date modified</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($objects as $object)
                                                     @if ($object->type == 'video')
                                                     <tr>
+                                                        <td style="width: 4%; text-align: center"> <i class="far fa-play-circle font-size-16 text-danger"></i></td>
                                                         <td><a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="far fa-play-circle font-size-16 mr-2"></i> {{$object->name}}</a></td>
                                                         <td>{{$object->source}}</td>
                                                         <td>{{$object->type}}</td>
@@ -231,18 +260,20 @@
                                         <table class="table align-middle table-nowrap table-hover mb-0 table">
                                             <thead>
                                                 <tr>
+                                                    <th scope="col"></th>   
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Source</th>
                                                     <th scope="col">Type</th>
                                                     <th scope="col">Format</th>
                                                     <th scope="col">Size</th>
-                                                    <th scope="col">Date modified</th>
+                                                    <th scope="col" style="width:15%">Date modified</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($objects as $object)
                                                     @if ($object->type == 'audio')
                                                     <tr>
+                                                        <td style="width: 4%; text-align: center"><i class="fas fa-music font-size-16 text-info"></i></td>
                                                         <td><a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fas fa-music font-size-16 mr-2"></i> {{$object->name}}</a></td>
                                                         <td>{{$object->source}}</td>
                                                         <td>{{$object->type}}</td>
@@ -261,18 +292,20 @@
                                         <table class="table align-middle table-nowrap table-hover mb-0 table">
                                             <thead>
                                                 <tr>
+                                                    <th scope="col"></th>  
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Source</th>
                                                     <th scope="col">Type</th>
                                                     <th scope="col">Format</th>
                                                     <th scope="col">Size</th>
-                                                    <th scope="col">Date modified</th>
+                                                    <th scope="col" style="width:15%">Date modified</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($objects as $object)
                                                     @if ($object->type == 'model')
                                                     <tr>
+                                                        <td style="width: 4%; text-align: center"><i class="fab fa-unity font-size-16 text-models"></i></td>
                                                         <td><a href="/partner/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fab fa-unity font-size-16 mr-2"></i> {{$object->name}}</a></td>
                                                         <td>{{$object->source}}</td>
                                                         <td>{{$object->type}}</td>
@@ -416,6 +449,7 @@
         </div>
     </section>
 </div>
+
 
 <script>
     // validate form

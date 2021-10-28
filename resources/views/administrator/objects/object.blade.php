@@ -13,7 +13,7 @@
         {{-- IMAGE --}}
         <div class="row mb-3 image-wrapper" >
             <div class="col-md-4">
-                <div class="card" style="max-height: 350px">
+                <div class="card" style="height: 100%">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="flex-grow-1 overflow-hidden">
                             <h6 class="font-size-15 font-weight-bold">General </h6>
@@ -199,9 +199,9 @@
         </div>
         @endif
 
-        <div class="row mb-3 tags-area">
+        <div class="row">
             <div class="col-md-12">
-                <div class="card mb-4" style="height: 500px;">
+                <div class="card mb-4" style="max-height: 500px;">
                     <div class="card-header">
                         <span class="h5 font-weight-bold text-primary" style="margin: 0px">Views</span>
                         <div class="div_cardheader_btn">
@@ -254,9 +254,9 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-bottom: 1.5rem;">
+        <div class="row">
             <div class="col-md-12">
-                <div class="card mb-4" style="height: 500px;">
+                <div class="card mb-4" style="max-height: 500px;">
                     <div class="card-header">
                         <span class="h5 font-weight-bold text-primary" style="margin: 0px">Interest</span>
                         <div class="div_cardheader_btn">
