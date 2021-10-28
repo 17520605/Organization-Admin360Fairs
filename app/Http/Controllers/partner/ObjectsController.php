@@ -15,8 +15,10 @@ class ObjectsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
+
         $objects = \App\Models\TObject::where([
-            ['tourId','=', $id]
+            ['tourId','=', $id],
+            ['ownerId', '=', $profile->id]
         ])->get();
 
         return view('partner.objects.index', [
@@ -53,6 +55,8 @@ class ObjectsController extends Controller
     
     public function saveCreate($id, Request $request)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        
         $type = $request->type;
         $source = $request->source;
         $name = $request->name;
@@ -88,6 +92,7 @@ class ObjectsController extends Controller
 
         $rs = DB::table('object')->insert([
             'tourId'=> $id,
+            'ownerId'=> $profile->id,
             'type' => $type,
             'source' => $source,
             'name' => $name,

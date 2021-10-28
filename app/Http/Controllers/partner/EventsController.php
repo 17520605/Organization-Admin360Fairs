@@ -28,7 +28,7 @@ class EventsController extends Controller
             ->select('profile.*')
             ->get();
 
-        return view('partner.events.webinars', ['profile' => $profile , 'tour'=>$tour, 'webinars' => $webinars,'speakers' => $speakers]);
+        return view('partner.events.webinar', ['profile' => $profile , 'tour'=>$tour, 'webinars' => $webinars,'speakers' => $speakers]);
     }
 
     public function webinar($id, $webinarId)

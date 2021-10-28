@@ -39,10 +39,29 @@ class BoothsController extends Controller
             $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
         }
 
-        $objects = DB::table('object')
-            ->join('booth_object', 'booth_object.objectId', '=', 'object.Id')
-            ->where('booth_object.boothId', '=', $boothId)
-            ->select('object.*')
+        $boothObjects = \App\Models\TObject::whereHas('booth_objects', function($q) use ($boothId)
+            {
+                $q->where('boothId', '=', $boothId);
+            })
+            ->where([
+                ['tourId','=', $id],
+                ['ownerId', '=', $profile->id]
+            ])
+            ->get();
+        
+        $otherObjects = \App\Models\TObject::where([
+                ['tourId','=', $id],
+                ['ownerId', '=', $profile->id]
+            ])
+            ->doesntHave('booth_objects')
+            ->orWhereHas('booth_objects', function($q) use ($boothId)
+            {
+                $q->where('boothId', '!=', $boothId)->orWhere('boothId', null);
+            })
+            ->where([
+                ['tourId','=', $id],
+                ['ownerId', '=', $profile->id]
+            ])
             ->get();
 
         $types = DB::table('object')
@@ -61,7 +80,8 @@ class BoothsController extends Controller
             'booth' => $booth,
             'panoramas' => $panoramas,
             'scene' => $scene,
-            'objects' => $objects,
+            'boothObjects' => $boothObjects,
+            'otherObjects' => $otherObjects,
             'types' => $types,
             'views' => $views,
             'interests' => $interests
@@ -87,4 +107,18 @@ class BoothsController extends Controller
         return back();
     }
 
+    public function saveAddObjects($id, Request $request)
+    {
+        $objectIds = $request->objectIds;
+        $boothId = $request->boothId;
+
+        foreach ($objectIds as $objectId) {
+            $booth_object = new \App\Models\Booth_Object();
+            $booth_object->boothId = $boothId;
+            $booth_object->objectId = $objectId;
+            $booth_object->save();
+        }
+
+        return back();
+    }
 }
