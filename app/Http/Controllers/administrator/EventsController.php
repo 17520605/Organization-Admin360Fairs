@@ -28,7 +28,7 @@ class EventsController extends Controller
             ->select('profile.*')
             ->get();
 
-        return view('administrator.events.webinars', ['profile' => $profile , 'tour'=>$tour, 'webinars' => $webinars,'speakers' => $speakers]);
+        return view('administrator.events.webinarcase', ['profile' => $profile , 'tour'=>$tour, 'webinars' => $webinars,'speakers' => $speakers]);
     }
     public function webinarscase($id)
     {

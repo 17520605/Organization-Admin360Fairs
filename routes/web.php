@@ -116,10 +116,10 @@ Route::middleware('auth')->group(function (){
             
             // booths
             Route::get('/{id}/booths', 'partner\BoothsController@index');
-            Route::get('/{id}/booths/booth', 'partner\BoothsController@booth');
             Route::post('/{id}/booths/save-edit', 'partner\BoothsController@saveEdit');
+            Route::post('/{id}/booths/save-add-objects', 'partner\BoothsController@saveAddObjects');
             Route::get('/{id}/booths/{boothId}', 'partner\BoothsController@booth');
-
+            
             // objects
             Route::get('/{id}/objects', 'partner\ObjectsController@index');
             Route::get('/{id}/objects/dashboard', 'partner\ObjectsController@dashboard');
