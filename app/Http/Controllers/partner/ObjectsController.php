@@ -57,6 +57,7 @@ class ObjectsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         
+        $boothId = $request->boothId;
         $type = $request->type;
         $source = $request->source;
         $name = $request->name;
@@ -90,7 +91,7 @@ class ObjectsController extends Controller
             }
         }
 
-        $rs = DB::table('object')->insert([
+        $objectId = DB::table('object')->insertGetId([
             'tourId'=> $id,
             'ownerId'=> $profile->id,
             'type' => $type,
@@ -102,6 +103,13 @@ class ObjectsController extends Controller
             'size' => $size,
             'content' => $content != null ? json_encode($content) : null
         ]);
+
+        if($boothId != null){
+            $booth_object = new \App\Models\Booth_Object();
+            $booth_object->boothId = $boothId;
+            $booth_object->objectId = $objectId;
+            $booth_object->save();
+        }
 
         return back();
     }

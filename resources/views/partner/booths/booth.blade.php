@@ -685,7 +685,7 @@
             </div>
         </div>
     </div>
-    {{-- POPUP ADD OBJECT --}}
+    {{-- POPUP ADD NEW OBJECT --}}
     <div class="modal fade" id="popup-add-new-object" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -706,8 +706,9 @@
                             </nav>
                         </div>
                         <div>
-                            <form class="form-step1 object__upload-box needs-validation" action="/partner/tours/{{$tour->id}}/objects/save-create" method="POST" enctype="multipart/form-data" novalidate>
+                            <form class="form-step1 object__upload-box needs-validation" action="/partner/tours/{{$tour->id}}/booths/save-create" method="POST" enctype="multipart/form-data" novalidate>
                                 @csrf
+                                <input type="hidden" name="boothId" value="{{$booth->id}}">
                                 <input id="popup-add-new-object__source-hidden-input" class="form-control" type="hidden" name="source" value="local">
                                 <div class="mb-3">
                                     <label class="small mb-1" for="">Type</label>
@@ -758,6 +759,7 @@
                             </form>
                             <form class="form-step2 object__upload-box needs-validation" action="/partner/tours/{{$tour->id}}/objects/save-create" method="POST"  style="display: none" novalidate>
                                 @csrf
+                                <input type="hidden" name="boothId" value="{{$booth->id}}">
                                 <input type="hidden" name="source" value="link">
                                 <div class="mb-3">
                                     <label class="small mb-1" for="">Type</label>
@@ -1216,7 +1218,7 @@
             $('#popup-add-new-object__link-url-input').change( async function () { 
                 let type = $('#popup-add-new-object__link-type-input').val();
                 let url = $(this).val();
-                let ext = (url.substr(1 + url.lastIndexOf("/")).split('?')[0]).split('#')[0].substr(url.lastIndexOf("."));
+                let ext = url.split(/[#?]/)[0].split('.').pop().trim();
                 let correct = false;
                 if( url.startsWith("https://youtu.be/")){
                     $('#popup-add-new-object__link-preview-video-ytb').show();
