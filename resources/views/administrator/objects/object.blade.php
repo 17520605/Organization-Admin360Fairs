@@ -223,12 +223,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $number = 1;
+                                    @endphp
                                     @if (count($views) == 0)
                                         <tr><td colspan="5"><center><span class="text-muted">No views</span></center></td></tr>
                                     @else
                                         @foreach ($views as $view)
                                         <tr class="zone-1">
-                                            <td style="text-align: center">1</td>
+                                            <td style="text-align: center">{{$number++}}</td>
                                             @if ($view->visitor != null)
                                             <td>{{$view->visitor->name}}</td>
                                             <td>{{$view->visitor->email}}</td>
@@ -276,12 +279,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                                     @if (count($views) == 0)
                                         <tr><td colspan="6"><center><span  class="text-muted">No the interest</span></center></td></tr>
                                     @else
                                     @foreach ($interests as $interest)
                                     <tr class="zone-1">
-                                        <td style="text-align: center">1</td>
+                                        <td style="text-align: center">{{$number++}}</td>
                                         <td>{{$interest->visitor->name}}</td>
                                         <td>{{$interest->visitor->email}}</td>
                                         <td>{{$interest->visitor->contact}}</td>

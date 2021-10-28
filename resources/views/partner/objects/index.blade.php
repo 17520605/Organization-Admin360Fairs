@@ -141,6 +141,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                                                 @foreach ($objects as $object)
                                                 <tr>
                                                     <td style="width: 4%; text-align: center">
@@ -206,6 +209,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                                                 @foreach ($objects as $object)
                                                     @if ($object->type == 'image')
                                                     <tr>
@@ -238,6 +244,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                                                 @foreach ($objects as $object)
                                                     @if ($object->type == 'video')
                                                     <tr>
@@ -270,6 +279,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                                                 @foreach ($objects as $object)
                                                     @if ($object->type == 'audio')
                                                     <tr>
@@ -302,6 +314,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                                                 @foreach ($objects as $object)
                                                     @if ($object->type == 'model')
                                                     <tr>

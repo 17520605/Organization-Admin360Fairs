@@ -18,6 +18,7 @@
                             <th style="width: 40px;">
                                 <input class="checkbox-all form-check-input1 dt-checkboxes" type="checkbox" name="all">
                             </th>
+                            <th>#</th>
                             <th style="width: 6%;">Avatar</th>
                             <th>Name</th>
                             <th>Email</th>
@@ -28,6 +29,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                         @foreach ($speakers as $speaker)
                         <tr class="speaker-{{$speaker->id}}">
                             <td>
@@ -37,6 +41,7 @@
                                     <input class="form-check-input1 dt-checkboxes"  type="checkbox" style="opacity: 0.3" checked disabled>
                                 @endif
                             </td>
+                            <td style="text-align: center">{{$number++}}</td>
                             <td style="text-align: center">
                                 <div><img class="rounded-circle avatar-xs" src="{{$speaker->speaker->avatar != null ? $speaker->speaker->avatar : 'https://res.cloudinary.com/virtual-tour/image/upload/v1634539139/icons/default_avatar_k3wxez.png' }}" alt=""></div>
                             </td>

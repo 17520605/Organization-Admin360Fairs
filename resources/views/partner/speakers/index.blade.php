@@ -32,6 +32,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                         @foreach ($invitations as $invitation)
                         <tr class="speaker-{{$invitation->speaker->id}}">
                             <td>
@@ -92,6 +95,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                         @foreach ($myInvitations as $invitation)
                         <tr class="speaker-{{$invitation->speaker->id}}">
                             <td>

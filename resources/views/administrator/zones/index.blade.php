@@ -23,9 +23,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $number = 1;
+                            @endphp
                             @foreach ($zones as $zone)
                             <tr class="zone-{{$zone->id}}">
-                                <td style="text-align: center">1</td>
+                                <td style="text-align: center">{{$number++}}</td>
                                 <td><a href="zones/{{$zone->id}}">{{$zone->name}}</a></td>
                                 <td>{{ count($zone->booths)}} </td>
                                 <td>

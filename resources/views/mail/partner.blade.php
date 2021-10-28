@@ -28,6 +28,9 @@
                 <div class="adM"></div>
                 <table align="center" cellpadding="0" border="0" cellspacing="0" bgcolor="#c9c9c9" style="background-color: #c9c9c9 !important;">
                     <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                         <tr>
                             <td style="padding-top: 30px;" class="m_1805024013170923873padding-top-0">
                                 <div style="display: none; max-height: 0px; overflow: hidden;">
@@ -47,10 +50,16 @@
                                 </div>
                                 <table width="660" border="0" cellpadding="0" cellspacing="0" style="width: 660px; background-color: #ffffff;" bgcolor="#ffffff">
                                     <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                                         <tr>
                                             <td bgcolor="#ffffff" style="background-color: #ffffff; padding-bottom: 15px;">
                                                 <table width="660" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="background-color: #ffffff; width: 660px;">
                                                     <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                                                         <tr>
                                                             <td class="m_1805024013170923873bg-image" background="https://ci3.googleusercontent.com/proxy/vaFinuzP1ke5S35ujcrhJ0ynX8nOuLfnFIuFlpLqzso9YBHpb5ZTnNOjBFmz7QW61TgJgcrO__fLfSq7Tf7o2A6M115d72ApMrzRvHjRFw=s0-d-e1-ft#https://cdn.hostinger.com/mailer/bg-paymentchargesuccess.png"
                                                                 bgcolor="#ffffff" width="660" valign="top" style="
@@ -62,6 +71,9 @@
                                                                 background-position: top center; ">
                                                                 <table align="left" width="400" border="0" cellpadding="0" cellspacing="0" style="width: 400px; padding-bottom: 38px;">
                                                                     <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                                                                         <tr>
                                                                             <td style="padding-bottom: 80px; padding-top: 37px; padding-left: 60px; font-size: 25px; font-weight: bold; color: #6a4bce;">
                                                                                 <i class="fab fa-korvue"></i> 360Fairs

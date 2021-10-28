@@ -127,6 +127,9 @@
                                         <div class="table-responsive mailbox-messages">
                                             <table class="table table-hover table-striped">
                                                 <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                                                     <tr>
                                                         <td>
                                                             <div class="icheck-primary">

@@ -531,9 +531,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $number = 1;
+                                    @endphp
                                     @foreach ($views as $view)
                                     <tr class="zone-1">
-                                        <td style="text-align: center">1</td>
+                                        <td style="text-align: center">{{$number++}}</td>
                                         @if ($view->visitor != null)
                                         <td>{{$view->visitor->name}}</td>
                                         <td>{{$view->visitor->email}}</td>
@@ -580,9 +583,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $number = 1;
+                                    @endphp
                                     @foreach ($interests as $interest)
                                     <tr class="zone-1">
-                                        <td style="text-align: center">1</td>
+                                        <td style="text-align: center">{{$number++}}</td>
                                         <td>{{$interest->visitor->name}}</td>
                                         <td>{{$interest->visitor->email}}</td>
                                         <td>{{$interest->visitor->contact}}</td>

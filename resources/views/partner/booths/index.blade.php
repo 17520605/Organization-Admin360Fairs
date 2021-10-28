@@ -26,7 +26,7 @@
                             @endif
                             @foreach ($booths as $booth)
                             <tr class="booth-{{$booth->id}}">
-                                <td style="text-align: center">1</td>
+                                <td style="text-align: center">{{$number++}}</td>
                                 <td><a href="/partner/tours/{{$tour->id}}/booths/{{$booth->id}}">{{$booth->name}}</a></td>
                                 <td>
                                     <span class="text-primary font-weight-bold">{{$booth->owner->name}}</span>

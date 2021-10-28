@@ -187,6 +187,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $number = 1;
+                                        @endphp
                                         <tr>
                                             <td>
                                                 <a class="text-dark fw-medium" href="/apps-filemanager"><i class="fas fa-file-code font-size-16 align-middle text-primary me-2"></i> index.html</a>

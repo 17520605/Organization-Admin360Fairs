@@ -23,8 +23,11 @@
                             </tr>
                         </thead>
                         <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                             <tr>
-                                <td style="text-align: center">1</td>
+                                <td style="text-align: center">{{$number++}}</td>
                                 <td>Brielle Williamson</td>
                                 <td><img class="products-tables" src="./../asset/images/apps-1.jpg" alt=""></td>
                                 <td>150$</td>

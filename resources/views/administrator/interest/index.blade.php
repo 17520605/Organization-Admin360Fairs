@@ -21,9 +21,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $number = 1;
+                            @endphp
                             @foreach ($interests as $interest)
                             <tr class="zone-1">
-                                <td style="text-align: center">1</td>
+                                <td style="text-align: center">{{$number++}}</td>
                                 <td><span class="font-weight-bold text-primary">{{$interest->visitor->name}}</span></td>
                                 <td><a class="font-weight-bold text-primary" href="mailto:{{$interest->visitor->email}}">{{$interest->visitor->email}} </a></td>
                                 <td><a class="font-weight-bold text-primary" href="tel:{{$interest->visitor->contact}}">{{$interest->visitor->contact}}</a></td>

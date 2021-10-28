@@ -28,6 +28,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
                         @foreach ($partners as $partner)
                         <tr class="partner-{{$partner->id}}">
                             <td>
@@ -37,7 +40,7 @@
                                     <input class="form-check-input1 dt-checkboxes"  type="checkbox" style="opacity: 0.3" checked disabled>
                                 @endif
                             </td>
-                            <td style="text-align: center">1</td>
+                            <td style="text-align: center">{{$number++}}</td>
                             <td style="text-align: center">
                                 <div><img class="rounded-circle avatar-xs" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634539139/icons/default_avatar_k3wxez.png" alt=""></div>
                             </td>

@@ -64,6 +64,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $number = 1;
+                                        @endphp
                                         @if (count($booths) == 0)
                                             <tr>
                                                 <td colspan="8">
