@@ -12,14 +12,16 @@ use Carbon\Carbon;
 
 class EventsController extends Controller
 {
-    public function webinars($id)
+    public function webinars($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
+        $tag = $request->get('tag');
 
         $all_dates = DB::table('webinar')->where([
                 ['tourId', '=', $id],
-                ['isDeleted', '=', false]
+                ['isDeleted', '=', false],
+                ['status', '=', \App\Models\Webinar::STATUS_CONFIRMED],
             ])
             ->groupBy('date')
             ->orderBy('date', 'ASC')
@@ -29,6 +31,7 @@ class EventsController extends Controller
                 ->where([
                     ['tourId', '=', $id],
                     ['isDeleted', '=', false],
+                    ['status', '=', \App\Models\Webinar::STATUS_CONFIRMED],
                 ])
                 ->whereRaw("Date(startAt) = ?", array($date->date))
                 ->orderBy('startAt', 'ASC')
@@ -49,6 +52,7 @@ class EventsController extends Controller
                 ->where([
                     ['tourId', '=', $id],
                     ['registerBy', '=', $profile->id],
+                    ['status', '=', \App\Models\Webinar::STATUS_CONFIRMED],
                     ['isDeleted', '=', false],
                 ])
                 ->whereRaw("Date(startAt) = ?", array($date->date))
@@ -71,13 +75,15 @@ class EventsController extends Controller
             ->select('profile.*')
             ->get();
 
+
         return view('administrator.events.webinars', [
             'profile' => $profile , 
             'tour'=>$tour, 
             'all_dates' => $all_dates,
             'my_dates' => $my_dates,
             'webinars'=>$webinars, 
-            'speakers' => $speakers
+            'speakers' => $speakers,
+            'tag' => $tag
         ]);
     }
 
@@ -179,5 +185,23 @@ class EventsController extends Controller
         return true;
     }
 
+    public function saveApprove($id, Request $request)
+    {
+        $webinarId = $request->webinarId;
+        $webinar = \App\Models\Webinar::find($webinarId);
+        $webinar->status = \App\Models\Webinar::STATUS_CONFIRMED;
+        $webinar->save();
+        
+        return true;
+    }
     
+    public function saveReject($id, Request $request)
+    {
+        $webinarId = $request->webinarId;
+        $webinar = \App\Models\Webinar::find($webinarId);
+        $webinar->status = \App\Models\Webinar::STATUS_REJECTED;
+        $webinar->save();
+        
+        return true;
+    }
 }

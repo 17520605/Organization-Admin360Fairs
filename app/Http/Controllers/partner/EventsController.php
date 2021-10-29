@@ -16,11 +16,55 @@ class EventsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
+        $tag = $request->get('tag');
+
+        $all_dates = DB::table('webinar')->where([
+                ['tourId', '=', $id],
+                ['isDeleted', '=', false]
+            ])
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get(DB::raw('Date(startAt) as date'));
+        foreach ($all_dates as $date) {
+            $webinars = \App\Models\Webinar::with('details')
+                ->where([
+                    ['tourId', '=', $id],
+                    ['isDeleted', '=', false],
+                ])
+                ->whereRaw("Date(startAt) = ?", array($date->date))
+                ->orderBy('startAt', 'ASC')
+                ->get();
+            $date->webinars = $webinars;
+        }
+
+        $my_dates = DB::table('webinar')->where([
+                ['tourId', '=', $id],
+                ['registerBy', '=', $profile->id],
+                ['isDeleted', '=', false]
+            ])
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get(DB::raw('Date(startAt) as date'));
+        foreach ($my_dates as $date) {
+            $webinars = \App\Models\Webinar::with('details')
+                ->where([
+                    ['tourId', '=', $id],
+                    ['registerBy', '=', $profile->id],
+                    ['isDeleted', '=', false],
+                ])
+                ->whereRaw("Date(startAt) = ?", array($date->date))
+                ->orderBy('startAt', 'ASC')
+                ->get();
+            $date->webinars = $webinars;
+        }
+
         $webinars = \App\Models\Webinar::with('details')
             ->where([
                 ['tourId', '=', $id],
-                ['isDeleted', '=', false]
-            ])->get();
+                ['isDeleted', '=', false],
+            ])
+            ->orderBy('startAt', 'ASC')
+            ->get();
 
         $speakers = DB::table('tour_speaker')
             ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
@@ -28,7 +72,16 @@ class EventsController extends Controller
             ->select('profile.*')
             ->get();
 
-        return view('partner.events.webinar', ['profile' => $profile , 'tour'=>$tour, 'webinars' => $webinars,'speakers' => $speakers]);
+        return view('partner.events.webinars', [
+            'profile' => $profile ,
+            'tour'=>$tour,
+            'all_dates' => $all_dates,
+            'my_dates' => $my_dates,
+            'webinars'=>$webinars, 
+            'speakers' => $speakers,
+            'tag' => $tag
+        ]);
+
     }
 
     public function webinar($id, $webinarId)
