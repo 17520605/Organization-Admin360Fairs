@@ -88,7 +88,8 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/interest', 'administrator\InterestController@index');
 
             // notification
-            Route::get('/{id}/notification/compose', 'administrator\NotificationController@index');
+            Route::get('/{id}/notifications', 'administrator\NotificationController@index');
+            Route::post('/{id}/notifications/save-create', 'administrator\NotificationController@saveCreate');
 
         }); 
     });
@@ -134,7 +135,6 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/events/webinars/save-edit', 'partner\EventsController@saveEdit');
             Route::delete('/{id}/events/webinars/{webinarId}', 'partner\EventsController@saveDelete');
 
-           
         }); 
 
     });
