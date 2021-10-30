@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class EventsController extends Controller
 {
-    public function webinars($id)
+    public function webinars($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
@@ -81,6 +81,7 @@ class EventsController extends Controller
             'speakers' => $speakers,
             'tag' => $tag
         ]);
+
     }
 
     public function webinar($id, $webinarId)
@@ -137,6 +138,7 @@ class EventsController extends Controller
 
         return back();
     }
+
     public function saveEdit( Request $request)
     {
         $webinarId = $request->webinarId;

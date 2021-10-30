@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use League\Csv\Reader;
 use App\Mail\MailService;
+
 class SpeakersController extends Controller
 {
     public function index($id)
