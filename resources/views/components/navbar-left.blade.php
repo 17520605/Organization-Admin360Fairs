@@ -47,14 +47,26 @@
     </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-store"></i>
-            <span>Booths</span>
+            <i class="fas fa-layer-group"></i>
+            <span>Zones</span>
         </a>
         <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Booths Manager</h6>
+                <h6 class="collapse-header">Zones Manager </h6>
                 <a href="/administrator/tours/{{$tour->id}}/zones" class="collapse-item" >Zones</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3-1" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-store"></i>
+            <span>Booths</span>
+        </a>
+        <div id="collapse3-1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Booths Manager</h6>
                 <a href="/administrator/tours/{{$tour->id}}/booths" class="collapse-item" >Booths</a>
+                <a href="/administrator/tours/{{$tour->id}}/booths/requests" class="collapse-item" >Requests <span class="badge bg-danger" style="float: right;">3</span></a>
             </div>
         </div>
     </li>
@@ -67,6 +79,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Event types</h6>
                 <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/events/webinars">Webinars</a>
+                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/events/webinars/requests">Requests <span class="badge bg-danger" style="float: right;">3</span></a>
             </div>
         </div>
     </li>

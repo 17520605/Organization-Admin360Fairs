@@ -18,7 +18,6 @@
                             <th style="width: 40px;">
                                 <input class="checkbox-all form-check-input1 dt-checkboxes" type="checkbox" name="all">
                             </th>
-                            <th style="text-align: center">#</th>
                             <th style="width: 8%;">Avatar</th>
                             <th>Name</th>
                             <th>Email</th>
@@ -28,9 +27,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            $number = 1;
-                        @endphp
                         @foreach ($partners as $partner)
                         <tr class="partner-{{$partner->id}}">
                             <td>
@@ -40,7 +36,6 @@
                                     <input class="form-check-input1 dt-checkboxes"  type="checkbox" style="opacity: 0.3" checked disabled>
                                 @endif
                             </td>
-                            <td style="text-align: center">{{$number++}}</td>
                             <td style="text-align: center">
                                 <div><img class="rounded-circle avatar-xs" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634539139/icons/default_avatar_k3wxez.png" alt=""></div>
                             </td>
@@ -89,7 +84,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control form-control-user" id="name" placeholder="Enter partner name" aria-describedby="inputGroupPrepend" required>
+                        <input type="text" name="name" autocomplete="off" class="form-control form-control-user" id="name" placeholder="Enter partner name" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please enter partner name
                         </div>
@@ -103,9 +98,9 @@
                     </div>
                     <div class="form-group">
                         <label for="name" class="form-label">Contact</label>
-                        <input type="tel" name="contact" class="form-control form-control-user" id="contact" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
+                        <input type="tel" name="contact" pattern="[0-9]{10}" class="form-control form-control-user" id="contact" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
-                            Please enter contact
+                            Please enter contact or wrong format
                         </div>
                     </div>
                     <div class="form-group messages-wrapper border" style="display: none">
@@ -132,7 +127,7 @@
                     <input id="popup-edit-partner__id-hidden-input" type="hidden" name="partnerId">
                     <div class="form-group">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control form-control-user" id="popup-edit-partner__name-input" placeholder="Enter partner name" aria-describedby="inputGroupPrepend" required>
+                        <input type="text" name="name" autocomplete="off" class="form-control form-control-user" id="popup-edit-partner__name-input" placeholder="Enter partner name" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please enter partner name
                         </div>
@@ -146,9 +141,9 @@
                     </div>
                     <div class="form-group">
                         <label for="name" class="form-label">Contact</label>
-                        <input type="tel" name="contact" class="form-control form-control-user" id="popup-edit-partner__contact-input" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
+                        <input type="tel" name="contact" pattern="[0-9]{10}" class="form-control form-control-user" id="popup-edit-partner__contact-input" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
-                            Please enter contact
+                            Please enter contact or wrong format
                         </div>
                     </div>
                     <div class="form-group messages-wrapper border" style="display: none">

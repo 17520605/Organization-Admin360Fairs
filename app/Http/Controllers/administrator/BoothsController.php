@@ -50,7 +50,45 @@ class BoothsController extends Controller
             'partners'=> $partners,
         ]);
     }
+    public function request($id)
+    {
+        $user = Auth::user();
+        $profile = DB::table('profile')->where('userId', $user->id)->first();
 
+        $tour = DB::table('tour')->find($id);
+
+        $zones = \App\Models\Zone::where('isDeleted', false)->get();
+
+        $groups = \App\Models\Zone::where('isDeleted', false)->get();
+        foreach ($groups as $group) {
+            $zoneId = $group->id;
+            $booths = \App\Models\Booth::whereHas('zone_booths', function ($q) use($zoneId){
+                    $q->where('zoneId', '=', $zoneId);
+                })->get();
+
+            $group->booths = $booths;
+        }
+
+        $freeBooths = \App\Models\Booth::with('owner')->doesntHave('zone_booths')->get();
+
+        $partners = DB::table('tour_partner')
+            ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')
+            ->where([
+                ['tour_partner.tourId', '=', $id],
+                ['tour_partner.status', '!=', \App\Models\Tour_Partner::UNCONFIRMED],
+            ])
+            ->select('profile.*', 'status')
+            ->get(); 
+
+        return view('administrator.booths.request', [
+            'profile' => $profile, 
+            'tour'=> $tour, 
+            'zones' => $zones, 
+            'groups' => $groups, 
+            'freeBooths'=> $freeBooths,
+            'partners'=> $partners,
+        ]);
+    }
     public function grantOwner($id, Request $request)
     {
         $boothId = $request->boothId;

@@ -17,4 +17,8 @@ class Webinar extends Model
     public function details() {
         return $this->hasMany(Webinar_Detail::class, 'webinarId');
     }
+
+    public function registrant() {
+        return $this->belongsTo(Profile::class, 'registerBy');
+    }
 }

@@ -21,7 +21,7 @@ class EventsController extends Controller
         $all_dates = DB::table('webinar')->where([
                 ['tourId', '=', $id],
                 ['isDeleted', '=', false],
-                ['status', '=', \App\Models\Webinar::STATUS_CONFIRMED],
+                ['isConfirmed', '=', true],
             ])
             ->groupBy('date')
             ->orderBy('date', 'ASC')
@@ -31,7 +31,7 @@ class EventsController extends Controller
                 ->where([
                     ['tourId', '=', $id],
                     ['isDeleted', '=', false],
-                    ['status', '=', \App\Models\Webinar::STATUS_CONFIRMED],
+                    ['isConfirmed', '=', true],
                 ])
                 ->whereRaw("Date(startAt) = ?", array($date->date))
                 ->orderBy('startAt', 'ASC')
@@ -42,7 +42,8 @@ class EventsController extends Controller
         $my_dates = DB::table('webinar')->where([
                 ['tourId', '=', $id],
                 ['registerBy', '=', $profile->id],
-                ['isDeleted', '=', false]
+                ['isDeleted', '=', false],
+                ['isConfirmed', '=', true],
             ])
             ->groupBy('date')
             ->orderBy('date', 'ASC')
@@ -52,7 +53,7 @@ class EventsController extends Controller
                 ->where([
                     ['tourId', '=', $id],
                     ['registerBy', '=', $profile->id],
-                    ['status', '=', \App\Models\Webinar::STATUS_CONFIRMED],
+                    ['isConfirmed', '=', true],
                     ['isDeleted', '=', false],
                 ])
                 ->whereRaw("Date(startAt) = ?", array($date->date))
@@ -86,7 +87,34 @@ class EventsController extends Controller
             'tag' => $tag
         ]);
     }
+    public function request($id, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+        $tag = $request->get('tag');
 
+        $webinars = \App\Models\Webinar::with('details','registrant')
+            ->where([
+                ['tourId', '=', $id],
+                ['isDeleted', '=', false],
+            ])
+            ->orderBy('startAt', 'ASC')
+            ->get();
+
+        $speakers = DB::table('tour_speaker')
+            ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
+            ->where('tour_speaker.tourId', $id)
+            ->select('profile.*')
+            ->get();
+
+        return view('administrator.events.request', [
+            'profile' => $profile , 
+            'tour'=>$tour, 
+            'webinars'=>$webinars, 
+            'speakers' => $speakers,
+            'tag' => $tag
+        ]);
+    }
     public function webinar($id, $webinarId)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
@@ -189,7 +217,7 @@ class EventsController extends Controller
     {
         $webinarId = $request->webinarId;
         $webinar = \App\Models\Webinar::find($webinarId);
-        $webinar->status = \App\Models\Webinar::STATUS_CONFIRMED;
+        $webinar->isConfirmed = true;
         $webinar->save();
         
         return true;
@@ -199,7 +227,7 @@ class EventsController extends Controller
     {
         $webinarId = $request->webinarId;
         $webinar = \App\Models\Webinar::find($webinarId);
-        $webinar->status = \App\Models\Webinar::STATUS_REJECTED;
+        $webinar->isConfirmed = false;
         $webinar->save();
         
         return true;

@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function (){
         
             // booths
             Route::get('/{id}/booths', 'administrator\BoothsController@index');
+            Route::get('/{id}/booths/requests', 'administrator\BoothsController@request');
             Route::get('/{id}/booths/booth', 'administrator\BoothsController@booth');
             Route::post('/{id}/booths/save-create', 'administrator\BoothsController@saveCreate');
             Route::post('/{id}/booths/save-edit', 'administrator\BoothsController@saveEdit');
@@ -76,6 +77,7 @@ Route::middleware('auth')->group(function (){
 
             // event
             Route::get('/{id}/events/webinars', 'administrator\EventsController@webinars');
+            Route::get('/{id}/events/webinars/requests', 'administrator\EventsController@request');
             Route::get('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@webinar');
             Route::post('/{id}/events/webinars/save-create', 'administrator\EventsController@saveCreate');
             Route::post('/{id}/events/webinars/save-edit', 'administrator\EventsController@saveEdit');

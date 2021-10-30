@@ -18,7 +18,6 @@
                             <th style="width: 40px;">
                                 <input class="checkbox-all form-check-input1 dt-checkboxes" type="checkbox" name="all">
                             </th>
-                            <th>#</th>
                             <th style="width: 6%;">Avatar</th>
                             <th>Name</th>
                             <th>Email</th>
@@ -29,9 +28,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            $number = 1;
-                        @endphp
                         @foreach ($speakers as $speaker)
                         <tr class="speaker-{{$speaker->id}}">
                             <td>
@@ -41,7 +37,6 @@
                                     <input class="form-check-input1 dt-checkboxes"  type="checkbox" style="opacity: 0.3" checked disabled>
                                 @endif
                             </td>
-                            <td style="text-align: center">{{$number++}}</td>
                             <td style="text-align: center">
                                 <div><img class="rounded-circle avatar-xs" src="{{$speaker->speaker->avatar != null ? $speaker->speaker->avatar : 'https://res.cloudinary.com/virtual-tour/image/upload/v1634539139/icons/default_avatar_k3wxez.png' }}" alt=""></div>
                             </td>
@@ -59,7 +54,7 @@
                                 @endif
                             </td>
                             <td class="btn-action-icon">
-                                <a href="/administrator/tours/1/speakers/{{$speaker->speaker->id}}/calendar"><i class="fas fa-calendar-week event"></i></a>
+                                <a href="/administrator/tours/1/speakers/{{$speaker->speaker->id}}/calendar"><i class="fas fa-calendar-week event text-primary"></i></a>
                                 @if($speaker->status == "unconfirmed")
                                 <i class="fas fa-pen edit" data-speaker-id="{{$speaker->speaker->id}}" data-speaker-name="{{$speaker->speaker->name}}" data-speaker-email="{{$speaker->speaker->email}}" data-speaker-contact="{{$speaker->speaker->contact}}" onclick="onOpenPopupEditSpeaker(this);"></i>
                                 <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
@@ -92,7 +87,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control form-control-user" id="name" placeholder="Enter speaker name" aria-describedby="inputGroupPrepend" required>
+                        <input type="text" name="name" autocomplete="off" class="form-control form-control-user" id="name" placeholder="Enter speaker name" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please enter speaker name
                         </div>
@@ -106,9 +101,9 @@
                     </div>
                     <div class="form-group">
                         <label for="name" class="form-label">Contact</label>
-                        <input type="tel" name="contact" class="form-control form-control-user" id="contact" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
+                        <input type="tel" name="contact" pattern="[0-9]{10}" class="form-control form-control-user" id="contact" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
-                            Please enter contact
+                            Please enter contact or wrong format
                         </div>
                     </div>
                     <div class="form-group messages-wrapper border" style="display: none">
@@ -135,7 +130,7 @@
                     <input id="popup-edit-speaker__id-hidden-input" type="hidden" name="id">
                     <div class="form-group">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control form-control-user" id="popup-edit-speaker__name-input" placeholder="Enter speaker name" aria-describedby="inputGroupPrepend" required>
+                        <input type="text" name="name" autocomplete="off" class="form-control form-control-user" id="popup-edit-speaker__name-input" placeholder="Enter speaker name" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please enter speaker name
                         </div>
@@ -149,9 +144,9 @@
                     </div>
                     <div class="form-group">
                         <label for="name" class="form-label">Contact</label>
-                        <input type="tel" name="contact" class="form-control form-control-user" id="popup-edit-speaker__contact-input" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
+                        <input type="tel" name="contact" pattern="[0-9]{10}" class="form-control form-control-user" id="popup-edit-speaker__contact-input" placeholder="Enter Contact" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
-                            Please enter contact
+                            Please enter contact or wrong format
                         </div>
                     </div>
                     <div class="form-group messages-wrapper border" style="display: none">
