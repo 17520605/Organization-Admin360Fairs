@@ -27,99 +27,172 @@
                         </div>
                     </div>
                     <div>
-                        <div id="card-object-wrapper" class="tab-body" data-tab="card" style="min-height: 400px">
+                        <div id="card-object-wrapper" class="tab-body" data-tab="card" style="min-height: 400px;margin-left: 2%;">
                             @foreach ($objects as $object)
-                            @if ($object->type == 'image')
-                            <div class="filtr-item" data-category="image" style="width: 25%; padding: 10px">
-                                <div class="card object-file-booth">
-                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                        <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                            <div class="image" style="height: 150px">
-                                                @if ($object->url != null || $object->url !='')
-                                                    <img class="border-image-bt" src="{{$object->url}}" alt="img" class="img-fluid">
-                                                @else
-                                                    <img class="border-image-bt" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634815623/error-404_ghj2tk.png" alt="img" class="img-fluid">
-                                                @endif
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">{{$object->name}}</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endif
-                            @if ($object->type == 'video')
-                            <div  class="filtr-item" data-category="video" style="width: 25%; padding: 10px">
-                                @if ($object->source == 'local')
-                                <div class="card object-file-booth">
-                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                        <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                            <div class="image" style="height: 150px">
-                                                <img src="" alt="img" class="img-fluid">
-                                            </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">{{$object->name}}</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                                @endif
-                                @if ($object->source == 'link')
-                                <div class="card object-file-booth">
-                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                        <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                            <div class="image" style="height: 150px">
-                                                <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
-                                                <div class="icon">
-                                                    <i class="fab fa-soundcloud"></i>
+                                @if ($object->type == 'image')
+                                    <div class="filtr-item" data-category="image" style="width: 24%; padding: 10px">
+                                        @if ($object->source == 'local')
+                                            <div class="card object-file-booth">
+                                                <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                        <div class="image" style="height: 150px">
+                                                            @if ($object->url != null || $object->url !='')
+                                                                <img class="border-image-bt" src="{{$object->url}}" alt="img" class="img-fluid">
+                                                            @else
+                                                                <img class="border-image-bt" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634815623/error-404_ghj2tk.png" alt="img" class="img-fluid">
+                                                            @endif
+                                                        </div>
+                                                        <div class="file-name">
+                                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                        </div>
+                                                    </a>
                                                 </div>
                                             </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">{{$object->name}}</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                                @endif
-                            </div>
-                            @endif
-                            @if ($object->type == 'audio')
-                            <div  class="filtr-item" data-category="audio" style="width: 25%; padding: 10px">
-                                <div class="card object-file-booth">
-                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                        <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                            <div class="image" style="height: 150px">
-                                                <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
-                                                <div class="icon">
-                                                    <i class="fab fa-soundcloud"></i>
+                                        @endif
+                                        @if ($object->source == 'link')
+                                            <div class="card object-file-booth">
+                                                <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                        <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
+                                                        <div class="image" style="height: 150px">
+                                                            @if ($object->url != null || $object->url !='')
+                                                                <img class="border-image-bt" src="{{$object->url}}" alt="img" class="img-fluid">
+                                                            @else
+                                                                <img class="border-image-bt" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634815623/error-404_ghj2tk.png" alt="img" class="img-fluid">
+                                                            @endif
+                                                        </div>
+                                                        <div class="file-name">
+                                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                        </div>
+                                                    </a>
                                                 </div>
                                             </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">{{$object->name}}</p>
-                                            </div>
-                                        </a>
+                                        @endif
                                     </div>
-                                </div>
-                            </div>
-                            @endif
-                            @if ($object->type == 'model')
-                            <div class="filtr-item" data-category="model" style="width: 25%; padding: 10px">
-                                <div class="card object-file-booth">
-                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                        <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                            <div class="image" style="height: 150px">
-                                                <model-viewer style="width: 100%; height: 150px;" src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
+                                @endif
+                                @if ($object->type == 'video')
+                                    <div  class="filtr-item" data-category="video" style="width: 24%; padding: 10px">
+                                        @if ($object->source == 'local')
+                                            <div class="card object-file-booth">
+                                                <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                        <div class="image" style="height: 150px">
+                                                            <img src="" alt="img" class="img-fluid">
+                                                        </div>
+                                                        <div class="file-name">
+                                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div class="file-name">
-                                                <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                        @endif
+                                        @if ($object->source == 'link')
+                                            <div class="card object-file-booth">
+                                                <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                        <div class="image" style="height: 150px">
+                                                            <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
+                                                            <div class="icon">
+                                                                <i class="fas fa-film"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="file-name">
+                                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </a>
+                                        @endif
+                                        @if ($object->source == 'youtube')
+                                            <div class="card object-file-booth">
+                                                <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                        <div class="image" style="height: 150px">
+                                                            <i class="fab fa-youtube" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#FF0000 "></i>
+                                                            <div class="icon">
+                                                                <i class="fab fa-youtube" style="color: #FF0000"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="file-name">
+                                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
-                                </div>
-                            </div>
-                            @endif
-                        @endforeach
+                                @endif
+                                @if ($object->type == 'audio')
+                                    <div  class="filtr-item" data-category="audio" style="width: 24%; padding: 10px">
+                                        @if ($object->source == 'local')
+                                            <div class="card object-file-booth">
+                                            <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                    <div class="image" style="height: 150px">
+                                                        <div class="icon">
+                                                            <i class="fab fa-soundcloud" style="color: #F77300"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="file-name">
+                                                        <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        @endif
+                                        @if ($object->source == 'link')
+                                        <div class="card object-file-booth">
+                                            <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                    <div class="image" style="height: 150px">
+                                                        <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
+                                                        <div class="icon">
+                                                            <i class="fab fa-soundcloud" style="color: #F77300"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="file-name">
+                                                        <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
+                                @endif
+                                @if ($object->type == 'model')
+                                    <div class="filtr-item" data-category="model" style="width: 24%; padding: 10px">
+                                        @if ($object->source == 'local')
+                                            <div class="card object-file-booth">
+                                                <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                        <div class="image" style="height: 150px">
+                                                            <model-viewer style="width: 100%; height: 150px;" src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
+                                                        </div>
+                                                        <div class="file-name">
+                                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if ($object->source == 'link')
+                                            <div class="card object-file-booth">
+                                                <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                        <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
+                                                        <div class="image" style="height: 150px">
+                                                            <model-viewer style="width: 100%; height: 150px;" src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
+                                                        </div>
+                                                        <div class="file-name">
+                                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                         <div>
                             <div class="tab-body" data-tab="table" style="display: none; min-height: 400px">
@@ -239,7 +312,7 @@
                                                     @if ($object->type == 'video')
                                                     <tr>
                                                         <td style="width: 4%; text-align: center"> <i class="far fa-play-circle font-size-16 text-danger"></i></td>
-                                                        <td><a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="far fa-play-circle font-size-16 mr-2"></i> {{$object->name}}</a></td>
+                                                        <td><a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a></td>
                                                         <td>{{$object->source}}</td>
                                                         <td>{{$object->type}}</td>
                                                         <td>{{$object->format != null ? $object->format : 'N/A'}}</td>
@@ -271,7 +344,7 @@
                                                     @if ($object->type == 'audio')
                                                     <tr>
                                                         <td style="width: 4%; text-align: center"><i class="fas fa-music font-size-16 text-info"></i></td>
-                                                        <td><a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fas fa-music font-size-16 mr-2"></i> {{$object->name}}</a></td>
+                                                        <td><a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a></td>
                                                         <td>{{$object->source}}</td>
                                                         <td>{{$object->type}}</td>
                                                         <td>{{$object->format != null ? $object->format : 'N/A'}}</td>
@@ -303,7 +376,7 @@
                                                     @if ($object->type == 'model')
                                                     <tr>
                                                         <td style="width: 4%; text-align: center"><i class="fab fa-unity font-size-16 text-models"></i></td>
-                                                        <td><a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}"><i class="fab fa-unity font-size-16 mr-2"></i> {{$object->name}}</a></td>
+                                                        <td><a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a></td>
                                                         <td>{{$object->source}}</td>
                                                         <td>{{$object->type}}</td>
                                                         <td>{{$object->format != null ? $object->format : 'N/A'}}</td>
@@ -325,8 +398,6 @@
         <!-- /.container-fluid -->
     </section>
 </div>
-
-
 <script>
     $(document).ready(function () {
         var filterizr = $('#card-object-wrapper').filterizr({
