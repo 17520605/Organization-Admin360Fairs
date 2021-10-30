@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.speaker')
 
 @section('content')
     <link href="{{ asset('admin-master/asset/style/app.min.css')}}" rel="stylesheet" />

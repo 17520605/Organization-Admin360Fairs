@@ -145,11 +145,38 @@ Route::middleware('auth')->group(function (){
     });
 
     Route::group(['prefix' => 'speaker'], function(){
-        Route::get('/', 'speaker\ToursController@index');
-        Route::get('/calendar', 'speaker\CalendarController@index');
-        Route::get('/tours', 'speaker\ToursController@index');
-        Route::get('/tour/{id}', 'speaker\TourController@index');
-      
+        Route::get('/', 'speaker\ToursController@index');   
+        
+        Route::group(['prefix' => 'tours'], function(){
+            Route::get('/{id}', 'speaker\CalendarController@index');
+            Route::get('/{id}/calendar', 'speaker\CalendarController@index');
+
+            // speakers
+            Route::get('/{id}/speakers', 'speaker\SpeakersController@index');
+            Route::get('/{id}/speakers/{speakerId}/calendar', 'speaker\SpeakersController@calendar');
+            Route::post('/{id}/speakers/save-create', 'speaker\SpeakersController@saveCreate');
+            Route::post('/{id}/speakers/save-edit', 'speaker\SpeakersController@saveEdit');
+            Route::post('/{id}/speakers/import-csv', 'speaker\SpeakersController@importCsv');
+            Route::post('/{id}/speakers/check-import-csv', 'speaker\SpeakersController@checkImportCsv');
+            Route::post('/{id}/speakers/send-emails', 'speaker\SpeakersController@sendEmails');
+            Route::delete('/{id}/speakers/{speakerId}', 'speaker\SpeakersController@saveDelete');
+
+            // event
+            Route::get('/{id}/events/webinars', 'speaker\EventsController@webinars');
+            Route::get('/{id}/events/webinars/{webinarId}', 'speaker\EventsController@webinar');
+            Route::post('/{id}/events/webinars/{webinarId}/upload-documents', 'speaker\EventsController@uploadDocuments');
+            Route::post('/{id}/events/webinars/{webinarId}/choose-documents', 'speaker\EventsController@chooseDocuments');
+            Route::post('/{id}/events/webinars/{webinarId}/delete-document', 'speaker\EventsController@deleteDocument');
+            Route::post('/{id}/events/webinars/{webinarId}/save-edit-webinar-detail', 'speaker\EventsController@saveEditWebinarDetail');
+            // Route::post('/{id}/events/webinars/save-edit', 'speaker\EventsController@saveEdit');
+
+            // documents
+            Route::get('/{id}/documents', 'speaker\DocumentsController@index');
+            Route::post('/{id}/documents/save-create', 'speaker\DocumentsController@saveCreate');
+            Route::post('/{id}/documents/save-delete', 'speaker\DocumentsController@saveDelete');
+        });
+
+        
     });
    
     Route::group(['prefix' => 'profile'], function(){
