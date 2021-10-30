@@ -79,6 +79,8 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@webinar');
             Route::post('/{id}/events/webinars/save-create', 'administrator\EventsController@saveCreate');
             Route::post('/{id}/events/webinars/save-edit', 'administrator\EventsController@saveEdit');
+            Route::post('/{id}/events/webinars/save-approve', 'administrator\EventsController@saveApprove');
+            Route::post('/{id}/events/webinars/save-reject', 'administrator\EventsController@saveReject');
             Route::delete('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@saveDelete');
 
             // views
@@ -91,7 +93,8 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/interest', 'administrator\RequestController@index');
 
             // notification
-            Route::get('/{id}/notification/compose', 'administrator\NotificationController@index');
+            Route::get('/{id}/notifications', 'administrator\NotificationController@index');
+            Route::post('/{id}/notifications/save-create', 'administrator\NotificationController@saveCreate');
 
         }); 
     });
@@ -137,7 +140,6 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/events/webinars/save-edit', 'partner\EventsController@saveEdit');
             Route::delete('/{id}/events/webinars/{webinarId}', 'partner\EventsController@saveDelete');
 
-           
         }); 
 
     });

@@ -16,6 +16,7 @@ class EventsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
+        $tag = $request->get('tag');
 
         $all_dates = DB::table('webinar')->where([
                 ['tourId', '=', $id],
@@ -72,12 +73,13 @@ class EventsController extends Controller
             ->get();
 
         return view('partner.events.webinars', [
-            'profile' => $profile , 
-            'tour'=>$tour, 
+            'profile' => $profile ,
+            'tour'=>$tour,
             'all_dates' => $all_dates,
             'my_dates' => $my_dates,
             'webinars'=>$webinars, 
-            'speakers' => $speakers
+            'speakers' => $speakers,
+            'tag' => $tag
         ]);
     }
 
