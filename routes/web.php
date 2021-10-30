@@ -89,6 +89,9 @@ Route::middleware('auth')->group(function (){
             // interest
             Route::get('/{id}/interest', 'administrator\InterestController@index');
 
+            // request
+            Route::get('/{id}/interest', 'administrator\RequestController@index');
+
             // notification
             Route::get('/{id}/notifications', 'administrator\NotificationController@index');
             Route::post('/{id}/notifications/save-create', 'administrator\NotificationController@saveCreate');

@@ -81,7 +81,6 @@ class EventsController extends Controller
             'speakers' => $speakers,
             'tag' => $tag
         ]);
-
     }
 
     public function webinar($id, $webinarId)
@@ -138,7 +137,6 @@ class EventsController extends Controller
 
         return back();
     }
-
     public function saveEdit( Request $request)
     {
         $webinarId = $request->webinarId;

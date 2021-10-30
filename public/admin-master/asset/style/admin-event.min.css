@@ -13772,6 +13772,7 @@ img {
 
 .line-time .timeline .timeline-box-card:nth-child(even) .timeline-box .event-content {
     margin-left: 30px;
+    text-align: -webkit-left;
 }
 
 .line-time .timeline .timeline-box-card:nth-child(even) .timeline-box .event-content .timeline-text {
@@ -15255,15 +15256,23 @@ img {
 .hover-a-webinar {
     text-transform: uppercase;
     cursor: pointer;
-    font-weight: 800 !important;
+    font-weight: 600 !important;
     line-height: 10px;
-    color: #6c6e72;
+    margin-bottom: 10px;
+    color: #707070;
 }
 
 .hover-a-webinar:hover {
-    font-weight: 800 !important;
+    font-weight: 600 !important;
     line-height: 10px;
-    color: #1e70e4;
+    color: #727cf5 !important;
+}
+
+.host-line-webinar {
+    text-transform: none;
+    font-size: 12px;
+    font-weight: 600;
+    color: #727cf5 !important;
 }
 
 .border-image-bt {
@@ -15324,17 +15333,13 @@ select:focus {
     outline: none !important;
 }
 
-#tab-event-btn-card,
-#tab-event-btn-line,
-#tab-event-btn-line1 {
+.webinar-tab .tab-header-btn {
     background: #c5ccd6;
     border: none;
     font-size: 15px !important;
 }
 
-#tab-event-btn-card.active,
-#tab-event-btn-line.active,
-#tab-event-btn-line1.active {
+.webinar-tab .tab-header-btn.active {
     background: #4e73df;
     transform: scale(1.2);
 }

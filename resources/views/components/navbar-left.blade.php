@@ -114,10 +114,16 @@
         Persons
     </div>
     <li class="nav-item">
-        <a class="nav-link collapsed" href="/administrator/tours/{{$tour->id}}/viewer">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse12" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-users"></i>
             <span>Viewer</span>
         </a>
+        <div id="collapse12" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Custom Viewer:</h6>
+                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/viewer">Viewer</a>
+            </div>
+        </div>
     </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse10" aria-expanded="true" aria-controls="collapseTwo">
@@ -128,6 +134,18 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Interest:</h6>
                 <a class="collapse-item"  href="/administrator/tours/{{$tour->id}}/interest">Interest</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse11" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-check-double"></i>
+            <span>Request</span>
+        </a>
+        <div id="collapse11" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Custom Request:</h6>
+                <a class="collapse-item"  href="/administrator/tours/{{$tour->id}}/Request">Request</a>
             </div>
         </div>
     </li>
