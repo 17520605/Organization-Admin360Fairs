@@ -105,7 +105,7 @@
                                                     <tr>
                                                         <td class="font-weight-bold" colspan="5">
                                                             <span>{{$detail->title}}</span>
-                                                            <span style="ml-3">( <a href="">{{$detail->speaker->name}}</a> )</span>
+                                                            <span style="ml-3">( <a href="">{{$detail->speaker != null ? $detail->speaker->name : "N/A"}}</a> )</span>
                                                             @if ($detail->speaker != null && $detail->speaker->id == $profile->id)
                                                                 <span class="float-right" onclick="onOpenPopupAddDocuments({{$detail->id}})"><i class="fas fa-plus"></i>Add</span> 
                                                             @endif
