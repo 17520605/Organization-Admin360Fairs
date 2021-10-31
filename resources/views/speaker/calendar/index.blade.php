@@ -75,6 +75,13 @@
         </div>
     </div>
     <script>
+        function htmlToElements(html) {
+            var template = document.createElement('template');
+            template.innerHTML = html;
+            return template.content.childNodes;
+        }
+    </script>
+    <script>
         ! function(l) {
             "use strict";
 
@@ -92,28 +99,7 @@
                 this.$newEventData = null
             }
 
-            e.prototype.onEventClick = function(e) {
-                    // this.$formEvent[0].reset(),
-                    // this.$formEvent.removeClass("was-validated"),
-                    // this.$newEventData = null,
-                    // this.$btnDeleteEvent.show(),
-                    // this.$modalTitle.text("Edit Event"),
-                    // this.$modal.show(),
-                    // this.$selectedEvent = e.event,
-                    // l("#event-title").val(this.$selectedEvent.title),
-                    // l("#event-category").val(this.$selectedEvent.classNames[0])
-                },
-                // e.prototype.onSelect = function(e) {
-                //     this.$formEvent[0].reset(),
-                //         this.$formEvent.removeClass("was-validated"),
-                //         this.$selectedEvent = null,
-                //         this.$newEventData = e,
-                //         this.$btnDeleteEvent.hide(),
-                //         this.$modalTitle.text("Add New Event"),
-                //         this.$modal.show(),
-                //         this.$calendarObj.unselect()
-                // },
-                e.prototype.init = function() {
+            e.prototype.init = function() {
                     var e = new Date(l.now());
                     // new FullCalendar.Draggable(document.getElementById("external-events"), { itemSelector: ".external-event", eventData: function(e) { return { title: e.innerText, className: l(e).data("class") } } });
                     var t = [
@@ -122,16 +108,45 @@
                                     title: "{{$webinars[$i]->topic}}",
                                     start: '{{$webinars[$i]->startAt}}',
                                     end: '{{$webinars[$i]->endAt}}',
-                                    className: "webinar webinar-{{$webinars[$i]->id}} {{ Carbon\Carbon::now()->gt(Carbon\Carbon::parse($webinars[$i]->endAt)) ? 'bg-secondary' : (Carbon\Carbon::now()->lt(Carbon\Carbon::parse($webinars[$i]->startAt)) ? 'bg-warning' : 'bg-danger') }}"
+                                    className: "webinar webinar-{{$webinars[$i]->id}} {{ Carbon\Carbon::now()->gt(Carbon\Carbon::parse($webinars[$i]->endAt)) ? 'bg-secondary' : (Carbon\Carbon::now()->lt(Carbon\Carbon::parse($webinars[$i]->startAt)) ? 'bg-warning' : 'bg-danger') }}",
+                                    url: '/speaker/tours/{{$tour->id}}/events/webinars/{{$webinars[$i]->id}}',
+                                    extendedProps: {
+                                        'content' : `
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-5">
+                                                            <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-1" style="color: #4348dfb0;"></i><span>{{ $webinars[$i]->startAt != null ? Carbon\Carbon::parse($webinars[$i]->startAt)->format('M-d  h:m') : 'N/A'}}</span></h6>
+                                                        </div>
+                                                        <div class="col-2 mt-1"> to </div>
+                                                        <div class="col-5">
+                                                            <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-1" style="color: #4348dfb0;"></i><span>{{ $webinars[$i]->endAt != null ? Carbon\Carbon::parse($webinars[$i]->endAt)->format('M-d  h:m') : 'N/A'}}</span></h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 mt-1">
+                                                    @foreach($webinars[$i]->details as $detail)
+                                                        <a class='text-detail-webinar'>
+                                                            <i class='fas fa-check'></i>
+                                                            {{$detail->title}}
+                                                            @if($detail->speaker != null && $detail->speaker->id == $profile->id)
+                                                            <i class='ml-2 fas fa-user'></i>
+                                                            @endif
+                                                        </a><br>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        `
+                                    }
                                 }
                                 @if ($i < count($webinars) - 1) , @endif
                             @endfor
                         ],
                         a = this;
                     a.$calendarObj = new FullCalendar.Calendar(a.$calendar[0], {
-                            slotDuration: "00:15:00",
-                            slotMinTime: "06:00:00",
-                            slotMaxTime: "23:00:00",
+                            // slotDuration: "00:15:00",
+                            // slotMinTime: "06:00:00",
+                            // slotMaxTime: "23:00:00",
                             themeSystem: "bootstrap",
                             bootstrapFontAwesome: !1,
                             buttonText: {
@@ -152,40 +167,33 @@
                                 right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
                             },
                             initialEvents: t,
-                            editable: !0,
-                            droppable: !0,
+                            editable: 0,
+                            droppable: 0,
                             selectable: !0,
-                            dateClick: function(e) {
-                                a.onSelect(e)
-                            },
+                            // dateClick: function(e) {
+                            //     a.onSelect(e)
+                            // },
                             eventClick: function(e) {
-                                a.onEventClick(e)
-                            }
+                                
+                            },
+                            eventMouseEnter: function(info) {
+                                let start = info.event.start;
+                                let end = info.event.end;
+                                let title = info.event.title;
+                                let content = info.event.extendedProps.content;
+                                $(info.el).popover({
+                                    title: title,
+                                    placement:'top',
+                                    trigger : 'hover',
+                                    content: content,
+                                    container:'body',
+                                    html: true,
+                                    animation: true
+                                })
+                                .popover('show');
+                            },
                         }),
-                        a.$calendarObj.render() //,
-                        // a.$btnNewEvent.on("click", function(e) {
-                        //     a.onSelect({
-                        //         date: new Date,
-                        //         allDay: !0
-                        //     })
-                        // }),
-                        // a.$formEvent.on("submit", function(e) {
-                        //     e.preventDefault();
-                        //     var t, n = a.$formEvent[0];
-                        //     n.checkValidity() ? (a.$selectedEvent ? (a.$selectedEvent.setProp("title", l("#event-title")
-                        //         .val()), a.$selectedEvent.setProp("classNames", [l("#event-category")
-                        //     .val()])) : (t = {
-                        //         title: l("#event-title").val(),
-                        //         start: a.$newEventData.date,
-                        //         allDay: a.$newEventData.allDay,
-                        //         className: l("#event-category").val()
-                        //     }, a.$calendarObj.addEvent(t)), a.$modal.hide()) : (e.stopPropagation(), n.classList
-                        //         .add("was-validated"))
-                        // }),
-                        // l(a.$btnDeleteEvent.on("click", function(e) {
-                        //     a.$selectedEvent && (a.$selectedEvent.remove(), a.$selectedEvent = null, a.$modal
-                        //     .hide())
-                        // }))
+                        a.$calendarObj.render()
                 },
                 l.CalendarApp = new e, l.CalendarApp.Constructor = e
         }(window.jQuery),

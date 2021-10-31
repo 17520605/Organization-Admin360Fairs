@@ -23,7 +23,8 @@ class EventsController extends Controller
 
         $all_dates = DB::table('webinar')->where([
                 ['tourId', '=', $id],
-                ['isDeleted', '=', false]
+                ['isDeleted', '=', false],
+                ['isConfirmed', '=', true]
             ])
             ->groupBy('date')
             ->orderBy('date', 'ASC')
@@ -33,6 +34,7 @@ class EventsController extends Controller
                 ->where([
                     ['tourId', '=', $id],
                     ['isDeleted', '=', false],
+                    ['isConfirmed', '=', true]
                 ])
                 ->whereRaw("Date(startAt) = ?", array($date->date))
                 ->orderBy('startAt', 'ASC')
@@ -45,6 +47,7 @@ class EventsController extends Controller
             ->where([
                 ['tourId', '=', $id],
                 ['isDeleted', '=', false],
+                ['isConfirmed', '=', true],
                 ['webinar_detail.speakerId', '=', $profile->id],
             ])
             ->groupBy('date')
@@ -55,6 +58,7 @@ class EventsController extends Controller
                 ->where([
                     ['tourId', '=', $id],
                     ['isDeleted', '=', false],
+                    ['isConfirmed', '=', true]
                 ])
                 ->whereHas('details', function ($q) use($profile){
                     $q->where('speakerId', '=', $profile->id);
