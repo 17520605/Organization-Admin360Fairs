@@ -8,13 +8,6 @@
     </a>
     <!-- Divider -->
     <hr class="sidebar-divider my-0" />
-
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Interface
-    </div>
-
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item active">
         <a class="nav-link" href="/speaker/tours/{{$tour->id}}/calendar">
@@ -24,7 +17,10 @@
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider" />
-
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Events
+    </div>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsewebina" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-calendar-week"></i>
@@ -37,12 +33,9 @@
             </div>
         </div>
     </li>
-    <!-- Divider -->
-    <hr class="sidebar-divider" />
-
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsedocuments" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-calendar-week"></i>
+            <i class="fas fa-folder-open"></i>
             <span>Documents</span>
         </a>
         <div id="collapsedocuments" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
