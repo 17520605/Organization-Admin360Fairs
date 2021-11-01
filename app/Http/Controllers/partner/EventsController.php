@@ -20,7 +20,8 @@ class EventsController extends Controller
 
         $all_dates = DB::table('webinar')->where([
                 ['tourId', '=', $id],
-                ['isDeleted', '=', false]
+                ['isDeleted', '=', false],
+                ['isConfirmed', '=', true]
             ])
             ->groupBy('date')
             ->orderBy('date', 'ASC')
@@ -30,6 +31,7 @@ class EventsController extends Controller
                 ->where([
                     ['tourId', '=', $id],
                     ['isDeleted', '=', false],
+                    ['isConfirmed', '=', true]
                 ])
                 ->whereRaw("Date(startAt) = ?", array($date->date))
                 ->orderBy('startAt', 'ASC')
@@ -40,7 +42,8 @@ class EventsController extends Controller
         $my_dates = DB::table('webinar')->where([
                 ['tourId', '=', $id],
                 ['registerBy', '=', $profile->id],
-                ['isDeleted', '=', false]
+                ['isDeleted', '=', false],
+                ['isConfirmed', '=', true]
             ])
             ->groupBy('date')
             ->orderBy('date', 'ASC')
@@ -51,6 +54,7 @@ class EventsController extends Controller
                     ['tourId', '=', $id],
                     ['registerBy', '=', $profile->id],
                     ['isDeleted', '=', false],
+                    ['isConfirmed', '=', true]
                 ])
                 ->whereRaw("Date(startAt) = ?", array($date->date))
                 ->orderBy('startAt', 'ASC')
@@ -62,6 +66,7 @@ class EventsController extends Controller
             ->where([
                 ['tourId', '=', $id],
                 ['isDeleted', '=', false],
+                ['isConfirmed', '=', true]
             ])
             ->orderBy('startAt', 'ASC')
             ->get();
@@ -88,6 +93,7 @@ class EventsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
+
         $webinar = \App\Models\Webinar::with('details')
             ->where('id',$webinarId)
             ->first();
@@ -104,7 +110,12 @@ class EventsController extends Controller
             ->select('profile.*')
             ->get();
 
-        return view('partner.events.webinar', ['profile' => $profile , 'webinar' => $webinar, 'speakers'=> $speakers, 'tour'=>$tour]);
+        return view('partner.events.webinar', [
+            'profile' => $profile , 
+            'webinar' => $webinar, 
+            'speakers'=> $speakers, 
+            'tour'=>$tour
+        ]);
     }
 
     public function saveCreate($id, Request $request)

@@ -154,56 +154,59 @@
         </div>
         <div class="tag-body row card-event" style="display: none;" data-tag="card">
             @foreach ($webinars as $webinar)
-            @if ($webinar->registerBy == $profile->id)
-             {{-- WEBINAR CUA CHINH MINH --}}
-            <div class="col-lg-4 ">
-                <div class="card card-margin">
-                    <div class="card-header no-border">
-                        <h6 class="card-title" style="font-weight: 400">360 EVENT</h6>
-                        <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
-                    </div>
-                    <div class="card-body pt-0">
-                        <div class="widget-49">
-                            <div class="widget-49-title-wrapper">
-                                <div class="widget-49-date-primary">
-                                    <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
-                                    <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
+                @if ($webinar->registerBy == $profile->id)
+                {{-- WEBINAR CUA CHINH MINH --}}
+                <div class="col-lg-4 ">
+                    <div class="card card-margin">
+                        <div class="card-header no-border">
+                            <h6 class="card-title" style="font-weight: 400">360 EVENT</h6>
+                            <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="widget-49">
+                                <div class="widget-49-title-wrapper">
+                                    <div class="widget-49-date-primary">
+                                        <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
+                                        <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
+                                    </div>
+                                    <div class="widget-49-meeting-info">
+                                        <span class="widget-49-pro-title">{{$webinar->topic}}</span>
+                                        <span class="widget-49-meeting-time">{{Carbon\Carbon::parse($webinar->startAt)->format('h:m')}} to {{Carbon\Carbon::parse($webinar->endAt)->format('h:m')}}</span>
+                                    </div>
                                 </div>
-                                <div class="widget-49-meeting-info">
-                                    <span class="widget-49-pro-title">{{$webinar->topic}}</span>
-                                    <span class="widget-49-meeting-time">{{Carbon\Carbon::parse($webinar->startAt)->format('h:m')}} to {{Carbon\Carbon::parse($webinar->endAt)->format('h:m')}}</span>
+                                <ol class="widget-49-meeting-points">
+                                    @foreach ($webinar->details as $detail)
+                                    <li class="widget-49-meeting-item"><span>{{$detail->title}}</span></li>
+                                    @endforeach
+                                </ol>
+                                <div class="widget-49-meeting-action">
+                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn btn-sm btn-flash-border-primary">View All</a>
                                 </div>
-                            </div>
-                            <ol class="widget-49-meeting-points">
-                                @foreach ($webinar->details as $detail)
-                                <li class="widget-49-meeting-item"><span>{{$detail->title}}</span></li>
-                                @endforeach
-                            </ol>
-                            <div class="widget-49-meeting-action">
-                                <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn btn-sm btn-flash-border-primary">View All</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @else
-            <div class="col-lg-4 ">
-                <div class="card card-margin">
-                    <div class="card-header no-border">
-                        <h6 class="card-title" style="font-weight: 400">360 EVENT</h6>
-                        <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
-                    </div>
-                    <div class="card-body pt-0">
-                        <div class="widget-49">
-                            <div class="widget-49-title-wrapper">
-                                <div class="widget-49-date-primary">
-                                    <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
-                                    <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
+                @else
+                <div class="col-lg-4 ">
+                    <div class="card card-margin">
+                        <div class="card-header no-border">
+                            <h6 class="card-title" style="font-weight: 400">360 EVENT</h6>
+                            <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="widget-49">
+                                <div class="widget-49-title-wrapper">
+                                    <div class="widget-49-date-primary">
+                                        <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
+                                        <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-            </div>
+                </div>
+                @endif
+            @endforeach
         </div>
         <div class="tag-body row card-event" style="display: none;" data-tag="card">
             @foreach ($webinars as $webinar)

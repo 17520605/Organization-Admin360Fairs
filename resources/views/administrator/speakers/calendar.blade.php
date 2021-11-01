@@ -124,6 +124,7 @@
             }
 
             e.prototype.onEventClick = function(e) {
+                    let target = e.currentTarget;
                     // this.$formEvent[0].reset(),
                     // this.$formEvent.removeClass("was-validated"),
                     // this.$newEventData = null,
