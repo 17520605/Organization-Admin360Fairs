@@ -21,16 +21,17 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
+                    
                 <div class="card tabs">
                     <div class="card-header">
-                        <div class="tab-header" style="flex: 0 1 0%;">
-                            <div class="float-left tab-header-btn {{ $tab == null || $tab == 'timeline' ? 'active' : ''}}" data-tab="timeline">Timeline</div>
-                            <div class="float-right tab-header-btn {{ $tab == null || $tab == 'documents' ? 'active' : ''}}" data-tab="documents">Documents</div>
+                        <div class="tab-header webinar-tab" style="width: 100%; height: 40px; mb-2 ">
+                            <span class="tab-header-btn btn btn-primary float-left {{ $tab == null || $tab == 'timeline' ? 'active' : ''}}" data-tab="timeline"><i class="fas fa-calendar-check"></i></span>
+                            <span class="tab-header-btn btn btn-primary float-left {{ $tab == 'documents' ? 'active' : ''}}" data-tab="documents"><i class="fas fa-folder-open"></i></span>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row justify-content-center tab-body" data-tab="timeline" style="display: {{ $tab == null || $tab == 'timeline' ? 'block' : 'none'}}">
-                            <div class="col-xl-10">
+                            <div class="col-xl-12">
                                 <div class="timeline">
                                     <div class="timeline-container">
                                         <div class="timeline-end">
@@ -44,13 +45,14 @@
                                             <div class="row timeline-box-card">
                                                 <div class="col-md-6">
                                                     <div class="timeline-icon">
-                                                        <i class="fas fa-pen text-primary h2 mb-0" data-title="{{$detail->title}}" onclick="onOpenPopupEditWebinarDetail({{$detail->id}}, event)"></i>
+                                                        
                                                     </div>
                                                     <div class="timeline-box">
                                                         <div class="timeline-date bg-primary text-center rounded">
                                                             <h4 class="text-white mb-0"> {{$time->format('h')}}</h4>
                                                             <h5 class="text-white mb-0"> {{$time->format('m')}}'</h5>
                                                         </div>
+                                                        <button class="btn-edit-webinar-sp btn btn-primary btn-circle btn-sm"onclick="onOpenPopupEditWebinarDetail({{$detail->id}}, event)"><i  class=" fas fa-pen" data-title="{{$detail->title}}" ></i></button>
                                                         <div class="event-content">
                                                             <div class="timeline-text">
                                                                 <h3 class="font-size-17"> {{$detail->speaker != null ? $detail->speaker->name : "N/A"}}</h3>
@@ -84,77 +86,78 @@
                             </div>
                         </div>
                         <div class="row justify-content-center tab-body" data-tab="documents" style="display: {{$tab == 'documents' ? 'block' : 'none'}}">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        Documents
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table align-middle table-nowrap table-hover mb-0 table">
-                                                <thead>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="border: 1px">
+                                        <thead>
+                                            <tr style="background: #eef2f7">
+                                                <th style="3% ;text-align:center">#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Date modified</th>
+                                                <th scope="col">Size</th>
+                                                <th scope="col" style="text-align: center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>    
+                                            @foreach ($webinar->details as $detail)
+                                            <tr>
+                                                <td class="font-weight-bold" style="line-height: 35px;background: #eaecf4 " colspan="5">
+                                                    <span>{{$detail->title}}</span>
+                                                    <span style="ml-3">( <a href="" class="text-primary font-weight-bold">{{$detail->speaker->name}}</a> )</span>
+                                                    @if ($detail->speaker != null && $detail->speaker->id == $profile->id)
+                                                        <button class="mb-0 btn float-right btn-add-document active "  onclick="onOpenPopupAddDocuments({{$detail->id}})"><i class="fas fa-plus"></i> Add documnet </button>
+                                                    @endif
+                                                </td>  
+                                            </tr>
+                                                @if (count($detail->documents) == 0)
+                                                <tr>
+                                                    <td colspan="5" style="text-align: center">There are no documents</td>  
+                                                </tr>
+                                                @else
+                                                    @foreach ($detail->documents as $document)
                                                     <tr>
-                                                        <th scope="col">Name</th>
-                                                        <th scope="col">Date modified</th>
-                                                        <th scope="col">Size</th>
-                                                        <th scope="col">Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>    
-                                                    @foreach ($webinar->details as $detail)
-                                                    <tr>
-                                                        <td class="font-weight-bold" colspan="5">
-                                                            <span>{{$detail->title}}</span>
-                                                            <span style="ml-3">( <a href="">{{$detail->speaker->name}}</a> )</span>
+                                                        <td style="font-size: 20px">
+                                                            @if (in_array($document->format, array('docx')))
+                                                                <i class="fas fa-file-word" style=" color: #2B5796;"></i>
+                                                            @elseif (in_array($document->format, array('pdf')))
+                                                                <i class="fas fa-file-pdf" style=" color: #B11B1E;"></i>
+                                                            @elseif (in_array($document->format, array('pptx')))
+                                                                <i class="fas fa-file-powerpoint" style=" color: #D04526;"></i>
+                                                            @elseif (in_array($document->format, array('csv')))
+                                                                <i class="fas fa-file-csv" style=" color: #1E7145;"></i>
+                                                            @elseif (in_array($document->format, array('html')))
+                                                                <i class="fas fa-file-code" style=" color: #6F357D;"></i>
+                                                            @elseif (in_array($document->format, array('txt')))
+                                                                <i class="fas fa-file-alt" style=" color: #056BE1;"></i>
+                                                            @else 
+                                                                <i class="fas fa-file" style=" color: #be4bdb;"></i>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <a class="text-dark fw-medium">
+                                                                {{$document->name}}
+                                                            </a>
+                                                        </td>
+                                                        <td>{{$document->created_at}}</td>
+                                                        <td>{{$document->size != null ? strval(number_format(floatval($document->size)/(1048576), 1)).' MB' : 'N/A'}}</td>   
+                                                        <td class="btn-action-icon">
+                                                            <i class="fas fa-download edit"></i>
                                                             @if ($detail->speaker != null && $detail->speaker->id == $profile->id)
-                                                                <span class="float-right" onclick="onOpenPopupAddDocuments({{$detail->id}})"><i class="fas fa-plus"></i>Add</span> 
+                                                            <i onclick="onDeleteDocument({{$detail->id}}, {{$document->id}})" class="fas fa-trash-alt delete"></i>
                                                             @endif
                                                         </td>  
                                                     </tr>
-                                                        @if (count($detail->documents) == 0)
-                                                        <tr>
-                                                            <td colspan="5" style="text-align: center">There are no documents</td>  
-                                                        </tr>
-                                                        @else
-                                                            @foreach ($detail->documents as $document)
-                                                            <tr>
-                                                                <td>
-                                                                    <a class="text-dark fw-medium">
-                                                                        @if (in_array($document, array('docx, doc')))
-                                                                            <i class="fas fa-docx mr-2"></i> 
-                                                                        @elseif (in_array($document, array('pdf')))
-                                                                            <i class="fas fa-pdf mr-2"></i> 
-                                                                        @else
-                                                                            <i class="fas fa-file-code font-size-16 align-middle text-primary mr-2"></i> 
-                                                                        @endif
-                                                                        {{$document->name}}
-                                                                    </a>
-                                                                </td>
-                                                                <td>{{$document->created_at}}</td>
-                                                                <td>{{$document->size != null ? strval(number_format(floatval($document->size)/(1048576), 1)).' MB' : 'N/A'}}</td>   
-                                                                <td class="btn-action-icon">
-                                                                    <i class="fas fa-download edit"></i>
-                                                                    @if ($detail->speaker != null && $detail->speaker->id == $profile->id)
-                                                                    <i onclick="onDeleteDocument({{$detail->id}}, {{$document->id}})" class="fas fa-trash-alt delete"></i>
-                                                                    @endif
-                                                                </td>  
-                                                            </tr>
-                                                            @endforeach
-                                                        @endif  
                                                     @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div> 
+                                                @endif  
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end card body -->
                 </div>
-                <!-- end card -->
             </div>
-            <!-- end col -->
         </div>
     </div>
     {{-- POPUP ADD DOCUMENT --}}
@@ -166,7 +169,7 @@
                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body tabs">
-                    <div class="row tab-header">
+                    <div class="row tab-header" style="text-align: center">
                         <div class="col-6 tab-header-btn active" data-tab="upload">Upload New Documents</div>
                         <div class="col-6 tab-header-btn" data-tab="choose">Choose Existing Documents</div>
                     </div>
@@ -196,18 +199,34 @@
                         </div> 
                     </div>
                     <div class="modal-body tab-body" data-tab="choose" style="display: none;">
-                        <div class="card">
-                            <form id="popup-add-documents__choose-form" class="row p-3" style="max-height: 500px; overflow-y: scroll;">
+                        <div class="card p-2">
+                            <form id="popup-add-documents__choose-form" class="row" style="max-height: 500px; overflow-y: scroll;    overflow-x: hidden;">
                                 @csrf
                                 <input type="hidden" name="webinarDetailId">
                                 @foreach ($documents as $document)
-                                <label class="col-12 m-2" for="popup-add-documents__checkbox-{{$document->id}}">
+                                <label class="col-12" for="popup-add-documents__checkbox-{{$document->id}}">
                                     <div class="card p-2">
                                         <div class="row">
                                             <div class="col-1">
-                                                <input id="popup-add-documents__checkbox-{{$document->id}}" class="form-control" name="documentIds[]" type="checkbox" value="{{$document->id}}" style="width: 20px; height: 20px;">
+                                                <input id="popup-add-documents__checkbox-{{$document->id}}" class="form-control form-check-input1" name="documentIds[]" type="checkbox" value="{{$document->id}}" style="width: 20px; height: 20px; margin-top: 5px">
                                             </div>
-                                            <div class="col-1"><i class="fas fa-file-code font-size-16 align-middle text-primary mr-2"></i></div>
+                                            <div class="col-auto" style="font-size: 20px">
+                                                @if (in_array($document->format, array('docx')))
+                                                    <i class="fas fa-file-word" style=" color: #2B5796;"></i>
+                                                @elseif (in_array($document->format, array('pdf')))
+                                                    <i class="fas fa-file-pdf" style=" color: #B11B1E;"></i>
+                                                @elseif (in_array($document->format, array('pptx')))
+                                                    <i class="fas fa-file-powerpoint" style=" color: #D04526;"></i>
+                                                @elseif (in_array($document->format, array('csv')))
+                                                    <i class="fas fa-file-csv" style=" color: #1E7145;"></i>
+                                                @elseif (in_array($document->format, array('html')))
+                                                    <i class="fas fa-file-code" style=" color: #6F357D;"></i>
+                                                @elseif (in_array($document->format, array('txt')))
+                                                    <i class="fas fa-file-alt" style=" color: #056BE1;"></i>
+                                                @else 
+                                                    <i class="fas fa-file" style=" color: #be4bdb;"></i>
+                                                @endif
+                                            </div>
                                             <div class="col-9" style="text-align: left;">{{$document->name}}</div>
                                         </div>
                                     </div>
@@ -223,7 +242,6 @@
             </div>
         </div>
     </div>
-
     {{-- POPUP EDIT WEBINAR DETAIL --}}
     <div class="modal fade" id="popup-edit-webinar-detail" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -289,33 +307,44 @@
                     data.append( i, file);
 
                     let ext = file.name.split('.').pop();
-                    let icon = '<i class="fas fa-file"></i>';
+                    let icon = '<i class="fas fa-file" style=" color: #be4bdb;"></i>';
 
                     switch (ext) {
                         case 'pdf':
-                            icon = '<i class="fas fa-pdf"></i>';
+                            icon = '<i class="fas fa-file-pdf" style=" color: #B11B1E;"></i>';
                             break;
                         case 'docx':
-                            icon = '<i class="fas fa-docx"></i>';
+                            icon = '<i class="fas fa-file-word" style=" color: #2B5796;"></i>';
+                            break;
+                        case 'pptx':
+                            icon = '<i class="fas fa-file-powerpoint" style=" color: #D04526;"></i>';
+                            break;
                         case 'txt':
-                            icon = '<i class="fas fa-txt"></i>';
+                            icon = '<i class="fas fa-file-alt" style=" color: #056BE1;"></i>';
+                            break;
+                        case 'csv':
+                            icon = '<i class="fas fa-file-csv" style=" color: #1E7145;"></i>';
+                            break;
                         case 'jpg':
-                            icon = '<i class="fas fa-jpg"></i>';
+                            icon = '<i class="fas fa-file-image" style=" color: #183153;"></i>';
                             break;
                         case 'mp4':
-                            icon = '<i class="fas fa-mp4"></i>';
+                            icon = '<i class="fas fa-file-video" style=" color: #183153;"></i>';
+                            break;
+                        case 'html':
+                            icon = '<i class="fas fa-file-code" style=" color: #6F357D;"></i>';
                             break;
                         default:
                             break;
                     }
 
                     let elm = $(`
-                        <div class="col-6 document-item">
-                            <div class="card p-2">
+                        <div class="col-12 document-item mb-1">
+                            <div class="card p-3">
                                 <div class="row">
                                     <div class="col-1">`+ icon +`</div>
                                     <div class="col-10" style="text-align: left;">`+ file.name +`</div>
-                                    <div class="col-1">
+                                    <div class="col-1" style="padding:0;">
                                         <i class="fas fa-trash-alt" onclick="onRemoveUploadingDocument(`+ i +`, event)"></i>
                                     </div>
                                 </div>

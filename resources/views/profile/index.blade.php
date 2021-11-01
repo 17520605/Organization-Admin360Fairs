@@ -92,7 +92,7 @@
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="">Organization Email</label>
-                                            <input class="form-control" name="email" id="profile_business_edit_email" disabled type="email" placeholder="Enter Type Email" value="{{$profile->type == 'company' ? $profile->email : ''}}">
+                                            <input class="form-control" name="email" id="profile_business_edit_email" disabled type="email" placeholder="Enter Type Email" value="{{$profile->email}}">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="">Organization Phone</label>
@@ -137,11 +137,11 @@
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="">Email</label>
-                                            <input class="form-control" name="email" id="profile_personal_edit_email" type="email" placeholder="Enter Your Email" value="{{$profile->type == 'personal' ? $profile->email : ''}}">
+                                            <input class="form-control" name="email" id="profile_personal_edit_email" disabled type="email" placeholder="Enter Your Email" value="{{$profile->email}}">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="">Phone</label>
-                                            <input class="form-control" name="phone" id="profile_personal_edit_contact" type="tel" placeholder="Enter Your Phone" value="{{$profile->type == 'personal' ? $profile->contact : ''}}">
+                                            <input class="form-control" name="contact" id="profile_personal_edit_contact" type="tel" placeholder="Enter Your Phone" value="{{$profile->type == 'personal' ? $profile->contact : ''}}">
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">

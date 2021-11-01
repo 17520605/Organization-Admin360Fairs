@@ -23,7 +23,6 @@ class ProfileController extends Controller
         if($profile != null)
         {
             $profile->name = $request->name;
-            $profile->email = $request->email;
             $profile->contact = $request->contact;
             $profile->address = $request->address;
             $profile->website = $request->website;
