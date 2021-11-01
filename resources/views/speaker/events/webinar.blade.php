@@ -56,8 +56,8 @@
                                                         <div class="event-content">
                                                             <div class="timeline-text">
                                                                 <h3 class="font-size-17"> {{$detail->speaker != null ? $detail->speaker->name : "N/A"}}</h3>
-                                                                <h3 class="font-size-14"><i class="fas fa-check"></i> {{$detail->title}}</h3>
-                                                                <div>
+                                                                <h3 class=" text-primary" style="font-weight: 600 ; font-size: 20px"><i class="fas fa-hashtag"></i> {{$detail->title}}</h3>
+                                                                <div style="width: 115%;">
                                                                     {!! $detail->content !!}
                                                                 </div>
                                                             </div>
@@ -254,7 +254,7 @@
                             @csrf
                             <input type="hidden" name="webinarDetailId">
                             <div class="form-group">
-                                <input name="title" id="popup_create_notification__title-input" class="form-control" placeholder="Enter title of webinar detail">
+                                <input name="title" id="popup_create_notification__title-input" class="form-control" placeholder="Enter title of webinar detail" value="{{$detail->title}}">
                             </div>
                             <div class="form-group">
                                 <textarea id="compose-textarea" name="content" class="form-control" style="height: 300px" placeholder="Enter content">
@@ -271,10 +271,8 @@
             </div>
         </div>
     </div>
-
     <script>
         var data = new FormData();
-
         $(document).ready(function () {
             $('.tab-header-btn').click(function(){
                 let area = $(this).parents('.tabs');

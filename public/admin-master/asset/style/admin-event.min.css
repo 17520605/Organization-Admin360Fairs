@@ -15349,7 +15349,7 @@ select:focus {
     background: #727cf5;
     position: absolute;
     color: #FFF;
-    margin-left: 100%;
+    margin-left: 98%;
 }
 
 .btn-edit-webinar-sp:hover {
@@ -15381,4 +15381,8 @@ select:focus {
     border-bottom: 2px solid;
     font-weight: 800;
     color: #4e73df;
+}
+
+.sub-title {
+    margin: 10px 25px !important;
 }
