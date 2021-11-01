@@ -15371,3 +15371,14 @@ select:focus {
     background: #314c9c;
     color: #FFF;
 }
+
+.tab_upload_files .tab-header-btn {
+    color: #4e73df;
+    height: 37px;
+}
+
+.tab_upload_files .tab-header-btn.active {
+    border-bottom: 2px solid;
+    font-weight: 800;
+    color: #4e73df;
+}

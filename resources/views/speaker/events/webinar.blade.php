@@ -116,7 +116,7 @@
                                                 @else
                                                     @foreach ($detail->documents as $document)
                                                     <tr>
-                                                        <td style="font-size: 20px">
+                                                        <td style="font-size: 20px ;text-align: center">
                                                             @if (in_array($document->format, array('docx')))
                                                                 <i class="fas fa-file-word" style=" color: #2B5796;"></i>
                                                             @elseif (in_array($document->format, array('pdf')))
@@ -169,7 +169,7 @@
                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body tabs">
-                    <div class="row tab-header" style="text-align: center">
+                    <div class="row tab-header tab_upload_files" style="text-align: center">
                         <div class="col-6 tab-header-btn active" data-tab="upload">Upload New Documents</div>
                         <div class="col-6 tab-header-btn" data-tab="choose">Choose Existing Documents</div>
                     </div>
@@ -177,30 +177,28 @@
                         <div class="card">
                             <div>
                                 <div class="upload-box" style="display: block; width: 100%">
-                                    <div class="upload-text text-center" style="width: 100%">
-                                        <div class="upload-form border-dashed" style="height: 100%;">
-                                            <div class="ml-3"> 
-                                                <input type="file" hidden="" id="popup-add-documents__file-input" multiple>
-                                                <button type="button" id="popup-add-documents__upload-btn">Upload</button>
-                                                <div style="width: 100%">
-                                                    <div id="popup-add-documents__files-wrapper" class="row p-3">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <div class="dropify-wrapper upload-form-document">
+                                        <div class="dropify-message">
+                                            <i class="fas fa-upload" style="font-size: 40px;"></i>
+                                            <p>Drag and drop a file CV here or click</p>
                                         </div>
+                                        <div class="dropify-loader"></div>
+                                        <input type="file" class="dropify" id="popup-add-documents__file-input" multiple>
+                                    </div>
+                                    <div style="width: 100% ;display: none;" class="upload-form-preview" >
+                                        <div id="popup-add-documents__files-wrapper" class="row p-3"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <input type="hidden" name="webinarDetailId">
-                                <button id="popup-add-documents__upload-save-btn" type="button" class="btn btn-primary btn-block icon-loader-show"> <span class="loader-icon-btn"></span> Upload </button>
-                            </div>
                         </div> 
+                        <div class="mt-2" style="padding: 0">
+                            <input type="hidden" name="webinarDetailId">
+                            <button id="popup-add-documents__upload-save-btn" type="button" class="btn btn-primary btn-block icon-loader-show"> <span class="loader-icon-btn"></span> Upload </button>
+                        </div>
                     </div>
                     <div class="modal-body tab-body" data-tab="choose" style="display: none;">
                         <div class="card p-2">
-                            <form id="popup-add-documents__choose-form" class="row" style="max-height: 500px; overflow-y: scroll;    overflow-x: hidden;">
+                            <form id="popup-add-documents__choose-form" class="row" style="max-height: 400px; overflow-y: scroll;    overflow-x: hidden;">
                                 @csrf
                                 <input type="hidden" name="webinarDetailId">
                                 @foreach ($documents as $document)
@@ -234,7 +232,7 @@
                                 @endforeach
                             </form>
                         </div>
-                        <div class="row">
+                        <div class="mt-2" style="padding: 0">
                             <button id="popup-add-documents__choose-save-btn" type="button" class="btn btn-primary btn-block icon-loader-show"> <span class="loader-icon-btn"></span> Upload </button>
                         </div>
                     </div>
@@ -290,18 +288,14 @@
                 area.find('.tab-body[data-tab="'+tab+'"]').show();
             });
 
-            $('#popup-add-documents__upload-btn').click(function () {  
-                $('#popup-add-documents__file-input').trigger('click');
-            })
-
             $('#popup-add-documents__file-input').change(function () {  
 
                 let detailId = $('#popup-add-documents').find('input[type="hidden"][name="webinarDetailId"]').val();
                 data.append( 'webinarDetailId', detailId);
-
-                $('#popup-add-documents__upload-btn').hide();
+                $('#popup-add-documents').find('.upload-form-preview').show();
+                $('#popup-add-documents').find('.upload-form-document').hide();
                 $('#popup-add-documents__files-wrapper').empty();
-
+                
                 for (let i = 0; i < this.files.length; i++) {
                     const file = this.files[i];
                     data.append( i, file);
@@ -413,7 +407,8 @@
             }
 
             if($('#popup-add-documents__files-wrapper').children().length == 0){
-                $('#popup-add-documents__upload-btn').show();
+                $('#popup-add-documents').find('.upload-form-document').show();
+                $('#popup-add-documents').find('.upload-form-preview').hide();
             }
         };
 
