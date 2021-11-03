@@ -23,7 +23,7 @@
                                     </div>
                                     <div class="widget-49-meeting-action px-4 py-3 border-top" style="position: relative;">
                                         <li class="list-inline-item me-3" style="position: absolute;left: 0;"><i class="fas fa-calendar-check" style="color: #5462fc; margin-right: 5px; "></i> Date Mangager : {{$tour->startTime != null ? Carbon\Carbon::parse($tour->startTime)->format('Y-m-d') : 'N/A'}}</li>
-                                        <a class="btn btn-df" href="{{env('APP_URL')}}/speaker/tours/{{$tour->id}}" style="position: absolute; right: 0; top: 2rem;border-radius: 3px;"> Manager</a>
+                                        <a class="btn btn-df btn-page-loader" href="{{env('APP_URL')}}/speaker/tours/{{$tour->id}}" style="position: absolute; right: 0; top: 2rem;border-radius: 3px;"> Manager</a>
                                     </div>
                                 </div>
                             </div>

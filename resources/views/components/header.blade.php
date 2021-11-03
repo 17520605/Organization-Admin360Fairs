@@ -7,6 +7,7 @@
     <link href="{{ asset('admin-master/asset/style/bootstrap.css')}}" rel="stylesheet" />
     <link href="{{ asset('admin-master/asset/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
     <link href="{{ asset('admin-master/asset/style/tooltip.css')}}" rel="stylesheet" />
+    <link href="{{ asset('admin-master/asset/style/page-loader-wrapper.css')}}" rel="stylesheet" />
     <link href="{{ asset('admin-master/asset/style/dropify.min.css')}}" rel="stylesheet" />
     <link href="{{ asset('admin-master/asset/plugins/summernote/summernote-bs4.min.css')}}" rel="stylesheet">
     <link href="{{ asset('admin-master/asset/style/fullcalendar.min.css')}}" rel="stylesheet" />

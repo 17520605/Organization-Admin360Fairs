@@ -114,7 +114,7 @@
                                                         <div class="event-content">
                                                             <div class="timeline-text">
                                                                 @foreach ($date->webinars as $webinar)
-                                                                <a style="display: block" href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov" 
+                                                                <a style="display: block" href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov btn-page-loader" 
                                                                     data-toggle="popover" 
                                                                     title="{{$webinar->topic}}" 
                                                                     data-content=" 
