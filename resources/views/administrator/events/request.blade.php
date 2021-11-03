@@ -49,39 +49,39 @@
         <div class="tag-body row card-event" style="display: {{ $tag == 'card' ? 'block' : 'none'}};" data-tag="card">
             @foreach ($webinars as $webinar)
                 @if ($webinar->isConfirmed === null || $webinar->isConfirmed === 0)
-                <div class="col-lg-4 webinar-item" data-webinar-id="{{$webinar->id}}">
-                    <a class="card card-margin" href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}">
-                        <div class="card-header no-border">
-                            <h6 class="card-title text-primary" style="font-weight: 700">EVENT-{{$webinar->id}}</h6>
-                            <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="widget-49">
-                                <div class="widget-49-title-wrapper">
-                                    <div class="widget-49-date-primary">
-                                        <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
-                                        <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
+                    <div class="col-lg-4 webinar-item" data-webinar-id="{{$webinar->id}}">
+                        <a class="card card-margin" href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}">
+                            <div class="card-header no-border">
+                                <h6 class="card-title text-primary" style="font-weight: 700">EVENT-{{$webinar->id}}</h6>
+                                <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="widget-49">
+                                    <div class="widget-49-title-wrapper">
+                                        <div class="widget-49-date-primary">
+                                            <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
+                                            <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
+                                        </div>
+                                        <div class="widget-49-meeting-info">
+                                            <span class="widget-49-pro-title">{{$webinar->topic}}</span>
+                                            <span class="widget-49-meeting-time">{{Carbon\Carbon::parse($webinar->startAt)->format('h:m')}} to {{Carbon\Carbon::parse($webinar->endAt)->format('h:m')}}</span>
+                                        </div>
                                     </div>
-                                    <div class="widget-49-meeting-info">
-                                        <span class="widget-49-pro-title">{{$webinar->topic}}</span>
-                                        <span class="widget-49-meeting-time">{{Carbon\Carbon::parse($webinar->startAt)->format('h:m')}} to {{Carbon\Carbon::parse($webinar->endAt)->format('h:m')}}</span>
+                                    <ol class="widget-49-meeting-points">
+                                        @foreach ($webinar->details as $detail)
+                                        <li class="widget-49-meeting-item"><span>{{$detail->title}}</span></li>
+                                        @endforeach
+                                    </ol>
+                                    <div class="widget-49-meeting-action">
+                                        <div class="div_cardheader_btn" style="bottom: 1rem !important;top: auto;">
+                                            <button class="mb-0 btn float-right" onclick="onOpenPopupConfirmReject({{$webinar->id}})"> Reject </button>
+                                            <button class="mb-0 btn float-right active" onclick="onOpenPopupConfirmApprove({{$webinar->id}})"></i> Approve </button>
+                                        </div>                           
                                     </div>
-                                </div>
-                                <ol class="widget-49-meeting-points">
-                                    @foreach ($webinar->details as $detail)
-                                    <li class="widget-49-meeting-item"><span>{{$detail->title}}</span></li>
-                                    @endforeach
-                                </ol>
-                                <div class="widget-49-meeting-action">
-                                    <div class="div_cardheader_btn" style="bottom: 1rem !important;top: auto;">
-                                        <button class="mb-0 btn float-right" onclick="onOpenPopupConfirmReject({{$webinar->id}})"> Reject </button>
-                                        <button class="mb-0 btn float-right active" onclick="onOpenPopupConfirmApprove({{$webinar->id}})"></i> Approve </button>
-                                    </div>                           
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
                 @endif
             @endforeach
         </div>
