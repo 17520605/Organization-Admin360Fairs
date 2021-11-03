@@ -113,27 +113,52 @@ class ObjectsController extends Controller
 
     public function saveCreate($id, Request $request)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        
         $type = $request->type;
         $source = $request->source;
         $name = $request->name;
         $description = $request->description;
+        $file = $request->file('file');
         $url = $request->url;
-        $format = $request->format;
-        $width = $request->width;
-        $height = $request->height;
-        $size = $request->size;
+        $format = null;
+        $size = null;
+        $content = null;
 
-        $rs = DB::table('object')->insert([
+        if($source == 'local'){
+            if($request->hasFile('file')){
+                $res = cloudinary()->upload($file->getRealPath(), [
+                    'resource_type' => 'auto'
+                ])->getResponse();
+                $resObj = json_decode(json_encode($res));
+
+                $url = $resObj->url;
+                $format = $resObj->format;
+                $size = $resObj->bytes;
+
+                $content = new \stdClass();
+                $content->width = $resObj->width;
+                $content->height = $resObj->height;
+            }
+        }
+        else
+        if($source == 'link'){
+            if(str_starts_with($url, 'https://www.youtube.com/')){
+                $source = 'youtube';
+            }
+        }
+
+        $objectId = DB::table('object')->insertGetId([
             'tourId'=> $id,
-            'type' => $request->type,
-            'source' => $request->source,
-            'name' => $request->name,
-            'description' => $request->description,
-            'url' => $request->url,
-            'format' => $request->format,
-            'width' => $request->width,
-            'height' => $request->height,
-            'size' => $request->size
+            'ownerId'=> $profile->id,
+            'type' => $type,
+            'source' => $source,
+            'name' => $name,
+            'description' => $description,
+            'url' => $url,
+            'format' => $format,
+            'size' => $size,
+            'content' => $content != null ? json_encode($content) : null
         ]);
 
         return back();
