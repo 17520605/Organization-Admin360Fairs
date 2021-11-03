@@ -87,7 +87,7 @@
                                                 <td>3</td>
                                                 <td>3</td>
                                                 <td>  
-                                                    <a href="" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
+                                                    <a href="/booths/{{$booth->id}}" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
                                                 </td>
                                                 <td class="btn-action-icon">
                                                     <i class="fas fa-pen edit"></i>

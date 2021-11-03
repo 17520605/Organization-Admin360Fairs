@@ -37,7 +37,7 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href="" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
+                                    <a href="zones/{{$zone->id}}" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
                                 </td>
                                 <td class="btn-action-icon">
                                     <i class="fas fa-pen edit" data-zone-id="{{$zone->id}}" data-name="{{$zone->name}}" data-booths='@foreach ($zone->booths as $booth){"id":"{{$booth->id}}", "name":"{{$booth->name}}"};@endforeach' onclick="onOpenPopupEditZone(this);"></i>

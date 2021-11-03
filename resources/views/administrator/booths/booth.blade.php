@@ -360,7 +360,7 @@
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                         <a href="javascript:void(0);">
                                             <div class="image">
-                                                <img src="{{$image->url}}" alt="img" class="img-fluid">
+                                                <img src="{{$image->url}}" width="100%" alt="img" class="img-fluid">
                                             </div>
                                             <div class="file-name">
                                                 <p class="m-b-5 text-muted">{{$image->name}}</p>
@@ -482,7 +482,7 @@
                                 <h5 class="font-size-15 font-weight-bold text-primary">Models</h5>
                             </div>
                         </div>
-                        <div class="row" style="max-height: 450px; overflow-y: scroll;">
+                        <div class="row" style="max-height: 500px; overflow-y: scroll;">
                             @php
                                 $models = $objects->where('type', 'model')->all();
                             @endphp
@@ -509,7 +509,7 @@
         </div>
         <div class="row mb-3 tags-area">
             <div class="col-md-12">
-                <div class="card mb-4" style="height: 500px;">
+                <div class="card mb-4" style="max-height: 500px;">
                     <div class="card-header">
                         <span class="h5 font-weight-bold text-primary" style="margin: 0px">Views</span>
                         <div class="div_cardheader_btn">
@@ -563,7 +563,7 @@
         </div>
         <div class="row" style="margin-bottom: 1.5rem;">
             <div class="col-md-12">
-                <div class="card mb-4" style="height: 500px;">
+                <div class="card mb-4" style="max-height: 500px;">
                     <div class="card-header">
                         <span class="h5 font-weight-bold text-primary" style="margin: 0px">Interest</span>
                         <div class="div_cardheader_btn">
