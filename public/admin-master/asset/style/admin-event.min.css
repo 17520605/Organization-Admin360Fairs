@@ -15286,7 +15286,7 @@ img {
     margin-bottom: 10px;
 }
 
-.loader-icon-btn {
+.icon-loader-form {
     display: none;
     position: absolute;
     border: 5px solid #ffffff;
@@ -15299,7 +15299,7 @@ img {
     animation: spin 2s linear infinite;
 }
 
-.loader-delete-icon-btn {
+.icon-loader-form-delete {
     display: none;
     position: absolute;
     border: 5px solid #dd2828;

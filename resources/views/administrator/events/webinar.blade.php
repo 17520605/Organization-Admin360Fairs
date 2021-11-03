@@ -165,7 +165,7 @@
                             <textarea placeholder="Enter your tour description" class="form-control" name="description" rows="6"> {{$webinar->description}} </textarea>
                         </div>
                         <!-- Form Group (create account submit)-->
-                        <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-icon-loader"><span class="icon-loader-form"></span> Save Changes</button>
                     </form>
                 </div>
             </div>

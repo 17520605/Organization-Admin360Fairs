@@ -1,14 +1,12 @@
 @extends('layouts.partner')
-
 @section('content')
     <div class="container-fluid tags-wrapper">
         <h1 class="h3 text-gray-800"> <span id="page-title">All Events</span> <button class="btn btn-df" style="position: absolute; right: 1.5rem;" data-toggle="modal" data-target="#popup-create-webinar"><i class="fas fa-upload" style="margin-right: 8px;"></i> Add new event</button></h1>
         <div class="tab-header mb-3 webinar-tab" style="width: 100%; height: 40px; mb-2 ">
-            <span class="tab-header-btn btn btn-primary float-left" data-tag="card" data-name="All Events"><i class="fas fa-clone"></i></span>
             <span class="tab-header-btn btn btn-primary float-left active" data-tag="all" data-name="All Events"><i class="fas fa-stream"></i></span>
             <span class="tab-header-btn btn btn-primary float-left " data-tag="my" data-name="My Events"><i class="fab fa-accusoft"></i></span>
         </div>
-        <div class="tag-body row line-time" style="display: block;" data-tag="all">
+        <div class="tag-body row line-time" style="display: {{ $tag == null || $tag == 'all' ? 'block' : 'none'}};" data-tag="all">
             <div class="col-lg-12">
                     <div class="card-body">
                         <div class="row justify-content-center">
@@ -39,7 +37,7 @@
                                                                 @foreach ($date->webinars as $webinar)
                                                                 @if ($webinar->registerBy == $profile->id)
                                                                     {{-- WEBINAR CUA CHINH MINH --}}
-                                                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
+                                                                    <a href="/partner/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
                                                                         data-toggle="popover" 
                                                                         title="{{$webinar->topic}}" 
                                                                         data-content="
@@ -50,7 +48,7 @@
                                                                         data-html="true"><i class="fas fa-angle-right"></i> {{$webinar->topic}} <span class="host-line-webinar">(Host)</span>
                                                                     </a><br>
                                                                 @else
-                                                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
+                                                                    <a href="/partner/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
                                                                         data-toggle="popover" 
                                                                         title="{{$webinar->topic}}" 
                                                                         data-content="
@@ -87,7 +85,7 @@
                     </div>
             </div>
         </div>
-        <div class="tag-body row line-time" style="display: none;" data-tag="my">
+        <div class="tag-body row line-time" style="display: {{ $tag == 'my' ? 'block' : 'none'}}" data-tag="my">
             <div class="col-lg-12">
                     <div class="card-body">
                         <div class="row justify-content-center">
@@ -116,7 +114,7 @@
                                                         <div class="event-content">
                                                             <div class="timeline-text">
                                                                 @foreach ($date->webinars as $webinar)
-                                                                <a style="display: block" href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov" 
+                                                                <a style="display: block" href="/partner/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov btn-page-loader" 
                                                                     data-toggle="popover" 
                                                                     title="{{$webinar->topic}}" 
                                                                     data-content=" 
@@ -152,103 +150,9 @@
                     </div>
             </div>
         </div>
-        <div class="tag-body row card-event" style="display: none;" data-tag="card">
-            @foreach ($webinars as $webinar)
-                @if ($webinar->registerBy == $profile->id)
-                {{-- WEBINAR CUA CHINH MINH --}}
-                <div class="col-lg-4 ">
-                    <div class="card card-margin">
-                        <div class="card-header no-border">
-                            <h6 class="card-title" style="font-weight: 400">360 EVENT</h6>
-                            <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="widget-49">
-                                <div class="widget-49-title-wrapper">
-                                    <div class="widget-49-date-primary">
-                                        <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
-                                        <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
-                                    </div>
-                                    <div class="widget-49-meeting-info">
-                                        <span class="widget-49-pro-title">{{$webinar->topic}}</span>
-                                        <span class="widget-49-meeting-time">{{Carbon\Carbon::parse($webinar->startAt)->format('h:m')}} to {{Carbon\Carbon::parse($webinar->endAt)->format('h:m')}}</span>
-                                    </div>
-                                </div>
-                                <ol class="widget-49-meeting-points">
-                                    @foreach ($webinar->details as $detail)
-                                    <li class="widget-49-meeting-item"><span>{{$detail->title}}</span></li>
-                                    @endforeach
-                                </ol>
-                                <div class="widget-49-meeting-action">
-                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn btn-sm btn-flash-border-primary">View All</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @else
-                <div class="col-lg-4 ">
-                    <div class="card card-margin">
-                        <div class="card-header no-border">
-                            <h6 class="card-title" style="font-weight: 400">360 EVENT</h6>
-                            <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="widget-49">
-                                <div class="widget-49-title-wrapper">
-                                    <div class="widget-49-date-primary">
-                                        <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
-                                        <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-            @endforeach
-        </div>
-        <div class="tag-body row card-event" style="display: none;" data-tag="card">
-            @foreach ($webinars as $webinar)
-                @if ($webinar->status == null || $webinar->status == \App\Models\Webinar::STATUS_UNCONFIRM)
-                <div class="col-lg-4 ">
-                    <div class="card card-margin">
-                        <div class="card-header no-border">
-                            <h6 class="card-title" style="font-weight: 400">360 EVENT</h6>
-                            <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="widget-49">
-                                <div class="widget-49-title-wrapper">
-                                    <div class="widget-49-date-primary">
-                                        <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
-                                        <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
-                                    </div>
-                                    <div class="widget-49-meeting-info">
-                                        <span class="widget-49-pro-title">{{$webinar->topic}}</span>
-                                        <span class="widget-49-meeting-time">{{Carbon\Carbon::parse($webinar->startAt)->format('h:m')}} to {{Carbon\Carbon::parse($webinar->endAt)->format('h:m')}}</span>
-                                    </div>
-                                </div>
-                                <ol class="widget-49-meeting-points">
-                                    @foreach ($webinar->details as $detail)
-                                    <li class="widget-49-meeting-item"><span>{{$detail->title}}</span></li>
-                                    @endforeach
-                                </ol>
-                                <div class="widget-49-meeting-action">
-                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn btn-sm btn-flash-border-primary">Reject</a>
-                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn btn-sm btn-flash-border-primary">Approve </a>
-                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn btn-sm btn-flash-border-primary">View All</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-            @endforeach
-        </div>
     </div>
     @include('components.add_event')
-    {{-- POPUP DELETE PARTICIANT --}}
+    {{-- POPUP DELETE WEBINAR --}}
     <div class="modal fade" id="popup-confirm-delete-webinar" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
@@ -270,6 +174,50 @@
             </div>
         </div>
     </div>
+    {{-- POPUP CONFIRM APPROVE WEBINAR --}}
+    <div class="modal fade" id="popup-confirm-approve-webinar" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="popup-edit-webinar__form">
+                    <div class="modal-header">
+                        <h5 class="fw-light">Approve Webinar </h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <p>Do you really want to approve it?</p>
+                    </div>
+                    <div class="modal-footer" style="padding: 0">
+                        <input id="popup-confirm-approve-webinar__id-hidden-input" type="hidden">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="popup-confirm-approve-webinar__confirm-btn" type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- POPUP CONFIRM REJECT WEBINAR --}}
+    <div class="modal fade" id="popup-confirm-reject-webinar" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="popup-edit-webinar__form">
+                    <div class="modal-header">
+                        <h5 class="fw-light">Reject Webinar </h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <p>Do you really want to reject it?</p>
+                    </div>
+                    <div class="modal-footer" style="padding: 0">
+                        <input id="popup-confirm-reject-webinar__id-hidden-input" type="hidden">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="popup-confirm-reject-webinar__confirm-btn" type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script>
         function onOpenPopupDeleteWebinar(target){
             let webinarId = $(target).attr('data-webinar-id');
@@ -282,9 +230,9 @@
             $('#popup-confirm-delete-webinar__delete-btn').click(function (){
                 let id = $('#popup-confirm-delete-webinar__id-hidden-input').val();
                 if(id != null && id != ""){
-                    let ajax = $.ajax({
+                    $.ajax({
                         headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                         },
                         url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/" + id,
                         type: 'delete',
@@ -305,7 +253,6 @@
             let area = $(this).parents('.tags-wrapper');
             let tag = $(this).data('tag');
             let name = $(this).data('name');
-
             $('#page-title').text(name);
 
             area.find('.tab-header-btn').removeClass("active");

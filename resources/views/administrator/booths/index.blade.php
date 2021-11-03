@@ -152,8 +152,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer" style="padding: 0.75rem 0;">
-                        <button class="btn btn-block btn-df" type="submit">Create new booths</button>
+                    <div class="modal-footer" >
+                        <button class="btn btn-block btn-df btn-icon-loader" type="submit"><span class="icon-loader-form"></span> Create new booths</button>
                     </div>
                 </form>
             </div>

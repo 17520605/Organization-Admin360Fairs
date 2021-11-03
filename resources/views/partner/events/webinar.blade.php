@@ -91,7 +91,7 @@
             <!-- end col -->
         </div>
     </div>
-        <div class="modal fade" id="popup-edit-webinar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="popup-edit-webinar" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -165,13 +165,12 @@
                             <textarea placeholder="Enter your tour description" class="form-control" name="description" rows="6"> {{$webinar->description}} </textarea>
                         </div>
                         <!-- Form Group (create account submit)-->
-                        <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-icon-loader"><span class="icon-loader-form"></span> Save Changes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <script>
         function onOpenPopupEditWebinar(target){
             $('#popup-edit-webinar').modal('show');

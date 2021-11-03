@@ -81,7 +81,7 @@
                                 @endforeach
                             </div>
                             <div class="modal-footer"  style="padding: 0.85rem 0px;">
-                                <button type="submit" id="popup-create-zone__save-btn" class="btn btn-primary btn-block">Save Upload</button>
+                                <button type="submit" id="popup-create-zone__save-btn" class="btn btn-primary btn-block btn-icon-loader"><span class="icon-loader-form"></span> Save Upload</button>
                             </div>
                         </form>
                     </div>
@@ -125,7 +125,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer"  style="padding: 0.85rem 0px;">
-                                <button type="submit" id="popup-edit-zone__save-btn" data-zone-id="" class="btn btn-primary btn-block">Save Change</button>
+                                <button type="submit" id="popup-edit-zone__save-btn" data-zone-id="" class="btn btn-primary btn-block btn-icon-loader"> <span class="icon-loader-form"></span> Save Change</button>
                             </div>
                         </form>
                     </div>
@@ -149,7 +149,7 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-delete-zone__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-delete-zone__delete-btn" type="button" class="btn btn-danger">Delete</button>
+                        <button id="popup-confirm-delete-zone__delete-btn" type="button" class="btn btn-danger btn-icon-loader-delete"><span class="icon-loader-form-delete"></span> Delete</button>
                     </div>
                 </form>
             </div>

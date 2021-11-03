@@ -7,12 +7,19 @@
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$booth->name}}</h1>
                     <div class="div_cardheader_btn">
-                        <button class="mb-0 btn float-right active" ><i class="fas fa-globe"></i> Publish </button>
+                        @if ($booth->isConfirmed === NULL)
+                            <button class="mb-0 btn float-right active" ><i class="fas fa-globe"></i> Publish </button>
+                        @elseif ($booth->isConfirmed === 0)
+                            <button class="mb-0 btn float-right active" style="opacity: 0.6 !important;" disabled><i class="fas fa-globe"></i> Publish</button>
+                        @endif
                         <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-booth"><i class="fas fa-pen"></i> Edit</button>
                     </div>
                 </div>
             </div>
         </div>
+        @if ($booth->isConfirmed === 0)
+           <div class="mb-3 text-danger" style="width: 100%; text-align: center ;font-weight: 500">Sorry for the problem, please edit the content accordingly and resubmit the request to the organizers </div>
+        @endif
         <div class="row mb-3">
             <div class="col-md-5">
                 <div class="card" style="height: 270px">
@@ -34,13 +41,8 @@
                 <div class="card mt-3">
                     <div class="upload-box" style="display: {{$booth->logo == null ? 'block' : 'none'}}; max-height: 200px; height: 200px">
                         <div class="upload-text text-center">
-                            <div class="upload-form border-dashed" style="height: 165px;">
-                                <div class="m-4"> No Logo
-                                    {{-- <button type="button" id="upload-logo-btn" class="btn btn-outline-primary"> <i class="fas fa-upload " style="margin-right: 8px; "></i>
-                                        Upload Logo
-                                    </button>
-                                    <input type="file" id="upload-logo-file-input" style="display: none" accept="image/*"> --}}
-                                </div>
+                            <div class="upload-form border-dashed" style="height: 165px;line-height: 150px ;font-size: 40px;font-weight: 900;pointer-events: none">
+                              NO LOGO
                             </div>
                         </div>
                     </div>
@@ -533,7 +535,7 @@
         </div>
         <div class="row mb-3 tags-area">
             <div class="col-md-12">
-                <div class="card mb-4" style="height: 500px;">
+                <div class="card mb-4" style="max-height: 500px;">
                     <div class="card-header">
                         <span class="h5 font-weight-bold text-primary" style="margin: 0px">Views</span>
                         <div class="div_cardheader_btn">
@@ -587,7 +589,7 @@
         </div>
         <div class="row" style="margin-bottom: 1.5rem;">
             <div class="col-md-12">
-                <div class="card mb-4" style="height: 500px;">
+                <div class="card mb-4" style="max-height: 500px;">
                     <div class="card-header">
                         <span class="h5 font-weight-bold text-primary" style="margin: 0px">Interest</span>
                         <div class="div_cardheader_btn">
@@ -680,7 +682,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button id="popup-edit-booth__save-btn" class="btn btn-success" form="popup-edit-booth__form" type="submit">Save Change</button>
+                    <button id="popup-edit-booth__save-btn" class="btn btn-primary btn-block btn-icon-loader" form="popup-edit-booth__form" type="submit"><span class="icon-loader-form"></span> Save Change</button>
                 </div>
             </div>
         </div>
@@ -754,7 +756,7 @@
                                 </div>
                                 
                                 <div class="modal-footer"  style="padding: 0.85rem 0px;">
-                                    <button type="submit" id="popup-add-new-object__local-save-btn" class="btn btn-primary btn-block">Save Upload</button>
+                                    <button type="submit" id="popup-add-new-object__local-save-btn" class="btn btn-primary btn-block btn-icon-loader"><span class="icon-loader-form"></span> Save Upload</button>
                                 </div>
                             </form>
                             <form class="form-step2 object__upload-box needs-validation" action="/partner/tours/{{$tour->id}}/objects/save-create" method="POST"  style="display: none" novalidate>
@@ -801,7 +803,7 @@
                                     <textarea class="form-control" name="description" id="popup-add-new-object__link-description-input" rows="4" placeholder="Write a description"></textarea>
                                 </div>
                                 <div class="modal-footer" style="padding: 0.85rem 0px;">
-                                    <button type="submit" id="popup-add-new-object__link-save-btn" class="btn btn-primary btn-block">Save Upload</button>
+                                    <button type="submit" id="popup-add-new-object__link-save-btn" class="btn btn-primary btn-block btn-icon-loader"><span class="icon-loader-form"></span> Save Upload</button>
                                 </div>
                             </form>
                         </div>
@@ -939,7 +941,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="popup-add-exist-objects__save-btn" form="popup-add-exist-objects__form" class="btn btn-success" type="submit" disabled>Save Change</button>
+                    <button id="popup-add-exist-objects__save-btn" form="popup-add-exist-objects__form" class="btn btn-primary btn-block" type="submit" disabled>Save Change</button>
                 </div>
             </div>
         </div>

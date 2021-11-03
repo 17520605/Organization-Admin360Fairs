@@ -102,6 +102,7 @@ class BoothsController extends Controller
         $booth->name = $name;
         $booth->description =  $description;
         $booth->logo =  $logo;
+        $booth->isConfirmed = NULL;
         $booth->save();
 
         return back();

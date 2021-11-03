@@ -243,7 +243,7 @@
                                     @endforeach
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn" type="submit">Save Change</button>
+                                    <button class="btn btn-block btn-primary btn-icon-loader" type="submit"><span class="icon-loader-form"></span> Save Change</button>
                                 </div>
                             </form>
                         </div>

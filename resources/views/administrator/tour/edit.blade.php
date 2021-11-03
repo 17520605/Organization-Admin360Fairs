@@ -69,7 +69,7 @@
                             </form>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary" form="tour-form" type="submit">Save changes</button>
+                            <button class="btn btn-primary btn-block" form="tour-form" type="submit">Save changes</button>
                         </div>
                     </div>
                 </div>

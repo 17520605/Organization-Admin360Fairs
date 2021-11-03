@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.partner')
 @section('content')
     <div class="container-fluid tags-wrapper">
         <h1 class="h3 text-gray-800"> <span>Request Events</span></h1>
@@ -16,6 +16,7 @@
                                 <th>Topic event</th>
                                 <th>Requied by</th>
                                 <th>Date Request</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -30,6 +31,7 @@
                                     <td><a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="font-weight-bold text-primary">{{$webinar->topic}}</a></td>
                                     <td>{{$webinar->registrant != null ? $webinar->registrant->name : 'N/A'}}</td>
                                     <td>{{$webinar->created_at}}</td>
+                                    <td>status</td>
                                     <td>
                                         @if ($webinar->isConfirmed === 0)
                                             <span class="badge bg-danger">Reject</span>
@@ -73,10 +75,7 @@
                                         @endforeach
                                     </ol>
                                     <div class="widget-49-meeting-action">
-                                        <div class="div_cardheader_btn" style="bottom: 1rem !important;top: auto;">
-                                            <button class="mb-0 btn float-right" onclick="onOpenPopupConfirmReject({{$webinar->id}})"> Reject </button>
-                                            <button class="mb-0 btn float-right active" onclick="onOpenPopupConfirmApprove({{$webinar->id}})"></i> Approve </button>
-                                        </div>                           
+                                        Bị Từ Chối                      
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +102,7 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-delete-webinar__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-delete-webinar__delete-btn" type="button" class="btn btn-danger btn-icon-loader-delete"><span class="icon-loader-form-delete"></span> Delete</button>
+                        <button id="popup-confirm-delete-webinar__delete-btn" type="button" class="btn btn-danger">Delete</button>
                     </div>
                 </form>
             </div>
@@ -125,7 +124,7 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-approve-webinar__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-approve-webinar__confirm-btn " type="button" class="btn btn-primary btn-icon-loader-delete"><span class="icon-loader-form-delete" style="border: 5px solid #4e73df;"></span> Approve</button>
+                        <button id="popup-confirm-approve-webinar__confirm-btn" type="button" class="btn btn-primary">Approve</button>
                     </div>
                 </form>
             </div>
@@ -147,7 +146,7 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-reject-webinar__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-reject-webinar__confirm-btn" type="button" class="btn btn-danger btn-icon-loader-delete"><span class="icon-loader-form-delete"></span> Reject</button>
+                        <button id="popup-confirm-reject-webinar__confirm-btn" type="button" class="btn btn-danger">Reject</button>
                     </div>
                 </form>
             </div>

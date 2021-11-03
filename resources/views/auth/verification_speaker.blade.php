@@ -21,8 +21,8 @@
                                         <div class="form-group">
                                             <input type="text" name="code" class="form-control form-control-user" maxlength="6" placeholder="_ _ _ _ _ _" style="text-align: center;font-size: 20px;color: #222;">
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            <i class="fas fa-paper-plane" style="margin-right: 10px;"></i> Code verification
+                                        <button type="submit" class="btn btn-primary btn-user btn-block btn-icon-loader">
+                                           <span class="icon-loader-form"></span> <i class="fas fa-paper-plane" style="margin-right: 10px;"></i> Code verification
                                         </button>
                                         <hr>
                                         <div class="text-center">

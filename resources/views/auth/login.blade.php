@@ -31,8 +31,8 @@
                                                 <label class="custom-control-label" for="customCheck">Remember Me</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-page-loader btn-primary btn-user btn-block">
-                                          Login
+                                        <button type="submit" class="btn btn-page-loader btn-primary btn-user btn-block btn-icon-loader">
+                                            <span class="icon-loader-form"></span>  Login
                                         </button>
                                     </form>
                                     <hr>

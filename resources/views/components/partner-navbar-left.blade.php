@@ -40,6 +40,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Event types</h6>
                 <a class="collapse-item btn-page-loader" href="/partner/tours/{{$tour->id}}/events/webinars">Webinars</a>
+                <a class="collapse-item btn-page-loader" href="/partner/tours/{{$tour->id}}/events/webinars/requests">Requests <span class="badge bg-danger" style="float: right;">3</span></a>
             </div>
         </div>
     </li>

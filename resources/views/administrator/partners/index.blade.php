@@ -107,7 +107,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="submit">Save Change</button>
+                    <button class="btn btn-primary btn-block  btn-icon-loader" type="submit"><span class="icon-loader-form"></span> Save Change</button>
                 </div>
             </form>
         </div>
@@ -150,7 +150,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="submit">Save Change</button>
+                    <button class="btn btn-primary btn-block btn-icon-loader" type="submit"><span class="icon-loader-form"></span> Save Change</button>
                 </div>
             </form>
         </div>
@@ -171,7 +171,7 @@
                 </div>
                 <div class="modal-footer" style="padding: 0">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" id="popup-confirm-delete-partner__delete-btn">Delete</button>
+                    <button type="button" class="btn btn-danger btn-icon-loader-delete" id="popup-confirm-delete-partner__delete-btn"><span class="icon-loader-form-delete"></span> Delete</button>
                 </div>
             </form>
         </div>
@@ -201,7 +201,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="popup-import-csv__check-btn" class="btn btn-primary" type="submit">Check</button>
-                    <button id="popup-import-csv__save-btn" class="btn btn-primary" type="submit" style="display: none">Save Change</button>
+                    <button id="popup-import-csv__save-btn" class="btn btn-primary btn-block btn-icon-loader" type="submit" style="display: none"><span class="icon-loader-form"></span> Save Change</button>
                 </div>
             </form>
         </div>
@@ -223,7 +223,7 @@
             <div class="modal-footer">
                 <input id="popup-confirm-delete-partner__id-hidden-input" type="hidden">
                 <button class="btn" type="submit">Cancel</button>
-                <button id="popup-confirm-send-email__send-btn" class="btn btn-primary" type="submit">Send</button>
+                <button id="popup-confirm-send-email__send-btn" class="btn btn-primary  btn-icon-loader" type="submit"><span class="icon-loader-form"></span> Send</button>
             </div>
         </div>
     </div>

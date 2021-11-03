@@ -11,7 +11,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-md-5">
-                <div class="card" style="height: 270px">
+                <div class="card" style="height: 62%">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="flex-grow-1 overflow-hidden">
                             <h6 class="font-size-15 font-weight-bold">General information : </h6>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="card mt-3">
-                    <div class="upload-box" style="display: {{$booth->logo == null ? 'block' : 'none'}}; max-height: 200px; height: 200px">
+                    <div class="upload-box" style="display: {{$booth->logo == null ? 'block' : 'none'}}; max-height: 200px; height: 38%">
                         <div class="upload-text text-center">
                             <div class="upload-form border-dashed" style="height: 165px;">
                                 <div class="m-4"> No Logo
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="col-md-7 view_booth_panoles">
-                <div class="card" style="width: 100% ;height: 75%; padding:20px;">
+                <div class="card" style="width: 100% ;height: 450px; padding:20px;">
                     <div id="viewer-container" style="width: 100%; height: 100%;">
                     </div>
                     <div class="bg-config-overview">
@@ -239,7 +239,7 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card objects-card all-card" style="width: 100%; padding: 0.25rem;">
+                <div class="card objects-card all-card" style="width: 100%; height: 100%; padding: 0.25rem;">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="d-flex">
                             <div class="overflow-hidden">

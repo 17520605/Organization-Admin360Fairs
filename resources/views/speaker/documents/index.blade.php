@@ -108,7 +108,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="submit">Save Change</button>
+                    <button class="btn btn-primary btn-block btn-icon-loader" type="submit"><span class="icon-loader-form"></span> Save Change</button>
                 </div>
             </form>
         </div>
@@ -138,7 +138,7 @@
                             </div>
                         </div>
                         <div class="modal-footer" style="padding: 0.85rem 0px;">
-                            <button id="popup-create-documents__save-btn" class="btn btn-primary btn-block"><span class="loader-icon-btn"></span> Save New Upload</button>
+                            <button id="popup-create-documents__save-btn" class="btn btn-primary btn-block"><span class="icon-loader-form"></span> Save New Upload</button>
                         </div>
                     </div>
                 </div>

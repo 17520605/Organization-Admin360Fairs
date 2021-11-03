@@ -21,8 +21,8 @@
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Re-enter password">
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                             Create Password
+                                        <button type="submit" class="btn btn-primary btn-user btn-block btn-icon-loader">
+                                            <span class="icon-loader-form"></span> Create Password
                                         </button>
                                     </form>
                                 </div>

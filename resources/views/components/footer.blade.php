@@ -5,8 +5,3 @@
         </div>
     </div>
 </footer>
-<script>
-    $('.btn-page-loader').click(function(){
-        $('.page-loader-wrapper').show();
-    });
-</script>

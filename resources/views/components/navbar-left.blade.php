@@ -152,7 +152,7 @@
         <div id="collapse11" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Request:</h6>
-                <a class="collapse-item btn-page-loader"  href="/administrator/tours/{{$tour->id}}/Request">Request</a>
+                <a class="collapse-item btn-page-loader"  href="/administrator/tours/{{$tour->id}}/request">Request</a>
             </div>
         </div>
     </li>

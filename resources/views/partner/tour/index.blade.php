@@ -6,9 +6,6 @@
             <div class="col-md-12">
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$tour->name}}</h1>
-                    <div class="div_cardheader_btn">
-                        <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#"><i class="fas fa-globe"></i> Publish </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -74,40 +71,34 @@
                 <div class="card" style="width: 100%; height: 100%; padding:20px;">
                     <div id="viewer-container" style="width: 100%; height: 100%;">
                     </div>
-                    <div class="bg-config-overview">
-                        <a href="https://360fairs.com/" class="btn-config-overview ">
-                            <i class="fas fa-cog"></i>
-                            <span>Config</span>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
         <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead class="group-head">
-                        <tr style="background: #eef2f7;">
-                            <th style="text-align: center;width: 5%">#</th>
-                            <th style="width: 15%;">Name</th>
-                            <th style="width: 20%;">Owner</th>
-                            <th style="width: 15%;">Last change at</th>
-                            <th style="width: 10%;">Status</th>
-                            <th style="width: 8%;">Action</th>
-                        </tr>
-                    </thead>
-                    <tr style="background-color: #4e73dfcf !important; color:#fff;">
-                        <td colspan="8">
-                            <span style="float: left">*</span>
-                            <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
-                        </td>
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead class="group-head">
+                    <tr style="background: #eef2f7;">
+                        <th style="text-align: center;width: 5%">#</th>
+                        <th style="width: 15%;">Name</th>
+                        <th style="width: 20%;">Owner</th>
+                        <th style="width: 15%;">Last change at</th>
+                        <th style="width: 10%;">Status</th>
+                        <th style="width: 8%;">Action</th>
                     </tr>
-                    <tbody class="group-0" style="display: none" >
-                        <tr>
-                            <td colspan="10"><center><span>No booths</span></center></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                </thead>
+                <tr style="background-color: #4e73dfcf !important; color:#fff;">
+                    <td colspan="8">
+                        <span style="float: left">*</span>
+                        <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
+                    </td>
+                </tr>
+                <tbody class="group-0" style="display: none" >
+                    <tr>
+                        <td colspan="10"><center><span>No booths</span></center></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="modal fade" id="popup-edit-tour" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -144,7 +135,7 @@
                         <textarea name="description" placeholder="Enter your tour description" class="form-control" rows="6"> {{$tour->description}} </textarea>
                     </div>
                     <!-- Form Group (create account submit)-->
-                    <button type="submit" class="btn btn-primary btn-block">Update Edit Tour</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-icon-loader"><span class="icon-loader-form"></span> Update Edit Tour</button>
                 </form>
             </div>
         </div>

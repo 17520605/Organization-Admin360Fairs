@@ -9,5 +9,11 @@
         $('.btn-page-loader').click(function(){
             $('.page-loader-wrapper').show();
         });
+        $('.btn-icon-loader').click(function(){
+            $('.icon-loader-form').show();
+        });
+        $('.btn-icon-loader-delete').click(function(){
+            $('.icon-loader-form-delete').show();
+        });
     </script>
 </html>

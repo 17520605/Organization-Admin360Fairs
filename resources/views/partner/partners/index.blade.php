@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="submit">Save Change</button>
+                    <button class="btn btn-primary btn-block btn-icon-loader" type="submit"><span class="icon-loader-form"></span> Save Change</button>
                 </div>
             </form>
         </div>
@@ -155,7 +155,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="submit">Save Change</button>
+                    <button class="btn btn-primary btn-block btn-icon-loader" type="submit"><span class="icon-loader-form"></span> Save Change</button>
                 </div>
             </form>
         </div>
@@ -206,7 +206,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="popup-import-csv__check-btn" class="btn btn-primary" type="submit">Check</button>
-                    <button id="popup-import-csv__save-btn" class="btn btn-primary" type="submit" style="display: none">Save Change</button>
+                    <button id="popup-import-csv__save-btn" class="btn btn-primary btn-block" type="submit" style="display: none">Save Change</button>
                 </div>
             </form>
         </div>
@@ -228,7 +228,7 @@
             <div class="modal-footer">
                 <input id="popup-confirm-delete-partner__id-hidden-input" type="hidden">
                 <button class="btn" type="submit">Cancel</button>
-                <button id="popup-confirm-send-email__send-btn" class="btn btn-primary" type="submit">Send</button>
+                <button id="popup-confirm-send-email__send-btn" class="btn btn-primary btn-block" type="submit">Send</button>
             </div>
         </div>
     </div>

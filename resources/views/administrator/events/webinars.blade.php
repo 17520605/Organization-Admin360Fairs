@@ -168,7 +168,7 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-delete-webinar__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-delete-webinar__delete-btn" type="button" class="btn btn-danger">Delete</button>
+                        <button id="popup-confirm-delete-webinar__delete-btn" type="button" class="btn btn-danger btn-icon-loader-delete"><span class="icon-loader-form-delete"></span> Delete</button>
                     </div>
                 </form>
             </div>
@@ -190,7 +190,7 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-approve-webinar__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-approve-webinar__confirm-btn" type="button" class="btn btn-danger">Delete</button>
+                        <button id="popup-confirm-approve-webinar__confirm-btn" type="button" class="btn btn-danger btn-icon-loader-delete"><span class="icon-loader-form-delete" style="border: 5px solid #4e73df;"></span> Approve</button>
                     </div>
                 </form>
             </div>
@@ -212,7 +212,7 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-reject-webinar__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-reject-webinar__confirm-btn" type="button" class="btn btn-danger">Delete</button>
+                        <button id="popup-confirm-reject-webinar__confirm-btn" type="button" class="btn btn-danger btn-icon-loader-delete"><span class="icon-loader-form-delete" ></span> Delete</button>
                     </div>
                 </form>
             </div>

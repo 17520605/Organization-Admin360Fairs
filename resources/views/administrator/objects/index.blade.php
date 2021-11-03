@@ -34,7 +34,7 @@
                                         @if ($object->source == 'local')
                                             <div class="card object-file-booth">
                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                    <a class="btn-page-loader" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                                         <div class="image" style="height: 150px">
                                                             @if ($object->url != null || $object->url !='')
                                                                 <img class="border-image-bt" src="{{$object->url}}" alt="img" class="img-fluid">
@@ -52,7 +52,7 @@
                                         @if ($object->source == 'link')
                                             <div class="card object-file-booth">
                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                    <a class="btn-page-loader" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                                         <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                                         <div class="image" style="height: 150px">
                                                             @if ($object->url != null || $object->url !='')
@@ -75,7 +75,7 @@
                                         @if ($object->source == 'local')
                                             <div class="card object-file-booth">
                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                    <a class="btn-page-loader" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                                         <div class="image" style="height: 150px">
                                                             <img src="" alt="img" class="img-fluid">
                                                         </div>
@@ -89,7 +89,7 @@
                                         @if ($object->source == 'link')
                                             <div class="card object-file-booth">
                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                    <a class="btn-page-loader" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                                         <div class="image" style="height: 150px">
                                                             <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                                             <div class="icon">
@@ -106,7 +106,7 @@
                                         @if ($object->source == 'youtube')
                                             <div class="card object-file-booth">
                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                    <a class="btn-page-loader" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                                         <div class="image" style="height: 150px">
                                                             <i class="fab fa-youtube" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#FF0000 "></i>
                                                             <div class="icon">
@@ -127,7 +127,7 @@
                                         @if ($object->source == 'local')
                                             <div class="card object-file-booth">
                                             <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                <a class="btn-page-loader" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                                     <div class="image" style="height: 150px">
                                                         <div class="icon">
                                                             <i class="fab fa-soundcloud" style="color: #F77300"></i>
@@ -143,7 +143,7 @@
                                         @if ($object->source == 'link')
                                         <div class="card object-file-booth">
                                             <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                <a class="btn-page-loader" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                                     <div class="image" style="height: 150px">
                                                         <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                                         <div class="icon">
@@ -164,7 +164,7 @@
                                         @if ($object->source == 'local')
                                             <div class="card object-file-booth">
                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                    <a class="btn-page-loader" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                                         <div class="image" style="height: 150px">
                                                             <model-viewer style="width: 100%; height: 150px;" src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
                                                         </div>
@@ -178,7 +178,7 @@
                                         @if ($object->source == 'link')
                                             <div class="card object-file-booth">
                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                    <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
+                                                    <a class="btn-page-loader" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
                                                         <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                                         <div class="image" style="height: 150px">
                                                             <model-viewer style="width: 100%; height: 150px;" src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
@@ -463,7 +463,7 @@
                                     </div>
                                     
                                     <div class="modal-footer"  style="padding: 0.85rem 0px;">
-                                        <button type="submit" id="popup-add-new-object__local-save-btn" class="btn btn-primary btn-block">Save Upload</button>
+                                        <button type="submit" id="popup-add-new-object__local-save-btn" class="btn btn-primary btn-block btn-icon-loader"> <span class="icon-loader-form"></span>  Save Upload</button>
                                     </div>
                                 </form>
                                 <form class="form-step2 object__upload-box needs-validation" action="/administrator/tours/{{$tour->id}}/objects/save-create" method="POST"  style="display: none" novalidate>
@@ -509,7 +509,7 @@
                                         <textarea class="form-control" name="description" id="popup-add-new-object__link-description-input" rows="4" placeholder="Write a description"></textarea>
                                     </div>
                                     <div class="modal-footer" style="padding: 0.85rem 0px;">
-                                        <button type="submit" id="popup-add-new-object__link-save-btn" class="btn btn-primary btn-block">Save Upload</button>
+                                        <button type="submit" id="popup-add-new-object__link-save-btn" class="btn btn-primary btn-block btn-icon-loader"> <span class="icon-loader-form"></span>  Save Upload</button>
                                     </div>
                                 </form>
                             </div>

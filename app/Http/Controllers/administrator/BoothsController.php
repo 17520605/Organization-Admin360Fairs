@@ -65,7 +65,6 @@ class BoothsController extends Controller
             $booths = \App\Models\Booth::whereHas('zone_booths', function ($q) use($zoneId){
                     $q->where('zoneId', '=', $zoneId);
                 })->get();
-
             $group->booths = $booths;
         }
 
@@ -89,6 +88,7 @@ class BoothsController extends Controller
             'partners'=> $partners,
         ]);
     }
+
     public function grantOwner($id, Request $request)
     {
         $boothId = $request->boothId;

@@ -122,9 +122,14 @@
         });
     </script>
     <script>
-        $('.icon-loader-show').click(function(){
-            $('.loader-icon-btn').show();
-            $('.loader-delete-icon-btn').show();
+        $('.btn-page-loader').click(function(){
+            $('.page-loader-wrapper').show();
+        });
+        $('.btn-icon-loader').click(function(){
+            $('.icon-loader-form').show();
+        });
+        $('.btn-icon-loader-delete').click(function(){
+            $('.icon-loader-form-delete').show();
         });
     </script>
     </body>

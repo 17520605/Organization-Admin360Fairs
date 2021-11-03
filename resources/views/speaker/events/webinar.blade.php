@@ -193,7 +193,7 @@
                         </div> 
                         <div class="mt-2" style="padding: 0">
                             <input type="hidden" name="webinarDetailId">
-                            <button id="popup-add-documents__upload-save-btn" type="button" class="btn btn-primary btn-block icon-loader-show"> <span class="loader-icon-btn"></span> Upload </button>
+                            <button id="popup-add-documents__upload-save-btn" type="button" class="btn btn-primary btn-block btn-icon-loader"> <span class="icon-loader-form"></span> Upload </button>
                         </div>
                     </div>
                     <div class="modal-body tab-body" data-tab="choose" style="display: none;">
@@ -233,7 +233,7 @@
                             </form>
                         </div>
                         <div class="mt-2" style="padding: 0">
-                            <button id="popup-add-documents__choose-save-btn" type="button" class="btn btn-primary btn-block icon-loader-show"> <span class="loader-icon-btn"></span> Upload </button>
+                            <button id="popup-add-documents__choose-save-btn" type="button" class="btn btn-primary btn-block btn-icon-loader"> <span class="icon-loader-form"></span> Upload </button>
                         </div>
                     </div>
                 </div>
@@ -263,7 +263,7 @@
                             </div>
                             <div class="row">
                                 <input type="hidden" name="webinarDetailId">
-                                <button id="popup-edit-webinar-detail__save-btn" type="button" class="btn btn-primary btn-block icon-loader-show"> <span class="loader-icon-btn"></span> Save </button>
+                                <button id="popup-edit-webinar-detail__save-btn" type="button" class="btn btn-primary btn-block btn-icon-loader"> <span class="icon-loader-form"></span> Save </button>
                             </div>
                         </form>
                     </div>

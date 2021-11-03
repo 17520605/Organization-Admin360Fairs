@@ -7,7 +7,7 @@
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$tour->name}}</h1>
                     <div class="div_cardheader_btn">
-                        <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#"><i class="fas fa-globe"></i> Publish </button>
+                        <button class="mb-0 btn float-right active btn-icon-loader"><span class="icon-loader-form"></span> <i class="fas fa-globe"></i> Publish </button>
                         <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-tour"><i class="fas fa-pen"></i> Edit</button>
                     </div>
                 </div>
@@ -264,7 +264,7 @@
                         <textarea name="description" placeholder="Enter your tour description" class="form-control" rows="6"> {{$tour->description}} </textarea>
                     </div>
                     <!-- Form Group (create account submit)-->
-                    <button type="submit" class="btn btn-primary btn-block icon-loader-show">  <span class="loader-icon-btn"></span> Update Edit Tour</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-icon-loader">  <span class="icon-loader-form"></span> Update Edit Tour</button>
                 </form>
             </div>
         </div>

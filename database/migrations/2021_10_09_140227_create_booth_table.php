@@ -23,6 +23,7 @@ class CreateBoothTable extends Migration
             $table->string('logo')->nullable();
             $table->dateTime('lastChangeAt');
             $table->string('status')->default('No owner');
+            $table->boolean('isConfirmed')->default(NULL);
             $table->timestamps();
         });
     }

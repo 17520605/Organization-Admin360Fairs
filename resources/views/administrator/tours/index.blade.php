@@ -67,7 +67,7 @@
                             <textarea name="description"  placeholder="Enter your tour description" class="form-control" rows="6"></textarea>
                         </div>
                         <!-- Form Group (create account submit)-->
-                        <button type="submit" class="btn btn-primary btn-block icon-loader-show"> <span class="loader-icon-btn"></span> Create New Tour</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-icon-loader"> <span class="icon-loader-form"></span> Create New Tour</button>
                     </form>
                 </div>
             </div>
