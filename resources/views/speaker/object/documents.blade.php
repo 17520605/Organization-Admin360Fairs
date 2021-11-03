@@ -10,7 +10,8 @@
                     There are currently no Document !
                 </div>
             @endif
-                @foreach ($documents as $document)
+                @foreach ($documents as $document) 
+
                 <div class="col-lg-3 col-md-4 col-sm-12">
                     <div class="card">
                         <div class="file">
