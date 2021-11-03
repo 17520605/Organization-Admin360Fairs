@@ -2,6 +2,7 @@
 <html lang="en">
     @include('components.header')
     <body id="page-top">
+        @include('components.page-loader')
         <!-- Page Wrapper -->
         <div id="wrapper">
             <!-- Sidebar -->
@@ -149,6 +150,11 @@
             $('.icon-loader-show').click(function(){
                 $('.loader-icon-btn').show();
                 $('.loader-delete-icon-btn').show();
+            });
+        </script>
+        <script>
+            $('.btn-page-loader').click(function(){
+                $('.page-loader-wrapper').show();
             });
         </script>
     </body>

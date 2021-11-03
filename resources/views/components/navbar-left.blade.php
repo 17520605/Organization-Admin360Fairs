@@ -1,6 +1,6 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/administrator/tours/{{$tour->id}}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center btn-page-loader" href="/administrator/tours/{{$tour->id}}">
         <div class="sidebar-brand-icon">
             <i class="fab fa-korvue"></i>
         </div>
@@ -12,7 +12,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/administrator/tours/{{$tour->id}}/dashboard">
+        <a class="nav-link btn-page-loader" href="/administrator/tours/{{$tour->id}}/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -28,20 +28,19 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="/administrator/tours/{{$tour->id}}">
-            <i class="fas fa-torii-gate"></i>
-            <span>Tour</span>
+        <a class="nav-link collapsed btn-page-loader" href="/administrator/tours/{{$tour->id}}">
+            <i class="fas fa-torii-gate"></i><span>Tour</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed"  href="#" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-building"></i>
             <span>Partners</span>
         </a>
         <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Partners:</h6>
-                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/partners">Partners</a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/partners">Partners</a>
             </div>
         </div>
     </li>
@@ -53,7 +52,7 @@
         <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Zones Manager </h6>
-                <a href="/administrator/tours/{{$tour->id}}/zones" class="collapse-item" >Zones</a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/zones">Zones</a>
             </div>
         </div>
     </li>
@@ -65,8 +64,8 @@
         <div id="collapse3-1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Booths Manager</h6>
-                <a href="/administrator/tours/{{$tour->id}}/booths" class="collapse-item" >Booths</a>
-                <a href="/administrator/tours/{{$tour->id}}/booths/requests" class="collapse-item" >Requests <span class="badge bg-danger" style="float: right;">3</span></a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/booths">Booths</a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/booths/requests">Requests <span class="badge bg-danger" style="float: right;">3</span></a>
             </div>
         </div>
     </li>
@@ -78,8 +77,8 @@
         <div id="collapsewebina" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Event types</h6>
-                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/events/webinars">Webinars</a>
-                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/events/webinars/requests">Requests <span class="badge bg-danger" style="float: right;">3</span></a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/events/webinars">Webinars</a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/events/webinars/requests">Requests <span class="badge bg-danger" style="float: right;">3</span></a>
             </div>
         </div>
     </li>
@@ -91,7 +90,7 @@
         <div id="collapsespeakers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Speakers</h6>
-                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/speakers/">Speakers</a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/speakers/">Speakers</a>
             </div>
         </div>
     </li>
@@ -109,13 +108,8 @@
         <div id="collapseresource" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"> Types </h6>
-                <a href="/administrator/tours/{{$tour->id}}/objects/dashboard" class="collapse-item">Dashboard</a>
-                <a href="/administrator/tours/{{$tour->id}}/objects" class="collapse-item">Object</a>
-                <a href="/administrator/tours/{{$tour->id}}/objects/images" class="collapse-item">Images</a>
-                <a href="/administrator/tours/{{$tour->id}}/objects/videos" class="collapse-item">Videos</a>
-                <a href="/administrator/tours/{{$tour->id}}/objects/audios" class="collapse-item">Audios</a>
-                <a href="/administrator/tours/{{$tour->id}}/objects/models" class="collapse-item">3D Model</a>
-                <a href="/administrator/tours/{{$tour->id}}/objects/documents" class="collapse-item">Documents</a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/objects/dashboard" >Dashboard</a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/objects">Object</a>
             </div>
         </div>
     </li>
@@ -134,7 +128,7 @@
         <div id="collapse12" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Viewer:</h6>
-                <a class="collapse-item" href="/administrator/tours/{{$tour->id}}/viewer">Viewer</a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/viewer">Viewer</a>
             </div>
         </div>
     </li>
@@ -146,7 +140,7 @@
         <div id="collapse10" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Interest:</h6>
-                <a class="collapse-item"  href="/administrator/tours/{{$tour->id}}/interest">Interest</a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/interest">Interest</a>
             </div>
         </div>
     </li>
@@ -158,7 +152,7 @@
         <div id="collapse11" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Request:</h6>
-                <a class="collapse-item"  href="/administrator/tours/{{$tour->id}}/Request">Request</a>
+                <a class="collapse-item btn-page-loader"  href="/administrator/tours/{{$tour->id}}/Request">Request</a>
             </div>
         </div>
     </li>
@@ -191,7 +185,7 @@
         <div id="collapse8" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Notifications:</h6>
-                <a class="collapse-item"  href="/administrator/tours/{{$tour->id}}/notification/compose">Notifications</a>
+                <a class="collapse-item btn-page-loader"  href="/administrator/tours/{{$tour->id}}/notification/compose">Notifications</a>
             </div>
         </div>
     </li>
