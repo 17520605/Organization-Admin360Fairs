@@ -58,7 +58,7 @@
                                 </td>
                                 <td>{{$freeBooth->lastChangeAt}}</td>
                                 <td>
-                                    <a href="/administrator/tours/{{$tour->id}}/booths/{{$freeBooth->id}}" class="btn-visit-now btn-page-loader" >Visit now <i class="fas fa-chevron-right"></i></a>
+                                    <a href="/administrator/tours/{{$tour->id}}/booths/{{$freeBooth->id}}" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
                                 </td>
                                 <td class="btn-action-icon">
                                     <i onclick="onGrantOwner({{$freeBooth->id}}, '{{$freeBooth->name}}', {{$freeBooth->owner->id}})" class="fa fa-user-shield user"></i>
@@ -86,7 +86,7 @@
                                 @foreach ($group->booths as $booth)
                                 <tr class="booth-{{$booth->id}}">
                                     <td style="text-align: center">{{$number++}}</td>
-                                    <td><a class="font-weight-bold text-primary btn-page-loader" href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}">{{$booth->name}}</a></td>
+                                    <td><a class="font-weight-bold text-primary" href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}">{{$booth->name}}</a></td>
                                     <td>
                                         @if ($booth->owner == null || $booth->owner->id == $profile->id)
                                             Host
@@ -104,7 +104,7 @@
                                     </td>
                                     <td>{{$booth->lastChangeAt}}</td>
                                     <td>
-                                        <a href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}" class="btn-page-loader btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
+                                        <a href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
                                     </td>
                                     <td class="btn-action-icon">
                                         <i onclick="onGrantOwner({{$booth->id}}, '{{$booth->name}}', {{$booth->owner->id}})" class="fa fa-user-shield user"></i>

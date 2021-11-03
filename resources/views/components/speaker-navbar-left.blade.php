@@ -1,6 +1,6 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center btn-page-loader" href="/speaker/tours/{{$tour->id}}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/speaker/tours/{{$tour->id}}">
         <div class="sidebar-brand-icon">
             <i class="fab fa-korvue"></i>
         </div>
@@ -10,7 +10,7 @@
     <hr class="sidebar-divider my-0" />
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item active">
-        <a class="nav-link btn-page-loader" href="/speaker/tours/{{$tour->id}}/calendar">
+        <a class="nav-link" href="/speaker/tours/{{$tour->id}}/calendar">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Calendar</span>
         </a>
@@ -29,7 +29,7 @@
         <div id="collapsewebina" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Event types</h6>
-                <a class="collapse-item btn-page-loader" href="/speaker/tours/{{$tour->id}}/events/webinars">Webinars</a>
+                <a class="collapse-item" href="/speaker/tours/{{$tour->id}}/events/webinars">Webinars</a>
             </div>
         </div>
     </li>
@@ -40,8 +40,8 @@
         </a>
         <div id="collapsedocuments" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Documents types</h6>
-                <a class="collapse-item btn-page-loader" href="/speaker/tours/{{$tour->id}}/documents">Documents</a>
+                <h6 class="collapse-header">Event types</h6>
+                <a class="collapse-item" href="/speaker/tours/{{$tour->id}}/documents">Documents</a>
             </div>
         </div>
     </li>
@@ -60,7 +60,7 @@
         <div id="collapse8" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Notifications:</h6>
-                <a class="collapse-item btn-page-loader" href="buttons.html">Notifications</a>
+                <a class="collapse-item" href="buttons.html">Notifications</a>
             </div>
         </div>
     </li>

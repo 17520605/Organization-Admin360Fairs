@@ -3,6 +3,7 @@
 @section('content')
 <div class="container-fluid gallery">
     <!-- Page Heading -->
+    <!-- DataTales Example -->
     <section class="content">
         <div class="card">
             <div class="card-header">
@@ -394,9 +395,9 @@
                 </div>
             </div>
         </div>
+        <!-- /.container-fluid -->
     </section>
 </div>
-
 <script>
     // validate form
     (function () {

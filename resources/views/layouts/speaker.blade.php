@@ -2,7 +2,6 @@
 <html lang="en">
     @include('components.header')
     <body id="page-top">
-        @include('components.page-loader')
         <!-- Page Wrapper -->
         <div id="wrapper">
             <!-- Sidebar -->

@@ -76,7 +76,7 @@
                     <div id="viewer-container" style="width: 100%; height: 100%;">
                     </div>
                     <div class="bg-config-overview">
-                        <a href="https://360fairs.com/" class="btn-config-overview btn-page-loader">
+                        <a href="https://360fairs.com/" class="btn-config-overview ">
                             <i class="fas fa-cog"></i>
                             <span>Config</span>
                         </a>
@@ -110,15 +110,15 @@
                                     @foreach ($zones as $zone)
                                     <tr>
                                         <td style="text-align: center">{{$number++}}</td>
-                                        <td><a class="btn-page-loader" href="/administrator/tours/{{$tour->id}}/zones/{{$zone->id}}">{{$zone->name}}</a></td>
+                                        <td><a href="zones/{{$zone->id}}">{{$zone->name}}</a></td>
                                         <td>{{ count($zone->booths)}} </td>
                                         <td>
                                             @foreach ($zone->booths as $booth)
-                                                <a class="btn-page-loader" href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}">{{$booth->name}}</a> , 
+                                                <a href="booths/{{$booth->id}}">{{$booth->name}}</a> , 
                                             @endforeach
                                         </td>
                                         <td>
-                                            <a href="/administrator/tours/{{$tour->id}}/zones/{{$zone->id}}" class="btn-visit-now btn-page-loader" >Visit now <i class="fas fa-chevron-right"></i></a>
+                                            <a href="" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

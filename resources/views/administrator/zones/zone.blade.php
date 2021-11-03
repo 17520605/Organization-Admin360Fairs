@@ -7,7 +7,7 @@
                 <div class="col-md-12">
                     <div class="card p-3">
                         <h1 class="h4 text-gray-800" style="margin: 0px">{{ $zone->name }}</h1>
-                        <a href="" class="btn btn-df btn-page-loader" target="_blank" style="width: 180px; position: absolute ;top: 0.75rem; right: 1rem;"><i class="fas fa-cog"></i> Config Zone</a>
+                        <a href="" class="btn btn-df" target="_blank" style="width: 180px; position: absolute ;top: 0.75rem; right: 1rem;"><i class="fas fa-cog"></i> Config Zone</a>
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     <div class="card" style="width: 100%; height: 400px;padding: 20px;">
                         <div id="viewer-container" style="width: 100%; height: 100%;"></div>
                         <div class="bg-config-overview">
-                            <a href="https://360fairs.com/" class="btn-config-overview btn-page-loader">
+                            <a href="https://360fairs.com/" class="btn-config-overview ">
                                 <i class="fas fa-cog"></i>
                                 <span>Config</span>
                             </a>
@@ -87,7 +87,7 @@
                                                 <td>3</td>
                                                 <td>3</td>
                                                 <td>  
-                                                    <a href="/booths/{{$booth->id}}" class="btn-visit-now btn-page-loader" >Visit now <i class="fas fa-chevron-right"></i></a>
+                                                    <a href="/booths/{{$booth->id}}" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
                                                 </td>
                                                 <td class="btn-action-icon">
                                                     <i class="fas fa-pen edit"></i>

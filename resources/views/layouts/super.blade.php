@@ -2,7 +2,6 @@
 <html lang="en">
     @include('components.header')
     <body id="page-top">
-        @include('components.page-loader')
         <div id="wrapper">
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content" style="min-height: 100vh;">
@@ -51,11 +50,6 @@
         $('.icon-loader-show').click(function(){
             $('.loader-icon-btn').show();
             $('.loader-delete-icon-btn').show();
-        });
-    </script>
-    <script>
-        $('.btn-page-loader').click(function(){
-            $('.page-loader-wrapper').show();
         });
     </script>
     </body>

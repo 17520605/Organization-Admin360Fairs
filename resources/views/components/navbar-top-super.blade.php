@@ -8,24 +8,24 @@
             @if (isset($roles))
             <select id="nav-top__role-select" >
                 @foreach ($roles as $key => $value)
-                    {{-- class="btn-page-loader" --}}
-                    <option  value="{{$key}}"> {{$value}} </option>
+                    <option value="{{$key}}"> {{$value}} </option>
                 @endforeach
             </select>
             @endif
         </li>
         <li class="nav-item">
-            <a href="/" class="nav-link btn-page-loader" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
+            <a href="/" class="nav-link" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
                 <i class="fas fa-torii-gate" style="margin-right: 8px"></i>  Tours
             </a>
         </li>
         <li class="nav-item">
-            <a href="/profile" class="nav-link btn-page-loader" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
+            <a href="/profile" class="nav-link" href="#" role="button" style="color: #fff;font-weight:600;padding:0 1.5rem">
                 <i class="fas fa-align-right" style="margin-right: 8px"></i>  Profile
             </a>
         </li>
         <div class="topbar-divider d-none d-sm-block"></div>
         <li class="nav-item dropdown no-arrow">
+
             <a class="nav-link dropdown-toggle" href="#" id="user1Dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline" style="font-size:0.9rem; color: #fff;">{{ isset($profile) ? $profile->name : ""}}</span>
                 <img class="img-profile rounded-circle" src="{{ isset($profile) ? ($profile->avatar != null ? $profile->avatar : 'https://res.cloudinary.com/virtual-tour/image/upload/v1634823839/icons/default_avatar_jeqa4w.png') : "" }}" />
@@ -34,7 +34,7 @@
                 <a class="dropdown-item" href="#"> <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings </a>
                 <a class="dropdown-item" href="#"> <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity Log </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item btn-page-loader" href="/logout" > <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout </a>
+                <a class="dropdown-item" href="/logout" > <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout </a>
             </div>
         </li>
     </ul>
