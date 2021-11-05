@@ -64,7 +64,7 @@
                                 <a href="/partner/tours/1/speakers/{{$invitation->speaker->id}}/calendar"><i class="fas fa-calendar-week event"></i></a>
                                 @if($invitation->status == "unconfirmed")
                                 <i class="fas fa-pen edit" data-speaker-id="{{$invitation->speaker->id}}" data-speaker-name="{{$invitation->speaker->name}}" data-speaker-email="{{$invitation->speaker->email}}" data-speaker-contact="{{$invitation->speaker->contact}}" onclick="onOpenPopupEditSpeaker(this);"></i>
-                                <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
+                                <i class="fas fa-trash-alt delete" data-speaker-id="{{$invitation->speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
                                 @elseif($invitation->status == "sent email")
                                 <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
                                 <i class="fas fa-trash-alt delete" data-speaker-id="{{$invitation->speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
@@ -127,7 +127,7 @@
                                 <a href="/partner/tours/1/speakers/{{$invitation->speaker->id}}/calendar"><i class="fas fa-calendar-week event"></i></a>
                                 @if($invitation->status == "unconfirmed")
                                 <i class="fas fa-pen edit" data-speaker-id="{{$invitation->speaker->id}}" data-speaker-name="{{$invitation->speaker->name}}" data-speaker-email="{{$invitation->speaker->email}}" data-speaker-contact="{{$invitation->speaker->contact}}" onclick="onOpenPopupEditSpeaker(this);"></i>
-                                <i class="fas fa-trash-alt delete" data-speaker-id="{{$speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
+                                <i class="fas fa-trash-alt delete" data-speaker-id="{{$invitation->speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>
                                 @elseif($invitation->status == "sent email")
                                 <i class="fas fa-pen edit" style="opacity: 0.3;pointer-events: none"></i>
                                 <i class="fas fa-trash-alt delete" data-speaker-id="{{$invitation->speaker->id}}" onclick="onOpenPopupDeleteSpeaker(this);"></i>

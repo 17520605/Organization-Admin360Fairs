@@ -7,7 +7,7 @@
                 <div class="col-md-12">
                     <div class="card p-3">
                         <h1 class="h4 text-gray-800" style="margin: 0px">{{ $zone->name }}</h1>
-                        <a href="" class="btn btn-df btn-page-loader" target="_blank" style="width: 180px; position: absolute ;top: 0.75rem; right: 1rem;"><i class="fas fa-cog"></i> Config Zone</a>
+                        <a href="" class="btn btn-df" style="width: 180px; position: absolute ;top: 0.75rem; right: 1rem;"><i class="fas fa-cog"></i> Config Zone</a>
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     <div class="card" style="width: 100%; height: 400px;padding: 20px;">
                         <div id="viewer-container" style="width: 100%; height: 100%;"></div>
                         <div class="bg-config-overview">
-                            <a href="https://360fairs.com/" class="btn-config-overview btn-page-loader">
+                            <a href="https://360fairs.com/" target="_blank" class="btn-config-overview">
                                 <i class="fas fa-cog"></i>
                                 <span>Config</span>
                             </a>
@@ -104,115 +104,6 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="fw-light">Choose Object for Booths</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body" style="border-radius:0 ;">
-                        <div class="d-flex flex-column" style="flex-grow: 1;">
-                            <div class="modal-body" style="flex: 0 1 0%;">
-                                <nav class="nav_profile">
-                                    <a href="javascript:void(0)" class="active" id="switch-local-btn"
-                                        style="width: 50%;">
-                                        <div class="d-block d-sm-inline"><i class="fas fa-file-image"></i> Images</div>
-                                    </a>
-                                    <a href="javascript:void(0)" id="switch-link-btn" style="width: 50%;">
-                                        <div class="d-block d-sm-inline"><i class="fas fa-file-video"></i> Videos</div>
-                                    </a>
-                                    <a href="javascript:void(0)" id="switch-link-btn" style="width: 50%;">
-                                        <div class="d-block d-sm-inline"><i class="fas fa-file-audio"></i> Audios</div>
-                                    </a>
-                                    <a href="javascript:void(0)" id="switch-link-btn" style="width: 50%;">
-                                        <div class="d-block d-sm-inline"><i class="fas fa-file-prescription"></i> Modes
-                                        </div>
-                                    </a>
-                                </nav>
-                                <div class="step-1">
-                                    <div class="row"
-                                        style="height: 55vh; overflow-y: scroll;margin: 0; padding-top: 20px;">
-                                        <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 5px;">
-                                            <div class="card">
-                                                <div class="file" style="border-radius:0 ;">
-                                                    <label class="image-checkbox">
-                                                        <img class="img-responsive"
-                                                            src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
-                                                            alt="img" style="width: 100%;">
-                                                        <input name="image[]" value="" type="checkbox">
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="step-2" style="display: none;">
-                                    <div class="row"
-                                        style="height: 55vh; overflow-y: scroll;margin: 0; padding-top: 20px;">
-                                        <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 5px;">
-                                            <div class="card">
-                                                <div class="file" style="border-radius:0 ;">
-                                                    <label class="image-checkbox">
-                                                        <img class="img-responsive"
-                                                            src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
-                                                            alt="img" style="width: 100%;">
-                                                        <input name="image[]" value="" type="checkbox">
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="step-3" style="display: none;">
-                                    <div class="row"
-                                        style="height: 55vh; overflow-y: scroll;margin: 0; padding-top: 20px;">
-                                        <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 5px;">
-                                            <div class="card">
-                                                <div class="file" style="border-radius:0 ;">
-                                                    <label class="image-checkbox">
-                                                        <img class="img-responsive"
-                                                            src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
-                                                            alt="img" style="width: 100%;">
-                                                        <input name="image[]" value="" type="checkbox">
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="step-4" style="display: none;">
-                                    <div class="row"
-                                        style="height: 55vh; overflow-y: scroll;margin: 0; padding-top: 20px;">
-                                        <div class="col-lg-4 col-md-4 col-sm-12" style="padding: 5px;">
-                                            <div class="card">
-                                                <div class="file" style="border-radius:0 ;">
-                                                    <label class="image-checkbox">
-                                                        <img class="img-responsive"
-                                                            src="https://wrraptheme.com/templates/lucid/hr/html/assets/images/image-gallery/9.jpg"
-                                                            alt="img" style="width: 100%;">
-                                                        <input name="image[]" value="" type="checkbox">
-                                                        <i class="fa fa-check hidden"></i>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-df1" type="button" data-dismiss="modal">Save Change</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="modal fade" id="popup-add-booth-to-zone" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -251,7 +142,6 @@
                 </div>
             </div>
         </div>
-
         <script>
             function init() {
                 var container = document.getElementById('viewer-container');

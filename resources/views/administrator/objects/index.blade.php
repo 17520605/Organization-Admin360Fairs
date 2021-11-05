@@ -463,7 +463,7 @@
                                     </div>
                                     
                                     <div class="modal-footer"  style="padding: 0.85rem 0px;">
-                                        <button type="submit" id="popup-add-new-object__local-save-btn" class="btn btn-primary btn-block btn-icon-loader"> <span class="icon-loader-form"></span>  Save Upload</button>
+                                        <button type="submit" id="popup-add-new-object__local-save-btn" class="btn btn-primary btn-block">Save Upload</button>
                                     </div>
                                 </form>
                                 <form class="form-step2 object__upload-box needs-validation" action="/administrator/tours/{{$tour->id}}/objects/save-create" method="POST"  style="display: none" novalidate>

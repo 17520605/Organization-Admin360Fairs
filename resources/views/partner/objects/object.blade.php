@@ -13,7 +13,7 @@
         {{-- IMAGE --}}
         <div class="row mb-3 image-wrapper" >
             <div class="col-md-4">
-                <div class="card" style="height: auto">
+                <div class="card" style="height: 100%">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="flex-grow-1 overflow-hidden">
                             <h6 class="font-size-15 font-weight-bold">General </h6>
@@ -60,7 +60,7 @@
         {{-- VIDEO --}}
         <div class="row mb-3 video-wrapper" >
             <div class="col-md-4">
-                <div class="card" style="max-height: 350px">
+                <div class="card" style="height: 100%">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="flex-grow-1 overflow-hidden">
                             <h6 class="font-size-15 font-weight-bold">General </h6>
@@ -68,6 +68,7 @@
                                 <div class="col-4">
                                     <p class="text-muted mb-2"> Name:  </p>
                                     <p class="text-muted mb-2"> Source: </p>
+                                    <p class="text-muted mb-2"> Dimensions: </p>
                                     <p class="text-muted mb-2"> Format: </p>
                                     <p class="text-muted mb-2"> size: </p>
                                     <p class="text-muted mb-2"> Update at: </p>
@@ -110,7 +111,7 @@
         {{-- AUDIO --}}
         <div class="row mb-3 audio-wrapper" >
             <div class="col-md-4">
-                <div class="card" style="max-height: 350px">
+                <div class="card" style="height: 100%">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="flex-grow-1 overflow-hidden">
                             <h6 class="font-size-15 font-weight-bold">General </h6>
@@ -157,7 +158,7 @@
         {{-- MODEL --}}
         <div class="row mb-3 model-wrapper" >
             <div class="col-md-4">
-                <div class="card" style="max-height: 350px">
+                <div class="card" style="height: 100%">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="flex-grow-1 overflow-hidden">
                             <h6 class="font-size-15 font-weight-bold">General </h6>

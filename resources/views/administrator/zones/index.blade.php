@@ -29,15 +29,15 @@
                             @foreach ($zones as $zone)
                             <tr class="zone-{{$zone->id}}">
                                 <td style="text-align: center">{{$number++}}</td>
-                                <td><a href="zones/{{$zone->id}}">{{$zone->name}}</a></td>
+                                <td><a class="btn-page-loader" href="zones/{{$zone->id}}">{{$zone->name}}</a></td>
                                 <td>{{ count($zone->booths)}} </td>
                                 <td>
                                     @foreach ($zone->booths as $booth)
-                                        <a href="booths/{{$booth->id}}">{{$booth->name}}</a> , 
+                                        <a class="btn-page-loader" href="booths/{{$booth->id}}">{{$booth->name}}</a> , 
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href="zones/{{$zone->id}}" class="btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
+                                    <a href="zones/{{$zone->id}}" class="btn-visit-now btn-page-loader" >Visit now <i class="fas fa-chevron-right"></i></a>
                                 </td>
                                 <td class="btn-action-icon">
                                     <i class="fas fa-pen edit" data-zone-id="{{$zone->id}}" data-name="{{$zone->name}}" data-booths='@foreach ($zone->booths as $booth){"id":"{{$booth->id}}", "name":"{{$booth->name}}"};@endforeach' onclick="onOpenPopupEditZone(this);"></i>

@@ -35,8 +35,6 @@
                                             @endif
                                         @endforeach
                                     @endif
-
-                                    
                                 </div>
                             </div>
                             <div class="col-lg-9">

@@ -103,7 +103,7 @@
                                     </td>
                                     <td>{{$booth->lastChangeAt}}</td>
                                     <td>
-                                        <a href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}" class="btn-page-loader btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
+                                        <a href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}" class="btn-visit-now btn-page-loader" >Visit now <i class="fas fa-chevron-right"></i></a>
                                     </td>
                                     <td class="btn-action-icon">
                                          <button type="button" class="btn btn-sm btn-success"  title="Edit" style="width: 32px;"><i class="fas fa-check"></i></button>

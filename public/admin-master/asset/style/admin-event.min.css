@@ -13628,6 +13628,10 @@ img {
     margin-right: 30px;
 }
 
+.line-time .timeline .timeline-box-card:nth-child(odd) .timeline-box .btn-edit-webinar-sp {
+    margin-left: 98%;
+}
+
 .line-time .timeline .timeline-box-card:nth-child(odd) .timeline-box .event-content .timeline-text {
     margin-right: 40px !important;
 }
@@ -13701,7 +13705,22 @@ img {
     z-index: 1;
 }
 
+.line-time .timeline .timeline-date1 {
+    width: 54px;
+    height: 80px;
+    display: inline-block;
+    padding: 8px;
+    clip-path: none;
+    top: -10px;
+    position: absolute;
+    z-index: 1;
+}
+
 .line-time .timeline-date {
+    right: 20px;
+}
+
+.line-time .timeline-date1 {
     right: 20px;
 }
 
@@ -13775,11 +13794,24 @@ img {
     text-align: -webkit-left;
 }
 
+.line-time .timeline .timeline-box-card:nth-child(even) .timeline-box .btn-edit-webinar-sp {
+    left: -12%;
+    position: absolute;
+}
+
 .line-time .timeline .timeline-box-card:nth-child(even) .timeline-box .event-content .timeline-text {
     margin-left: 40px !important;
 }
 
+.line-time .timeline .timeline-box-card:nth-child(even) .timeline-box .event-content .timeline-text h3.font-size-17 {
+    text-align: right;
+}
+
 .line-time .timeline .timeline-box-card:nth-child(even) .timeline-box .timeline-date {
+    left: 20px;
+}
+
+.line-time .timeline .timeline-box-card:nth-child(even) .timeline-box .timeline-date1 {
     left: 20px;
 }
 
@@ -15349,7 +15381,6 @@ select:focus {
     background: #727cf5;
     position: absolute;
     color: #FFF;
-    margin-left: 98%;
 }
 
 .btn-edit-webinar-sp:hover {
@@ -15385,4 +15416,13 @@ select:focus {
 
 .sub-title {
     margin: 10px 25px !important;
+}
+
+.line-time .timeline .timeline-date1 {
+    width: 70px;
+    height: 34px;
+    display: inline-block;
+    position: absolute;
+    top: 12px;
+    z-index: 1;
 }
