@@ -115,7 +115,7 @@ class EventsController extends Controller
             'tag' => $tag
         ]);
     }
-public function webinar($id, $webinarId, Request $request)
+    public function webinar($id, $webinarId, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);

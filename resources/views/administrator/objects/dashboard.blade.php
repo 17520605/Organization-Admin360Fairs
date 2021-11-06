@@ -5,9 +5,9 @@
         <!-- DataTales Example -->
         <div class="container-fluid manager_object">
             <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="m-4 font-size-18">File Manager</h4>
+                <div class="col-md-12" style="padding: 0;">
+                    <div class="card p-3">
+                        <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">File Manager</h1>
                     </div>
                 </div>
             </div>
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-9" style="padding: 0;padding-left: 1rem;">
                     <div class="d-md-flex">
                         <div class="w-100">
                             <div class="card" style="">
@@ -173,57 +173,65 @@
                     <div class="card" style="padding-left: 0.5rem; padding-right: 0.5rem;">
                         <div class="mt-4">
                             <div class="d-flex flex-wrap">
-                                <h5 class="font-size-16 me-3">Recent Files</h5>
-                                <div class="ms-auto"><a class="fw-medium text-reset" href="/apps-filemanager">View All</a></div>
+                                <h1 class="h6 font-weight-bold text-primary" style="margin: 0px"><i class="fab fa-cloudscale"></i> Recent  File</h1>
                             </div>
-                            <hr class="mt-2" />
+                            <hr class="mt-3" />
                             <div class="table-responsive">
-                                <table class="table align-middle table-nowrap table-hover mb-0 table">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Date modified</th>
-                                            <th scope="col" colspan="2">Size</th>
+                                            <th scope="col">#</th>
+                                            <th scope="col" style="width: 25%;">Name</th>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Size</th>
+                                            <th scope="col" style="width:25%">Date modified</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php
-                                            $number = 1;
-                                        @endphp
+                                        @foreach ($objects as $object)
                                         <tr>
-                                            <td>
-                                                <a class="text-dark fw-medium" href="/apps-filemanager"><i class="fas fa-file-code font-size-16 align-middle text-primary me-2"></i> index.html</a>
+                                            <td style="width: 5%; text-align: center">
+                                                @if ($object->type == 'image')
+                                                    <i class="fas fa-image font-size-16 text-success"></i>
+                                                @elseif($object->type == 'video')
+                                                    <i class="far fa-play-circle font-size-16 text-danger"></i>
+                                                @elseif($object->type == 'audio')
+                                                    <i class="fas fa-music font-size-16 text-info"></i>
+                                                @elseif($object->type == 'model')
+                                                    <i class="fab fa-unity font-size-16 text-models"></i>
+                                                @else 
+                                                    @if ($object->format == 'pdf')
+                                                        <i class="fas fa-file-pdf font-size-16 text-danger"></i>
+                                                    @elseif ($object->format == 'doc' || $object->format == 'docx')
+                                                        <i class="fas fa-file-word font-size-16 text-primary" ></i>
+                                                    @elseif ($object->format == 'xlsx' || $object->format == 'xlsm' || $object->format == 'csv')
+                                                        <i class="fas fa-file-csv font-size-16 text-success"></i>
+                                                    @elseif ($object->format == 'txt' || $object->format == 'html' || $object->format == 'php')
+                                                        <i class="fas fa-file-alt font-size-16 text-primary"></i>
+                                                    @else
+                                                        <i class="fas fa-file font-size-16 text-warning"></i>
+                                                    @endif
+                                                    
+                                                @endif
                                             </td>
-                                            <td>12-10-2020, 09:45</td>
-                                            <td>09 KB</td>
                                             <td>
-                                                <div class="dropdown">
-                                                    <a aria-haspopup="true" class="font-size-16 text-muted dropdown-toggle" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
-                                                    <div tabindex="-1" role="menu" direction="right" aria-hidden="true" class="dropdown-menu-end dropdown-menu">
-                                                        <a class="dropdown-item" href="/apps-filemanager">Open</a><a class="dropdown-item" href="/apps-filemanager">Edit</a><a class="dropdown-item" href="/apps-filemanager">Rename</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="/apps-filemanager">Remove</a>
-                                                    </div>
-                                                </div>
+                                                @if ($object->type == 'image')
+                                                    <a class="text-primary" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
+                                                @elseif($object->type == 'video')
+                                                    <a class="text-primary" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
+                                                @elseif($object->type == 'audio')
+                                                    <a class="text-primary" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
+                                                @elseif($object->type == 'model')
+                                                    <a class="text-primary" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
+                                                @else 
+                                                    <a class="text-primary" href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">{{$object->name}}</a>
+                                                @endif
                                             </td>
+                                            <td>{{$object->format != null ? $object->format : 'N/A'}}</td>
+                                            <td>{{$object->size != null ? strval(number_format(floatval($object->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
+                                            <td>{{$object->updated_at}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <a class="text-dark fw-medium" href="/apps-filemanager"><i class="fas fa-file-code font-size-16 align-middle text-primary me-2"></i> index.html</a>
-                                            </td>
-                                            <td>12-10-2020, 09:45</td>
-                                            <td>09 KB</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a aria-haspopup="true" class="font-size-16 text-muted dropdown-toggle" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
-                                                    <div tabindex="-1" role="menu" direction="right" aria-hidden="true" class="dropdown-menu-end dropdown-menu">
-                                                        <a class="dropdown-item" href="/apps-filemanager">Open</a><a class="dropdown-item" href="/apps-filemanager">Edit</a><a class="dropdown-item" href="/apps-filemanager">Rename</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="/apps-filemanager">Remove</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

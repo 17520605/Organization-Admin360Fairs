@@ -48,12 +48,9 @@
                                                         
                                                     </div>
                                                     <div class="timeline-box">
-                                                        <div class="timeline-date1 bg-primary text-center rounded">
-                                                            <h6 class="text-white mb-0"> {{$time->format('h')}} : {{$time->format('m')}}</h6>
-                                                        </div>
                                                         <div class="event-content">
                                                             <div class="timeline-text">
-                                                                <h3 class="font-size-17"> {{$detail->speaker != null ? $detail->speaker->name : "N/A"}}</h3>
+                                                                <h3 class="font-size-17"> {{$detail->speaker != null ? $detail->speaker->name : "N/A"}} <span style="margin-left: 10px ;color: #727cf5 !important"><i class="fas fa-clock"></i> {{$time->format('h')}} :{{$time->format('m')}}</span></h3>
                                                                 <h3 class=" text-primary" style="font-weight: 500 ; font-size: 17px"><i class="fas fa-hashtag"></i> {{$detail->title}}</h3>
                                                                 <div style="width: 115%;">
                                                                     {!! $detail->content !!}
@@ -86,7 +83,7 @@
                         <div class="row justify-content-center tab-body" data-tab="documents" style="display: {{$tab == 'documents' ? 'block' : 'none'}}">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="border: 1px">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="1px solid #e3e6f0;">
                                         <thead>
                                             <tr style="background: #eef2f7">
                                                 <th style="3% ;text-align:center">#</th>

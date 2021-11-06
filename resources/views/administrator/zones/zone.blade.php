@@ -60,7 +60,6 @@
                                             <th style="width: 100px;"> Panoramas</th>
                                             <th style="width: 100px;">Objects</th>
                                             <th style="width: 135px;">Visit</th>
-                                            <th style="width: 8%;">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -87,11 +86,7 @@
                                                 <td>3</td>
                                                 <td>3</td>
                                                 <td>  
-                                                    <a href="/booths/{{$booth->id}}" class="btn-visit-now btn-page-loader" >Visit now <i class="fas fa-chevron-right"></i></a>
-                                                </td>
-                                                <td class="btn-action-icon">
-                                                    <i class="fas fa-pen edit"></i>
-                                                    <i class="fas fa-trash-alt delete"></i>
+                                                    <a href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}" class="btn-visit-now btn-page-loader" >Visit now <i class="fas fa-chevron-right"></i></a>
                                                 </td>
                                             </tr>
                                             @endforeach

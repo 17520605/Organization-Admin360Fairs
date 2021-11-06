@@ -15,7 +15,7 @@
         </div>
         <div class="tab-header mb-3 webinar-tab" style="width: 100%; height: 40px; mb-2 ">
             <span class="btn-tab-1 tab-header-btn btn btn-primary float-left active" ><i class="fas fa-stream"></i></span>
-            <span class="btn-tab-2 tab-header-btn btn btn-primary float-left"><i class="fab fa-accusoft"></i></span>
+            <span class="btn-tab-2 tab-header-btn btn btn-primary float-left"><i class="fas fa-eye"></i></span>
         </div>
         <div class="div-tab-1">
             <div class="row" style="margin-bottom: 1.5rem;">

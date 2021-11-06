@@ -38,14 +38,14 @@
                                                                 @if ($webinar->registerBy == $profile->id)
                                                                     {{-- WEBINAR CUA CHINH MINH --}}
                                                                     <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
-                                                                        data-toggle="popover" 
+                                                                        data-toggle="popover" style="font-weight: 800 ;color: #727cf5 !important"
                                                                         title="{{$webinar->topic}}" 
                                                                         data-content="
                                                                             @foreach ($webinar->details as $detail) 
-                                                                                <a class='text-detail-webinar'><i class='fas fa-check'></i>  {{$detail->title}} </a><br>
+                                                                                <a> - {{$detail->title}} </a><br>
                                                                             @endforeach
                                                                         " 
-                                                                        data-html="true"><i class="fas fa-angle-right"></i> {{$webinar->topic}} <span class="host-line-webinar">(Host)</span>
+                                                                        data-html="true"><i class="fas fa-check"></i> {{$webinar->topic}} <span class="host-line-webinar">(Host)</span>
                                                                     </a><br>
                                                                 @else
                                                                     <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
@@ -53,7 +53,7 @@
                                                                         title="{{$webinar->topic}}" 
                                                                         data-content="
                                                                             @foreach ($webinar->details as $detail) 
-                                                                                <a class='text-detail-webinar'><i class='fas fa-check'></i>  {{$detail->title}} </a><br>
+                                                                                <a> - {{$detail->title}} </a><br>
                                                                             @endforeach
                                                                         " 
                                                                         data-html="true"><i class="fas fa-angle-right"></i> {{$webinar->topic}}
