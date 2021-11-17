@@ -83,7 +83,7 @@
                         <div class="row justify-content-center tab-body" data-tab="documents" style="display: {{$tab == 'documents' ? 'block' : 'none'}}">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="1px solid #e3e6f0;">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="border: 1px solid #e3e6f0;">
                                         <thead>
                                             <tr style="background: #eef2f7">
                                                 <th style="3% ;text-align:center">#</th>

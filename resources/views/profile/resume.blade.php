@@ -11,7 +11,7 @@
                                     <div class="avatar-lg">
                                         @if ($profile->avatar != null || $profile->avatar !='')
                                             <img style="width: 150px; height: 150px; border: 2px" src="{{$profile->avatar}}" alt="" class="rounded-circle img-thumbnail">
-                                        @else
+                                        @elseif($profile->avatar == null || $profile->avatar =='')
                                             <img style="width: 150px; height: 150px; border: 2px" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634823839/icons/default_avatar_jeqa4w.png" alt="" class="rounded-circle img-thumbnail">
                                         @endif
                                     </div>
@@ -51,35 +51,40 @@
                 </div>
             </div>
             <div class="row mt-4 mb-5" id="box-cv-up">
-                <div class="col-12" id="preview-box-cv"> 
-                    <button class="btn btn-download-cv" data-href='{{$profile->profile}}' download="resume.jpg" onclick='forceDownload(this)'><i class="fas fa-download"></i></button>
-                    <img id="preview-box-cv-img" style="width: 100%; border-radius: 5px;" src="{{$profile->profile == '' ? '':$profile->profile}}" alt="">
-                </div>
+                @if ($profile->profile != null || $profile->profile !='')
+                    <div class="col-12" id="preview-box-cv"> 
+                        <button class="btn btn-download-cv" data-href='{{$profile->profile}}' download="resume.jpg" onclick='forceDownload(this)'><i class="fas fa-download"></i></button>
+                        <img id="preview-box-cv-img" style="width: 100%; border-radius: 5px;" src="{{$profile->profile == '' ? '':$profile->profile}}" alt="">
+                    </div>
+                @elseif($profile->profile == null || $profile->profile =='')
+                    <div class="text-primary font-weight-bold text-center" style="width: 100%;">Show at this user not update CV</div>
+                @endif
+
             </div>
         </div>
     </div>
     <script src="add-download-btn.js"></script>
 <script>
-function forceDownload(link) {
-   var url = link.getAttribute("data-href");
-   var fileName = link.getAttribute("download");
-   link.innerText = "Working...";
-   var xhr = new XMLHttpRequest();
-   xhr.open("GET", url, true);
-   xhr.responseType = "blob";
-   xhr.onload = function() {
-      var urlCreator = window.URL || window.webkitURL;
-      var imageUrl = urlCreator.createObjectURL(this.response);
-      var tag = document.createElement('a');
-      tag.href = imageUrl;
-      tag.download = fileName;
-      document.body.appendChild(tag);
-      tag.click();
-      document.body.removeChild(tag);
-      link.innerText = "Download Resume";
-   }
-   xhr.send();
-}
+    function forceDownload(link) {
+        var url = link.getAttribute("data-href");
+        var fileName = link.getAttribute("download");
+        link.innerText = "Working...";
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "blob";
+        xhr.onload = function() {
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(this.response);
+        var tag = document.createElement('a');
+        tag.href = imageUrl;
+        tag.download = fileName;
+        document.body.appendChild(tag);
+        tag.click();
+        document.body.removeChild(tag);
+        link.innerText = "Download Resume";
+    }
+    xhr.send();
+    }
 </script>
 
 @endsection

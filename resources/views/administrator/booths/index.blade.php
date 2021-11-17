@@ -46,7 +46,7 @@
                                     @if ($freeBooth->owner == null || $freeBooth->owner->id == $profile->id)
                                         Host
                                     @else
-                                        <span class="text-primary font-weight-bold">{{$freeBooth->owner->name}}</span>
+                                        <a href="/resume/{{$freeBooth->owner->id}}" target="_blank" class="text-primary font-weight-bold">{{$freeBooth->owner->name}}</a>
                                     @endif
                                 </td>  
                                 <td>
@@ -91,7 +91,7 @@
                                         @if ($booth->owner == null || $booth->owner->id == $profile->id)
                                             Host
                                         @else
-                                            <span class="text-primary font-weight-bold">{{$booth->owner->name}}</span>
+                                            <a href="/resume/{{$booth->owner->id}}" target="_blank" class="text-primary font-weight-bold">{{$booth->owner->name}}</a>
                                         @endif
 
                                     </td>
