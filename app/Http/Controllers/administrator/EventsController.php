@@ -115,16 +115,11 @@ class EventsController extends Controller
             'tag' => $tag
         ]);
     }
-    public function webinar($id, $webinarId)
+    public function webinar($id, $webinarId, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-        $webinar = \App\Models\Webinar::with('details')
-            ->where('id',$webinarId)
-            ->first();
-        foreach ($webinar->details as $detail) {
-            $detail->speaker = DB::table('profile')->find($detail->speakerId);
-        }
+        $tab = $request->get('tab');
 
         $speakers = DB::table('tour_speaker')
             ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
@@ -135,8 +130,39 @@ class EventsController extends Controller
             ->select('profile.*')
             ->get();
 
-        return view('administrator.events.webinar', ['profile' => $profile , 'webinar' => $webinar, 'speakers'=> $speakers, 'tour'=>$tour]);
+        $webinar = \App\Models\Webinar::with('details')
+            ->where('id',$webinarId)
+            ->first();
+        foreach ($webinar->details as $detail) {
+            $detail->speaker = DB::table('profile')->find($detail->speakerId);
+
+            $documents = \App\Models\Document::with('owner')
+                ->whereHas('webinar_detail_documents', function ($q) use($detail){
+                    $q->where('webinarDetailId', $detail->id);
+                })
+                ->where('isDeleted', false)
+                ->get();
+
+            $detail->documents = $documents;
+        }
+
+        $documents = \App\Models\Document::where([
+            ['ownerId', '=', $profile->id],
+            ['isDeleted', '=', false],
+        ])
+        ->orderBy('created_at','DESC')
+        ->get();
+
+        return view('administrator.events.webinar', [
+            'profile' => $profile , 
+            'tour'=>$tour,
+            'speakers'=> $speakers,
+            'webinar' => $webinar, 
+            'documents'=> $documents, 
+            'tab' => $tab
+        ]);
     }
+
 
     public function saveCreate($id, Request $request)
     {

@@ -47,17 +47,16 @@
                                                     <div class="timeline-icon">
                                                         
                                                     </div>
-                                                    <div class="timeline-box">
-                                                        <div class="timeline-date bg-primary text-center rounded">
-                                                            <h4 class="text-white mb-0"> {{$time->format('h')}}</h4>
-                                                            <h5 class="text-white mb-0"> {{$time->format('m')}}'</h5>
+                                                    <div class="timeline-box detail-items-speaker" style="max-width: 90%;">
+                                                        <div class="timeline-date1 bg-primary text-center rounded">
+                                                            <h6 class="text-white mb-0"> {{$time->format('h')}} : {{$time->format('m')}}</h6>
                                                         </div>
-                                                        <button class="btn-edit-webinar-sp btn btn-primary btn-circle btn-sm"onclick="onOpenPopupEditWebinarDetail({{$detail->id}}, event)"><i  class=" fas fa-pen" data-title="{{$detail->title}}" ></i></button>
+                                                        <button class="btn-edit-webinar-sp btn btn-primary btn-circle btn-sm" onclick="onOpenPopupEditWebinarDetail({{$detail->id}}, event)"><i  class=" fas fa-pen" data-title="{{$detail->title}}"></i></button>
                                                         <div class="event-content">
                                                             <div class="timeline-text">
                                                                 <h3 class="font-size-17"> {{$detail->speaker != null ? $detail->speaker->name : "N/A"}}</h3>
-                                                                <h3 class=" text-primary" style="font-weight: 600 ; font-size: 20px"><i class="fas fa-hashtag"></i> {{$detail->title}}</h3>
-                                                                <div style="width: 115%;">
+                                                                <h3 class=" text-primary" style="font-weight: 600 ; font-size: 20px"><i class="fas fa-hashtag"></i> <span class="detail-title">{{$detail->title}}</span></h3>
+                                                                <div style="width: 115%;" class="detail-content">
                                                                     {!! $detail->content !!}
                                                                 </div>
                                                             </div>
@@ -254,15 +253,15 @@
                             @csrf
                             <input type="hidden" name="webinarDetailId">
                             <div class="form-group">
-                                <input name="title" id="popup_create_notification__title-input" class="form-control" placeholder="Enter title of webinar detail" value="{{$detail->title}}">
+                                <input name="title" id="popup-edit-webinar-detail__title-input" class="form-control" placeholder="Enter title of webinar detail" value="{{$detail->title}}">
                             </div>
                             <div class="form-group">
-                                <textarea id="compose-textarea" name="content" class="form-control" style="height: 300px" placeholder="Enter content">
-                                    {!! $detail->content !!}
+                                <textarea id="popup-edit-webinar-detail__content-input" name="content" class="form-control" style="height: 300px">
+                                
                                 </textarea>
                             </div>
                             <div class="row">
-                                <input type="hidden" name="webinarDetailId">
+                                <input type="hidden" id="popup-edit-webinar-detail__IDWebinar-input" name="webinarDetailId">
                                 <button id="popup-edit-webinar-detail__save-btn" type="button" class="btn btn-primary btn-block btn-icon-loader"> <span class="icon-loader-form"></span> Save </button>
                             </div>
                         </form>
@@ -434,13 +433,18 @@
         }
 
         function onOpenPopupEditWebinarDetail(detailId, e) {  
-            let title = $(e.currentTarget).data('title');
-
+            let title = $(e.currentTarget).parents('.detail-items-speaker').find('.detail-title').text();
+            let content = $(e.currentTarget).parents('.detail-items-speaker').find('.detail-content').html();
             $('#popup-edit-webinar-detail').modal('show');
-            $('#popup_create_notification__title-input').val(title);
-            $('#popup-edit-webinar-detail').find('input[type="hidden"][name="webinarDetailId"]').val(detailId);
+            $('#popup-edit-webinar-detail__title-input').val(title);
+            $('#popup-edit-webinar-detail__content-input').summernote('code', content );
+            $('#popup-edit-webinar-detail__IDWebinar-input').val(detailId);
         }
-
-
+    </script>
+    <script>
+        $(function() {
+            //Add text editor
+            $('#popup-edit-webinar-detail__content-input').summernote()
+        })
     </script>
 @endsection

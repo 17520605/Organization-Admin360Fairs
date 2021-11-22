@@ -8,8 +8,7 @@
             @if (isset($roles))
             <select id="nav-top__role-select" >
                 @foreach ($roles as $key => $value)
-                    {{-- class="btn-page-loader" --}}
-                    <option  value="{{$key}}"> {{$value}} </option>
+                    <option value="{{$key}}"> {{$value}} </option>
                 @endforeach
             </select>
             @endif
@@ -43,6 +42,7 @@
     $(document).ready(function () {
         $("#nav-top__role-select").change(function (e) { 
             location.href = '/' + $(this).val();
+            $('.page-loader-wrapper').show();
         });
     });
 </script>

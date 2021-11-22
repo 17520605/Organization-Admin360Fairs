@@ -25,7 +25,7 @@
                         </thead>
                         <tr style="background-color: #4e73dfcf !important; color:#fff;" onclick="toggleGroup(0)">
                             <td colspan="8">
-                                <span style="float: left"><i class="fas fa-asterisk"></i> (Total : {{count($freeBooths)}} booths) </span>
+                                <span style="float: left"><i class="fas fa-asterisk" style="margin-right: 5px"></i>({{count($freeBooths)}}) </span>
                                 <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
                             </td>
                         </tr>
@@ -46,7 +46,7 @@
                                     @if ($freeBooth->owner == null || $freeBooth->owner->id == $profile->id)
                                         Host
                                     @else
-                                        <span class="text-primary font-weight-bold">{{$freeBooth->owner->name}}</span>
+                                        <a href="/resume/{{$freeBooth->owner->id}}" target="_blank" class="text-primary font-weight-bold">{{$freeBooth->owner->name}}</a>
                                     @endif
                                 </td>  
                                 <td>
@@ -73,7 +73,7 @@
                         <div>
                             <tr style="background-color: #4e73dfcf !important; color:#fff;" onclick="toggleGroup({{$group->id}})">
                                 <td colspan="8">
-                                    <span style="float: left"><span class="font-weight-bold" style="margin-right: 5px">{{$group->name}} </span>(Total : {{count($group->booths)}} booths) </span>
+                                    <span style="float: left"><span class="font-weight-bold" style="margin-right: 5px">{{$group->name}}</span>({{count($group->booths)}}) </span>
                                     <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
                                 </td>
                             </tr>
@@ -91,7 +91,7 @@
                                         @if ($booth->owner == null || $booth->owner->id == $profile->id)
                                             Host
                                         @else
-                                            <span class="text-primary font-weight-bold">{{$booth->owner->name}}</span>
+                                            <a href="/resume/{{$booth->owner->id}}" target="_blank" class="text-primary font-weight-bold">{{$booth->owner->name}}</a>
                                         @endif
 
                                     </td>

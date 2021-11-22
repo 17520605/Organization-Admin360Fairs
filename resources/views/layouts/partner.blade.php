@@ -9,7 +9,9 @@
             @include('components.partner-navbar-left')
 
             <div id="content-wrapper" class="d-flex flex-column">
+
                 <!-- Main Content -->
+
                 <div id="content">
 
                     @include('components.navbar-top')
@@ -17,14 +19,18 @@
                     @yield('content')
 
                 </div>
+
                 <!-- Footer -->
+
                 @include('components.footer')
 
             </div>
             <!-- End of Content Wrapper -->
         </div>
+
         {{-- POP --}}
         <!-- Scroll to Top Button-->
+
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
@@ -38,7 +44,6 @@
                         alwaysShowClose: true
                     });
                 });
-
                 $('.filter-container').filterizr({
                     gutterPixels: 3
                 });

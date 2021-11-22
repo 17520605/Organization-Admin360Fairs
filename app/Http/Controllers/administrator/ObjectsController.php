@@ -29,7 +29,10 @@ class ObjectsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-        return view('administrator.objects.dashboard', ['profile' => $profile, 'tour'=>$tour]);
+        $objects = \App\Models\TObject::where([
+            ['tourId','=', $id]
+        ])->get();
+        return view('administrator.objects.dashboard', ['profile' => $profile, 'tour'=>$tour,'objects'=>$objects,]);
     }
 
     public function object($id, $objectId, Request $request)

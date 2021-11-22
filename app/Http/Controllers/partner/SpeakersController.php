@@ -18,6 +18,7 @@ class SpeakersController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
+
         $invitations = \App\Models\Tour_Speaker::with('speaker', 'inviter')
             ->where('tourId', $id)
             ->get();
@@ -41,7 +42,7 @@ class SpeakersController extends Controller
             'profile' => $profile, 
             'tour'=> $tour, 
             'invitations' => $invitations,
-            'myInvitations' => $myInvitations,
+            'myInvitations' => $myInvitations
         ]);
     }
     
