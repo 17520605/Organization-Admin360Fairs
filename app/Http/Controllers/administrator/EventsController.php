@@ -115,6 +115,7 @@ class EventsController extends Controller
             'tag' => $tag
         ]);
     }
+
     public function webinar($id, $webinarId, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
@@ -163,9 +164,20 @@ class EventsController extends Controller
         ]);
     }
 
+    public function create($id, Request $request)
+    {     
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+
+        return view('administrator.events.create', [
+            'profile' => $profile , 
+            'tour'=>$tour
+        ]);
+    }
 
     public function saveCreate($id, Request $request)
     {
+       
         $topic = $request->topic;
         $start = $request->start;
         $end = $request->end;
