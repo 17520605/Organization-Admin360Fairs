@@ -282,7 +282,7 @@
                 name: '{{$views[$i]->visitor->name}}',
                 email: '{{$views[$i]->visitor->email}}',
                 contact: '{{$views[$i]->visitor->contact}}',
-                visitAt: '{{$views[$i]->visitAt}}'
+                visitAt: '{{$views[$i]->created_at}}'
             }
             @else
             {   
@@ -341,7 +341,7 @@
                 enabled: false
             },
             stroke: {
-                curve: 'smooth'
+                curve: 'straight'
             },
             grid: {
                 row: {
