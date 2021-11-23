@@ -25,7 +25,9 @@
                                     </h6>
                                 </div>
                             </div>
-                            <span class="btn-edit-webinars"><i class="fas fa-pen-square"></i>
+                            <span class="btn-edit-webinars">
+                                <button data-toggle="modal" data-target="#popup-delete-webinar">Delete</button>
+                                <i class="fas fa-pen-square"></i>
                                 <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}/edit">Edit</a>
                             </span>
                         </h6>
@@ -135,5 +137,40 @@
             </div>
         </div>
     </div>
+    {{-- POPUP DELETE WEBINAR --}}
+    <div class="modal fade" id="popup-delete-webinar" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Confirm Delete Webinar</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to detele this webinar ?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="deleteWebinar()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function deleteWebinar() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}",
+                type: 'delete',
+                dataType: 'json',
+                success: function (res) { 
+                    if(res != null){
+                        location.href = '/administrator/tours/{{$tour->id}}/events/webinars';
+                    }
+                }
+            });
+        }
+    </script>
 @endsection
 

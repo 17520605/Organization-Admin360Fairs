@@ -337,9 +337,7 @@ class EventsController extends Controller
         $webinar = \App\Models\Webinar::find($webinarId);
         $webinar->isDeleted = true ;
         $webinar->save();
-
-        $webinar_speaker = \App\Models\Webinar_Detail::where('webinarId', $webinarId)->delete();
-
+        
         return true;
     }
 

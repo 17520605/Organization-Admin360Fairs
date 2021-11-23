@@ -138,68 +138,204 @@ class EventsController extends Controller
         return view('partner.events.webinar', ['profile' => $profile , 'webinar' => $webinar, 'speakers'=> $speakers, 'tour'=>$tour]);
     }
 
+    public function create($id, Request $request)
+    {     
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+
+        return view('partner.events.create', [
+            'profile' => $profile , 
+            'tour'=>$tour
+        ]);
+    }
+
+    public function edit($id, $webinarId, Request $request)
+    {     
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+
+        $webinar = \App\Models\Webinar::with('details', 'speakers', 'registrant')
+            ->where('id',$webinarId)
+            ->first();
+
+        return view('partner.events.edit', [
+            'profile' => $profile , 
+            'tour'=>$tour,
+            'webinar' => $webinar
+        ]);
+    }
+
     public function saveCreate($id, Request $request)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+
         $topic = $request->topic;
+        $poster = $request->poster;
         $start = $request->start;
         $end = $request->end;
         $description = $request->description;
-        $titles = $request->titles;
-        $durations = $request->durations;
-        $speakers = $request->speakers;
+
+        $speakerNos = $request->speakerNos;
+        $speakerHonorifics = $request->speakerHonorifics;
+        $speakerNames = $request->speakerNames;
+        $speakerPositions = $request->speakerPositions;
+        $speakerAvatars = $request->speakerAvatars;
+        
+        $detailTitles = $request->detailTitles;
+        $detailDurations = $request->detailDurations;
+        $detailSpeakerNos = $request->detailSpeakerNos;
+        $detailContents = $request->detailContents;
+
+        // save file to cloud
+        $posterUrl = isset($poster) ? $this->uploadFile($poster, true)->url : 'https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg';
+        $avatarUrls = [];
+        foreach ($speakerNames as $key => $value) {
+            $url = 'https://res.cloudinary.com/virtual-tour/image/upload/v1634458347/icons/default-avatar_muo2gc.jpg';
+            if(isset($speakerAvatars[$key])){
+                $file = $speakerAvatars[$key];
+                $url = $this->uploadFile($file, true)->url;
+            }
+            $avatarUrls[$key] = $url;
+        }
 
         $webinar = new \App\Models\Webinar();
         $webinar->tourId = $id ;
+        $webinar->registerBy = $profile->id;
         $webinar->topic = $topic;
+        $webinar->poster = $posterUrl;
         $webinar->description = $description;
         $webinar->startAt = $start;
         $webinar->endAt = $end;
+        if($profile->id ==  $tour->organizerId){
+            $webinar->isConfirmed = true;
+        }
         $webinar->save();
 
-        for ($i=0; $i < count($titles); $i++) { 
+        // create speakers
+        $speakers = [];
+        foreach ($speakerNos as $key => $value) {
+            $name = $speakerNames[$key];
+            $avatarUrl = $avatarUrls[$key];
+            $honorific = $speakerHonorifics[$key];
+            $position = $speakerPositions[$key];
+
+            $speaker = new \App\Models\Speaker();
+            $speaker->webinarId = $webinar->id;
+            $speaker->name = $name;
+            $speaker->avatar = $avatarUrl;
+            $speaker->honorific = $honorific;
+            $speaker->position = $position;
+            $speaker->save();
+            $speakers[$value] = $speaker;
+        }
+
+        // create details
+        foreach ($detailTitles as $key => $value) {
             $detail = new \App\Models\Webinar_Detail();
             $detail->webinarId = $webinar->id;
-            $detail->title = $titles[$i];
-            $detail->duration = $durations[$i];
-            $detail->speakerId = $speakers[$i];
+            $detail->title = $detailTitles[$key];
+            $detail->duration = $detailDurations[$key];
+            $detail->content = $detailContents[$key];
+            $detail->speakerId = $speakers[$detailSpeakerNos[$key]]->id;
             $detail->save();
         }
-        return back();
+        
+        return redirect('/partner/tours/'.$id.'/events/webinars/'.$webinar->id);
     }
 
-    public function saveEdit( Request $request)
+    public function saveEdit($id, Request $request)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
         $webinarId = $request->webinarId;
+
         $topic = $request->topic;
+        $poster = $request->poster;
         $start = $request->start;
         $end = $request->end;
         $description = $request->description;
-        $titles = $request->titles;
-        $durations = $request->durations;
-        $speakers = $request->speakers;
+
+        $speakerNos = $request->speakerNos;
+        $speakerIds = $request->speakerIds;
+        $speakerHonorifics = $request->speakerHonorifics;
+        $speakerNames = $request->speakerNames;
+        $speakerPositions = $request->speakerPositions;
+        $speakerAvatars = $request->speakerAvatars;
+        
+        $detailTitles = $request->detailTitles;
+        $detailDurations = $request->detailDurations;
+        $detailSpeakerNos = $request->detailSpeakerNos;
+        $detailContents = $request->detailContents;
 
         $webinar = \App\Models\Webinar::find($webinarId);
-        $webinar->topic = $topic;
-        $webinar->startAt = $start;
-        $webinar->endAt = $end;
-        $webinar->description = $description;
-        $webinar->save();
 
+        // save file to cloud
+        $posterUrl = isset($poster) ? $this->uploadFile($poster, true)->url : $webinar->poster;
+        $avatarUrls = [];
+        foreach ($speakerNames as $key => $value) {
+            $url = null;
+            if(isset($speakerAvatars[$key])){
+                $file = $speakerAvatars[$key];
+                $url = $this->uploadFile($file, true)->url;
+            }
+            else
+            if(isset($speakerIds[$key])){ // get old avatar if exist
+                $oldSpeaker = \App\Models\Speaker::find($speakerIds[$key]);
+                if(isset($oldSpeaker)){
+                    $url = $oldSpeaker->avatar;
+                }
+            }
+            $avatarUrls[$key] = $url;
+        }
+
+        // delete old speakers
+        $rs = \App\Models\Speaker::where('webinarId', $webinarId)->delete();
+
+        // create details
+        $speakers = [];
+        foreach ($speakerNos as $key => $value) {
+            $name = $speakerNames[$key];
+            $avatarUrl = $avatarUrls[$key];
+            $honorific = $speakerHonorifics[$key];
+            $position = $speakerPositions[$key];
+
+            $speaker = new \App\Models\Speaker();
+            $speaker->webinarId = $webinarId;
+            $speaker->name = $name;
+            $speaker->avatar = isset($avatarUrl) ? $avatarUrl : 'https://res.cloudinary.com/virtual-tour/image/upload/v1634458347/icons/default-avatar_muo2gc.jpg';
+            $speaker->honorific = $honorific;
+            $speaker->position = $position;
+            $speaker->save();
+            $speakers[$value] = $speaker;
+        }
+
+       
+        if(isset($webinar)){
+            $webinar->topic = $topic;
+            $webinar->poster = $posterUrl;
+            $webinar->startAt = $start;
+            $webinar->endAt = $end;
+            $webinar->description = $description;
+            $webinar->save();
+        }
+
+        // delete old details
         $details = \App\Models\Webinar_Detail::where('webinarId', $webinarId);
         $details->delete();
 
-        for ($i=0; $i < count($titles); $i++) { 
-            if($titles[$i] != null ){
-                $detail = new \App\Models\Webinar_Detail();
-                $detail->webinarId = $webinarId;
-                $detail->title = $titles[$i];
-                $detail->duration = $durations[$i];
-                $detail->speakerId = $speakers[$i];
-                $detail->save();
-            }
+        // create details
+        foreach ($detailTitles as $key => $value) {
+            $detail = new \App\Models\Webinar_Detail();
+            $detail->webinarId = $webinar->id;
+            $detail->title = $detailTitles[$key];
+            $detail->duration = $detailDurations[$key];
+            $detail->content = $detailContents[$key];
+            $detail->speakerId = $speakers[$detailSpeakerNos[$key]]->id;
+            $detail->save();
         }
 
-        return back();
+        return redirect('/partner/tours/'.$id.'/events/webinars/'.$webinar->id);
     }
 
     public function saveDelete($id, $webinarId, Request $request)
@@ -207,10 +343,9 @@ class EventsController extends Controller
         $webinar = \App\Models\Webinar::find($webinarId);
         $webinar->isDeleted = true ;
         $webinar->save();
-
-        $webinar_speaker = \App\Models\Webinar_Detail::where('webinarId', $webinarId)->delete();
-
+        
         return true;
     }
+
 
 }
