@@ -14,6 +14,10 @@ class Webinar extends Model
     protected $table = 'webinar';
     public $timestamps = true;
 
+    public function speakers() {
+        return $this->hasMany(Speaker::class, 'webinarId');
+    }
+
     public function details() {
         return $this->hasMany(Webinar_Detail::class, 'webinarId');
     }

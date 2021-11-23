@@ -79,8 +79,8 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/events/webinars', 'administrator\EventsController@webinars');
             Route::get('/{id}/events/webinars/requests', 'administrator\EventsController@request');
             Route::get('/{id}/events/webinars/create', 'administrator\EventsController@create');
-            Route::get('/{id}/events/webinars/edit/{$webinarId}', 'administrator\EventsController@edit');
             Route::get('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@webinar');
+            Route::get('/{id}/events/webinars/{webinarId}/edit', 'administrator\EventsController@edit');
             Route::post('/{id}/events/webinars/save-create', 'administrator\EventsController@saveCreate');
             Route::post('/{id}/events/webinars/save-edit', 'administrator\EventsController@saveEdit');
             Route::post('/{id}/events/webinars/save-approve', 'administrator\EventsController@saveApprove');

@@ -2,15 +2,15 @@
 
 @section('content')
 <div class="m-3">
-    <form id="form-create" class="needs-validation" action="/administrator/tours/{{$tour->id}}/events/webinars/save-create" method="POST" enctype="multipart/form-data" novalidate>
+    <form id="form-edit" class="needs-validation" action="/administrator/tours/{{$tour->id}}/events/webinars/save-edit" method="POST" enctype="multipart/form-data" novalidate>
         @csrf
+        <input type="hidden" name="webinarId" value="{{$webinar->id}}">
         <div class="row mb-3">
             <div class="col-md-12">
                 <div class="card p-3">
-                    <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Create New Webinar</h1>
+                    <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Edit Webinar</h1>
                     <div class="div_cardheader_btn">
-                        <button type="submit" class="mb-0 btn float-right active"><span class="icon-loader-form"></span> Create </button>
-                        <button type="reset" class="mb-0 btn float-right" onclick="clean()">Clean</button>
+                        <button type="submit" class="mb-0 btn float-right active"><span class="icon-loader-form"></span> Save Changes </button>
                     </div>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="card-body">
                         <div style="position: relative;">
-                            <img id="form-create__poster-img" src="https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg" alt="" style="width: 100%; height: 60vh;">
+                            <img id="form-edit__poster-img" src="{{$webinar->poster}}" alt="" style="width: 100%; height: 60vh;">
                             <button type="button" style="position: absolute; top: 10px; right: 10px; font-size: 20px" onclick="selectPoster(event)"><i class="fas fa-pen"></i></button>
                             <input class="poster-file-input" type="file" name="poster" hidden onchange="changePoster(event)">
                         </div>
@@ -41,7 +41,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="small mb-1">Topic</label>
-                            <input class="form-control" type="text" name="topic" placeholder="Enter topic" required>
+                            <input class="form-control" type="text" value="{{$webinar->topic}}" name="topic" placeholder="Enter topic" required>
                             <div class="invalid-feedback">
                                 Please enter topic.
                             </div>
@@ -49,14 +49,14 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" for="start">Start time</label>
-                                <input class="form-control" id="start" name="start" type="datetime-local" required>
+                                <input class="form-control" id="start" name="start" value="{{ Carbon\Carbon::parse($webinar->startAt)->format('Y-m-d\TH:i')}}" type="datetime-local" required>
                                 <div class="invalid-feedback">
                                     Please enter start time.
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="end">End time</label>
-                                <input class="form-control" id="end" name="end" type="datetime-local" required>
+                                <input class="form-control" id="end" name="end" value="{{ Carbon\Carbon::parse($webinar->endAt)->format('Y-m-d\TH:i')}}" type="datetime-local" required>
                                 <div class="invalid-feedback">
                                     Please enter end time.
                                 </div>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1" for="description">Description</label>
-                            <textarea placeholder="Enter webinar description" class="form-control" name="description" rows="6" required></textarea>
+                            <textarea placeholder="Enter webinar description" class="form-control" name="description" rows="6" required> {{$webinar->description}} </textarea>
                             <div class="invalid-feedback">
                                 Please enter description.
                             </div>
@@ -81,7 +81,54 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div id="speakers-wrapper" class="col-12"></div>
+                            <div id="speakers-wrapper" class="col-12">
+                                @foreach ($webinar->speakers as $key => $speaker)
+                                <div class="row mb-4 pl-3 speaker-wrapper">
+                                    <input type="hidden" name="speakerNos[]" value="{{$key}}">
+                                    <input type="hidden" name="speakerIds[]" value="{{$speaker->id}}">
+                                    <div style="float: left; width: 150px; height: 100px;"> 
+                                        <button type="button" class="avatar-upload-btn" onclick="selectAvatar(event)" style="position: relative; width: 100px; height: 100px; border: 1px gray; border-style: dotted; border-radius: 50px">
+                                            <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;">
+                                                <img type="image" src="{{$speaker->avatar}}" style="width: 100px; height: 100px; border-radius: 50px"/>
+                                            </div>
+                                            <i class="fas fa-pen"></i>
+                                        </button>
+                                        <input class="avatar-file-input" type="file" name="speakerAvatars[]" accept="image/*" hidden onchange="changeAvatar(event)">
+                                    </div>
+                                    <div style="float: left; width: calc(100% - 250px); height: 100px;">
+                                        <div class="row mb-3">
+                                            <div class="col-3">
+                                                <select class="form-control" name="speakerHonorifics[]" required>
+                                                    <option value="Mr" {{$speaker->honorific == 'Mr' ? 'selected' : '' }} >Mr</option>
+                                                    <option value="Ms" {{$speaker->honorific == 'Ms' ? 'selected' : '' }} >Ms</option>
+                                                    <option value="Mrs" {{$speaker->honorific == 'Mrs' ? 'selected' : '' }} >Mrs</option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Please choose honorific.
+                                                </div>
+                                            </div>
+                                            <div class="col-9">
+                                                <input class="form-control" type="text" name="speakerNames[]" value="{{$speaker->name}}" onchange="changeSpeakerName(event)" placeholder="Speaker's name" required>
+                                                <div class="invalid-feedback">
+                                                    Please enter speaker name.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <input class="form-control" type="text" name="speakerPositions[]" value="{{$speaker->position}}" placeholder="Speaker's position" required>
+                                                <div class="invalid-feedback">
+                                                    Please enter speaker position.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="float: left; width: 100px; height:100%; text-align: center;">
+                                        <i class="fas fa-minus-circle" onclick="removeSpeaker(event);" style="font-size: 25px;color: #f32d2d;line-height: 38px;"></i>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
                             <div class="col-12">
                                 <button type="button" onclick="openPopupCreateSpeaker()" style="width: 100%">Create New Speaker</button>
                             </div>
@@ -97,26 +144,46 @@
                         <h5 class="fw-light">Agenda</h5>
                     </div>
                     <div class="card-body">
-                        {{-- <div class="row gx-3 mb-3">
-                            <div class="col-md-6">
-                                <input class="form-control" type="text" name="detailTitles[]" placeholder="Title">
-                            </div>
-                            <div class="col-md-1" style="padding: 0;">
-                                <input class="form-control" type="number" name="detailDurations[]" min="0" max="500" style="padding-right: 0!important;" placeholder="Duration">
-                            </div>
-                            <div class="col-md-4" style="padding-right:0px ;">
-                                <select class="form-control" name="detailSpeakerNos[]">
-                                    <option disabled selected>--Choose speaker--</option>
-                                    
-                                </select>
-                            </div>
-                            <div class="col-md-1" style="text-align: center;">
-                                <i class="fas fa-plus-circle add-agenda" onclick="addAgenda();" style="font-size: 25px;color: #4e73df;line-height: 38px;"></i>
-                                <i class="fas fa-minus-circle remove-agenda" onclick="removeAgenda(event);" style="font-size: 25px;color: #f32d2d;line-height: 38px; display: none;"></i>
-                            </div>
-                        </div> --}}
                         <div class="row">
-                            <div id="agendas-wrapper" class="col-12"></div>
+                            <div id="agendas-wrapper" class="col-12">
+                                @foreach ($webinar->details as $detail)
+                                <div class="row gx-3 mb-4 agenda-item">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-12 mb-3">
+                                                <input class="form-control" type="text" name="detailTitles[]" value="{{$detail->title}}" placeholder="Title" required>
+                                                <div class="invalid-feedback">
+                                                    Please enter title.
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <input class="form-control" type="number" name="detailDurations[]" value="{{$detail->duration}}" min="0" max="500" style="padding-right: 0!important;" placeholder="Duration" required>
+                                                <div class="invalid-feedback">
+                                                    Please enter duration.
+                                                </div>
+                                            </div>
+                                            <div class="col-9 speaker-select-wrapper">
+                                                <select class="form-control" name="detailSpeakerNos[]" required>
+                                                    <option disabled>--Choose speaker--</option>
+                                                    @foreach ($webinar->speakers as $key => $speaker)
+                                                        <option value="{{$key}}" {{$detail->speakerId == $speaker->id ? 'selected' : '' }}>{{$speaker->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Please choose speaker name.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 speaker-content-wrapper">
+                                        <textarea name="detailContents[]" class="form-control summernote" style="height: 300px">{!! $detail->content !!}</textarea>
+                                    </div>
+                                    <div class="col-md-1" style="text-align: center;">
+                                        <i class="fas fa-minus-circle remove-agenda" onclick="removeAgenda(event);" style="font-size: 25px;color: #f32d2d;line-height: 38px;"></i>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
                             <div class="col-12">
                                 <button type="button" onclick="openPopupCreateAgenda()" style="width: 100%">Create New Agenda</button>
                             </div>
@@ -137,6 +204,8 @@
             </div>
             <div class="modal-body" style="padding: 30px">
                 <div class="row mb-4 pl-3 speaker-wrapper">
+                    <input type="hidden" name="speakerNos[]">
+                    <input type="hidden" name="speakerIds[]">
                     <div style="float: left; width: 150px; height: 100px;"> 
                         <button type="button" class="avatar-upload-btn" onclick="selectAvatar(event)" style="position: relative; width: 100px; height: 100px; border: 1px gray; border-style: dotted; border-radius: 50px">
                             <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;">
@@ -147,13 +216,12 @@
                         <input class="avatar-file-input" type="file" name="speakerAvatars[]" accept="image/*" hidden onchange="changeAvatar(event)">
                     </div>
                     <div style="float: left; width: calc(100% - 250px); height: 100px;">
-                        <input type="hidden" name="speakerNos[]" value='0'>
                         <div class="row mb-3">
                             <div class="col-3">
                                 <select class="form-control" name="speakerHonorifics[]" required>
-                                    <option>Mr</option>
-                                    <option>Ms</option>
-                                    <option>Mrs</option>
+                                    <option value="Mr">Mr</option>
+                                    <option value="Ms">Ms</option>
+                                    <option value="Mrs">Mrs</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please choose honorific.
@@ -204,7 +272,10 @@
                     <div class="col-9 mb-3"> 
                         <label for="">Speaker</label>
                         <select class="form-control" name="detailSpeakerNos[]" required>
-                            <option disabled="" selected="">--Choose speaker--</option>
+                            <option disabled>--Choose speaker--</option>
+                            @foreach ($webinar->speakers as $key => $speaker)
+                                <option value="{{$key}}" {{$detail->speakerId == $speaker->id ? 'selected' : '' }}>{{$speaker->name}}</option>
+                            @endforeach
                         </select>
                         <div class="invalid-feedback">
                             Please choose speaker name.
@@ -213,7 +284,7 @@
                     <div class="col-12">
                         <label for="">Content</label>
                         <div class="form-group">
-                            <textarea id="popup-create-agenda__content-input" name="detailContents[]" class="form-control" style="height: 300px"></textarea>
+                            <textarea id="popup-create-agenda__content-input" name="detailContents[]" class="form-control summernote" style="height: 300px"></textarea>
                         </div>
                     </div>
                 </div>
@@ -227,8 +298,8 @@
 
 
 <script>
-    var _no = 0;
-    
+    var _no = {{count($webinar->speakers)}};
+
     function openPopupCreateSpeaker() {  
         $('#popup-create-speaker').find('input').val(null);
         $("#popup-create-speaker").find('select').prop("selectedIndex", 0);
@@ -270,7 +341,11 @@
                                 Please enter duration.
                             </div>
                         </div>
-                        <div class="col-7 speaker-select-wrapper"></div>
+                        <div class="col-9 speaker-select-wrapper">
+                            <div class="invalid-feedback">
+                                Please choose speaker name.
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-5 speaker-content-wrapper"></div>
@@ -282,7 +357,7 @@
         
         wrapper.find('input[name="detailTitles[]"]').val(title);
         wrapper.find('input[name="detailDurations[]"]').val(duration);
-        wrapper.find('.speaker-select-wrapper').append(select);
+        wrapper.find('.speaker-select-wrapper').preppend(select);
         wrapper.find('.speaker-content-wrapper').append(content);
         content.summernote({
             toolbar: [
@@ -302,11 +377,11 @@
     }
 
     function addSpeaker() {
-        let no = ++_no;
+        _no = _no + 1;
         let name = $('#popup-create-speaker').find('input[name="speakerNames[]"]').val();
         let honorific = $('#popup-create-speaker').find('select[name="speakerHonorifics[]"]').val();
         let wrapper = $('#popup-create-speaker').find('.speaker-wrapper').clone();
-        wrapper.find('input[name="speakerNos[]"]').val(no);
+        wrapper.find('input[name="speakerNos[]"]').val(_no);
         wrapper.find('select[name="speakerHonorifics[]"]').val(honorific);
         wrapper.append(`
             <div style="float: left; width: 100px; height:100%; text-align: center;">
@@ -319,7 +394,7 @@
         $("#speakers-wrapper").append(wrapper);
 
         $('select[name="detailSpeakerNos[]"').append(`
-            <option value="`+ no +`">`+ name +`</option>
+            <option value="`+ _no +`">`+ name +`</option>
         `);
 
         $('#popup-create-speaker').modal('hide');
@@ -382,8 +457,8 @@
             img.attr('src', URL.createObjectURL(file));
         }
     }
-</script>
 
+</script>
 <script>
     (function () {
         "use strict";
@@ -413,7 +488,7 @@
 
     $(document).ready(function () 
     {
-        $('#popup-create-agenda__content-input').summernote({
+        $('textarea.summernote').summernote({
             toolbar: [
                 ['style', ['bold', 'italic', 'underline', 'clear']],
                 ['fontsize', ['fontsize']],

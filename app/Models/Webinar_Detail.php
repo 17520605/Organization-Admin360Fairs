@@ -16,7 +16,7 @@ class Webinar_Detail extends Model
     }
 
     public function speaker() {
-        return $this->belongsTo(Profile::class, 'speakerId');
+        return $this->belongsTo(Speaker::class, 'speakerId');
     }
 
 }
