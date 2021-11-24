@@ -10,26 +10,25 @@
                         <h6 class="card-title">
                             <div class="row">
                                 <div class="col-3" style="margin-left: 20px;margin-top: 10px;">
-                                    <span style="font-size:12px">Start at</span>
-                                    <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{Carbon\Carbon::parse($webinar->startAt)->format('M-d g:i A')}}</span></h6>
+                                    <span style="font-size:14px">Start at</span>
+                                    <h6 class="mt-2" style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{Carbon\Carbon::parse($webinar->startAt)->format('M-d g:i A')}}</span></h6>
                                 </div>
                                 <div class="col-3" style="margin-left: 20px;margin-top: 10px;">
-                                    <span style="font-size:12px">End at</span>
-                                    <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{Carbon\Carbon::parse($webinar->endAt)->format('M-d g:i A')}}</span></h6>
+                                    <span style="font-size:14px">End at</span>
+                                    <h6 class="mt-2" style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{Carbon\Carbon::parse($webinar->endAt)->format('M-d g:i A')}}</span></h6>
                                 </div>
                                 <div class="col-4" style="margin-left: 20px;margin-top: 10px;">
-                                    <span style="font-size:12px">Register by</span>
-                                    <h6 style="font-size:15px">
+                                    <span style="font-size:14px">Register by</span>
+                                    <h6 class="mt-2" style="font-size:15px">
                                         <span><img src="{{(isset($webinar->registrant) && isset($webinar->registrant->avatar)) ? $webinar->registrant->avatar : 'https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg'}}" style="width: 30px; height: 30px; border-radius: 15px;">
-                                        </span><span>{{isset($webinar->registrant) ? $webinar->registrant->name : 'N/A'}}</span>
+                                        </span><span style="line-height: 30px ;font-weight: 600">{{isset($webinar->registrant) ? $webinar->registrant->name : 'N/A'}}</span>
                                     </h6>
                                 </div>
                             </div>
-                            <span class="btn-edit-webinars">
-                                <button data-toggle="modal" data-target="#popup-delete-webinar">Delete</button>
-                                <i class="fas fa-pen-square"></i>
-                                <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}/edit">Edit</a>
-                            </span>
+                            <div style="position: absolute; top: 10px; right: 10px;">
+                                <button class="mb-0 btn btn-edit_webinar btn-page-loader" onclick="window.location.href='/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}/edit'"><span class="icon-loader-form"></span><i class="fas fa-pen-alt"></i></button>
+                                <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-delete-webinar"><i class="fas fa-trash-alt"></i></button>
+                            </div>
                         </h6>
                     </div>
                     <div class="card-header">
@@ -99,12 +98,12 @@
                                                     <div class="timeline-icon">
                                                         
                                                     </div>
-                                                    <div class="timeline-box">
+                                                    <div class="timeline-box" style="position: relative;">
                                                         <div class="event-content">
                                                             <div class="timeline-text">
                                                                 <h3 class=" text-primary" style="font-weight: 500 ; font-size: 17px"><i class="fas fa-hashtag"></i> {{$detail->title}}</h3>
                                                                 <h3 class="font-size-17" style="color: #727cf5"><i class="fas fa-user-tie"></i> {{ isset($detail->speaker) ?  $detail->speaker->honorific.'.'.$detail->speaker->name : "N/A"}} <span style="margin-left: 10px ;"><i class="fas fa-clock"></i> {{$time->format('g:i A')}}</span></h3>
-                                                                <div style="width: 115%;">
+                                                                <div class="content_show_event">
                                                                     {!! $detail->content !!}
                                                                 </div>
                                                             </div>

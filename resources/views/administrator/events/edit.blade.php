@@ -20,12 +20,12 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="fw-light" style="float: left">Poster</h5>
-                        <button type="button" style="float: right"><i class="far fa-question-circle"></i></button>
+                        <button type="button" class="btn btn-circle btn-question-event" style="float: right"><i class="far fa-question-circle"></i></button>
                     </div>
                     <div class="card-body">
                         <div style="position: relative;">
-                            <img id="form-edit__poster-img" src="{{$webinar->poster}}" alt="" style="width: 100%; height: 60vh;">
-                            <button type="button" style="position: absolute; top: 10px; right: 10px; font-size: 20px" onclick="selectPoster(event)"><i class="fas fa-pen"></i></button>
+                            <img id="form-create__poster-img" src="{{$webinar->poster}}" alt="" style="width: 100%; height: 60vh;">
+                            <button type="button" class="btn btn-upload-banner" onclick="selectPoster(event)"><i class="fas fa-pen"></i></button>
                             <input class="poster-file-input" type="file" name="poster" hidden onchange="changePoster(event)">
                         </div>
                     </div>
@@ -130,7 +130,7 @@
                                 @endforeach
                             </div>
                             <div class="col-12">
-                                <button type="button" onclick="openPopupCreateSpeaker()" style="width: 100%">Create New Speaker</button>
+                                <button type="button" class="btn btn-primary btn-block" onclick="openPopupCreateSpeaker()"><i class="fas fa-plus" style="margin-right: 8px"></i> Create New Speaker</button>
                             </div>
                         </div>
                     </div>
@@ -185,7 +185,7 @@
                                 @endforeach
                             </div>
                             <div class="col-12">
-                                <button type="button" onclick="openPopupCreateAgenda()" style="width: 100%">Create New Agenda</button>
+                                <button type="button" class="btn btn-primary btn-block" onclick="openPopupCreateAgenda()"><i class="fas fa-plus" style="margin-right: 8px"></i> Create New Agenda</button>
                             </div>
                         </div>
                     </div>
@@ -206,7 +206,7 @@
                 <div class="row mb-4 pl-3 speaker-wrapper">
                     <input type="hidden" name="speakerNos[]">
                     <input type="hidden" name="speakerIds[]">
-                    <div style="float: left; width: 150px; height: 100px;"> 
+                    <div style="float: left; width: 150px; height: 100px;">
                         <button type="button" class="avatar-upload-btn" onclick="selectAvatar(event)" style="position: relative; width: 100px; height: 100px; border: 1px gray; border-style: dotted; border-radius: 50px">
                             <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;">
                                 <img type="image" src="https://dongthanhphat.vn//userfiles/images/Partner/anh-dai-dien-FB-200.jpg" style="width: 100px; height: 100px; border-radius: 50px"/>
@@ -265,11 +265,11 @@
                         <label for="">Title</label>
                         <input class="form-control" type="text" name="detailTitles[]" placeholder="Enter title">
                     </div>
-                    <div class="col-3 mb-3"> 
+                    <div class="col-3 mb-3">
                         <label for="">Duration</label>
                         <input class="form-control" type="number" name="detailDurations[]" min="5" max="500" step="5" value="5" style="padding-right: 0!important;" placeholder="Duration">
                     </div>
-                    <div class="col-9 mb-3"> 
+                    <div class="col-9 mb-3">
                         <label for="">Speaker</label>
                         <select class="form-control" name="detailSpeakerNos[]" required>
                             <option disabled>--Choose speaker--</option>
@@ -330,21 +330,22 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-12 mb-3">
+                            <label class="small mb-1" for="">Title Seminar</label>
                             <input class="form-control" type="text" name="detailTitles[]" placeholder="Title" required>
                             <div class="invalid-feedback">
                                 Please enter title.
                             </div>
                         </div>
                         <div class="col-3">
+                            <label class="small mb-1" for="">Time program</label>
                             <input class="form-control" type="number" name="detailDurations[]" min="0" max="500" style="padding-right: 0!important;" placeholder="Duration" required>
                             <div class="invalid-feedback">
                                 Please enter duration.
                             </div>
                         </div>
-                        <div class="col-9 speaker-select-wrapper">
-                            <div class="invalid-feedback">
-                                Please choose speaker name.
-                            </div>
+                        <div class="col-9">
+                            <label class="small mb-1" for="">Speaker's name</label>
+                            <div class="speaker-select-wrapper"></div>
                         </div>
                     </div>
                 </div>
@@ -384,7 +385,7 @@
         wrapper.find('input[name="speakerNos[]"]').val(_no);
         wrapper.find('select[name="speakerHonorifics[]"]').val(honorific);
         wrapper.append(`
-            <div style="float: left; width: 100px; height:100%; text-align: center;">
+            <div style="float: left; width: 80px; height:100%; margin-top: 65px; text-align: center; position: absolute;right: -10px;">
                 <i class="fas fa-minus-circle" onclick="removeSpeaker(event);" style="font-size: 25px;color: #f32d2d;line-height: 38px;"></i>
             </div>
         `);
