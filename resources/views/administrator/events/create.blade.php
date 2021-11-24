@@ -9,7 +9,7 @@
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Create New Webinar</h1>
                     <div class="div_cardheader_btn">
-                        <button type="submit" class="mb-0 btn float-right active"><span class="icon-loader-form"></span> Create </button>
+                        <button type="submit" class="mb-0 btn float-right active "><span class="icon-loader-form"></span> Create </button>
                         <button type="reset" class="mb-0 btn float-right" onclick="clean()">Clean</button>
                     </div>
                 </div>
@@ -20,12 +20,12 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="fw-light" style="float: left">Poster</h5>
-                        <button type="button" style="float: right"><i class="far fa-question-circle"></i></button>
+                        <button type="button" class="btn btn-circle btn-question-event" style="float: right"><i class="far fa-question-circle"></i></button>
                     </div>
                     <div class="card-body">
                         <div style="position: relative;">
-                            <img id="form-create__poster-img" src="https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg" alt="" style="width: 100%; height: 60vh;">
-                            <button type="button" style="position: absolute; top: 10px; right: 10px; font-size: 20px" onclick="selectPoster(event)"><i class="fas fa-pen"></i></button>
+                            <img id="form-create__poster-img" src="https://res.cloudinary.com/virtual-tour/image/upload/v1637745597/Background/banner_dvkauy.jpg" alt="" style="width: 100%; height: 65vh; pointer-events: none; border-radius:5px ">
+                            <button type="button" class="btn btn-upload-banner" onclick="selectPoster(event)"><i class="fas fa-pen"></i></button>
                             <input class="poster-file-input" type="file" name="poster" hidden onchange="changePoster(event)">
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                         <div class="row">
                             <div id="speakers-wrapper" class="col-12"></div>
                             <div class="col-12">
-                                <button type="button" onclick="openPopupCreateSpeaker()" style="width: 100%">Create New Speaker</button>
+                                <button type="button" class="btn btn-primary btn-block" onclick="openPopupCreateSpeaker()"><i class="fas fa-plus" style="margin-right: 8px"></i> Create New Speaker</button>
                             </div>
                         </div>
                     </div>
@@ -118,7 +118,7 @@
                         <div class="row">
                             <div id="agendas-wrapper" class="col-12"></div>
                             <div class="col-12">
-                                <button type="button" onclick="openPopupCreateAgenda()" style="width: 100%">Create New Agenda</button>
+                                <button type="button" class="btn btn-primary btn-block" onclick="openPopupCreateAgenda()"><i class="fas fa-plus" style="margin-right: 8px"></i> Create New Agenda</button>
                             </div>
                         </div>
                     </div>
@@ -136,20 +136,19 @@
                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="padding: 30px">
-                <div class="row mb-4 pl-3 speaker-wrapper">
-                    <div style="float: left; width: 150px; height: 100px;"> 
-                        <button type="button" class="avatar-upload-btn" onclick="selectAvatar(event)" style="position: relative; width: 100px; height: 100px; border: 1px gray; border-style: dotted; border-radius: 50px">
-                            <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;">
-                                <img type="image" src="https://dongthanhphat.vn//userfiles/images/Partner/anh-dai-dien-FB-200.jpg" style="width: 100px; height: 100px; border-radius: 50px"/>
-                            </div>
-                            <i class="fas fa-pen"></i>
-                        </button>
-                        <input class="avatar-file-input" type="file" name="speakerAvatars[]" accept="image/*" hidden onchange="changeAvatar(event)">
+                <div class="row pl-3 mb-3 speaker-wrapper">
+                    <div class="col-auto" style="margin-right: 30px;"> 
+                        <div class="avatar-lg">
+                            <img style="width: 150px; height: 150px; border: 2px;background-color: #5873c4;" src="http://res.cloudinary.com/virtual-tour/image/upload/v1635327878/rk5ex6hwu5kwebeqrf4k.jpg" alt="" class="rounded-circle img-thumbnail">
+                            <button onclick="selectAvatar(event)" style="background: #5873c4" class="btn btn-default change-avatar-profile"><i style="color: #FFF" class="fas fa-pen"></i></button>
+                            <input class="avatar-file-input" type="file" name="speakerAvatars[]" accept="image/*" hidden onchange="changeAvatar(event)">
+                        </div>
                     </div>
-                    <div style="float: left; width: calc(100% - 250px); height: 100px;">
+                    <div class="col-9" style="position: absolute;margin-left: 20%">
                         <input type="hidden" name="speakerNos[]" value='0'>
                         <div class="row mb-3">
                             <div class="col-3">
+                                <label class="small mb-1" for="">Speaker's gender</label>
                                 <select class="form-control" name="speakerHonorifics[]" required>
                                     <option>Mr</option>
                                     <option>Ms</option>
@@ -160,14 +159,16 @@
                                 </div>
                             </div>
                             <div class="col-9">
+                                <label class="small mb-1" for="">Name speaker</label>
                                 <input class="form-control" type="text" name="speakerNames[]" onchange="changeSpeakerName(event)" placeholder="Speaker's name" required>
                                 <div class="invalid-feedback">
                                     Please enter speaker name.
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="">Organization Email</label>
                                 <input class="form-control" type="text" name="speakerPositions[]" placeholder="Speaker's position" required>
                                 <div class="invalid-feedback">
                                     Please enter speaker position.
@@ -259,18 +260,23 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-12 mb-3">
+                            <label class="small mb-1" for="">Title Seminar</label>
                             <input class="form-control" type="text" name="detailTitles[]" placeholder="Title" required>
                             <div class="invalid-feedback">
                                 Please enter title.
                             </div>
                         </div>
                         <div class="col-3">
+                            <label class="small mb-1" for="">Time program</label>
                             <input class="form-control" type="number" name="detailDurations[]" min="0" max="500" style="padding-right: 0!important;" placeholder="Duration" required>
                             <div class="invalid-feedback">
                                 Please enter duration.
                             </div>
                         </div>
-                        <div class="col-7 speaker-select-wrapper"></div>
+                        <div class="col-9">
+                            <label class="small mb-1" for="">Speaker's name</label>
+                            <div class="speaker-select-wrapper"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-5 speaker-content-wrapper"></div>
@@ -309,7 +315,7 @@
         wrapper.find('input[name="speakerNos[]"]').val(no);
         wrapper.find('select[name="speakerHonorifics[]"]').val(honorific);
         wrapper.append(`
-            <div style="float: left; width: 100px; height:100%; text-align: center;">
+            <div style="float: left; width: 80px; height:100%; margin-top: 65px; text-align: center; position: absolute;right: -10px;">
                 <i class="fas fa-minus-circle" onclick="removeSpeaker(event);" style="font-size: 25px;color: #f32d2d;line-height: 38px;"></i>
             </div>
         `);
@@ -364,7 +370,7 @@
         if(files.length > 0){
             let file = files[0];
             let btn = $(e.currentTarget).parent().find('.avatar-upload-btn');
-            let img = btn.find('img');
+            let img = $(e.currentTarget).parent().find('img');
             img.attr('src', URL.createObjectURL(file));
         }
     }
