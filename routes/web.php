@@ -148,6 +148,7 @@ Route::middleware('auth')->group(function (){
             Route::delete('/{id}/events/webinars/{webinarId}', 'partner\EventsController@saveDelete');
 
             // notifications
+            Route::get('/{id}/notifications', 'partner\NotificationsController@index');
             Route::get('/{id}/notifications/get-unseen', 'partner\NotificationsController@getUnseen');
             
         }); 
