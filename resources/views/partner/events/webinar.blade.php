@@ -11,7 +11,16 @@
                             <span>{{Carbon\Carbon::parse($webinar->startAt)->format('M d : h:m')}} </span>
                             to 
                             <span>{{Carbon\Carbon::parse($webinar->endAt)->format('M d : h:m')}} </span>
-                            <span class="btn-edit-webinars" onclick="onOpenPopupEditWebinar(this)"><i class="fas fa-pen-square"></i> Edit</span>
+                            @if (!isset($webianr->isConfirmed))
+                                <span class="btn-edit-webinars"> Waiting for approve</span>
+                            @elseif($webianr->isConfirmed == false){
+                                <span class="btn-edit-webinars"> Rejected</span>
+                                <span class="btn-edit-webinars" onclick="onOpenPopupEditWebinar(this)"><i class="fas fa-pen-square"></i> Edit</span>
+                            }
+                            @elseif($webianr->isConfirmed == true){
+                                <span class="btn-edit-webinars"> Approved</span>
+                            }
+                            @endif
                         </h6>
                     </div>
                     <div class="card-body">

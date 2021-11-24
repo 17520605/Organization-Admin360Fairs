@@ -59,7 +59,9 @@
         <script src="{{ asset('admin-master/asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
         <script src="{{ asset('admin-master/asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{ asset('admin-master/asset/js/demo/datatables-demo.js')}}"></script>
-               
+        <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
         <script>
             $(function() {
                 //Enable check and uncheck all functionality
@@ -93,6 +95,88 @@
             })
         </script>
 
+        {{-- NOTIFICATIONS --}}
+        <script>
+            const NotificationTypes = {
+                Webinar: {
+                    NEW: 1,
+                    REJECTED: 2,
+                    APPROVED: 3,
+                },
+            };
+
+            $(document).ready(function () {
+                loadNotifications();
+
+                var pusher = new Pusher('{{env("PUSHER_APP_KEY")}}', {
+                    cluster: '{{env("PUSHER_APP_CLUSTER")}}'
+                });
+
+                var channel = pusher.subscribe('users@'+'{{$profile->id}}');
+                channel.bind('webinar@new', function(res) {
+                    let notification = JSON.parse(res);
+                    let text = $('#top-nav-notifications__count').text();
+                    let notifCount = text == "" ? 1 : parseInt(text) + 1;
+                    $('#top-nav-notifications__count').text(notifCount);
+                    $('#top-nav-notifications__count').show();
+
+                    $('#top-nav-notifications__wrapper').append(createHTMLNotification(notification));
+                });
+            });
+            
+            function createHTMLNotification(notification) { 
+                let elm = null;
+                let content = JSON.parse(notification.content);
+                switch (notification.type) {
+                    case '{{\App\Models\Notification::INFO}}':
+                        elm = $(`
+                            <a class="dropdown-item d-flex align-items-center" href="/partner/tours/{{$tour->id}}/notifications#`+ notification.id +`">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        <i class="fas fa-file-alt text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">`+ moment(notification.created_at).format('MMMM DD YYYY hh:mm') +`</div>
+                                    <span class="font-weight-bold">`+ notification.title +`</span>
+                                    <span> <a href="/partner/tours/{{$tour->id}}/events/webinars/`+ content.id +`">`+ content.topic +`</a> </span>
+                                </div>
+                            </a>
+                        `);
+                        break;
+
+                    default:
+                        break;
+                };
+                
+                return elm;
+            };
+
+            function loadNotifications() {  
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "/partner/tours/{{$tour->id}}/notifications/get-unseen",
+                    method: 'get',
+                    dataType: 'json',
+                    success: function (notifications) {
+                        $('#top-nav-notifications__count').text(notifications.length);
+                        if(notifications.length > 0){
+                            $('#top-nav-notifications__count').show();
+                        }
+                        else{
+                            $('#top-nav-notifications__count').hide();
+                        }
+                           
+                        notifications.forEach(notification => {
+                            $('#top-nav-notifications__wrapper').append(createHTMLNotification(notification));
+                        });
+                    }
+                });
+            }
+
+        </script>
         <script>
             $(function() {
                 //Add text editor

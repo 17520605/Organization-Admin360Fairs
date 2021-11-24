@@ -96,7 +96,6 @@ class Controller extends BaseController
 
             return $next($request);
         });
-        
     }
 
     public function uploadFile($file, $isUsed = false)
@@ -122,4 +121,6 @@ class Controller extends BaseController
 
         return $resObj;
     }
+
+
 }

@@ -240,6 +240,19 @@ class EventsController extends Controller
             $detail->speakerId = $speakers[$detailSpeakerNos[$key]]->id;
             $detail->save();
         }
+
+        $webinar = \App\Models\Webinar::with('details', 'speakers', 'registrant')->find($webinar->id);
+
+        // send notification for user registered webinar
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $id;
+        $notification->to = 'users@'.$webinar->registrant->id;
+        $notification->channel = 'webinar@new';
+        $notification->type = \App\Models\Notification::INFO;
+        $notification->title = "You register a new webinar";
+        $notification->content = json_encode($webinar);
+        $notification->save();
+        $notification->send();
         
         return redirect('/partner/tours/'.$id.'/events/webinars/'.$webinar->id);
     }

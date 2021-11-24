@@ -147,7 +147,9 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/events/webinars/save-edit', 'partner\EventsController@saveEdit');
             Route::delete('/{id}/events/webinars/{webinarId}', 'partner\EventsController@saveDelete');
 
-          
+            // notifications
+            Route::get('/{id}/notifications/get-unseen', 'partner\NotificationsController@getUnseen');
+            
         }); 
 
     });
