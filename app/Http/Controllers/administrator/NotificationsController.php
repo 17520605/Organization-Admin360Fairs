@@ -16,7 +16,18 @@ class NotificationsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-        return view('administrator.notification.notification', ['profile' => $profile, 'tour'=> $tour]);
+
+        $notifications = \App\Models\Notification::where([
+                ['tourId', '=', $tour->id],
+                ['to', '=', 'users@'.$profile->id]
+            ])
+            ->orderBy('created_at', 'DESC')
+            ->get();
+        return view('administrator.notifications.index', [
+            'profile' => $profile, 
+            'tour'=> $tour,
+            'notifications'=> $notifications,
+        ]);
     }
 
     public function getAll($id, Request $request)
@@ -44,5 +55,20 @@ class NotificationsController extends Controller
             ])->get();
 
         return json_encode($notifications);
+    }
+
+    public function setSeen($id, $notificationId, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+
+        $notification = \App\Models\Notification::find($notificationId);
+        if(isset($notification) && $notification->isSeen == false){
+            $notification->isSeen = true;
+            $notification->save();
+            return true;
+        }
+
+        return false;
     }
 }
