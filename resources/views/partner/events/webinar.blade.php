@@ -8,37 +8,91 @@
                     <div class="card-header">
                         <h4 class="card-title text-primary font-weight-bold">{{$webinar->topic}}</h4>
                         <h6 class="card-title">
-                            <span>{{Carbon\Carbon::parse($webinar->startAt)->format('M d : h:m')}} </span>
-                            to 
-                            <span>{{Carbon\Carbon::parse($webinar->endAt)->format('M d : h:m')}} </span>
-                            @if (!isset($webianr->isConfirmed))
-                                <span class="btn-edit-webinars"> Waiting for approve</span>
-                            @elseif($webianr->isConfirmed == false){
-                                <span class="btn-edit-webinars"> Rejected</span>
-                                <span class="btn-edit-webinars" onclick="onOpenPopupEditWebinar(this)"><i class="fas fa-pen-square"></i> Edit</span>
-                            }
-                            @elseif($webianr->isConfirmed == true){
-                                <span class="btn-edit-webinars"> Approved</span>
-                            }
-                            @endif
+                            <div class="row">
+                                <div class="col-3" style="margin-left: 20px;margin-top: 10px;">
+                                    <span style="font-size:14px">Start at</span>
+                                    <h6 class="mt-2" style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{Carbon\Carbon::parse($webinar->startAt)->format('M-d g:i A')}}</span></h6>
+                                </div>
+                                <div class="col-3" style="margin-left: 20px;margin-top: 10px;">
+                                    <span style="font-size:14px">End at</span>
+                                    <h6 class="mt-2" style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{Carbon\Carbon::parse($webinar->endAt)->format('M-d g:i A')}}</span></h6>
+                                </div>
+                                <div class="col-4" style="margin-left: 20px;margin-top: 10px;">
+                                    <span style="font-size:14px">Register by</span>
+                                    <h6 class="mt-2" style="font-size:15px">
+                                        <span><img src="{{(isset($webinar->registrant) && isset($webinar->registrant->avatar)) ? $webinar->registrant->avatar : 'https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg'}}" style="width: 30px; height: 30px; border-radius: 15px;">
+                                        </span><span style="line-height: 30px ;font-weight: 600">{{isset($webinar->registrant) ? $webinar->registrant->name : 'N/A'}}</span>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div style="position: absolute; top: 10px; right: 10px;">
+                                @if ($webinar->registerBy == $profile->id)
+                                <button class="mb-0 btn btn-edit_webinar btn-page-loader" onclick="window.location.href='/partner/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}/edit'"><span class="icon-loader-form"></span><i class="fas fa-pen-alt"></i></button>
+                                <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-delete-webinar"><i class="fas fa-trash-alt"></i></button>
+                                @endif
+
+                                @if (!isset($webinar->isConfirmed))
+                                <span>Waiting for approve</span>
+                                @elseif ($webinar->isConfirmed == true)
+                                <span>Approved</span>
+                                @elseif ($webinar->isConfirmed == false)
+                                <span>Rejected</span>
+                                @endif
+                            </div>
                         </h6>
+                    </div>
+                    <div class="card-header">
+                        <div>
+                            <img src="{{$webinar->poster}}" alt="" style="width: 100%; height: 60vh;">
+                        </div>
                     </div>
                     <div class="card-body">
                         {{$webinar->description}}
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Timeline</h5>
+                        <div style="width: 100%; height: 30px; mb-2 "> <h5>Speakers</h5></div>
                     </div>
-                    <!-- end card header -->
                     <div class="card-body">
-                        <div class="row justify-content-center">
-                            <div class="col-xl-10">
+                        <div class="row">
+                            @foreach ($webinar->speakers as $speaker)
+                            <div class="col-lg-6">
+                                <div class="row mb-4 pl-3 speaker-wrapper">
+                                    <div style="float: left; width: 120px;"> 
+                                        <div style="width: 100%; height: 100%;">
+                                            <img type="image" src="{{$speaker->avatar}}" style="width: 80px; height: 80px; border-radius: 40px"/>
+                                        </div>
+                                    </div>
+                                    <div style="float: left; width: calc(100% - 120px); height: 80px;">
+                                        <div class="row">
+                                            <h5 style="font-weight: bold"><span>{{$speaker->honorific}}.</span> <span>{{$speaker->name}}</span></h5>
+                                        </div>
+                                        <div class="row">
+                                            <span class="text-muted">{{$speaker->position}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div style="width: 100%; height: 30px; mb-2 "> <h5>Timeline</h5></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-center tab-body">
+                            <div class="col-xl-12">
                                 <div class="timeline">
                                     <div class="timeline-container">
                                         <div class="timeline-end">
@@ -50,23 +104,18 @@
                                             @endphp
                                             @foreach ($webinar->details as $detail)
                                             <div class="row timeline-box-card">
-                                                {{-- <div class="col-md-6">
-                                                    
-                                                </div> --}}
-
                                                 <div class="col-md-6">
                                                     <div class="timeline-icon">
-                                                        {{-- <i class="bx bx-briefcase-alt-2 text-primary h2 mb-0"></i> --}}
+                                                        
                                                     </div>
-                                                    <div class="timeline-box">
-                                                        <div class="timeline-date bg-primary text-center rounded">
-                                                            <h4 class="text-white mb-0"> {{$time->format('h')}}</h4>
-                                                            <h5 class="text-white mb-0"> {{$time->format('m')}}'</h5>
-                                                        </div>
+                                                    <div class="timeline-box" style="position: relative;">
                                                         <div class="event-content">
                                                             <div class="timeline-text">
-                                                                <h3 class="font-size-17"> {{$detail->speaker != null ? $detail->speaker->name : "N/A"}}</h3>
-                                                                <h3 class="font-size-14"><i class="fas fa-check"></i> {{$detail->title}}</h3>
+                                                                <h3 class=" text-primary" style="font-weight: 500 ; font-size: 17px"><i class="fas fa-hashtag"></i> {{$detail->title}}</h3>
+                                                                <h3 class="font-size-17" style="color: #727cf5"><i class="fas fa-user-tie"></i> {{ isset($detail->speaker) ?  $detail->speaker->honorific.'.'.$detail->speaker->name : "N/A"}} <span style="margin-left: 10px ;"><i class="fas fa-clock"></i> {{$time->format('g:i A')}}</span></h3>
+                                                                <div class="content_show_event">
+                                                                    {!! $detail->content !!}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -83,7 +132,7 @@
                                         <div class="timeline-launch">
                                             <div class="timeline-box">
                                                 <div class="timeline-text">
-                                                    <h3 style="font-size: 17px" class="text-primary font-weight-bold">Launched our company on 21 June 2021</h3>
+                                                    <h3 style="font-size: 17px" class="text-primary font-weight-bold">Thank you for your watching</h3>
                                                     <p class="text-muted mb-0">Copyright © by 360Fairs</p>
                                                 </div>
                                             </div>
@@ -93,128 +142,120 @@
                             </div>
                         </div>
                     </div>
-                    <!-- end card body -->
                 </div>
-                <!-- end card -->
             </div>
-            <!-- end col -->
         </div>
     </div>
-    <div class="modal fade" id="popup-edit-webinar" tabindex="-1" role="dialog" aria-hidden="true">
+    {{-- POPUP DELETE WEBINAR --}}
+    <div class="modal fade" id="popup-delete-webinar" tabindex="-1" role="dialog" aria-modal="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="fw-light">Edit Webinar</h5>
+                    <h5 class="fw-light">Confirm Delete Webinar</h5>
                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <form action="/administrator/tours/{{$tour->id}}/events/webinars/save-edit" method="POST">
-                        @csrf
-                        <input type="hidden" name="webinarId" value="{{$webinar->id}}">
-                        <div class="mb-3">
-                            <label class="small mb-1">Topic</label>
-                            <input class="form-control" type="text" name="topic" value="{{$webinar->topic}}" placeholder="Enter topic">
-                        </div>
-                        <div class="row gx-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="start">Start time</label>
-                                <input class="form-control" id="start" name="start" value="{{Carbon\Carbon::parse($webinar->startAt)->format('Y-m-d\TH:i')}}" type="datetime-local">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="end">End time</label>
-                                <input class="form-control" id="end" name="end" value="{{Carbon\Carbon::parse($webinar->endAt)->format('Y-m-d\TH:i')}}" type="datetime-local">
-                            </div>
-                        </div>
-                        <label class="small mb-1" for="">Agenda</label>
-                        <div id="agenda-wrapper">
-                            @foreach ($webinar->details as $detail)
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" name="titles[]" value="{{$detail->title}}" placeholder="Title">
-                                </div>
-                                <div class="col-md-1" style="padding: 0;">
-                                    <input class="form-control" type="number" name="durations[]" value="{{$detail->duration}}" min="0" max="500" style="padding-right: 0!important;" placeholder="Duration">
-                                </div>
-                                <div class="col-md-4" style="padding-right:0px ;">
-                                    <select class="form-control" name="speakers[]">
-                                        <option>--Choose speaker--</option>
-                                        @foreach ($speakers as $key => $speaker)
-                                            <option value="{{$speaker->id}}" {{$speaker->id == $detail->speakerId ? 'selected' : '' }}>{{$speaker->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-1" style="text-align: center;">
-                                    <i class="fas fa-minus-circle remove-agenda" onclick="removeAgenda(event);" style="font-size: 25px;color: #f32d2d;line-height: 38px;"></i>
-                                </div>
-                            </div>
-                            @endforeach
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" name="titles[]" placeholder="Title">
-                                </div>
-                                <div class="col-md-1" style="padding: 0;">
-                                    <input class="form-control" type="number" name="durations[]" min="0" max="500" style="padding-right: 0!important;" placeholder="Duration">
-                                </div>
-                                <div class="col-md-4" style="padding-right:0px ;">
-                                    <select class="form-control" name="speakers[]">
-                                        <option>--Choose speaker--</option>
-                                        @foreach ($speakers as $key => $speaker)
-                                            <option value="{{$speaker->id}}"> {{$speaker->name}} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-1" style="text-align: center;">
-                                    <i class="fas fa-plus-circle add-agenda" onclick="addAgenda();" style="font-size: 25px;color: #4e73df;line-height: 38px;"></i>
-                                    <i class="fas fa-minus-circle remove-agenda" onclick="removeAgenda(event);" style="font-size: 25px;color: #f32d2d;line-height: 38px; display:none"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1" for="description">Tour Description</label>
-                            <textarea placeholder="Enter your tour description" class="form-control" name="description" rows="6"> {{$webinar->description}} </textarea>
-                        </div>
-                        <!-- Form Group (create account submit)-->
-                        <button type="submit" class="btn btn-primary btn-block btn-icon-loader"><span class="icon-loader-form"></span> Save Changes</button>
-                    </form>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to detele this webinar ?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="deleteWebinar()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- POPUP APPROVE WEBINAR --}}
+    <div class="modal fade" id="popup-approve-webinar" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Confirm Approve</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to approve this webinar ?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="approveWebinar()">Approve</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- POPUP APPROVE WEBINAR --}}
+    <div class="modal fade" id="popup-reject-webinar" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Confirm Reject</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to reject this webinar ?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="rejectWebinar()">Reject</button>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        function onOpenPopupEditWebinar(target){
-            $('#popup-edit-webinar').modal('show');
-        }
-        function addAgenda() {
-            $('.add-agenda').hide();
-            $('.remove-agenda').show();
-            $("#agenda-wrapper").append( 
-                `<div class="row gx-3 mb-3 agenda-item">
-                    <div class="col-md-6">
-                        <input class="form-control" type="text" name="titles[]" placeholder="Title">
-                    </div>
-                    <div class="col-md-1" style="padding: 0;">
-                        <input class="form-control" type="number" name="durations[]" min="0" max="500" style="padding-right: 0!important;" placeholder="Duration">
-                    </div>
-                    <div class="col-md-4" style="padding-right:0px ;">
-                        <select class="form-control" name="speakers[]">
-                            <option>--Choose speaker--</option>
-                            @foreach ($speakers as $key => $speaker)
-                                <option value="{{$speaker->id}}">{{$speaker->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-1" style="text-align: center;">
-                        <i class="fas fa-plus-circle add-agenda" onclick="addAgenda();" style="font-size: 25px;color: #4e73df;line-height: 38px;"></i>
-                        <i class="fas fa-minus-circle remove-agenda" onclick="removeAgenda(event);" style="font-size: 25px;color: #f32d2d;line-height: 38px; display: none;"></i>
-                    </div>
-                </div>`
-            );
-
-            let a = "{{$tour->id}}";
+        function deleteWebinar() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}",
+                type: 'delete',
+                dataType: 'json',
+                success: function (res) { 
+                    if(res != null){
+                        location.href = '/administrator/tours/{{$tour->id}}/events/webinars';
+                    }
+                }
+            });
         }
 
-        function removeAgenda(e) {
-            $(e.currentTarget).parent().parent().remove();
+        function approveWebinar() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/save-approve",
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    webinarId: '{{$webinar->id}}'
+                },
+                success: function (res) { 
+                    if(res != null){
+                        location.reload()
+                    }
+                }
+            });
+        }
+
+        function rejectWebinar() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/save-reject",
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    webinarId: '{{$webinar->id}}'
+                },
+                success: function (res) { 
+                    if(res != null){
+                        location.reload()
+                    }
+                }
+            });
         }
     </script>
 @endsection
+

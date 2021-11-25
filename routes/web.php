@@ -96,9 +96,10 @@ Route::middleware('auth')->group(function (){
             // request
             Route::get('/{id}/request', 'administrator\RequestController@index');
 
-            // notification
-            Route::get('/{id}/notifications', 'administrator\NotificationController@index');
-            Route::post('/{id}/notifications/save-create', 'administrator\NotificationController@saveCreate');
+            // notifications
+            Route::get('/{id}/notifications', 'administrator\NotificationsController@index');
+            Route::get('/{id}/notifications/get-unseen', 'administrator\NotificationsController@getUnseen');
+            Route::get('/{id}/notifications/get-all', 'administrator\NotificationsController@getAll');
 
         }); 
     });
@@ -141,8 +142,8 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/events/webinars', 'partner\EventsController@webinars');
             Route::get('/{id}/events/webinars/requests', 'partner\EventsController@request');
             Route::get('/{id}/events/webinars/create', 'partner\EventsController@create');
-            Route::get('/{id}/events/webinars/edit', 'partner\EventsController@edit');
             Route::get('/{id}/events/webinars/{webinarId}', 'partner\EventsController@webinar');
+            Route::get('/{id}/events/webinars/{webinarId}/edit', 'partner\EventsController@edit');
             Route::post('/{id}/events/webinars/save-create', 'partner\EventsController@saveCreate');
             Route::post('/{id}/events/webinars/save-edit', 'partner\EventsController@saveEdit');
             Route::delete('/{id}/events/webinars/{webinarId}', 'partner\EventsController@saveDelete');
@@ -150,6 +151,7 @@ Route::middleware('auth')->group(function (){
             // notifications
             Route::get('/{id}/notifications', 'partner\NotificationsController@index');
             Route::get('/{id}/notifications/get-unseen', 'partner\NotificationsController@getUnseen');
+            Route::get('/{id}/notifications/get-all', 'partner\NotificationsController@getAll');
             
         }); 
 

@@ -95,16 +95,8 @@
             })
         </script>
 
-        {{-- NOTIFICATIONS --}}
-        <script>
-            const NotificationTypes = {
-                Webinar: {
-                    NEW: 1,
-                    REJECTED: 2,
-                    APPROVED: 3,
-                },
-            };
-
+         {{-- NOTIFICATIONS --}}
+         <script>
             $(document).ready(function () {
                 loadNotifications();
 
@@ -126,7 +118,6 @@
             
             function createHTMLNotification(notification) { 
                 let elm = null;
-                let content = JSON.parse(notification.content);
                 switch (notification.type) {
                     case '{{\App\Models\Notification::INFO}}':
                         elm = $(`
@@ -139,7 +130,7 @@
                                 <div>
                                     <div class="small text-gray-500">`+ moment(notification.created_at).format('MMMM DD YYYY hh:mm') +`</div>
                                     <span class="font-weight-bold">`+ notification.title +`</span>
-                                    <span> <a href="/partner/tours/{{$tour->id}}/events/webinars/`+ content.id +`">`+ content.topic +`</a> </span>
+                                    <span>`+ notification.content +` </span>
                                 </div>
                             </a>
                         `);
@@ -168,15 +159,15 @@
                         else{
                             $('#top-nav-notifications__count').hide();
                         }
-                           
+                        
                         notifications.forEach(notification => {
                             $('#top-nav-notifications__wrapper').append(createHTMLNotification(notification));
                         });
                     }
                 });
             }
-
         </script>
+
         <script>
             $(function() {
                 //Add text editor

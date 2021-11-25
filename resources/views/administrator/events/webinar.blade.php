@@ -26,8 +26,22 @@
                                 </div>
                             </div>
                             <div style="position: absolute; top: 10px; right: 10px;">
+                                @if ($webinar->registerBy == $profile->id)
                                 <button class="mb-0 btn btn-edit_webinar btn-page-loader" onclick="window.location.href='/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}/edit'"><span class="icon-loader-form"></span><i class="fas fa-pen-alt"></i></button>
                                 <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-delete-webinar"><i class="fas fa-trash-alt"></i></button>
+                                @else
+                                    @if (!isset($webinar->isConfirmed))
+                                    <button class="mb-0 btn btn-edit_webinar"  data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
+                                    <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button>
+                                    @elseif ($webinar->isConfirmed == true)
+                                    <button class="mb-0 btn btn-edit_webinar"  data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
+                                    <span>Approved</span>
+                                    @elseif ($webinar->isConfirmed == false)
+                                    <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button>
+                                    <span>Rejected</span>
+                                    @endif 
+                                @endif
+                                
                             </div>
                         </h6>
                     </div>
@@ -154,6 +168,44 @@
             </div>
         </div>
     </div>
+
+    {{-- POPUP APPROVE WEBINAR --}}
+    <div class="modal fade" id="popup-approve-webinar" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Confirm Approve</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to approve this webinar ?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="approveWebinar()">Approve</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- POPUP APPROVE WEBINAR --}}
+    <div class="modal fade" id="popup-reject-webinar" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Confirm Reject</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to reject this webinar ?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="rejectWebinar()">Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         function deleteWebinar() {  
             $.ajax({
@@ -166,6 +218,44 @@
                 success: function (res) { 
                     if(res != null){
                         location.href = '/administrator/tours/{{$tour->id}}/events/webinars';
+                    }
+                }
+            });
+        }
+
+        function approveWebinar() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/save-approve",
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    webinarId: '{{$webinar->id}}'
+                },
+                success: function (res) { 
+                    if(res != null){
+                        location.reload()
+                    }
+                }
+            });
+        }
+
+        function rejectWebinar() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/save-reject",
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    webinarId: '{{$webinar->id}}'
+                },
+                success: function (res) { 
+                    if(res != null){
+                        location.reload()
                     }
                 }
             });

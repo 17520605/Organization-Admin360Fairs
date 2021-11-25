@@ -87,6 +87,7 @@ class EventsController extends Controller
             'tag' => $tag
         ]);
     }
+
     public function request($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
@@ -126,7 +127,7 @@ class EventsController extends Controller
             ->first();
 
         return view('administrator.events.webinar', [
-            'profile' => $profile , 
+            'profile' => $profile, 
             'tour'=>$tour,
             'webinar' => $webinar, 
         ]);

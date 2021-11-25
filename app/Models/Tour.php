@@ -9,5 +9,6 @@ class Tour extends Model
 {
     protected $table = 'tour';
     public $timestamps = true;
+    
 }
 
