@@ -39,7 +39,7 @@
                             </div>
                             <div style="position: absolute; top: 10px; right: 10px;">
                                 @if ($webinar->registerBy == $profile->id)
-                                <button class="mb-0 btn btn-edit_webinar btn-page-loader" onclick="window.location.href='/partner/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}/edit'"><span class="icon-loader-form"></span><i class="fas fa-pen-alt"></i></button>
+                                <button class="mb-0 btn btn-edit_webinar btn-page-loader" onclick="window.location.href='/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}/edit'"><span class="icon-loader-form"></span><i class="fas fa-pen-alt"></i></button>
                                 <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-delete-webinar"><i class="fas fa-trash-alt"></i></button>
                                 @endif
                             </div>
@@ -213,12 +213,12 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}",
+                url: "{{env('APP_URL')}}/administrator/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}",
                 type: 'delete',
                 dataType: 'json',
                 success: function (res) { 
                     if(res != null){
-                        location.href = '/administrator/tours/{{$tour->id}}/events/webinars';
+                        location.href = '/administrator/booths/{{$booth->id}}/events/webinars';
                     }
                 }
             });
@@ -229,7 +229,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/save-approve",
+                url: "{{env('APP_URL')}}/administrator/booths/{{$booth->id}}/events/webinars/save-approve",
                 type: 'post',
                 dataType: 'json',
                 data:{
@@ -248,7 +248,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/save-reject",
+                url: "{{env('APP_URL')}}/administrator/booths/{{$booth->id}}/events/webinars/save-reject",
                 type: 'post',
                 dataType: 'json',
                 data:{

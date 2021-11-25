@@ -121,7 +121,7 @@
                 switch (notification.type) {
                     case '{{\App\Models\Notification::INFO}}':
                         elm = $(`
-                            <a class="dropdown-item d-flex align-items-center" href="/partner/tours/{{$tour->id}}/notifications#`+ notification.id +`">
+                            <a class="dropdown-item d-flex align-items-center" href="/partner/booths/{{$booth->id}}/notifications#`+ notification.id +`">
                                 <div class="mr-3">
                                     <div class="icon-circle bg-primary">
                                         <i class="fas fa-file-alt text-white"></i>
@@ -148,7 +148,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "/partner/tours/{{$tour->id}}/notifications/get-unseen",
+                    url: "/partner/booths/{{$booth->id}}/notifications/get-unseen",
                     method: 'get',
                     dataType: 'json',
                     success: function (notifications) {

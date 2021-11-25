@@ -29,6 +29,14 @@ class ToursController extends Controller
             ->select('tour.*')
             ->get();
         
+            foreach ($tours as $tour) {
+                $booths = \App\Models\Booth::with('owner')->where([
+                    ['ownerId', '=', $profile->id],
+                    ['tourId', '=', $tour->id]
+                ])->get();
+                $tour->booths = $booths;
+            }
+        
         // check Admin
         if($user->level >= User::LEVEL_TOURADMIN){
             $roles['administrator'] = 'Administrator';

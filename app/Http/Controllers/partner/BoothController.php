@@ -8,40 +8,26 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class BoothsController extends Controller
+class BoothController extends Controller
 {
     
-    public function index($id)
+    public function index($id, Request $request)
     {
         $user = Auth::user();
         $profile = DB::table('profile')->where('userId', $user->id)->first();
-        $tour = DB::table('tour')->find($id);
+        
+        $booth = \App\Models\Booth::with('owner')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
 
-        $booths = \App\Models\Booth::with('owner')->where('ownerId', $profile->id)->get();
-
-        return view('partner.booths.index', [
-            'profile' => $profile, 
-            'tour'=> $tour, 
-            'booths'=> $booths,
-        ]);
-    }
-
-    public function booth($id, $boothId, Request $request)
-    {
-        $user = Auth::user();
-        $profile = DB::table('profile')->where('userId', $user->id)->first();
-        $tour = DB::table('tour')->find($id);
-
-        $booth = \App\Models\Booth::with('owner')->find($boothId);
         $scene = DB::table('scene')->find($booth->sceneId);
         $panoramas = [];
         if($scene != null){
             $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
         }
 
-        $boothObjects = \App\Models\TObject::whereHas('booth_objects', function($q) use ($boothId)
+        $boothObjects = \App\Models\TObject::whereHas('booth_objects', function($q) use ($id)
             {
-                $q->where('boothId', '=', $boothId);
+                $q->where('boothId', '=', $id);
             })
             ->where([
                 ['tourId','=', $id],
@@ -54,9 +40,9 @@ class BoothsController extends Controller
                 ['ownerId', '=', $profile->id]
             ])
             ->doesntHave('booth_objects')
-            ->orWhereHas('booth_objects', function($q) use ($boothId)
+            ->orWhereHas('booth_objects', function($q) use ($id)
             {
-                $q->where('boothId', '!=', $boothId)->orWhere('boothId', null);
+                $q->where('boothId', '!=', $id)->orWhere('boothId', null);
             })
             ->where([
                 ['tourId','=', $id],
@@ -66,15 +52,15 @@ class BoothsController extends Controller
 
         $types = DB::table('object')
             ->join('booth_object', 'object.id', '=', 'booth_object.objectId')
-            ->where('booth_object.boothId', $boothId)
+            ->where('booth_object.boothId', $id)
             ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(object.id) as count'))
             ->groupBy('type')
             ->get();
         
-        $views = \App\Models\View::with('visitor')->where('boothId', $boothId)->get();
-        $interests = \App\Models\Interest::with('visitor')->where('boothId', $boothId)->get();
+        $views = \App\Models\View::with('visitor')->where('boothId', $id)->get();
+        $interests = \App\Models\Interest::with('visitor')->where('boothId', $id)->get();
 
-        return view('partner.booths.booth', [
+        return view('partner.booth.index', [
             'profile' => $profile, 
             'tour'=> $tour, 
             'booth' => $booth,
@@ -86,7 +72,6 @@ class BoothsController extends Controller
             'views' => $views,
             'interests' => $interests
         ]);
-
     } 
 
     public function saveEdit($id, Request $request)

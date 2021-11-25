@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="m-3">
-    <form id="form-edit" class="needs-validation" action="/partner/tours/{{$tour->id}}/events/webinars/save-edit" method="POST" enctype="multipart/form-data" novalidate>
+    <form id="form-edit" class="needs-validation" action="/partner/booths/{{$booth->id}}/events/webinars/save-edit" method="POST" enctype="multipart/form-data" novalidate>
         @csrf
         <input type="hidden" name="webinarId" value="{{$webinar->id}}">
         <div class="row mb-3">
