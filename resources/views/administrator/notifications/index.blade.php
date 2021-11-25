@@ -84,7 +84,7 @@
     }
 
     function activeNotificationSelected() {  
-        let notificaionId = window.location.hash.substr(1);
+        let notificaionId = new URL(location.href).searchParams.get('active');
         seenNotification(notificaionId);
     }
 </script>

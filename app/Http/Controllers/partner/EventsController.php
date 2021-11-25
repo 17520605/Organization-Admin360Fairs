@@ -261,7 +261,7 @@ class EventsController extends Controller
             $notification->channel = 'webinar@new';
             $notification->type = \App\Models\Notification::INFO;
             $notification->title = "You register a new webinar";
-            $notification->content = '<a href="/partner/tours/'.$tour->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+            $notification->content = '<a href="/partner/booths/'.$booth->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
             $notification->save();
             $notification->send();
 

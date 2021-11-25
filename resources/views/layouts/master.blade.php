@@ -117,7 +117,7 @@
                 switch (notification.type) {
                     case '{{\App\Models\Notification::INFO}}':
                         elm = $(`
-                            <a class="nav-notification-item dropdown-item d-flex align-items-center btn-page-loader" data-notification-id="`+ notification.id +`" href="/administrator/tours/{{$tour->id}}/notifications#`+ notification.id +`">
+                            <a class="nav-notification-item dropdown-item d-flex align-items-center btn-page-loader" data-notification-id="`+ notification.id +`" href="/administrator/tours/{{$tour->id}}/notifications?active=`+ notification.id +`">
                                 <div class="dropdown-list-image mr-3">
                                     <div class="icon-circle bg-primary">
                                         <i class="fas fa-file-alt text-white"></i>
