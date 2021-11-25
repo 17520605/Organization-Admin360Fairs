@@ -23,13 +23,13 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsewebina" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-calendar-week"></i>
-            <span>Events</span>
+            <span>Webinars</span>
         </a>
         <div id="collapsewebina" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Event types</h6>
+                <h6 class="collapse-header">Options</h6>
+                <a class="collapse-item btn-page-loader" href="/partner/booths/{{$booth->id}}/events/webinars/schedule">Schedule</a>
                 <a class="collapse-item btn-page-loader" href="/partner/booths/{{$booth->id}}/events/webinars">Webinars</a>
-                <a class="collapse-item btn-page-loader" href="/partner/booths/{{$booth->id}}/events/webinars/requests">Waitlist </a>
             </div>
         </div>
     </li>

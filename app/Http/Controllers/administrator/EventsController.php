@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class EventsController extends Controller
 {
-    public function webinars($id, Request $request)
+    public function schedule($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
@@ -88,7 +88,7 @@ class EventsController extends Controller
         ]);
     }
 
-    public function request($id, Request $request)
+    public function requests($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
@@ -98,6 +98,7 @@ class EventsController extends Controller
             ->where([
                 ['tourId', '=', $id],
                 ['isDeleted', '=', false],
+                ['isWaitingApproval', '=', true],
             ])
             ->orderBy('startAt', 'ASC')
             ->get();
@@ -344,21 +345,73 @@ class EventsController extends Controller
 
     public function saveApprove($id, Request $request)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+
         $webinarId = $request->webinarId;
         $webinar = \App\Models\Webinar::find($webinarId);
         $webinar->isConfirmed = true;
+        $webinar->isWaitingApproval = false;
         $webinar->save();
         
+        // send notification to user registered webinar
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->to = 'users@'.$webinar->registrant->id;
+        $notification->channel = 'webinar@new';
+        $notification->type = \App\Models\Notification::SUCCESS;
+        $notification->title = "Your webinar was approved by organizer";
+        $notification->content = '<a href="/partner/booths/'.$webinar->boothId.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+        $notification->save();
+        $notification->send();
+
+        // send notification to organizer
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->to = 'users@'.$tour->organizerId;
+        $notification->channel = 'webinar@new';
+        $notification->type = \App\Models\Notification::SUCCESS;
+        $notification->title = "You approved a webinar";
+        $notification->content = '<a href="/administrator/tours/'.$webinar->tourId.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+        $notification->save();
+        $notification->send();
+
         return true;
     }
     
     public function saveReject($id, Request $request)
     {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+
         $webinarId = $request->webinarId;
         $webinar = \App\Models\Webinar::find($webinarId);
         $webinar->isConfirmed = false;
+        $webinar->isWaitingApproval = false;
         $webinar->save();
         
+        // send notification to user registered webinar
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->to = 'users@'.$webinar->registrant->id;
+        $notification->channel = 'webinar@new';
+        $notification->type = \App\Models\Notification::WARNING;
+        $notification->title = "Your webinar was rejected by organizer";
+        $notification->content = '<a href="/partner/booths/'.$webinar->boothId.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+        $notification->save();
+        $notification->send();
+
+        // send notification to organizer
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->to = 'users@'.$tour->organizerId;
+        $notification->channel = 'webinar@new';
+        $notification->type = \App\Models\Notification::WARNING;
+        $notification->title = "You rejected a webinar";
+        $notification->content = '<a href="/administrator/tours/'.$webinar->tourId.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+        $notification->save();
+        $notification->send();
+
         return true;
     }
 }
