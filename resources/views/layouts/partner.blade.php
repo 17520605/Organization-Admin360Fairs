@@ -121,7 +121,7 @@
                 switch (notification.type) {
                     case '{{\App\Models\Notification::INFO}}':
                         elm = $(`
-                            <a class="dropdown-item d-flex align-items-center" href="/partner/booths/{{$booth->id}}/notifications#`+ notification.id +`">
+                            <a class="dropdown-item d-flex align-items-center" href="/partner/booths/{{$booth->id}}/notifications?active=`+ notification.id +`">
                                 <div class="mr-3">
                                     <div class="icon-circle bg-primary">
                                         <i class="fas fa-file-alt text-white"></i>
@@ -163,6 +163,13 @@
                         notifications.forEach(notification => {
                             $('#top-nav-notifications__wrapper').append(createHTMLNotification(notification));
                         });
+
+                        // thực hiện mở notification ở page notification#id
+                        try {
+                            activeNotificationSelected();
+                        } catch (error) {
+                            
+                        }
                     }
                 });
             }
