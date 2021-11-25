@@ -16,7 +16,7 @@ class NotificationsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-        return view('administrator.notifications.index', ['profile' => $profile, 'tour'=> $tour]);
+        return view('administrator.notification.notification', ['profile' => $profile, 'tour'=> $tour]);
     }
 
     public function getAll($id, Request $request)
