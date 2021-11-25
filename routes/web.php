@@ -107,30 +107,22 @@ Route::middleware('auth')->group(function (){
     Route::group(['prefix' => 'partner'], function(){
         Route::get('/', 'partner\ToursController@index');
         Route::get('/tours', 'partner\ToursController@index');
-        Route::get('/tour/{id}', 'partner\TourController@index');
 
-        Route::group(['prefix' => 'tours'], function(){
-            // tour
-            Route::get('/{id}', 'partner\TourController@index');
-            Route::get('/{id}/tour', 'partner\TourController@index');
-            Route::get('/{id}/tour/edit', 'partner\TourController@edit');
-            Route::post('/{id}/tour/save-edit', 'partner\TourController@saveEdit');
+        Route::group(['prefix' => 'booths'], function(){
+            // // speakers
+            // Route::get('/{id}/speakers', 'partner\SpeakersController@index');
+            // Route::get('/{id}/speakers/{speakerId}/calendar', 'partner\SpeakersController@calendar');
+            // Route::post('/{id}/speakers/save-create', 'partner\SpeakersController@saveCreate');
+            // Route::post('/{id}/speakers/save-edit', 'partner\SpeakersController@saveEdit');
+            // Route::post('/{id}/speakers/import-csv', 'partner\SpeakersController@importCsv');
+            // Route::post('/{id}/speakers/check-import-csv', 'partner\SpeakersController@checkImportCsv');
+            // Route::post('/{id}/speakers/send-emails', 'partner\SpeakersController@sendEmails');
+            // Route::delete('/{id}/speakers/{speakerId}', 'partner\SpeakersController@saveDelete');
             
-            // speakers
-            Route::get('/{id}/speakers', 'partner\SpeakersController@index');
-            Route::get('/{id}/speakers/{speakerId}/calendar', 'partner\SpeakersController@calendar');
-            Route::post('/{id}/speakers/save-create', 'partner\SpeakersController@saveCreate');
-            Route::post('/{id}/speakers/save-edit', 'partner\SpeakersController@saveEdit');
-            Route::post('/{id}/speakers/import-csv', 'partner\SpeakersController@importCsv');
-            Route::post('/{id}/speakers/check-import-csv', 'partner\SpeakersController@checkImportCsv');
-            Route::post('/{id}/speakers/send-emails', 'partner\SpeakersController@sendEmails');
-            Route::delete('/{id}/speakers/{speakerId}', 'partner\SpeakersController@saveDelete');
-            
-            // booths
-            Route::get('/{id}/booths', 'partner\BoothsController@index');
-            Route::post('/{id}/booths/save-edit', 'partner\BoothsController@saveEdit');
-            Route::post('/{id}/booths/save-add-objects', 'partner\BoothsController@saveAddObjects');
-            Route::get('/{id}/booths/{boothId}', 'partner\BoothsController@booth');
+            // booth
+            Route::get('/{id}', 'partner\BoothController@index');
+            Route::post('/{id}/save-edit', 'partner\BoothController@saveEdit');
+            Route::post('/{id}/save-add-objects', 'partner\BoothController@saveAddObjects');
             
             // objects
             Route::get('/{id}/objects', 'partner\ObjectsController@index');

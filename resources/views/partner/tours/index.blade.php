@@ -17,13 +17,15 @@
                                         </div>
                                         <div class="widget-49-meeting-info">
                                             <span style="font-weight: bold; font-size: 22px; color: #4e73df;cursor: pointer;">{{$tour->name}}</span>
-                                            <span class="widget-49-pro-title font-weight-bold">Booth 1 ,Booth 2</span>
+                                            <li class="list-inline-item me-3" style="position: absolute;left: 0;">{{$tour->startTime != null ? Carbon\Carbon::parse($tour->startTime)->format('M-d-y g:i A') : 'N/A'}} - {{$tour->startTime != null ? Carbon\Carbon::parse($tour->endTime)->format('M-d-y g:i A') : 'N/A'}}</li>
                                         </div>
                                     </div>
+                                    @foreach ($tour->booths as $booth)
                                     <div class="widget-49-meeting-action px-4 py-3 border-top" style="position: relative;">
-                                        <li class="list-inline-item me-3" style="position: absolute;left: 0;"><i class="fas fa-calendar-check" style="color: #5462fc; margin-right: 5px; "></i> Date Mangager : {{$tour->startTime != null ? Carbon\Carbon::parse($tour->startTime)->format('Y-m-d') : 'N/A'}}</li>
-                                        <a class="btn btn-df btn-page-loader" href="{{env('APP_URL')}}/partner/tour/{{$tour->id}}" style="position: absolute; right: 0; top: 2rem;border-radius: 3px;"> Manager</a>
+                                        <li class="list-inline-item me-3" style="position: absolute;left: 0;"><i class="fas fa-store" style="color: #5462fc; margin-right: 5px; "></i>{{$booth->name}}</li>
+                                        <a class="btn btn-df btn-page-loader" href="{{env('APP_URL')}}/partner/booths/{{$booth->id}}" style="position: absolute; right: 0; top: 2rem;border-radius: 3px;"> Manager</a>
                                     </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

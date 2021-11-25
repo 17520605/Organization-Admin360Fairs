@@ -12,14 +12,15 @@ use Carbon\Carbon;
 
 class EventsController extends Controller
 {
-   public function webinars($id, Request $request)
+    public function webinars($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
+        $booth = DB::table('booth')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
         $tag = $request->get('tag');
 
         $all_dates = DB::table('webinar')->where([
-                ['tourId', '=', $id],
+                ['tourId', '=', $tour->id],
                 ['isDeleted', '=', false],
                 ['isConfirmed', '=', true],
             ])
@@ -29,7 +30,7 @@ class EventsController extends Controller
         foreach ($all_dates as $date) {
             $webinars = \App\Models\Webinar::with('details')
                 ->where([
-                    ['tourId', '=', $id],
+                    ['tourId', '=', $tour->id],
                     ['isDeleted', '=', false],
                     ['isConfirmed', '=', true],
                 ])
@@ -40,7 +41,7 @@ class EventsController extends Controller
         }
 
         $my_dates = DB::table('webinar')->where([
-                ['tourId', '=', $id],
+                ['tourId', '=', $tour->id],
                 ['registerBy', '=', $profile->id],
                 ['isDeleted', '=', false],
                 ['isConfirmed', '=', true],
@@ -51,7 +52,7 @@ class EventsController extends Controller
         foreach ($my_dates as $date) {
             $webinars = \App\Models\Webinar::with('details')
                 ->where([
-                    ['tourId', '=', $id],
+                    ['tourId', '=', $tour->id],
                     ['registerBy', '=', $profile->id],
                     ['isConfirmed', '=', true],
                     ['isDeleted', '=', false],
@@ -64,7 +65,7 @@ class EventsController extends Controller
 
         $webinars = \App\Models\Webinar::with('details')
             ->where([
-                ['tourId', '=', $id],
+                ['tourId', '=', $tour->id],
                 ['isDeleted', '=', false],
             ])
             ->orderBy('startAt', 'ASC')
@@ -72,14 +73,14 @@ class EventsController extends Controller
 
         $speakers = DB::table('tour_speaker')
             ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
-            ->where('tour_speaker.tourId', $id)
+            ->where('tour_speaker.tourId', $tour->id)
             ->select('profile.*')
             ->get();
-
 
         return view('partner.events.webinars', [
             'profile' => $profile , 
             'tour'=>$tour, 
+            'booth'=>$booth, 
             'all_dates' => $all_dates,
             'my_dates' => $my_dates,
             'webinars'=>$webinars, 
@@ -87,6 +88,7 @@ class EventsController extends Controller
             'tag' => $tag
         ]);
     }
+
     public function request($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
@@ -115,10 +117,11 @@ class EventsController extends Controller
             'tag' => $tag
         ]);
     }
+
     public function webinar($id, $webinarId)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
+        $booth = DB::table('booth')->find($id);
         $webinar = \App\Models\Webinar::with('details')
             ->where('id',$webinarId)
             ->first();
@@ -135,24 +138,29 @@ class EventsController extends Controller
             ->select('profile.*')
             ->get();
 
-        return view('partner.events.webinar', ['profile' => $profile , 'webinar' => $webinar, 'speakers'=> $speakers, 'tour'=>$tour]);
+        return view('partner.events.webinar', [
+            'profile' => $profile , 
+            'webinar' => $webinar, 
+            'speakers'=> $speakers, 
+            'booth'=>$booth
+        ]);
     }
 
     public function create($id, Request $request)
     {     
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
+        $booth = DB::table('booth')->find($id);
 
         return view('partner.events.create', [
             'profile' => $profile , 
-            'tour'=>$tour
+            'booth'=>$booth
         ]);
     }
 
     public function edit($id, $webinarId, Request $request)
     {     
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
+        $booth = DB::table('booth')->find($id);
 
         $webinar = \App\Models\Webinar::with('details', 'speakers', 'registrant')
             ->where('id',$webinarId)
@@ -161,6 +169,7 @@ class EventsController extends Controller
         return view('partner.events.edit', [
             'profile' => $profile , 
             'tour'=>$tour,
+            'tour'=>$booth,
             'webinar' => $webinar
         ]);
     }
@@ -168,7 +177,8 @@ class EventsController extends Controller
     public function saveCreate($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
+        $booth = DB::table('booth')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
 
         $topic = $request->topic;
         $poster = $request->poster;
@@ -246,7 +256,7 @@ class EventsController extends Controller
         if($profile->id !=  $tour->organizerId){
             // send notification to user registered webinar
             $notification = new \App\Models\Notification();
-            $notification->tourId = $id;
+            $notification->tourId = $tour->id;
             $notification->to = 'users@'.$webinar->registrant->id;
             $notification->channel = 'webinar@new';
             $notification->type = \App\Models\Notification::INFO;
@@ -257,7 +267,7 @@ class EventsController extends Controller
 
             // send notification to organizer
             $notification = new \App\Models\Notification();
-            $notification->tourId = $id;
+            $notification->tourId = $tour->id;
             $notification->to = 'users@'.$tour->organizerId;
             $notification->channel = 'webinar@new';
             $notification->type = \App\Models\Notification::INFO;
@@ -273,7 +283,8 @@ class EventsController extends Controller
     public function saveEdit($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
+        $booth = DB::table('booth')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
         $webinarId = $request->webinarId;
 
         $topic = $request->topic;
@@ -367,7 +378,7 @@ class EventsController extends Controller
         if($profile->id !=  $tour->organizerId){
             // send notification to user registered webinar
             $notification = new \App\Models\Notification();
-            $notification->tourId = $id;
+            $notification->tourId = $tour->id;
             $notification->to = 'users@'.$webinar->registrant->id;
             $notification->channel = 'webinar@new';
             $notification->type = \App\Models\Notification::INFO;
@@ -378,7 +389,7 @@ class EventsController extends Controller
 
             // send notification to organizer
             $notification = new \App\Models\Notification();
-            $notification->tourId = $id;
+            $notification->tourId = $tour->id;
             $notification->to = 'users@'.$tour->organizerId;
             $notification->channel = 'webinar@new';
             $notification->type = \App\Models\Notification::INFO;

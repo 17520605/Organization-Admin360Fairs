@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="m-3">
-    <form id="form-create" class="needs-validation" action="/partner/tours/{{$tour->id}}/events/webinars/save-create" method="POST" enctype="multipart/form-data" novalidate>
+    <form id="form-create" class="needs-validation" action="/partner/booths/{{$booth->id}}/events/webinars/save-create" method="POST" enctype="multipart/form-data" novalidate>
         @csrf
         <div class="row mb-3">
             <div class="col-md-12">

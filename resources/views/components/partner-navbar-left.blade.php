@@ -1,22 +1,11 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center btn-page-loader" href="/partner/tours/{{$tour->id}}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center btn-page-loader" href="/partner/booths/{{$booth->id}}">
         <div class="sidebar-brand-icon">
             <i class="fab fa-korvue"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Partner AD</div>
+        <div class="sidebar-brand-text mx-3">Booth Manager</div>
     </a>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0" />
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link btn-page-loader" href="/partner/tours/{{$tour->id}}/dashboard">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-        </a>
-    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider" />
@@ -26,9 +15,9 @@
         Interface
     </div>
     <li class="nav-item">
-        <a class="nav-link collapsed btn-page-loader" href="/partner/tours/{{$tour->id}}/booths">
+        <a class="nav-link collapsed btn-page-loader" href="/partner/booths/{{$booth->id}}">
             <i class="fas fa-store"></i>
-            <span>Booths</span>
+            <span>Booth</span>
         </a>
     </li>
     <li class="nav-item">
@@ -39,20 +28,8 @@
         <div id="collapsewebina" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Event types</h6>
-                <a class="collapse-item btn-page-loader" href="/partner/tours/{{$tour->id}}/events/webinars">Webinars</a>
-                <a class="collapse-item btn-page-loader" href="/partner/tours/{{$tour->id}}/events/webinars/requests">Waitlist </a>
-            </div>
-        </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsespeakers" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-user-check"></i>
-            <span>Speakers</span>
-        </a>
-        <div id="collapsespeakers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Speakers</h6>
-                <a class="collapse-item btn-page-loader" href="/partner/tours/{{$tour->id}}/speakers/">Speakers</a>
+                <a class="collapse-item btn-page-loader" href="/partner/booths/{{$booth->id}}/events/webinars">Webinars</a>
+                <a class="collapse-item btn-page-loader" href="/partner/booths/{{$booth->id}}/events/webinars/requests">Waitlist </a>
             </div>
         </div>
     </li>
@@ -65,13 +42,12 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseresource" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-folder"></i>
-            <span>Objects Manager</span>
+            <span>Objects</span>
         </a>
         <div id="collapseresource" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"> Types </h6>
-                <a class="collapse-item btn-page-loader" href="/partner/tours/{{$tour->id}}/objects/dashboard">Dashboard</a>
-                <a class="collapse-item btn-page-loader" href="/partner/tours/{{$tour->id}}/objects" >Objects</a>
+                <a class="collapse-item btn-page-loader" href="/partner/booths/{{$booth->id}}/objects" >Objects</a>
             </div>
         </div>
     </li>

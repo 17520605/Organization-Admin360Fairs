@@ -11,28 +11,49 @@ use \stdClass;
 
 class ObjectsController extends Controller
 {
-    public function index($id)
+
+    public function index ($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
+        $booth = \App\Models\Booth::with('owner')->find($id);
+        $boothObjects = \App\Models\TObject::whereHas('booth_objects', function($q) use ($id){
+                $q->where('boothId', '=', $id);
+            })
+            ->where([
+                ['tourId','=', $id],
+                ['ownerId', '=', $profile->id]
+            ])
+            ->get();
+        
+        $otherObjects = \App\Models\TObject::where([
+                ['tourId','=', $id],
+                ['ownerId', '=', $profile->id]
+            ])
+            ->doesntHave('booth_objects')
+            ->orWhereHas('booth_objects', function($q) use ($id)
+            {
+                $q->where('boothId', '!=', $id)->orWhere('boothId', null);
+            })
+            ->where([
+                ['tourId','=', $id],
+                ['ownerId', '=', $profile->id]
+            ])
+            ->get();
 
-        $objects = \App\Models\TObject::where([
-            ['tourId','=', $id],
-            ['ownerId', '=', $profile->id]
-        ])->get();
-
+        $types = DB::table('object')
+            ->join('booth_object', 'object.id', '=', 'booth_object.objectId')
+            ->where('booth_object.boothId', $id)
+            ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(object.id) as count'))
+            ->groupBy('type')
+            ->get();
+            
         return view('partner.objects.index', [
             'profile' => $profile, 
-            'tour'=>$tour,
-            'objects'=>$objects,
+            'booth' => $booth,
+            'boothObjects' => $boothObjects,
+            'otherObjects' => $otherObjects,
+            'types' => $types,
         ]);
-    }
-    
-    public function dashboard ($id, Request $request)
-    {
-        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
-        return view('partner.objects.dashboard', ['profile' => $profile, 'tour'=>$tour]);
     }
     
     public function object($id, $objectId, Request $request)
