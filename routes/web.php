@@ -100,6 +100,7 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/notifications', 'administrator\NotificationsController@index');
             Route::get('/{id}/notifications/get-unseen', 'administrator\NotificationsController@getUnseen');
             Route::get('/{id}/notifications/get-all', 'administrator\NotificationsController@getAll');
+            Route::post('/{id}/notifications/{notificationId}/set-seen', 'administrator\NotificationsController@setSeen');
 
         }); 
     });
@@ -144,6 +145,7 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/notifications', 'partner\NotificationsController@index');
             Route::get('/{id}/notifications/get-unseen', 'partner\NotificationsController@getUnseen');
             Route::get('/{id}/notifications/get-all', 'partner\NotificationsController@getAll');
+            Route::post('/{id}/notifications/{notificationId}/set-seen', 'administrator\NotificationsController@setSeen');
             
         }); 
 

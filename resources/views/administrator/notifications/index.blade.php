@@ -1,4 +1,4 @@
-@extends('layouts.partner')
+@extends('layouts.master')
 
 @section('content')
 <div class="container-fluid notification_col">
@@ -28,7 +28,7 @@
     </div>
 </div>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function () {   
         $('.notification-list').click(function () {  
             let notificaionId = $(this).attr('data-notification-id');
             if($(this).hasClass('active')){
@@ -64,7 +64,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "post",
-                url: "/partner/booths/" + "{{$booth->id}}" + "/notifications/" + notificaionId + "/set-seen",
+                url: "/administrator/tours/" + "{{$tour->id}}" + "/notifications/" + notificaionId + "/set-seen",
                 data: {
                     notificaionId: notificaionId
                 },
@@ -86,9 +86,6 @@
     function activeNotificationSelected() {  
         let notificaionId = window.location.hash.substr(1);
         seenNotification(notificaionId);
-
-        // scroll page to this
-        // TODO
     }
 </script>
 @endsection
