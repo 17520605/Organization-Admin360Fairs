@@ -1,154 +1,107 @@
 @extends('layouts.partner')
 @section('content')
     <div class="container-fluid tags-wrapper">
-        <h1 class="h3 text-gray-800"> <span id="page-title">All Events</span> <button class="btn btn-df" style="position: absolute; right: 1.5rem;"><a href="/partner/booths/{{$booth->id}}/events/webinars/create"><i class="fas fa-upload" style="margin-right: 8px;"></i> Register new event</a></button></h1>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card p-3">
+                    <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">List of My Webinars</h1>
+                    <div class="div_cardheader_btn">
+                        <button class="mb-0 btn float-right" onclick="location.href='/partner/booths/{{$booth->id}}/events/webinars/create'"><i class="fas fa-plus"></i> Create New Webinar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="tab-header mb-3 webinar-tab" style="width: 100%; height: 40px; mb-2 ">
-            <span class="tab-header-btn btn btn-primary float-left active" data-tag="all" data-name="All Events"><i class="fas fa-stream"></i></span>
-            <span class="tab-header-btn btn btn-primary float-left " data-tag="my" data-name="My Events"><i class="fab fa-accusoft"></i></span>
+            <span class="tab-header-btn btn btn-primary float-left active" data-tag="list" data-name="All Events"><i class="fas fa-stream"></i></span>
+            <span class="tab-header-btn btn btn-primary float-left" data-tag="card" data-name="All Events"><i class="fas fa-clone"></i></span>
         </div>
-        <div class="tag-body row line-time" style="display: {{ $tag == null || $tag == 'all' ? 'block' : 'none'}};" data-tag="all">
-            <div class="col-lg-12">
-                    <div class="card-body">
-                        <div class="row justify-content-center">
-                            <div class="col-xl-10">
-                                <div class="timeline">
-                                    <div class="timeline-container">
-                                        <div class="timeline-end">
-                                            <p>Start</p>
+        <div class="card shadow mb-4 tag-body" style="display: {{ $tag == null || $tag == 'list' ? 'block' : 'none'}}" data-tag="list">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr style="background: #eef2f7;">
+                                <th style="text-align: center">#</th>
+                                <th>Topic event</th>
+                                <th>Requied by</th>
+                                <th>Date Request</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @php
+                            $number = 1;
+                        @endphp
+                        @foreach ($webinars as $webinar)
+                            @if ($webinar->isConfirmed === null || $webinar->isConfirmed === 0)
+                                <tr data-webinar-id="{{$webinar->id}}">
+                                    <td style="text-align: center">{{$number++}}</td>
+                                    <td><a href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="font-weight-bold text-primary">{{$webinar->topic}}</a></td>
+                                    <td>{{$webinar->registrant != null ? $webinar->registrant->name : 'N/A'}}</td>
+                                    <td>{{$webinar->created_at}}</td>
+                                    <td>
+                                        @if($webinar->isConfirmed === null && $webinar->isWaitingApproval == false)
+                                            Editting 
+                                        @elseif($webinar->isConfirmed == true && $webinar->isWaitingApproval == false)
+                                            Approved
+                                        @elseif($webinar->isConfirmed == false && $webinar->isWaitingApproval == false)
+                                            Rejected
+                                        @elseif($webinar->isWaitingApproval == true)
+                                            Waiting for approval
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($webinar->isConfirmed === 0)
+                                            <span class="badge bg-danger">Reject</span>
+                                        @else
+                                            <button type="button" class="btn btn-sm btn-success" onclick="onOpenPopupConfirmApprove({{$webinar->id}})" title="Edit" style="width: 32px;"><i class="fas fa-check"></i></button>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="onOpenPopupConfirmReject({{$webinar->id}})" title="Delete" style="width: 32px;"><i class="fas fa-times"></i></button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tag-body row card-event" style="display: {{ $tag == 'card' ? 'block' : 'none'}};" data-tag="card">
+            @foreach ($webinars as $webinar)
+                @if ($webinar->isConfirmed === null || $webinar->isConfirmed === 0)
+                    <div class="col-lg-4 webinar-item" data-webinar-id="{{$webinar->id}}">
+                        <a class="card card-margin" href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}">
+                            <div class="card-header no-border">
+                                <h6 class="card-title text-primary" style="font-weight: 700">EVENT-{{$webinar->id}}</h6>
+                                <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="widget-49">
+                                    <div class="widget-49-title-wrapper">
+                                        <div class="widget-49-date-primary">
+                                            <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
+                                            <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
                                         </div>
-                                        <div class="timeline-continue">
-                                            
-                                            @foreach ($all_dates as $date)
-                                            <div class="row timeline-box-card">
-                                                @php
-                                                    $time = Carbon\Carbon::parse($date->date);
-                                                @endphp
-                                                <div class="col-md-6">
-                                                    <div class="timeline-icon">
-                                                        {{-- <i class="bx bx-briefcase-alt-2 text-primary h2 mb-0"></i> --}}
-                                                    </div>
-                                                    <div class="timeline-box">
-                                                        <div class="timeline-date bg-primary text-center rounded">
-                                                            <h4 class="text-white mb-0">{{$time->format('d')}}</h4>
-                                                            <h5 class="text-white mb-0" style="text-transform: uppercase ;font-size: 16px">{{$time->format('M')}}</h5>
-                                                        </div>
-                                                        <div class="event-content">
-                                                            <div class="timeline-text">
-                                                                @foreach ($date->webinars as $webinar)
-                                                                @if ($webinar->registerBy == $profile->id)
-                                                                    {{-- WEBINAR CUA CHINH MINH --}}
-                                                                    <a href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
-                                                                        data-toggle="popover" 
-                                                                        title="{{$webinar->topic}}" 
-                                                                        data-content="
-                                                                            @foreach ($webinar->details as $detail) 
-                                                                                <a class='text-detail-webinar'><i class='fas fa-check'></i>  {{$detail->title}} </a><br>
-                                                                            @endforeach
-                                                                        " 
-                                                                        data-html="true"><i class="fas fa-angle-right"></i> {{$webinar->topic}} <span class="host-line-webinar">(Host)</span>
-                                                                    </a><br>
-                                                                @else
-                                                                    <a href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
-                                                                        data-toggle="popover" 
-                                                                        title="{{$webinar->topic}}" 
-                                                                        data-content="
-                                                                            @foreach ($webinar->details as $detail) 
-                                                                                <a class='text-detail-webinar'><i class='fas fa-check'></i>  {{$detail->title}} </a><br>
-                                                                            @endforeach
-                                                                        " 
-                                                                        data-html="true"><i class="fas fa-angle-right"></i> {{$webinar->topic}}
-                                                                    </a><br>
-                                                                @endif
-                                                                @endforeach 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endforeach
+                                        <div class="widget-49-meeting-info">
+                                            <span class="widget-49-pro-title">{{$webinar->topic}}</span>
+                                            <span class="widget-49-meeting-time">{{Carbon\Carbon::parse($webinar->startAt)->format('h:m')}} to {{Carbon\Carbon::parse($webinar->endAt)->format('h:m')}}</span>
                                         </div>
-                                        <div class="timeline-start">
-                                            <p>End</p>
-                                        </div>
-                                        <div class="timeline-launch">
-                                            <div class="timeline-box">
-                                                <div class="timeline-text">
-                                                    <h3 style="font-size: 17px" class="text-primary font-weight-bold">Launched our company on 21 June 2021</h3>
-                                                    <p class="text-muted mb-0">Copyright © by 360Fairs</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    </div>
+                                    <ol class="widget-49-meeting-points">
+                                        @foreach ($webinar->details as $detail)
+                                        <li class="widget-49-meeting-item"><span>{{$detail->title}}</span></li>
+                                        @endforeach
+                                    </ol>
+                                    <div class="widget-49-meeting-action">
+                                        Bị Từ Chối                      
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
-            </div>
-        </div>
-        <div class="tag-body row line-time" style="display: {{ $tag == 'my' ? 'block' : 'none'}}" data-tag="my">
-            <div class="col-lg-12">
-                    <div class="card-body">
-                        <div class="row justify-content-center">
-                            <div class="col-xl-12">
-                                <div class="timeline">
-                                    <div class="timeline-container">
-                                        <div class="timeline-end">
-                                            <p>Start</p>
-                                        </div>
-                                        <div class="timeline-continue">
-                                            
-                                            @foreach ($my_dates as $date)
-                                            <div class="row timeline-box-card">
-                                                @php
-                                                    $time = Carbon\Carbon::parse($date->date);
-                                                @endphp
-                                                <div class="col-md-6">
-                                                    <div class="timeline-icon">
-                                                        {{-- <i class="bx bx-briefcase-alt-2 text-primary h2 mb-0"></i> --}}
-                                                    </div>
-                                                    <div class="timeline-box">
-                                                        <div class="timeline-date bg-primary text-center rounded">
-                                                            <h4 class="text-white mb-0">{{$time->format('d')}}</h4>
-                                                            <h5 class="text-white mb-0" style="text-transform: uppercase ;font-size: 16px">{{$time->format('M')}}</h5>
-                                                        </div>
-                                                        <div class="event-content">
-                                                            <div class="timeline-text">
-                                                                @foreach ($date->webinars as $webinar)
-                                                                <a style="display: block" href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov btn-page-loader" 
-                                                                    data-toggle="popover" 
-                                                                    title="{{$webinar->topic}}" 
-                                                                    data-content=" 
-                                                                        @foreach ($webinar->details as $detail) 
-                                                                            <a class='text-detail-webinar'><i class='fas fa-check'></i>  {{$detail->title}} </a><br>
-                                                                        @endforeach
-                                                                    " 
-                                                                    data-html="true"><i class="fas fa-angle-right"></i> {{$webinar->topic}}
-                                                                </a>
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endforeach
-                                        </div>
-                                        <div class="timeline-start">
-                                            <p>End</p>
-                                        </div>
-                                        <div class="timeline-launch">
-                                            <div class="timeline-box">
-                                                <div class="timeline-text">
-                                                    <h3 style="font-size: 17px" class="text-primary font-weight-bold">Launched our company on 21 June 2021</h3>
-                                                    <p class="text-muted mb-0">Copyright © by 360Fairs</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
+                @endif
+            @endforeach
         </div>
     </div>
     @include('components.add_event')
@@ -190,7 +143,7 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-approve-webinar__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-approve-webinar__confirm-btn" type="button" class="btn btn-danger">Delete</button>
+                        <button id="popup-confirm-approve-webinar__confirm-btn" type="button" class="btn btn-primary">Approve</button>
                     </div>
                 </form>
             </div>
@@ -212,13 +165,24 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-reject-webinar__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-reject-webinar__confirm-btn" type="button" class="btn btn-danger">Delete</button>
+                        <button id="popup-confirm-reject-webinar__confirm-btn" type="button" class="btn btn-danger">Reject</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
     <script>
+        function onOpenPopupConfirmReject(webinarId){
+            $('#popup-confirm-reject-webinar__id-hidden-input').val(webinarId);
+            $('#popup-confirm-reject-webinar').modal('show');
+        }
+
+        function onOpenPopupConfirmApprove(webinarId){
+            $('#popup-confirm-approve-webinar__id-hidden-input').val(webinarId);
+            $('#popup-confirm-approve-webinar').modal('show');
+        }
+
         function onOpenPopupDeleteWebinar(target){
             let webinarId = $(target).attr('data-webinar-id');
             $('#popup-confirm-delete-webinar__id-hidden-input').val(webinarId);
@@ -234,12 +198,56 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                         },
-                        url: "{{env('APP_URL')}}/administrator/booths/{{$booth->id}}/events/webinars/" + id,
+                        url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/" + id,
                         type: 'delete',
                         dataType: 'json',
                         success: function (res) { 
                             if (res == 1) {
                                 $('#popup-confirm-delete-webinar').modal('hide');
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#popup-confirm-approve-webinar__confirm-btn').click(function (){
+                let id = $('#popup-confirm-approve-webinar__id-hidden-input').val();
+                if(id != null && id != ""){
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                        url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/save-approve",
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            webinarId: id,
+                        },
+                        success: function (res) { 
+                            if (res == 1) {
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#popup-confirm-reject-webinar__confirm-btn').click(function (){
+                let id = $('#popup-confirm-reject-webinar__id-hidden-input').val();
+                if(id != null && id != ""){
+                    let ajax = $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/save-reject",
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            webinarId: id,
+                        },
+                        success: function (res) { 
+                            if (res == 1) {
                                 location.reload();
                             }
                         }
@@ -253,6 +261,7 @@
             let area = $(this).parents('.tags-wrapper');
             let tag = $(this).data('tag');
             let name = $(this).data('name');
+
             $('#page-title').text(name);
 
             area.find('.tab-header-btn').removeClass("active");

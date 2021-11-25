@@ -76,8 +76,9 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/objects/{objectId}', 'administrator\ObjectsController@object');
 
             // event
-            Route::get('/{id}/events/webinars', 'administrator\EventsController@webinars');
-            Route::get('/{id}/events/webinars/requests', 'administrator\EventsController@request');
+            Route::get('/{id}/events/webinars', 'administrator\EventsController@schedule');
+            Route::get('/{id}/events/webinars/schedule', 'administrator\EventsController@schedule');
+            Route::get('/{id}/events/webinars/requests', 'administrator\EventsController@requests');
             Route::get('/{id}/events/webinars/create', 'administrator\EventsController@create');
             Route::get('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@webinar');
             Route::get('/{id}/events/webinars/{webinarId}/edit', 'administrator\EventsController@edit');
@@ -133,12 +134,13 @@ Route::middleware('auth')->group(function (){
 
             // event
             Route::get('/{id}/events/webinars', 'partner\EventsController@webinars');
-            Route::get('/{id}/events/webinars/requests', 'partner\EventsController@request');
+            Route::get('/{id}/events/webinars/schedule', 'partner\EventsController@schedule');
             Route::get('/{id}/events/webinars/create', 'partner\EventsController@create');
             Route::get('/{id}/events/webinars/{webinarId}', 'partner\EventsController@webinar');
             Route::get('/{id}/events/webinars/{webinarId}/edit', 'partner\EventsController@edit');
             Route::post('/{id}/events/webinars/save-create', 'partner\EventsController@saveCreate');
             Route::post('/{id}/events/webinars/save-edit', 'partner\EventsController@saveEdit');
+            Route::post('/{id}/events/webinars/save-register', 'partner\EventsController@saveRegister');
             Route::delete('/{id}/events/webinars/{webinarId}', 'partner\EventsController@saveDelete');
 
             // notifications

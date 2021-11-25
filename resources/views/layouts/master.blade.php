@@ -131,6 +131,38 @@
                         `);
                         break;
 
+                    case '{{\App\Models\Notification::SUCCESS}}':
+                        elm = $(`
+                            <a class="nav-notification-item dropdown-item d-flex align-items-center btn-page-loader" data-notification-id="`+ notification.id +`" href="/administrator/tours/{{$tour->id}}/notifications?active=`+ notification.id +`">
+                                <div class="dropdown-list-image mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        <i class="fas fa-file-alt text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="font-weight-bold">
+                                    <div class="text-truncate">`+ notification.title +`</div>
+                                    <div class="small text-gray-500 mb-0">`+ moment(notification.created_at).format('MMMM DD YYYY hh:mm') +`</div>
+                                </div>
+                            </a>
+                        `);
+                        break;
+
+                    case '{{\App\Models\Notification::WARNING}}':
+                        elm = $(`
+                            <a class="nav-notification-item dropdown-item d-flex align-items-center btn-page-loader" data-notification-id="`+ notification.id +`" href="/administrator/tours/{{$tour->id}}/notifications?active=`+ notification.id +`">
+                                <div class="dropdown-list-image mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        <i class="fas fa-file-alt text-white"></i>
+                                    </div>
+                                </div>
+                                <div class="font-weight-bold">
+                                    <div class="text-truncate">`+ notification.title +`</div>
+                                    <div class="small text-gray-500 mb-0">`+ moment(notification.created_at).format('MMMM DD YYYY hh:mm') +`</div>
+                                </div>
+                            </a>
+                        `);
+                        break;
+
                     default:
                         break;
                 };

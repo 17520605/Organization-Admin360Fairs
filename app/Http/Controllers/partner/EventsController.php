@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class EventsController extends Controller
 {
-    public function webinars($id, Request $request)
+    public function schedule($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $booth = DB::table('booth')->find($id);
@@ -77,7 +77,7 @@ class EventsController extends Controller
             ->select('profile.*')
             ->get();
 
-        return view('partner.events.webinars', [
+        return view('partner.events.schedule', [
             'profile' => $profile , 
             'tour'=>$tour, 
             'booth'=>$booth, 
@@ -89,15 +89,17 @@ class EventsController extends Controller
         ]);
     }
 
-    public function request($id, Request $request)
+    public function webinars($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
+        $booth = DB::table('booth')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
         $tag = $request->get('tag');
 
         $webinars = \App\Models\Webinar::with('details','registrant')
             ->where([
-                ['tourId', '=', $id],
+                ['tourId', '=',  $tour->id],
+                ['boothId', '=',  $booth->id],
                 ['isDeleted', '=', false],
             ])
             ->orderBy('startAt', 'ASC')
@@ -105,13 +107,14 @@ class EventsController extends Controller
 
         $speakers = DB::table('tour_speaker')
             ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
-            ->where('tour_speaker.tourId', $id)
+            ->where('tour_speaker.tourId',  $tour->id)
             ->select('profile.*')
             ->get();
 
-        return view('partner.events.request', [
+        return view('partner.events.webinars', [
             'profile' => $profile , 
-            'tour'=>$tour, 
+            'tour'=>$tour,
+            'booth'=>$booth, 
             'webinars'=>$webinars, 
             'speakers' => $speakers,
             'tag' => $tag
@@ -211,7 +214,8 @@ class EventsController extends Controller
         }
 
         $webinar = new \App\Models\Webinar();
-        $webinar->tourId = $id ;
+        $webinar->tourId = $tour->id;
+        $webinar->boothId = $booth->id;
         $webinar->registerBy = $profile->id;
         $webinar->topic = $topic;
         $webinar->poster = $posterUrl;
@@ -253,33 +257,22 @@ class EventsController extends Controller
             $detail->save();
         }
 
-        $webinar = \App\Models\Webinar::with('details', 'speakers', 'registrant')->find($webinar->id);
-
-        if($profile->id !=  $tour->organizerId){
-            // send notification to user registered webinar
-            $notification = new \App\Models\Notification();
-            $notification->tourId = $tour->id;
-            $notification->to = 'users@'.$webinar->registrant->id;
-            $notification->channel = 'webinar@new';
-            $notification->type = \App\Models\Notification::INFO;
-            $notification->title = "You register a new webinar";
-            $notification->content = '<a href="/partner/booths/'.$booth->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
-            $notification->save();
-            $notification->send();
-
-            // send notification to organizer
-            $notification = new \App\Models\Notification();
-            $notification->tourId = $tour->id;
-            $notification->to = 'users@'.$tour->organizerId;
-            $notification->channel = 'webinar@new';
-            $notification->type = \App\Models\Notification::INFO;
-            $notification->title = "A new webinar has just been registered";
-            $notification->content = '<a href="/administrator/tours/'.$tour->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
-            $notification->save();
-            $notification->send();
+        if($profile->id ==  $tour->organizerId){
+             // send notification to who create webinar
+             $notification = new \App\Models\Notification();
+             $notification->tourId = $tour->id;
+             $notification->to = 'users@'.$webinar->registrant->id;
+             $notification->channel = 'webinar@new';
+             $notification->type = \App\Models\Notification::INFO;
+             $notification->title = "You create a new webinar";
+             $notification->content = '<a href="/partner/booths/'.$booth->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+             $notification->save();
+             $notification->send();
         }
+
+        $webinar = \App\Models\Webinar::with('details', 'speakers', 'registrant')->find($webinar->id);
         
-        return redirect('/partner/tours/'.$id.'/events/webinars/'.$webinar->id);
+        return redirect('/partner/booths/'.$booth->id.'/events/webinars/'.$webinar->id);
     }
 
     public function saveEdit($id, Request $request)
@@ -380,30 +373,30 @@ class EventsController extends Controller
         }
 
         if($profile->id !=  $tour->organizerId){
-            // send notification to user registered webinar
-            $notification = new \App\Models\Notification();
-            $notification->tourId = $tour->id;
-            $notification->to = 'users@'.$webinar->registrant->id;
-            $notification->channel = 'webinar@new';
-            $notification->type = \App\Models\Notification::INFO;
-            $notification->title = "You have re-registered a webinar";
-            $notification->content = '<a href="/partner/tours/'.$tour->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
-            $notification->save();
-            $notification->send();
+            // // send notification to user registered webinar
+            // $notification = new \App\Models\Notification();
+            // $notification->tourId = $tour->id;
+            // $notification->to = 'users@'.$webinar->registrant->id;
+            // $notification->channel = 'webinar@new';
+            // $notification->type = \App\Models\Notification::INFO;
+            // $notification->title = "You have re-registered a webinar";
+            // $notification->content = '<a href="/partner/tours/'.$tour->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+            // $notification->save();
+            // $notification->send();
 
-            // send notification to organizer
-            $notification = new \App\Models\Notification();
-            $notification->tourId = $tour->id;
-            $notification->to = 'users@'.$tour->organizerId;
-            $notification->channel = 'webinar@new';
-            $notification->type = \App\Models\Notification::INFO;
-            $notification->title = "A webinar has just been re-registered";
-            $notification->content = '<a href="/administrator/tours/'.$tour->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
-            $notification->save();
-            $notification->send();
+            // // send notification to organizer
+            // $notification = new \App\Models\Notification();
+            // $notification->tourId = $tour->id;
+            // $notification->to = 'users@'.$tour->organizerId;
+            // $notification->channel = 'webinar@new';
+            // $notification->type = \App\Models\Notification::INFO;
+            // $notification->title = "A webinar has just been re-registered";
+            // $notification->content = '<a href="/administrator/tours/'.$tour->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+            // $notification->save();
+            // $notification->send();
         }
 
-        return redirect('/partner/tours/'.$id.'/events/webinars/'.$webinar->id);
+        return redirect('/partner/booths/'.$booth->id.'/events/webinars/'.$webinar->id);
     }
 
     public function saveDelete($id, $webinarId, Request $request)
@@ -414,6 +407,46 @@ class EventsController extends Controller
         
         return true;
     }
+
+    public function saveRegister($id, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $booth = DB::table('booth')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
+
+        $webinarId = $request->webinarId;
+        $webinar = \App\Models\Webinar::find($webinarId);
+        $webinar->isConfirmed = null;
+        $webinar->isWaitingApproval = true;
+        $webinar->save();
+        
+        if($profile->id != $tour->organizerId){
+            // send notification to user registered webinar
+            $notification = new \App\Models\Notification();
+            $notification->tourId = $tour->id;
+            $notification->to = 'users@'.$webinar->registrant->id;
+            $notification->channel = 'webinar@new';
+            $notification->type = \App\Models\Notification::INFO;
+            $notification->title = "You register a new webinar";
+            $notification->content = '<a href="/partner/booths/'.$booth->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+            $notification->save();
+            $notification->send();
+
+            // send notification to organizer
+            $notification = new \App\Models\Notification();
+            $notification->tourId = $tour->id;
+            $notification->to = 'users@'.$tour->organizerId;
+            $notification->channel = 'webinar@new';
+            $notification->type = \App\Models\Notification::INFO;
+            $notification->title = "A new webinar has just been registered";
+            $notification->content = '<a href="/administrator/tours/'.$tour->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+            $notification->save();
+            $notification->send();
+        }
+
+        return true;
+    }
+
 
 
 }
