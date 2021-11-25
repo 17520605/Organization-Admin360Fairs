@@ -50,7 +50,7 @@
                 <h6 class="dropdown-header">
                     Alerts Center
                 </h6>
-                <div id="top-nav-notifications__wrapper"></div>
+                <span id="top-nav-notifications__wrapper"></span>
                 <a class="dropdown-item text-center small text-gray-500" href="/partner/tours/1/notifications">Show All Notifications</a>
             </div>
         </li>

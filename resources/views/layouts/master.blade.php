@@ -117,16 +117,15 @@
                 switch (notification.type) {
                     case '{{\App\Models\Notification::INFO}}':
                         elm = $(`
-                            <a class="dropdown-item d-flex align-items-center" href="/partner/tours/{{$tour->id}}/notifications#`+ notification.id +`">
-                                <div class="mr-3">
+                            <a class="dropdown-item d-flex align-items-center btn-page-loader" href="/administrator/tours/{{$tour->id}}/notifications#`+ notification.id +`">
+                                <div class="dropdown-list-image mr-3">
                                     <div class="icon-circle bg-primary">
                                         <i class="fas fa-file-alt text-white"></i>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="small text-gray-500">`+ moment(notification.created_at).format('MMMM DD YYYY hh:mm') +`</div>
-                                    <span class="font-weight-bold">`+ notification.title +`</span>
-                                    <span>`+ notification.content +` </span>
+                                <div class="font-weight-bold">
+                                    <div class="text-truncate">`+ notification.title +`</div>
+                                    <div class="small text-gray-500 mb-0">`+ moment(notification.created_at).format('MMMM DD YYYY hh:mm') +`</div>
                                 </div>
                             </a>
                         `);
@@ -135,7 +134,6 @@
                     default:
                         break;
                 };
-                
                 return elm;
             };
 
@@ -155,7 +153,6 @@
                         else{
                             $('#top-nav-notifications__count').hide();
                         }
-                        
                         notifications.forEach(notification => {
                             $('#top-nav-notifications__wrapper').append(createHTMLNotification(notification));
                         });

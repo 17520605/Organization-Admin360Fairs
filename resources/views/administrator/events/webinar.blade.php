@@ -31,13 +31,14 @@
                                 <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-delete-webinar"><i class="fas fa-trash-alt"></i></button>
                                 @else
                                     @if (!isset($webinar->isConfirmed))
-                                    <button class="mb-0 btn btn-edit_webinar"  data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
-                                    <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button>
+                                    <button class="mb-0 btn btn-edit_webinar "  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button>
+                                    <button class="mb-0 btn btn-delete_webinar "  style=" margin-right: 40px; " data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
+                                    
                                     @elseif ($webinar->isConfirmed == true)
-                                    <button class="mb-0 btn btn-edit_webinar"  data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
+                                    <button class="mb-0 btn btn-delete_webinar "  data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
                                     <span>Approved</span>
                                     @elseif ($webinar->isConfirmed == false)
-                                    <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button>
+                                    <button class="mb-0 btn btn-edit_webinar"  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button>
                                     <span>Rejected</span>
                                     @endif 
                                 @endif
