@@ -35,11 +35,11 @@
                                     <button class="mb-0 btn btn-delete_webinar "  style=" margin-right: 40px; " data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
                                     
                                     @elseif ($webinar->isConfirmed == true)
-                                    <button class="mb-0 btn btn-delete_webinar "  data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
-                                    <span>Approved</span>
+                                    {{-- <button class="mb-0 btn btn-delete_webinar "  data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button> --}}
+                                    <span style="position: absolute;top: 5px; right: 5px; color: #4e73df;font-weight: 700;font-size: 20px;">Approved</span>
                                     @elseif ($webinar->isConfirmed == false)
-                                    <button class="mb-0 btn btn-edit_webinar"  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button>
-                                    <span>Rejected</span>
+                                    {{-- <button class="mb-0 btn btn-edit_webinar"  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button> --}}
+                                    <span style="position: absolute;top: 5px; right: 5px; color: #9b0505;font-weight: 700;font-size: 20px;">Rejected</span>
                                     @endif 
                                 @endif
                                 
@@ -52,6 +52,7 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <p>Link Zoom : <a href="{{$webinar->zoom}}" class="font-weight-bold" target="_blank">{{$webinar->zoom}}</a></p>
                         {{$webinar->description}}
                     </div>
                 </div>

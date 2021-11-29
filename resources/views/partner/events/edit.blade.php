@@ -63,6 +63,13 @@
                             </div>
                         </div>
                         <div class="mb-3">
+                            <label class="small mb-1">Link zoom</label>
+                            <input class="form-control" type="text" id="zoom" name="zoom" value="{{$webinar->zoom}}" placeholder="Enter link Zoom" required>
+                            <div class="invalid-feedback">
+                                Please enter link zoom.
+                            </div>
+                        </div>
+                        <div class="mb-3">
                             <label class="small mb-1" for="description">Description</label>
                             <textarea placeholder="Enter webinar description" class="form-control" name="description" rows="6" required> {{$webinar->description}} </textarea>
                             <div class="invalid-feedback">

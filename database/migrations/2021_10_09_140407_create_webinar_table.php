@@ -20,6 +20,7 @@ class CreateWebinarTable extends Migration
             $table->string('topic');
             $table->dateTime('startAt');
             $table->dateTime('endAt');
+            $table->string('zoom');
             $table->string('description');
             $table->boolean('isDeleted')->default(0);
             $table->boolean('isConfirmed')->default(NULL);

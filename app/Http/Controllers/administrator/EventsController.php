@@ -169,6 +169,7 @@ class EventsController extends Controller
         $poster = $request->poster;
         $start = $request->start;
         $end = $request->end;
+        $zoom = $request->zoom;
         $description = $request->description;
 
         $speakerNos = $request->speakerNos;
@@ -199,6 +200,7 @@ class EventsController extends Controller
         $webinar->registerBy = $profile->id;
         $webinar->topic = $topic;
         $webinar->poster = $posterUrl;
+        $webinar->zoom = $zoom;
         $webinar->description = $description;
         $webinar->startAt = $start;
         $webinar->endAt = $end;
@@ -249,6 +251,7 @@ class EventsController extends Controller
         $poster = $request->poster;
         $start = $request->start;
         $end = $request->end;
+        $zoom = $request->zoom;
         $description = $request->description;
 
         $speakerNos = $request->speakerNos;
@@ -311,6 +314,7 @@ class EventsController extends Controller
             $webinar->poster = $posterUrl;
             $webinar->startAt = $start;
             $webinar->endAt = $end;
+            $webinar->zoom = $zoom;
             $webinar->description = $description;
             $webinar->save();
         }

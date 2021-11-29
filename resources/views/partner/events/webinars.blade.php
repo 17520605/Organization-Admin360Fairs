@@ -1,7 +1,7 @@
 @extends('layouts.partner')
 @section('content')
     <div class="container-fluid tags-wrapper">
-        <h1 class="h3 text-gray-800"> <span id="page-title">All Events</span> <button class="btn btn-df" style="position: absolute; right: 1.5rem;"><a href="/partner/tours/{{$tour->id}}/events/webinars/create"><i class="fas fa-upload" style="margin-right: 8px;"></i> Register new event</a></button></h1>
+        <h1 class="h3 text-gray-800"> <span id="page-title">All Events</span><button class="btn btn-df btn-page-loader" onclick="window.location.href='/partner/tours/{{$tour->id}}/events/webinars/create'" style="position: absolute; right: 1.5rem;"><i class="fas fa-plus" style="margin-right: 8px;"></i> Add new event</button></h1>
         <div class="tab-header mb-3 webinar-tab" style="width: 100%; height: 40px; mb-2 ">
             <span class="tab-header-btn btn btn-primary float-left active" data-tag="all" data-name="All Events"><i class="fas fa-stream"></i></span>
             <span class="tab-header-btn btn btn-primary float-left " data-tag="my" data-name="My Events"><i class="fab fa-accusoft"></i></span>

@@ -167,7 +167,16 @@
                 });
             }
         </script>
-
+        <script>
+            $('body').on('click', function (e) {
+                if (!$('li.dropdown').is(e.target) 
+                    && $('li.dropdown').has(e.target).length === 0 
+                    && $('.open').has(e.target).length === 0
+                ) {
+                    $('li.dropdown').removeClass('open');
+                }
+            });
+        </script>
         <script>
             $(function() {
                 //Add text editor

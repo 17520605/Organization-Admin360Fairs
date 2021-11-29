@@ -17,11 +17,23 @@
                                     <span style="font-size:14px">End at</span>
                                     <h6 class="mt-2" style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{Carbon\Carbon::parse($webinar->endAt)->format('M-d g:i A')}}</span></h6>
                                 </div>
-                                <div class="col-4" style="margin-left: 20px;margin-top: 10px;">
+                                <div class="col-3" style="margin-left: 20px;margin-top: 10px;">
                                     <span style="font-size:14px">Register by</span>
                                     <h6 class="mt-2" style="font-size:15px">
                                         <span><img src="{{(isset($webinar->registrant) && isset($webinar->registrant->avatar)) ? $webinar->registrant->avatar : 'https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg'}}" style="width: 30px; height: 30px; border-radius: 15px;">
                                         </span><span style="line-height: 30px ;font-weight: 600">{{isset($webinar->registrant) ? $webinar->registrant->name : 'N/A'}}</span>
+                                    </h6>
+                                </div>
+                                <div class="col-auto" style="margin-left: 20px;margin-top: 10px;">
+                                    <span style="font-size:14px">Status</span>
+                                    <h6 class="mt-2" style="font-size:15px">
+                                        @if (!isset($webinar->isConfirmed))
+                                        <span class="badge badge-warning badge-counter">Waiting for approve</span>
+                                        @elseif ($webinar->isConfirmed == true)
+                                        <span class="badge badge-primary badge-counter">Approved</span>
+                                        @elseif ($webinar->isConfirmed == false)
+                                        <span class="badge badge-danger badge-counter">Rejected</span>
+                                        @endif
                                     </h6>
                                 </div>
                             </div>
@@ -29,14 +41,6 @@
                                 @if ($webinar->registerBy == $profile->id)
                                 <button class="mb-0 btn btn-edit_webinar btn-page-loader" onclick="window.location.href='/partner/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}/edit'"><span class="icon-loader-form"></span><i class="fas fa-pen-alt"></i></button>
                                 <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-delete-webinar"><i class="fas fa-trash-alt"></i></button>
-                                @endif
-
-                                @if (!isset($webinar->isConfirmed))
-                                <span>Waiting for approve</span>
-                                @elseif ($webinar->isConfirmed == true)
-                                <span>Approved</span>
-                                @elseif ($webinar->isConfirmed == false)
-                                <span>Rejected</span>
                                 @endif
                             </div>
                         </h6>
@@ -47,6 +51,7 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <p>Link Zoom : <a href="{{$webinar->zoom}}" class="font-weight-bold" target="_blank">{{$webinar->zoom}}</a></p>
                         {{$webinar->description}}
                     </div>
                 </div>

@@ -28,7 +28,7 @@
                             @if ($webinar->isConfirmed === null || $webinar->isConfirmed === 0)
                                 <tr data-webinar-id="{{$webinar->id}}">
                                     <td style="text-align: center">{{$number++}}</td>
-                                    <td><a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="font-weight-bold text-primary">{{$webinar->topic}}</a></td>
+                                    <td><a href="/partner/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="font-weight-bold text-primary">{{$webinar->topic}}</a></td>
                                     <td>{{$webinar->registrant != null ? $webinar->registrant->name : 'N/A'}}</td>
                                     <td>{{$webinar->created_at}}</td>
                                     <td>status</td>
@@ -52,7 +52,7 @@
             @foreach ($webinars as $webinar)
                 @if ($webinar->isConfirmed === null || $webinar->isConfirmed === 0)
                     <div class="col-lg-4 webinar-item" data-webinar-id="{{$webinar->id}}">
-                        <a class="card card-margin" href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}">
+                        <a class="card card-margin" href="/partner/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}">
                             <div class="card-header no-border">
                                 <h6 class="card-title text-primary" style="font-weight: 700">EVENT-{{$webinar->id}}</h6>
                                 <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
@@ -74,8 +74,8 @@
                                         <li class="widget-49-meeting-item"><span>{{$detail->title}}</span></li>
                                         @endforeach
                                     </ol>
-                                    <div class="widget-49-meeting-action">
-                                        Bị Từ Chối                      
+                                    <div class="widget-49-meeting-action" style="margin-top: -10px; font-size: 20px ;font-weight: 700; color: #9b0505">
+                                        Rejected                     
                                     </div>
                                 </div>
                             </div>
