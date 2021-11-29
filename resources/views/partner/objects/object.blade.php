@@ -7,6 +7,7 @@
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$object->name}}</h1>
                 </div>
+                
             </div>
         </div>
         @if ($object->type == 'image')
