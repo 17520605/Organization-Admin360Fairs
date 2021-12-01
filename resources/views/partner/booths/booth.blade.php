@@ -48,7 +48,7 @@
                     </div>
                     <div class="preview-box" style="display: {{$booth->logo == null ? 'none' : 'block'}}; max-height: 200px; height: 200px; padding:1rem;">
                         <div class="upload-text text-center">
-                            <img id="preview-logo-img" src="{{$booth->logo}}" style="height: 100%; width:100%"  alt="">
+                            <img id="preview-logo-img" src="{{$booth->logo}}" style="height: 165px; width:100%"  alt="">
                         </div>
                     </div>
                 </div>
@@ -658,23 +658,23 @@
                         </div>
                         <div class="row mb-3">
                             <label class="small mb-1" for="">Logo</label>
-                            <div class="card" style="height: 300px; width: 100%">
-                                <div class="upload-box" style="display: {{$booth->logo == null ? 'block' : 'none'}}; height: 300px; width: 100%">
-                                    <div class="upload-text text-center" style="height: 300px; width: 100%">
+                            <div class="card" style="width: 100%">
+                                <div class="upload-box" style="display: {{$booth->logo == null ? 'block' : 'none'}}; width: 100%">
+                                    <div class="upload-text text-center" style="width: 100%">
                                         <div class="upload-form border-dashed" style="height: 100%;">
                                             <div class="m-4"> 
                                                 <input type="file" hidden id="popup-edit-booth__file-input">
-                                                <button type="button" id="popup-edit-booth__upload-logo-btn">Upload</button>
+                                                <button type="button" class="btn btn-primary" id="popup-edit-booth__upload-logo-btn"><i class="fas fa-upload"></i> Upload Logo</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="preview-box" style="display: {{$booth->logo == null ? 'none' : 'block'}}; height: 300px; width: 100%; padding:1rem;">
+                                <div class="preview-box" style="display: {{$booth->logo == null ? 'none' : 'block'}};width: 100%; padding:1rem;">
                                     <div class="upload-text text-center">
-                                        <img id="popup-edit-booth__preview-logo-img" src="{{$booth->logo}}" style="height: 100%; width:100%" alt="">
+                                        <img id="popup-edit-booth__preview-logo-img" src="{{$booth->logo}}" style="height: 100%;height: 400px; width:100%" alt="">
                                     </div>
-                                    <div class="m-4">
-                                        <button type="button" id="popup-edit-booth__remove-btn">Remove</button>
+                                    <div class="m-4" style="display: flex;justify-content: center;align-items: center;position: absolute;width: 90%;height: 400px;top: 0;">
+                                        <button type="button" class="btn btn-danger" id="popup-edit-booth__remove-btn">Remove</button>
                                     </div>
                                 </div>
                             </div>

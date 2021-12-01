@@ -146,7 +146,7 @@
                                 <span class="mb-0 btn float-right tootbar-table-btn"><i class="fas fa-list-ul"></i> </span>
                             </div>
                         </div>
-                        <div class="card-body tag-wrapper tag-table-wrapper">
+                        <div class="card-body tag-wrapper tag-table-wrapper" style="max-height: 450px;overflow-y: scroll;">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="views-table" width="100%" cellspacing="0">
                                     <thead>

@@ -15,9 +15,10 @@ class TourController extends Controller
 
         $tour = DB::table('tour')->find($id);
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        
+        $overview = \App\Models\Panorama::find($tour->overviewId);
         return view('partner.tour.index', [
             'profile' => $profile,
+            'overview'=> $overview,
             'tour'=> $tour
         ]);
     }

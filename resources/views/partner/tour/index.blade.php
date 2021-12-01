@@ -141,4 +141,29 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    var viewer;
+    var container = document.getElementById('viewer-container');
+</script>
+<script>
+    function init() {
+        viewer = new PANOLENS.Viewer({
+            container: container,
+            autoRotate: true,
+            autoRotateSpeed: 1.0,
+        });
+        viewer.OrbitControls.noZoom = true;
+
+        @if ($overview != null)
+            let imagePanorama = new PANOLENS.ImagePanorama('{{ $overview->imageUrl }}');
+            viewer.add(imagePanorama);
+        @endif
+    }
+</script>
+<script>
+    $(document).ready(function() {
+        init();
+    });
+</script>
 @endsection

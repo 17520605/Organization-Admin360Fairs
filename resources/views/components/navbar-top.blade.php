@@ -51,7 +51,7 @@
                     Alerts Center
                 </h6>
                 <span id="top-nav-notifications__wrapper"></span>
-                <a class="dropdown-item text-center small text-gray-500" href="/partner/tours/1/notifications">Show All Notifications</a>
+                <a class="dropdown-item text-center small text-gray-500" href="/administrator/tours/1/notifications">Show All Notifications</a>
             </div>
         </li>
 
