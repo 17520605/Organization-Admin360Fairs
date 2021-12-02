@@ -155,5 +155,8 @@
                 $('.icon-loader-form-delete').show();
             });
         </script>
+        <script>
+            $('table').DataTable();
+        </script>
     </body>
 </html>

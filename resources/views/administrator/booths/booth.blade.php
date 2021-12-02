@@ -44,7 +44,7 @@
                         </div>
                         <div class="preview-box" style="display: {{$booth->logo == null ? 'none' : 'block'}}; max-height: 200px; height: 200px; padding:1rem;">
                             <div class="upload-text text-center">
-                                <img id="preview-logo-img" src="{{$booth->logo}}" style="height: 100%; width:100%"  alt="">
+                                <img id="preview-logo-img" src="{{$booth->logo}}" style="height: 165px; width:100%"  alt="">
                             </div>
                         </div>
                     </div>

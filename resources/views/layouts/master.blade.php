@@ -227,5 +227,8 @@
                 $('.icon-loader-form-delete').show();
             });
         </script>
+        <script>
+            $('table').not('.notDatatable').DataTable();
+        </script>
     </body>
 </html>

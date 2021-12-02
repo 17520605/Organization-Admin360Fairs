@@ -55,6 +55,7 @@ class ToursController extends Controller
         $start_at = $request->start_at;
         $end_at = $request->end_at;
         $type = $request->type;
+        $image = $request->image;
         $location = $request->location;
         $description = $request->description;
 
@@ -63,9 +64,10 @@ class ToursController extends Controller
                 'name' => $name,
                 'startTime' => $start_at,
                 'endTime' => $end_at,
+                'image' => $image,
                 'location' => $location,
                 'description' => $description,
-                'organizerId' => Auth::id()
+                'organizerId' => $profile->id
             ]);
 
         return redirect('administrator/tours');

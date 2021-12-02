@@ -11,7 +11,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
+                    <table class="table table-bordered notDatatable" style="border: 1px solid #e3e6f0;" width="100%" cellspacing="0">
                         <thead class="group-head">
                             <tr style="background: #eef2f7;">
                                 <th style="text-align: center;width: 5%">#</th>

@@ -137,7 +137,7 @@
         <div class="div-tab-2" style="display: none">
             <div class="row tags-area">
                 <div class="col-md-12">
-                    <div class="card mb-4" style="max-height: 500px;">
+                    <div class="card mb-4">
                         <div class="card-header">
                             <span class="h6 font-weight-bold text-primary" style="margin: 0px">Views</span>
                             <div class="div_cardheader_btn">
@@ -146,7 +146,7 @@
                                 <span class="mb-0 btn float-right tootbar-table-btn"><i class="fas fa-list-ul"></i> </span>
                             </div>
                         </div>
-                        <div class="card-body tag-wrapper tag-table-wrapper" style="max-height: 450px;overflow-y: scroll;">
+                        <div class="card-body tag-wrapper tag-table-wrapper">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="views-table" width="100%" cellspacing="0">
                                     <thead>
@@ -262,6 +262,32 @@
                     </div>
                     <div class="row gx-3 mb-3">
                         <div class="col-md-12">
+                            <label class="small mb-1" for="">Banner Tour</label>
+                            <div class="card" style="width: 100%">
+                                <div class="upload-box" style="display: {{$tour->image == null ? 'block' : 'none'}}; width: 100%">
+                                    <div class="upload-text text-center" style="width: 100%">
+                                        <div class="upload-form border-dashed" style="height: 100%;">
+                                            <div class="m-4"> 
+                                                <input type="hidden"name="image" value="">
+                                                <input type="file"  hidden id="popup-edit-tour__file-input">
+                                                <button type="button" class="btn btn-primary" id="popup-edit-tour__upload-img-btn"><i class="fas fa-upload"></i> Upload Banner</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="preview-box" style="display: {{$tour->image == null ? 'none' : 'block'}};width: 100%; padding:1rem;">
+                                    <div class="upload-text text-center">
+                                        <img id="popup-edit-tour__preview-img" src="{{$tour->image}}" style="height: 100%;height: 400px; width:100%" alt="">
+                                    </div>
+                                    <div class="m-4" style="display: flex;justify-content: center;align-items: center;position: absolute;width: 90%;height: 400px;top: 0;">
+                                        <button type="button" class="btn btn-danger" id="popup-edit-tour__remove-btn">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-12">
                             <label class="small mb-1">Location</label>
                             <input class="form-control" name="location" value="{{$tour->location}}" type="text" placeholder="Enter your location" />
                         </div>
@@ -271,12 +297,51 @@
                         <textarea name="description" placeholder="Enter your tour description" class="form-control" rows="6"> {{$tour->description}} </textarea>
                     </div>
                     <!-- Form Group (create account submit)-->
-                    <button type="submit" class="btn btn-primary btn-block btn-icon-loader">  <span class="icon-loader-form"></span> Update Edit Tour</button>
+                    <button id="popup-edit-tour__save-btn" type="submit" class="btn btn-primary btn-block btn-icon-loader">  <span class="icon-loader-form"></span> Update Edit Tour</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $('#popup-edit-tour__upload-img-btn').click(function () { $('#popup-edit-tour__file-input').trigger('click')});
+
+    $('#popup-edit-tour__file-input').change(function () {  
+        let file = this.files[0];
+        $('#popup-edit-tour__save-btn').prop('disabled', true);
+        if(file != null){
+            $('#popup-edit-tour__preview-img').attr('src', URL.createObjectURL(file));
+            $('#popup-edit-tour').find('.upload-box').hide();
+            $('#popup-edit-tour').find('.preview-box').show();
+
+            let data = new FormData();
+            data.append('file', file);
+            let ajax = $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/storage/upload",
+                method: 'post',
+                processData: false,
+                contentType: false,
+                data: data,
+                dataType: 'json',
+                success: function (res) { 
+                    if (res != null) {
+                        $('#popup-edit-tour').find('input[type="hidden"][name="image"]').val(res.url);
+                        $('#popup-edit-tour__save-btn').prop('disabled', false);
+                    }
+                }
+            });
+        }
+    })
+
+    $('#popup-edit-tour__remove-btn').click(function(){
+        $('#popup-edit-tour').find('.upload-box').show();
+        $('#popup-edit-tour').find('.preview-box').hide();
+        $('#popup-edit-tour').find('input[type="hidden"][name="image"]').val(null);
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
     var viewer;
@@ -410,4 +475,5 @@
         $('.btn-tab-2').addClass('active');
     });
 </script>
+
 @endsection

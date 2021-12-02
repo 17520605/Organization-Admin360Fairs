@@ -50,6 +50,7 @@ class TourController extends Controller
         $name = $request->name;
         $start = $request->start;
         $end = $request->end;
+        $image = $request->image;
         $location = $request->location;
         $description = $request->description;
         $image = $request->image;
@@ -60,6 +61,7 @@ class TourController extends Controller
                 'name' => $name,
                 'startTime' => $start,
                 'endTime' => $end,
+                'image' => $image,
                 'location' => $location,
                 'description' => $description,
                 'image' => $image,
