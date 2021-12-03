@@ -9,4 +9,5 @@ class Asset extends Model
     protected $table = 'asset';
     public $timestamps = true;
 
+    
 }
