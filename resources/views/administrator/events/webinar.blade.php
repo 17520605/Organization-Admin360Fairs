@@ -17,11 +17,25 @@
                                     <span style="font-size:14px">End at</span>
                                     <h6 class="mt-2" style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{Carbon\Carbon::parse($webinar->endAt)->format('M-d g:i A')}}</span></h6>
                                 </div>
-                                <div class="col-4" style="margin-left: 20px;margin-top: 10px;">
+                                <div class="col-3" style="margin-left: 20px;margin-top: 10px;">
                                     <span style="font-size:14px">Register by</span>
                                     <h6 class="mt-2" style="font-size:15px">
                                         <span><img src="{{(isset($webinar->registrant) && isset($webinar->registrant->avatar)) ? $webinar->registrant->avatar : 'https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg'}}" style="width: 30px; height: 30px; border-radius: 15px;">
                                         </span><span style="line-height: 30px ;font-weight: 600">{{isset($webinar->registrant) ? $webinar->registrant->name : 'N/A'}}</span>
+                                    </h6>
+                                </div>
+                                <div class="col-auto" style="margin-left: 20px;margin-top: 10px;">
+                                    <span style="font-size:14px">Status</span>
+                                    <h6 class="mt-2" style="font-size:15px">
+                                        @if($webinar->isConfirmed === null && $webinar->isWaitingApproval == false)
+                                            Editting 
+                                        @elseif($webinar->isConfirmed == true && $webinar->isWaitingApproval == false)
+                                            Approved
+                                        @elseif($webinar->isConfirmed == false && $webinar->isWaitingApproval == false)
+                                            Rejected
+                                        @elseif($webinar->isWaitingApproval == true)
+                                            Waiting for approval
+                                        @endif
                                     </h6>
                                 </div>
                             </div>
@@ -30,19 +44,13 @@
                                 <button class="mb-0 btn btn-edit_webinar btn-page-loader" onclick="window.location.href='/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}/edit'"><span class="icon-loader-form"></span><i class="fas fa-pen-alt"></i></button>
                                 <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-delete-webinar"><i class="fas fa-trash-alt"></i></button>
                                 @else
-                                    @if (!isset($webinar->isConfirmed))
-                                    <button class="mb-0 btn btn-edit_webinar "  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button>
-                                    <button class="mb-0 btn btn-delete_webinar "  style=" margin-right: 40px; " data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
-                                    
-                                    @elseif ($webinar->isConfirmed == true)
-                                    {{-- <button class="mb-0 btn btn-delete_webinar "  data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button> --}}
-                                    <span style="position: absolute;top: 5px; right: 5px; color: #4e73df;font-weight: 700;font-size: 20px;">Approved</span>
-                                    @elseif ($webinar->isConfirmed == false)
-                                    {{-- <button class="mb-0 btn btn-edit_webinar"  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button> --}}
-                                    <span style="position: absolute;top: 5px; right: 5px; color: #9b0505;font-weight: 700;font-size: 20px;">Rejected</span>
-                                    @endif 
+                                    @if ($webinar->isWaitingApproval == true && $webinar->isConfirmed === null)
+                                        <button class="mb-0 btn btn-edit_webinar "  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button>
+                                        <button class="mb-0 btn btn-delete_webinar "  style=" margin-right: 40px; " data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
+                                    @elseif($webinar->isConfirmed == true && $webinar->isWaitingApproval == false)
+                                        <button class="mb-0 btn btn-delete_webinar "  style=" margin-right: 40px; " data-toggle="modal" data-target="#popup-reedit-webinar"></span>Request Re-Edit</button>
+                                    @endif
                                 @endif
-                                
                             </div>
                         </h6>
                     </div>
@@ -181,6 +189,7 @@
                 </div>
                 <div class="modal-body" style="padding: 30px">
                     <span>Are you sure to approve this webinar ?</span>
+                    <span class="error text-danger"></span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Cancel</button>
@@ -190,7 +199,7 @@
         </div>
     </div>
 
-    {{-- POPUP APPROVE WEBINAR --}}
+    {{-- POPUP REJECT WEBINAR --}}
     <div class="modal fade" id="popup-reject-webinar" tabindex="-1" role="dialog" aria-modal="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -200,6 +209,7 @@
                 </div>
                 <div class="modal-body" style="padding: 30px">
                     <span>Are you sure to reject this webinar ?</span>
+                    <span class="error text-danger"></span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Cancel</button>
@@ -208,7 +218,35 @@
             </div>
         </div>
     </div>
+     {{-- POPUP REEDIT WEBINAR --}}
+     <div class="modal fade" id="popup-reedit-webinar" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Confirm Send Request Re-Edit</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to send request re-edit this webinar ?</span>
+                    <span class="error text-danger"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="reeditWebinar()">Send Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
+        $('#popup-approve-webinar').on("shown.bs.modal", function () {
+            $('#popup-approve-webinar').find('.error').hide();
+        })
+
+        $('#popup-reject-webinar').on("shown.bs.modal", function () {
+            $('#popup-reject-webinar').find('.error').hide();
+        })
+
+
         function deleteWebinar() {  
             $.ajax({
                 headers: {
@@ -237,8 +275,12 @@
                     webinarId: '{{$webinar->id}}'
                 },
                 success: function (res) { 
-                    if(res != null){
+                    if(res.success == true){
                         location.reload()
+                    }
+                    else{
+                        $('#popup-approve-webinar').find(".error").text(res.error);
+                        $('#popup-approve-webinar').find(".error").show();
                     }
                 }
             });
@@ -256,8 +298,35 @@
                     webinarId: '{{$webinar->id}}'
                 },
                 success: function (res) { 
-                    if(res != null){
+                    if(res.success == true){
                         location.reload()
+                    }
+                    else{
+                        $('#popup-reject-webinar').find(".error").text(res.error);
+                        $('#popup-reject-webinar').find(".error").show();
+                    }
+                }
+            });
+        }
+        
+        function reeditWebinar() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/save-reedit",
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    webinarId: '{{$webinar->id}}'
+                },
+                success: function (res) { 
+                    if(res.success == true){
+                        location.reload()
+                    }
+                    else{
+                        $('#popup-reedit-webinar').find(".error").text(res.error);
+                        $('#popup-reedit-webinar').find(".error").show();
                     }
                 }
             });

@@ -1,10 +1,10 @@
-@extends('layouts.partner')
+@extends('layouts.master')
 @section('content')
     <div class="container-fluid tags-wrapper">
-        <h1 class="h3 text-gray-800"> <span id="page-title">All Events</span></h1>
+        <h1 class="h3 text-gray-800"> <span id="page-title">All Events</span> <button class="btn btn-df btn-page-loader" onclick="window.location.href='/administrator/tours/{{$tour->id}}/events/webinars/create'" style="position: absolute; right: 1.5rem;"><i class="fas fa-plus" style="margin-right: 8px;"></i> Add new event</button></h1>
         <div class="tab-header mb-3 webinar-tab" style="width: 100%; height: 40px; mb-2 ">
             <span class="tab-header-btn btn btn-primary float-left active" data-tag="all" data-name="All Events"><i class="fas fa-stream"></i></span>
-            <span class="tab-header-btn btn btn-primary float-left " data-tag="my" data-name="My Events"><i class="fab fa-accusoft"></i></span>
+            <span class="tab-header-btn btn btn-primary float-left " data-tag="my" data-name="Tour's Events"><i class="fab fa-accusoft"></i></span>
         </div>
         <div class="tag-body row line-time" style="display: {{ $tag == null || $tag == 'all' ? 'block' : 'none'}};" data-tag="all">
             <div class="col-lg-12">
@@ -15,7 +15,6 @@
                                     <div class="timeline-container">
                                         <div class="timeline-end">
                                             <p>Start</p>
-                                            <h6>{{Carbon\Carbon::parse($tour->startTime)->format('M d g:i A')}}</h6>
                                         </div>
                                         <div class="timeline-continue">
                                             
@@ -38,23 +37,23 @@
                                                                 @foreach ($date->webinars as $webinar)
                                                                 @if ($webinar->registerBy == $profile->id)
                                                                     {{-- WEBINAR CUA CHINH MINH --}}
-                                                                    <a href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
-                                                                        data-toggle="popover" 
+                                                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
+                                                                        data-toggle="popover" style="font-weight: 800 ;color: #727cf5 !important"
                                                                         title="{{$webinar->topic}}" 
                                                                         data-content="
                                                                             @foreach ($webinar->details as $detail) 
-                                                                                <a class='text-detail-webinar'><i class='fas fa-check'></i>  {{$detail->title}} </a><br>
+                                                                                <a> - {{$detail->title}} </a><br>
                                                                             @endforeach
                                                                         " 
-                                                                        data-html="true"><i class="fas fa-angle-right"></i> {{$webinar->topic}} <span class="host-line-webinar">(Host)</span>
+                                                                        data-html="true"><i class="fas fa-check"></i> {{$webinar->topic}} <span class="host-line-webinar">(Host)</span>
                                                                     </a><br>
                                                                 @else
-                                                                    <a href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
+                                                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov mt-3" 
                                                                         data-toggle="popover" 
                                                                         title="{{$webinar->topic}}" 
                                                                         data-content="
                                                                             @foreach ($webinar->details as $detail) 
-                                                                                <a class='text-detail-webinar'><i class='fas fa-check'></i>  {{$detail->title}} </a><br>
+                                                                                <a> - {{$detail->title}} </a><br>
                                                                             @endforeach
                                                                         " 
                                                                         data-html="true"><i class="fas fa-angle-right"></i> {{$webinar->topic}}
@@ -70,12 +69,12 @@
                                         </div>
                                         <div class="timeline-start">
                                             <p>End</p>
-                                            <h6>{{Carbon\Carbon::parse($tour->endTime)->format('M d g:i A')}}</h6>
                                         </div>
                                         <div class="timeline-launch">
                                             <div class="timeline-box">
                                                 <div class="timeline-text">
-                                                    <h3 style="font-size: 17px" class="text-primary font-weight-bold">Thank you for your visit</h3>
+                                                    <h3 style="font-size: 17px" class="text-primary font-weight-bold">Launched our company on 21 June 2021</h3>
+                                                    <p class="text-muted mb-0">Copyright © by 360Fairs</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -95,7 +94,6 @@
                                     <div class="timeline-container">
                                         <div class="timeline-end">
                                             <p>Start</p>
-                                            <h6>{{Carbon\Carbon::parse($tour->startTime)->format('M d g:i A')}}</h6>
                                         </div>
                                         <div class="timeline-continue">
                                             
@@ -116,7 +114,7 @@
                                                         <div class="event-content">
                                                             <div class="timeline-text">
                                                                 @foreach ($date->webinars as $webinar)
-                                                                <a style="display: block" href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov btn-page-loader" 
+                                                                <a style="display: block" href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="hover-a-webinar popov btn-page-loader" 
                                                                     data-toggle="popover" 
                                                                     title="{{$webinar->topic}}" 
                                                                     data-content=" 
@@ -136,7 +134,6 @@
                                         </div>
                                         <div class="timeline-start">
                                             <p>End</p>
-                                            <h6>{{Carbon\Carbon::parse($tour->endTime)->format('M d g:i A')}}</h6>
                                         </div>
                                         <div class="timeline-launch">
                                             <div class="timeline-box">
@@ -171,7 +168,7 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-delete-webinar__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-delete-webinar__delete-btn" type="button" class="btn btn-danger">Delete</button>
+                        <button id="popup-confirm-delete-webinar__delete-btn" type="button" class="btn btn-danger btn-icon-loader-delete"><span class="icon-loader-form-delete"></span> Delete</button>
                     </div>
                 </form>
             </div>
@@ -193,7 +190,7 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-approve-webinar__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-approve-webinar__confirm-btn" type="button" class="btn btn-danger">Delete</button>
+                        <button id="popup-confirm-approve-webinar__confirm-btn" type="button" class="btn btn-danger btn-icon-loader-delete"><span class="icon-loader-form-delete" style="border: 5px solid #4e73df;"></span> Approve</button>
                     </div>
                 </form>
             </div>
@@ -215,7 +212,7 @@
                     <div class="modal-footer" style="padding: 0">
                         <input id="popup-confirm-reject-webinar__id-hidden-input" type="hidden">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-reject-webinar__confirm-btn" type="button" class="btn btn-danger">Delete</button>
+                        <button id="popup-confirm-reject-webinar__confirm-btn" type="button" class="btn btn-danger btn-icon-loader-delete"><span class="icon-loader-form-delete" ></span> Delete</button>
                     </div>
                 </form>
             </div>
@@ -237,7 +234,7 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                         },
-                        url: "{{env('APP_URL')}}/administrator/booths/{{$booth->id}}/events/webinars/" + id,
+                        url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/" + id,
                         type: 'delete',
                         dataType: 'json',
                         success: function (res) { 

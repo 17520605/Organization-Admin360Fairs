@@ -42,15 +42,18 @@ class ZonesController extends Controller
         $tour = DB::table('tour')->find($id);
 
         $zone = \App\Models\Zone::find($zoneId);
-        $overview = \App\Models\Panorama::find($zone->overviewId);
+        $scene = \App\Models\Scene::find($zone->sceneId);
+        $panoramas = [];
+        if($scene != null){
+            $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
+        }
 
-
-        $booths =  DB::table('booth')
-            ->join('zone_booth', 'booth.id', '=', 'zone_booth.boothId')
-            ->where('zoneId', '=', $zoneId)
-            ->select('booth.*')
+        $booths = \App\Models\Booth::with('owner')
+            ->whereHas('zone_booths', function ($q) use($zoneId){
+                $q->where('zoneId', '=', $zoneId);
+            })
             ->get();
-        
+
         $freeBooths = DB::table('booth')
             ->whereRaw(" NOT EXISTS ( SELECT * FROM zone_booth  WHERE  zone_booth.boothId = booth.id )")
             ->get();
@@ -58,7 +61,8 @@ class ZonesController extends Controller
         return view('administrator.zones.zone', [
             'profile' => $profile,
             'tour'=> $tour,
-            'overview'=> $overview, 
+            'panoramas'=> $panoramas, 
+            'scene' => $scene,
             'zone'=>$zone,
             'booths' => $booths,
             'freeBooths' => $freeBooths,

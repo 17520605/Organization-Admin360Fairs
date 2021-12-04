@@ -79,6 +79,7 @@
                 <h6 class="collapse-header">Options</h6>
                 <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/events/webinars/schedule">Schedule</a>
                 <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/events/webinars/requests">Requests</a>
+                <a class="collapse-item btn-page-loader" href="/administrator/tours/{{$tour->id}}/events/webinars">Webinars</a>
             </div>
         </div>
     </li>

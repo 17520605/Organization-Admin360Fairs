@@ -6,12 +6,12 @@
             <div class="card-header">
                 <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Zones : ( {{count($zones)}}/{{$tour->maximumZone}})</h1>
                 <div class="div_cardheader_btn" >
-                    <button class="mb-0 btn float-right active"  data-toggle="modal" data-target="#popup-create-zone"><i class="fas fa-plus"></i> Add New Booth </button>
+                    <button class="mb-0 btn float-right active"  data-toggle="modal" data-target="#popup-create-zone"><i class="fas fa-plus"></i> Create Zone </button>
                 </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
                         <thead>
                             <tr style="background: #eef2f7;">
                                 <th style="text-align: center;width: 5%;">#</th>

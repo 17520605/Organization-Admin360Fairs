@@ -77,7 +77,7 @@ class EventsController extends Controller
             ->get();
 
 
-        return view('administrator.events.webinars', [
+        return view('administrator.events.schedule', [
             'profile' => $profile , 
             'tour'=>$tour, 
             'all_dates' => $all_dates,
@@ -115,6 +115,29 @@ class EventsController extends Controller
             'webinars'=>$webinars, 
             'speakers' => $speakers,
             'tag' => $tag
+        ]);
+    }
+
+    public function webinars($id, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+
+        $webinars = \App\Models\Webinar::with('details','registrant')
+            ->where([
+                ['tourId', '=',  $tour->id],
+                ['boothId', '=',  null],
+                ['isDeleted', '=', false],
+            ])
+            ->orderBy('startAt', 'ASC')
+            ->get();
+
+       
+
+        return view('administrator.events.webinars', [
+            'profile' => $profile , 
+            'tour'=>$tour,
+            'webinars'=>$webinars, 
         ]);
     }
 
@@ -353,7 +376,25 @@ class EventsController extends Controller
         $tour = DB::table('tour')->find($id);
 
         $webinarId = $request->webinarId;
-        $webinar = \App\Models\Webinar::find($webinarId);
+        $webinar = \App\Models\Webinar::where([
+            ['id', '=', $webinarId],
+            ['isDeleted', '=', false],
+        ])->first();
+
+        if(!isset($webinar)){
+            return json_encode([
+                "success" => false,
+                'error' => "Webinar does not exist or has been deleted.",
+            ]);
+        }
+
+        if($webinar->isWaitingApproval == false){
+            return json_encode([
+                "success" => false,
+                'error' => "The approval request has already been canceled or processed.",
+            ]);
+        }
+
         $webinar->isConfirmed = true;
         $webinar->isWaitingApproval = false;
         $webinar->save();
@@ -362,25 +403,29 @@ class EventsController extends Controller
         $notification = new \App\Models\Notification();
         $notification->tourId = $tour->id;
         $notification->to = 'users@'.$webinar->registrant->id;
-        $notification->channel = 'webinar@new';
+        $notification->channel = 'webinar@approve';
         $notification->type = \App\Models\Notification::SUCCESS;
-        $notification->title = "Your webinar was approved by organizer";
+        $notification->title = "Your webinar registration was approved";
         $notification->content = '<a href="/partner/booths/'.$webinar->boothId.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+        $notification->detail = json_encode(["webinar" => $webinar]);
         $notification->save();
         $notification->send();
 
         // send notification to organizer
         $notification = new \App\Models\Notification();
         $notification->tourId = $tour->id;
+        $notification->isSeen = true;
         $notification->to = 'users@'.$tour->organizerId;
-        $notification->channel = 'webinar@new';
+        $notification->channel = 'webinar@approve';
         $notification->type = \App\Models\Notification::SUCCESS;
-        $notification->title = "You approved a webinar";
+        $notification->title = "You approved a webinar registration";
         $notification->content = '<a href="/administrator/tours/'.$webinar->tourId.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+        $notification->detail = json_encode(["webinar" => $webinar]);
         $notification->save();
-        $notification->send();
 
-        return true;
+        return json_encode([
+            "success" => true,
+        ]);
     }
     
     public function saveReject($id, Request $request)
@@ -389,7 +434,26 @@ class EventsController extends Controller
         $tour = DB::table('tour')->find($id);
 
         $webinarId = $request->webinarId;
-        $webinar = \App\Models\Webinar::find($webinarId);
+        $message = $request->message;
+        $webinar = \App\Models\Webinar::where([
+            ['id', '=', $webinarId],
+            ['isDeleted', '=', false],
+        ])->first();
+
+        if(!isset($webinar)){
+            return json_encode([
+                "success" => false,
+                'error' => "Webinar does not exist or has been deleted.",
+            ]);
+        }
+
+        if($webinar->isWaitingApproval == false){
+            return json_encode([
+                "success" => false,
+                'error' => "The approval request has already been canceled or processed.",
+            ]);
+        }
+
         $webinar->isConfirmed = false;
         $webinar->isWaitingApproval = false;
         $webinar->save();
@@ -398,24 +462,79 @@ class EventsController extends Controller
         $notification = new \App\Models\Notification();
         $notification->tourId = $tour->id;
         $notification->to = 'users@'.$webinar->registrant->id;
-        $notification->channel = 'webinar@new';
+        $notification->channel = 'webinar@reject';
         $notification->type = \App\Models\Notification::WARNING;
-        $notification->title = "Your webinar was rejected by organizer";
+        $notification->title = "Your webinar registration was rejected";
         $notification->content = '<a href="/partner/booths/'.$webinar->boothId.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+        $notification->detail = json_encode(["message" => $message]);
         $notification->save();
         $notification->send();
 
         // send notification to organizer
         $notification = new \App\Models\Notification();
         $notification->tourId = $tour->id;
+        $notification->isSeen = true;
         $notification->to = 'users@'.$tour->organizerId;
         $notification->channel = 'webinar@new';
         $notification->type = \App\Models\Notification::WARNING;
-        $notification->title = "You rejected a webinar";
+        $notification->title = "You rejected a webinar registration";
         $notification->content = '<a href="/administrator/tours/'.$webinar->tourId.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+        $notification->detail = json_encode(["webinar" => $webinar]);
+        $notification->save();
+
+        return json_encode([
+            "success" => true,
+        ]);
+    }
+
+    public function saveReedit($id, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+        $webinarId = $request->webinarId;
+        $webinar = \App\Models\Webinar::where([
+            ['id', '=', $webinarId],
+            ['isDeleted', '=', false],
+        ])->first();
+
+
+        if(!isset($webinar)){
+            return json_encode([
+                "success" => false,
+                'error' => "Webinar does not exist or has been deleted.",
+            ]);
+        }
+
+        $webinar->isConfirmed = null;
+        $webinar->isWaitingApproval = false;
+        $webinar->save();
+        
+        // send notification to user request 
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->to = 'users@'.$webinar->registrant->id;
+        $notification->channel = 'webinar@reedit';
+        $notification->type = \App\Models\Notification::INFO;
+        $notification->title = "You have a request for re-edit webinar";
+        $notification->content = '<a href="/partner/booths/'.$webinar->boothId.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+        $notification->detail = json_encode(["webinar" => $webinar]);
         $notification->save();
         $notification->send();
 
-        return true;
+        // send notification to organizer
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->isSeen = true;
+        $notification->to = 'users@'.$tour->organizerId;
+        $notification->channel = 'webinar@reedit';
+        $notification->type = \App\Models\Notification::INFO;
+        $notification->title = "You have request re-edit for a webinar";;
+        $notification->content = '<a href="/administrator/tours/'.$webinar->tourId.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+        $notification->detail = json_encode(["webinar" => $webinar]);
+        $notification->save();
+
+        return json_encode([
+            "success" => true,
+        ]);
     }
 }

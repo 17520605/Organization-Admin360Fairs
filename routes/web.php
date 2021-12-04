@@ -59,6 +59,9 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/booths/booth', 'administrator\BoothsController@booth');
             Route::post('/{id}/booths/save-create', 'administrator\BoothsController@saveCreate');
             Route::post('/{id}/booths/save-edit', 'administrator\BoothsController@saveEdit');
+            Route::post('/{id}/booths/save-approve', 'administrator\BoothsController@saveApprove');
+            Route::post('/{id}/booths/save-reject', 'administrator\BoothsController@saveReject');
+            Route::post('/{id}/booths/save-reedit', 'administrator\BoothsController@saveReedit');
             Route::post('/{id}/booths/grant-owner', 'administrator\BoothsController@grantOwner');
             Route::get('/{id}/booths/{boothId}', 'administrator\BoothsController@booth');
             Route::post('/{id}/booths/{boothId}/change-logo', 'administrator\BoothsController@changeLogo');
@@ -76,7 +79,7 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/objects/{objectId}', 'administrator\ObjectsController@object');
 
             // event
-            Route::get('/{id}/events/webinars', 'administrator\EventsController@schedule');
+            Route::get('/{id}/events/webinars', 'administrator\EventsController@webinars');
             Route::get('/{id}/events/webinars/schedule', 'administrator\EventsController@schedule');
             Route::get('/{id}/events/webinars/requests', 'administrator\EventsController@requests');
             Route::get('/{id}/events/webinars/create', 'administrator\EventsController@create');
@@ -86,6 +89,7 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/events/webinars/save-edit', 'administrator\EventsController@saveEdit');
             Route::post('/{id}/events/webinars/save-approve', 'administrator\EventsController@saveApprove');
             Route::post('/{id}/events/webinars/save-reject', 'administrator\EventsController@saveReject');
+            Route::post('/{id}/events/webinars/save-reedit', 'administrator\EventsController@saveReedit');
             Route::delete('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@saveDelete');
 
             // views
@@ -124,6 +128,8 @@ Route::middleware('auth')->group(function (){
             // booth
             Route::get('/{id}', 'partner\BoothController@index');
             Route::post('/{id}/save-edit', 'partner\BoothController@saveEdit');
+            Route::post('/{id}/save-request', 'partner\BoothController@saveRequest');
+            Route::post('/{id}/save-cancel', 'partner\BoothController@saveCancel');
             Route::post('/{id}/save-add-objects', 'partner\BoothController@saveAddObjects');
             
             // objects
@@ -141,6 +147,7 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/events/webinars/save-create', 'partner\EventsController@saveCreate');
             Route::post('/{id}/events/webinars/save-edit', 'partner\EventsController@saveEdit');
             Route::post('/{id}/events/webinars/save-register', 'partner\EventsController@saveRegister');
+            Route::post('/{id}/events/webinars/save-cancel', 'partner\EventsController@saveCancel');
             Route::delete('/{id}/events/webinars/{webinarId}', 'partner\EventsController@saveDelete');
 
             // notifications

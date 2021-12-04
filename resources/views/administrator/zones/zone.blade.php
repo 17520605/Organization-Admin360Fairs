@@ -30,14 +30,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7">
-                    <div class="card" style="width: 100%; height: 400px;padding: 20px;">
-                        <div id="viewer-container" style="width: 100%; height: 100%;"></div>
+                <div class="col-md-7 view_booth_panoles">
+                    <div class="card" style="width: 100% ;height: 450px; padding:20px;">
+                        <div id="viewer-container" style="width: 100%; height: 100%;">
+                        </div>
                         <div class="bg-config-overview">
-                            <a href="https://360fairs.com/" target="_blank" class="btn-config-overview">
+                            <a href="https://360fairs.com/" class="btn-config-overview ">
                                 <i class="fas fa-cog"></i>
                                 <span>Config</span>
                             </a>
+                        </div>
+                    </div>
+                    <div class="card mt-3" style="width: 100%; height: 105px; padding:8px;">
+                        <div id="container">
+                            <div class="tour__bottom-bar-slider-outer" id="booth-track">
+                                <div class="tour__bottom-bar-slider" style="width: 100%; position: relative;">
+                                    {{-- <i class="fas fa-angle-left" id="left-button-scroll"></i> --}}
+                                    <div id="slider-track" class="tour__bottom-bar-slider-track" style=" overflow-x: hidden; height: 100%; display: flex;">
+                                        @if (count($panoramas) == 0)
+                                            <div><span>No panoramas</span></div>
+                                        @endif
+                                        @foreach ($panoramas as $panorama)
+                                        <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
+                                            <div style="width: 135px; height: 90px;">
+                                                <img src="{{$panorama->imageUrl}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
+                                                <span class="span-booth-name" style="font-weight: 600">{{$panorama->name}}</span>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    {{-- <i class="fas fa-angle-right" id="right-button-scroll"></i> --}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,14 +75,12 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr style="background: #eef2f7;">
                                             <th style="text-align: center ; width: 5%;">#</th>
                                             <th>Name</th>
                                             <th style="width: 25%;">Owner</th>
-                                            <th style="width: 100px;"> Panoramas</th>
-                                            <th style="width: 100px;">Objects</th>
                                             <th style="width: 135px;">Visit</th>
                                         </tr>
                                     </thead>
@@ -79,12 +101,10 @@
                                             @foreach ($booths as $booth)
                                             <tr>
                                                 <td>{{$order++}}</td>
-                                                <td>{{ $booth->name }}</td>
+                                                <td> <a href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}">{{ $booth->name }}</a></td>
                                                 <td>
-                                                    <a href="https://github.com/">Nguyen Ngoc Khai</a>
+                                                    <a>{{$booth->owner != null ? $booth->owner->name : 'N/A'}}</a>
                                                 </td>
-                                                <td>3</td>
-                                                <td>3</td>
                                                 <td>  
                                                     <a href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}" class="btn-visit-now btn-page-loader" >Visit now <i class="fas fa-chevron-right"></i></a>
                                                 </td>
@@ -138,17 +158,17 @@
             </div>
         </div>
         <script>
-            function init() {
-                var container = document.getElementById('viewer-container');
-                var viewer = new PANOLENS.Viewer({
+            function initViewer() {
+                let container = document.getElementById('viewer-container');
+                viewer = new PANOLENS.Viewer({
                     container: container,
                     autoRotate: true,
                     autoRotateSpeed: 1.0,
                 });
                 viewer.OrbitControls.noZoom = true;
 
-                @if ($overview != null)
-                    let imagePanorama = new PANOLENS.ImagePanorama('{{ $overview->imageUrl }}');
+                @if ($scene != null && $scene->defaultPanoramaId != null)
+                    let imagePanorama = new PANOLENS.ImagePanorama("{{$panoramas->where('id', $scene->defaultPanoramaId)->first()->imageUrl}}");
                     viewer.add(imagePanorama);
                 @endif
             }
@@ -158,10 +178,39 @@
                 $('#'+tagName+'-wrapper').show();
             }
 
+            function onGoToPanorama(target) {  
+                let imageUrl = $(target).attr('src');
+                viewer.destroy();
+                container.innerHTML = "";
+                viewer = new PANOLENS.Viewer({
+                    container: container,
+                    autoRotate: true,
+                    autoRotateSpeed: 1.0,
+                });
+                viewer.OrbitControls.noZoom = true;
+                let imagePanorama = new PANOLENS.ImagePanorama(imageUrl);
+                viewer.add(imagePanorama);
+            }
+
+            function initViewer() {
+                let container = document.getElementById('viewer-container');
+                viewer = new PANOLENS.Viewer({
+                    container: container,
+                    autoRotate: true,
+                    autoRotateSpeed: 1.0,
+                });
+                viewer.OrbitControls.noZoom = true;
+
+                @if ($scene != null && $scene->defaultPanoramaId != null)
+                    let imagePanorama = new PANOLENS.ImagePanorama("{{$panoramas->where('id', $scene->defaultPanoramaId)->first()->imageUrl}}");
+                    viewer.add(imagePanorama);
+                @endif
+            }
+
         </script>
         <script>
             $(document).ready(function() {
-                init();
+                initViewer();
             });
         </script>
 

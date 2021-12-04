@@ -12,7 +12,6 @@ class TourController extends Controller
 {
     public function index($id)
     {
-
         $tour = DB::table('tour')->find($id);
         $user = Auth::user();
         $profile = DB::table('profile')->where('userId', $user->id)->first();
@@ -30,7 +29,12 @@ class TourController extends Controller
             $zone->booths = $booths;
         }
 
-        $overview = \App\Models\Panorama::find($tour->overviewId);
+        $scene = DB::table('scene')->find($tour->sceneId);
+        $panoramas = [];
+        if($scene != null){
+            $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
+        }
+
           
         $views = \App\Models\View::with('visitor')->where('tourId', $id)->get();
         $interests = \App\Models\Interest::with('visitor')->where('tourId', $id)->get();
@@ -38,7 +42,8 @@ class TourController extends Controller
         return view('administrator.tour.index', [
             'profile' => $profile,
             'tour'=> $tour,
-            'overview'=> $overview,
+            'scene'=> $scene,
+            'panoramas'=> $panoramas,
             'zones'=>$zones,
             'views'=>$views,
             'interests'=>$interests

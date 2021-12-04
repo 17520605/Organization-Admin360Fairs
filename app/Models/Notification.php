@@ -29,6 +29,6 @@ class Notification extends Model
             )
         );
 
-        $pusher->trigger($this->to, $this->channel, json_encode($this));
+        $pusher->trigger($this->to, '*', json_encode($this));
     }
 }

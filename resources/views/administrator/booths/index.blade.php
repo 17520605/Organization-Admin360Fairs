@@ -44,19 +44,23 @@
                                 <td><a class="font-weight-bold text-primary" href="/administrator/tours/{{$tour->id}}/booths/{{$freeBooth->id}}">{{$freeBooth->name}}</a></td>
                                 <td>
                                     @if ($freeBooth->owner == null || $freeBooth->owner->id == $profile->id)
-                                        Host
+                                        <span class="text-muted"> Host </span> 
                                     @else
                                         <a href="/resume/{{$freeBooth->owner->id}}" target="_blank" class="text-primary font-weight-bold">{{$freeBooth->owner->name}}</a>
                                     @endif
                                 </td>  
                                 <td>
-                                    @if ($freeBooth->status == 'No owner')
-                                        <span class="badge bg-warning">{{$freeBooth->status}}</span>
-                                    @elseif ($freeBooth->status == 'Granted owner')
-                                        <span class="badge bg-danger">{{$freeBooth->status}}</span>
+                                    @if($freeBooth->isConfirmed === null && $freeBooth->isWaitingApproval == false)
+                                        Editting 
+                                    @elseif($freeBooth->isConfirmed == true && $freeBooth->isWaitingApproval == false)
+                                        Approved
+                                    @elseif($freeBooth->isConfirmed == false && $freeBooth->isWaitingApproval == false)
+                                        Rejected
+                                    @elseif($freeBooth->isWaitingApproval == true)
+                                        Waiting for approval
                                     @endif
                                 </td>
-                                <td>{{$freeBooth->lastChangeAt}}</td>
+                                <td>{{$freeBooth->updated_at}}</td>
                                 <td>
                                     <a href="/administrator/tours/{{$tour->id}}/booths/{{$freeBooth->id}}" class="btn-visit-now btn-page-loader" >Visit now <i class="fas fa-chevron-right"></i></a>
                                 </td>
@@ -89,20 +93,24 @@
                                     <td><a class="font-weight-bold text-primary btn-page-loader" href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}">{{$booth->name}}</a></td>
                                     <td>
                                         @if ($booth->owner == null || $booth->owner->id == $profile->id)
-                                            Host
+                                            <span class="text-muted"> Host </span
                                         @else
                                             <a href="/resume/{{$booth->owner->id}}" target="_blank" class="text-primary font-weight-bold">{{$booth->owner->name}}</a>
                                         @endif
 
                                     </td>
                                     <td>
-                                        @if ($booth->status == 'No owner')
-                                            <span class="badge bg-warning">{{$booth->status}}</span>
-                                        @elseif ($booth->status == 'Granted owner')
-                                            <span class="badge bg-danger">{{$booth->status}}</span>
+                                        @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
+                                            Editting 
+                                        @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
+                                            Approved
+                                        @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false)
+                                            Rejected
+                                        @elseif($booth->isWaitingApproval == true)
+                                            Waiting for approval
                                         @endif
                                     </td>
-                                    <td>{{$booth->lastChangeAt}}</td>
+                                    <td>{{$booth->updated_at}}</td>
                                     <td>
                                         <a href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}" class="btn-page-loader btn-visit-now" >Visit now <i class="fas fa-chevron-right"></i></a>
                                     </td>
@@ -239,6 +247,7 @@
                                 <center><span>No zone</span></center>
                             @else
                                 <select name="partnerId" id="popup-grant-owner__select-owner" class="form-control">
+                                    <option  value="{{$profile->id}}">--- Host ---</option>
                                     @foreach ($partners as $partner)
                                         <option id="popup-grant-owner__parter-{{$partner->id}}" value="{{$partner->id}}">{{$partner->name}}</option>
                                     @endforeach

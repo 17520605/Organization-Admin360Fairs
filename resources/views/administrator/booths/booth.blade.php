@@ -6,13 +6,38 @@
             <div class="col-md-12">
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$booth->name}}</h1>
+                    <h6 class="mt-2" style="font-size:15px">
+                        @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
+                            Editting 
+                        @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
+                            Approved
+                        @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false)
+                            Rejected
+                        @elseif($booth->isWaitingApproval == true)
+                            Waiting for approval
+                        @endif
+                    </h6>
+                    <div class="div_cardheader_btn">
+                        @if ($profile->id == $booth->ownerId || $booth->ownerId === null)
+                            <button class="mb-0 btn float-right active" onclick="window.open('/partner/booths/{{$booth->id}}')">Go to Management </button>
+                        @else 
+                            @if ($booth->isWaitingApproval == true && $booth->isConfirmed === null)
+                                <button class="mb-0 btn btn-edit_webinar "  data-toggle="modal" data-target="#popup-approve-booth">Approve</button>
+                                <button class="mb-0 btn btn-delete_webinar "  style=" margin-right: 40px; " data-toggle="modal" data-target="#popup-reject-booth"></span>Reject</button>
+                            @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
+                                <button class="mb-0 btn btn-delete_webinar "  style=" margin-right: 40px; " data-toggle="modal" data-target="#popup-reedit-booth"></span>Request Re-Edit</button>
+                            @endif
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
+        @if ($profile->id == $booth->ownerId || $booth->ownerId === null)
         <div class="tab-header mb-3 webinar-tab" style="width: 100%; height: 40px; mb-2 ">
             <span class="btn-tab-1 tab-header-btn btn btn-primary float-left active" ><i class="fas fa-stream"></i></span>
             <span class="btn-tab-2 tab-header-btn btn btn-primary float-left"><i class="fas fa-eye"></i></span>
         </div>
+        @endif
         <div class="div-tab-1">
             <div class="row mb-3">
                 <div class="col-md-5">
@@ -56,9 +81,9 @@
                         <div class="bg-config-overview">
                             <a href="https://360fairs.com/" class="btn-config-overview ">
                                 <i class="fas fa-cog"></i>
-                                <span>Config</span>
+                                <span>View</span>
                             </a>
-                        </div>
+                        </div> 
                     </div>
                     <div class="card mt-3" style="width: 100%; height: 105px; padding:8px;">
                         <div id="container">
@@ -66,6 +91,9 @@
                                 <div class="tour__bottom-bar-slider" style="width: 100%; position: relative;">
                                     {{-- <i class="fas fa-angle-left" id="left-button-scroll"></i> --}}
                                     <div id="slider-track" class="tour__bottom-bar-slider-track" style=" overflow-x: hidden; height: 100%; display: flex;">
+                                        @if (count($panoramas) == 0)
+                                            <div><span>No panoramas</span></div>
+                                        @endif
                                         @foreach ($panoramas as $panorama)
                                         <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
                                             <div style="width: 135px; height: 90px;">
@@ -510,6 +538,7 @@
                 </div>
             </div>
         </div>
+        @if ($profile->id == $booth->ownerId || $booth->ownerId === null)
         <div class="div-tab-2" style="display: none">
             <div class="row mb-3 tags-area">
                 <div class="col-md-12">
@@ -518,46 +547,9 @@
                             <span class="h5 font-weight-bold text-primary" style="margin: 0px">Views</span>
                             <div class="div_cardheader_btn">
                                 <span class="mb-0 btn float-right"><i class="fas fa-eye"></i> {{ count($views)}} </span>
-                                <span class="mb-0 btn float-right tootbar-chart-btn"><i class="fas fa-chart-line"></i></span>
-                                <span class="mb-0 btn float-right tootbar-table-btn"><i class="fas fa-list-ul"></i> </span>
                             </div>
                         </div>
-                        <div class="card-body tag-wrapper tag-table-wrapper">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="views-table" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr style="background: #eef2f7;">
-                                            <th style="text-align: center;width: 5%;">#</th>
-                                            <th >Name</th>
-                                            <th style="width: 20%;">Email</th>
-                                            <th style="width: 15%;">Contact</th>
-                                            <th style="width: 180px;">Visit at</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $number = 1;
-                                        @endphp
-                                        @foreach ($views as $view)
-                                        <tr class="zone-1">
-                                            <td style="text-align: center">{{$number++}}</td>
-                                            @if ($view->visitor != null)
-                                            <td>{{$view->visitor->name}}</td>
-                                            <td>{{$view->visitor->email}}</td>
-                                            <td>{{$view->visitor->contact}}</td>
-                                            @else
-                                            <td>Anonymous</td>
-                                            <td>N/A</td>
-                                            <td>N/A</td>
-                                            @endif
-                                            <td>{{$view->visitAt}}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="card-body tag-wrapper tag-chart-wrapper" style="display: none; height: 100%; width:100%;">
+                        <div class="card-body" style="height: 100%; width:100%;">
                             <div id="view-chart-container" style="height: 100%; width:100%;">
                                 
                             </div>
@@ -613,8 +605,70 @@
                 </div>
             </div>
         </div>
+        @endif
+    </div>
+
+    {{-- POPUP APPROVE BOOTH --}}
+    <div class="modal fade" id="popup-approve-booth" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Confirm Approve</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to approve this webinar ?</span>
+                    <span class="error text-danger"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="approveBooth()">Approve</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- POPUP REEDIT BOOTH --}}
+    <div class="modal fade" id="popup-reedit-booth" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Confirm Send Request Re-Edit</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to approve this webinar ?</span>
+                    <span class="error text-danger"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="reeditBooth()">Send Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- POPUP REJECT BOOTH --}}
+    <div class="modal fade" id="popup-reject-booth" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Confirm Reject</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to reject this webinar ?</span>
+                    <span class="error text-danger"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="rejectBooth()">Reject</button>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
+
         $('.btn-tab-1').click(function(){
             $('.div-tab-1').show();
             $('.div-tab-2').hide();
@@ -626,7 +680,77 @@
             $('.div-tab-1').hide();
             $('.btn-tab-1').removeClass('active');
             $('.btn-tab-2').addClass('active');
+            initViewChart();
         });
+
+        function approveBooth() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/booths/save-approve",
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    boothId: '{{$booth->id}}'
+                },
+                success: function (res) { 
+                    if(res.success == true){
+                        location.reload()
+                    }
+                    else{
+                        $('#popup-approve-booth').find(".error").text(res.error);
+                        $('#popup-approve-booth').find(".error").show();
+                    }
+                }
+            });
+        }
+
+        function reeditBooth() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/booths/save-reedit",
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    boothId: '{{$booth->id}}'
+                },
+                success: function (res) { 
+                    if(res.success == true){
+                        location.reload()
+                    }
+                    else{
+                        $('#popup-reedit-booth').find(".error").text(res.error);
+                        $('#popup-reedit-booth').find(".error").show();
+                    }
+                }
+            });
+        }
+
+        function rejectBooth() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/booths/save-reject",
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    boothId: '{{$booth->id}}'
+                },
+                success: function (res) { 
+                    if(res.success == true){
+                        location.reload()
+                    }
+                    else{
+                        $('#popup-reject-booth').find(".error").text(res.error);
+                        $('#popup-reject-booth').find(".error").show();
+                    }
+                }
+            });
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
@@ -752,66 +876,6 @@
     <script>
         $(document).ready(function() {
             initViewer();
-            initViewChart();
-
-            // $('.table').DataTable({
-            //     "searching": false
-            // });
-
-            $('.tootbar-chart-btn').click(function (e) { 
-                $(this).parents('.tags-area').find('.tag-wrapper').hide();
-                $(this).parents('.tags-area').find('.tag-chart-wrapper').show();
-            });
-
-            $('.tootbar-table-btn').click(function (e) { 
-                $(this).parents('.tags-area').find('.tag-wrapper').hide();
-                $(this).parents('.tags-area').find('.tag-table-wrapper').show();
-            });
-
-            // $('#upload-logo-btn').click(function () { $('#upload-logo-file-input').trigger('click')});
-
-            // $('#upload-logo-file-input').change(function () {  
-            //     let file = this.files[0];
-            //     if(file != null){
-            //         $('#preview-logo-img').attr('src', URL.createObjectURL(file));
-            //         $('.upload-box').hide();
-            //         $('.preview-box').show();
-
-            //         let data = new FormData();
-            //         data.append('file', file);
-            //         let ajax = $.ajax({
-            //             headers: {
-            //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //             },
-            //             url: "{{env('APP_URL')}}/storage/upload",
-            //             method: 'post',
-            //             processData: false,
-            //             contentType: false,
-            //             data: data,
-            //             dataType: 'json',
-            //             success: function (url) { 
-            //                 if (url != null) {
-            //                     let ajax = $.ajax({
-            //                         headers: {
-            //                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //                         },
-            //                         url: "/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}/change-logo",
-            //                         method: 'post',
-            //                         data: {
-            //                             logo: url
-            //                         },
-            //                         dataType: 'json',
-            //                         success: function (res) { 
-            //                             if (res != null) {
-            //                                 alert("upload done");
-            //                             }
-            //                         }
-            //                     });
-            //                 }
-            //             }
-            //         });
-            //     }
-            // })
         });
     </script>
 @endsection

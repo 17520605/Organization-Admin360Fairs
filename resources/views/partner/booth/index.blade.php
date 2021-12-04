@@ -6,13 +6,37 @@
             <div class="col-md-12">
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$booth->name}}</h1>
-                    <div class="div_cardheader_btn">
-                        @if ($booth->isConfirmed === NULL)
-                            <button class="mb-0 btn float-right active" ><i class="fas fa-globe"></i> Publish </button>
-                        @elseif ($booth->isConfirmed === 0)
-                            <button class="mb-0 btn float-right active" style="opacity: 0.6 !important;" disabled><i class="fas fa-globe"></i> Publish</button>
+                    <h6 class="mt-2" style="font-size:15px">
+                        @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
+                            Editting 
+                        @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
+                            Approved
+                        @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false)
+                            Rejected
+                        @elseif($booth->isWaitingApproval == true)
+                            Waiting for approval
                         @endif
-                        <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-booth"><i class="fas fa-pen"></i> Edit</button>
+                    </h6>
+                    <div style="position: absolute; top: 10px; right: 10px;">
+                        @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
+                            @if ($booth->ownerId == $profile->id)
+                                <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#popup-request-approval"> Request Approval </button>
+                                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-booth"><i class="fas fa-pen"></i> Edit</button>
+                            @endif
+                        @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
+                            
+                        @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false)
+                            @if ($booth->ownerId == $profile->id)
+                                @if ($booth->ownerId != $tour->organizerId )
+                                    <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#popup-request-approval"> Request Approval </button>
+                                @endif
+                                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-booth"><i class="fas fa-pen"></i> Edit</button>
+                            @endif
+                        @elseif($booth->isWaitingApproval == true)
+                            @if ($booth->ownerId == $profile->id)
+                                <button class="mb-0 btn" data-toggle="modal" data-target="#popup-cancel-request"> Cancel</button>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>
@@ -22,7 +46,7 @@
         @endif
         <div class="row mb-3">
             <div class="col-md-5">
-                <div class="card" style="height: 270px">
+                <div class="card" style="height: 62%">
                     <div class="card-body" style="color: #555; font-size: 14px;">
                         <div class="flex-grow-1 overflow-hidden">
                             <h6 class="font-size-15 font-weight-bold">General information : </h6>
@@ -39,30 +63,37 @@
                     </div>
                 </div>
                 <div class="card mt-3">
-                    <div class="upload-box" style="display: {{$booth->logo == null ? 'block' : 'none'}}; max-height: 200px; height: 200px">
+                    <div class="upload-box" style="display: {{$booth->logo == null ? 'block' : 'none'}}; max-height: 200px; height: 38%">
                         <div class="upload-text text-center">
-                            <div class="upload-form border-dashed" style="height: 165px;line-height: 150px ;font-size: 40px;font-weight: 900;pointer-events: none">
-                              NO LOGO
+                            <div class="upload-text text-center">
+                                <div class="upload-form border-dashed" style="height: 165px;line-height: 150px ;font-size: 40px;font-weight: 900;pointer-events: none">
+                                NO LOGO
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="preview-box" style="display: {{$booth->logo == null ? 'none' : 'block'}}; max-height: 200px; height: 200px; padding:1rem;">
                         <div class="upload-text text-center">
-                            <img id="preview-logo-img" src="{{$booth->logo}}" style="height: 100%; width:100%"  alt="">
+                            <img id="preview-logo-img" src="{{$booth->logo}}" style="height: 165px; width:100%"  alt="">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-7 view_booth_panoles">
-                <div class="card" style="width: 100% ;height: 75%; padding:20px;">
+                <div class="card" style="width: 100% ;height: 450px; padding:20px;">
                     <div id="viewer-container" style="width: 100%; height: 100%;">
                     </div>
+                    @if ($profile->id == $booth->ownerId || $booth->ownerId === null)
                     <div class="bg-config-overview">
-                        <a href="https://360fairs.com/" class="btn-config-overview ">
-                            <i class="fas fa-cog"></i>
-                            <span>Config</span>
-                        </a>
+                        @if($booth->isConfirmed === null && $booth->isWaitingApproval == false && $booth->ownerId == $profile->id)
+                            <a href="https://360fairs.com/" class="btn-config-overview "> <i class="fas fa-cog"></i><span>Config</span></a>
+                        @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false && $booth->ownerId == $profile->id)
+                            <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-booth"><i class="fas fa-pen"></i> Edit</button>
+                        @else 
+                            <a href="https://360fairs.com/" class="btn-config-overview "> <i class="fas fa-eye"></i><span>View</span></a>
+                        @endif
                     </div>
+                    @endif 
                 </div>
                 <div class="card mt-3" style="width: 100%; height: 105px; padding:8px;">
                     <div id="container">
@@ -70,6 +101,9 @@
                             <div class="tour__bottom-bar-slider" style="width: 100%; position: relative;">
                                 {{-- <i class="fas fa-angle-left" id="left-button-scroll"></i> --}}
                                 <div id="slider-track" class="tour__bottom-bar-slider-track" style=" overflow-x: hidden; height: 100%; display: flex;">
+                                    @if (count($panoramas) == 0)
+                                        <div><span>No panoramas</span></div>
+                                    @endif
                                     @foreach ($panoramas as $panorama)
                                     <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
                                         <div style="width: 135px; height: 90px;">
@@ -93,46 +127,9 @@
                         <span class="h5 font-weight-bold text-primary" style="margin: 0px">Views</span>
                         <div class="div_cardheader_btn">
                             <span class="mb-0 btn float-right"><i class="fas fa-eye"></i> {{ count($views)}} </span>
-                            <span class="mb-0 btn float-right tootbar-chart-btn"><i class="fas fa-chart-line"></i></span>
-                            <span class="mb-0 btn float-right tootbar-table-btn"><i class="fas fa-list-ul"></i> </span>
                         </div>
                     </div>
-                    <div class="card-body tag-wrapper tag-table-wrapper">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="views-table" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr style="background: #eef2f7;">
-                                        <th style="text-align: center;width: 5%;">#</th>
-                                        <th >Name</th>
-                                        <th style="width: 20%;">Email</th>
-                                        <th style="width: 15%;">Contact</th>
-                                        <th style="width: 180px;">Visit at</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                        @php
-                            $number = 1;
-                        @endphp
-                                    @foreach ($views as $view)
-                                    <tr class="zone-1">
-                                        <td style="text-align: center">{{$number++}}</td>
-                                        @if ($view->visitor != null)
-                                        <td>{{$view->visitor->name}}</td>
-                                        <td>{{$view->visitor->email}}</td>
-                                        <td>{{$view->visitor->contact}}</td>
-                                        @else
-                                        <td>Anonymous</td>
-                                        <td>N/A</td>
-                                        <td>N/A</td>
-                                        @endif
-                                        <td>{{$view->visitAt}}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-body tag-wrapper tag-chart-wrapper" style="display: none; height: 100%; width:100%;">
+                    <div class="card-body" style="height: 100%; width:100%;">
                         <div id="view-chart-container" style="height: 100%; width:100%;">
                             
                         </div>
@@ -177,11 +174,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                    <div class="card-body" style="display: none; height: 100%; width:100%;">
-                        <div id="interest-chart-container" style="height: 100%; width:100%;">
-                            
                         </div>
                     </div>
                 </div>
@@ -240,6 +232,44 @@
             </div>
         </div>
     </div>
+    {{-- POPUP REQUEST APPROVAL --}}
+    <div class="modal fade" id="popup-request-approval" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Confirm Register</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to send request approval for this booth?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="requestApproval()">Send Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     {{-- POPUP CANCEL REQUEST --}}
+     <div class="modal fade" id="popup-cancel-request" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Confirm Register</h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <span>Are you sure to send request approval for this booth?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="cancelRequest()">Send Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     
     <script>
@@ -267,6 +297,47 @@
                 @if ($i < count($views) - 1 ) , @endif
             @endfor
         ]
+
+        function cancelRequest() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/partner/booths/{{$booth->id}}/save-cancel",
+                type: 'post',
+                dataType: 'json',
+                success: function (res) { 
+                    if(res.success == true){
+                        location.reload()
+                    }
+                    else{
+                        $('#popup-request-approval').find(".error").text(res.error);
+                        $('#popup-request-approval').find(".error").show();
+                    }
+                }
+            });
+        } 
+
+        function requestApproval() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/partner/booths/{{$booth->id}}/save-request",
+                type: 'post',
+                dataType: 'json',
+                success: function (res) { 
+                    if(res.success == true){
+                        location.reload()
+                    }
+                    else{
+                        $('#popup-request-approval').find(".error").text(res.error);
+                        $('#popup-request-approval').find(".error").show();
+                    }
+                }
+            });
+        }
+
 
         function switchObjectTypeTag(type) {  
             $('.objects-card').hide();
@@ -371,16 +442,6 @@
             // $('.table').DataTable({
             //     "searching": false
             // });
-
-            $('.tootbar-chart-btn').click(function (e) { 
-                $(this).parents('.tags-area').find('.tag-wrapper').hide();
-                $(this).parents('.tags-area').find('.tag-chart-wrapper').show();
-            });
-
-            $('.tootbar-table-btn').click(function (e) { 
-                $(this).parents('.tags-area').find('.tag-wrapper').hide();
-                $(this).parents('.tags-area').find('.tag-table-wrapper').show();
-            });
 
             $('#popup-edit-booth__upload-logo-btn').click(function () { $('#popup-edit-booth__file-input').trigger('click')});
 

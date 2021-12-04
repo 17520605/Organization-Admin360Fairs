@@ -50,6 +50,7 @@ class BoothsController extends Controller
             'partners'=> $partners,
         ]);
     }
+
     public function request($id)
     {
         $user = Auth::user();
@@ -216,5 +217,172 @@ class BoothsController extends Controller
         $booth = \App\Models\Booth::find($boothId);
         $booth->delete();
         return true;
+    }
+
+    public function saveApprove($id, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+
+        $boothId = $request->boothId;
+        $booth = \App\Models\Booth::where([
+            ['id', '=', $boothId],
+            ['isDeleted', '=', false],
+        ])->first();
+
+        if(!isset($booth)){
+            return json_encode([
+                "success" => false,
+                'error' => "Booth does not exist or has been deleted.",
+            ]);
+        }
+
+        if($booth->isWaitingApproval == false){
+            return json_encode([
+                "success" => false,
+                'error' => "The approval request has already been canceled or processed.",
+            ]);
+        }
+
+        $booth->isConfirmed = true;
+        $booth->isWaitingApproval = false;
+        $booth->save();
+        
+        // send notification to user request
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->to = 'users@'.$booth->owner->id;
+        $notification->channel = 'booth@approve';
+        $notification->type = \App\Models\Notification::SUCCESS;
+        $notification->title = "Your request for booth was approved";
+        $notification->content = '<a href="/partner/booths/'.$booth->id.'">'.$booth->name.'</a>';
+        $notification->detail = json_encode(["booth" => $booth]);
+        $notification->save();
+        $notification->send();
+
+        // send notification to organizer
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->isSeen = true;
+        $notification->to = 'users@'.$tour->organizerId;
+        $notification->channel = 'booth@booth';
+        $notification->type = \App\Models\Notification::SUCCESS;
+        $notification->title = "You approved a booth request";
+        $notification->content = '<a href="/administrator/tours/'.$booth->tourId.'/booths/'.$booth->id.'">'.$booth->name.'</a>';
+        $notification->detail = json_encode(["booth" => $booth]);
+        $notification->save();
+
+        return json_encode([
+            "success" => true,
+        ]);
+    }
+    
+    public function saveReject($id, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+
+        $message = $request->message;
+        $boothId = $request->boothId;
+        $booth = \App\Models\Booth::where([
+            ['id', '=', $boothId],
+            ['isDeleted', '=', false],
+        ])->first();
+
+        if(!isset($booth)){
+            return json_encode([
+                "success" => false,
+                'error' => "Booth does not exist or has been deleted.",
+            ]);
+        }
+
+        if($booth->isWaitingApproval == false){
+            return json_encode([
+                "success" => false,
+                'error' => "The approval request has already been canceled or processed.",
+            ]);
+        }
+
+        $booth->isConfirmed = false;
+        $booth->isWaitingApproval = false;
+        $booth->save();
+        
+        // send notification to user request 
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->to = 'users@'.$booth->ownerId;
+        $notification->channel = 'booth@reject';
+        $notification->type = \App\Models\Notification::WARNING;
+        $notification->title = "Your request for booth was rejected ";
+        $notification->content = '<a href="/partner/booths/'.$booth->id.'">'.$booth->name.'</a>';
+        $notification->detail = json_encode(["message" => $message]);
+        $notification->save();
+        $notification->send();
+
+        // send notification to organizer
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->isSeen = true;
+        $notification->to = 'users@'.$tour->organizerId;
+        $notification->channel = 'booth@reject';
+        $notification->type = \App\Models\Notification::WARNING;
+        $notification->title = "You rejected a booth request";
+        $notification->content = '<a href="/administrator/tours/'.$booth->tourId.'/booths/'.$booth->id.'">'.$booth->name.'</a>';
+        $notification->detail = json_encode(["booth" => $booth]);
+        $notification->save();
+
+        return json_encode([
+            "success" => true,
+        ]);
+    }
+
+    public function saveReedit($id, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $tour = DB::table('tour')->find($id);
+        $boothId = $request->boothId;
+        $booth = \App\Models\Booth::where([
+            ['id', '=', $boothId],
+            ['isDeleted', '=', false],
+        ])->first();
+
+        if(!isset($booth)){
+            return json_encode([
+                "success" => false,
+                'error' => "Booth does not exist or has been deleted.",
+            ]);
+        }
+
+        $booth->isConfirmed = null;
+        $booth->isWaitingApproval = false;
+        $booth->save();
+        
+        // send notification to user request 
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->to = 'users@'.$booth->ownerId;
+        $notification->channel = 'booth@reedit';
+        $notification->type = \App\Models\Notification::INFO;
+        $notification->title = "You have a request for re-edit booth";
+        $notification->content = '<a href="/partner/booths/'.$booth->id.'">'.$booth->name.'</a>';
+        $notification->detail = json_encode(["booth" => $booth]);
+        $notification->save();
+        $notification->send();
+
+        // send notification to organizer
+        $notification = new \App\Models\Notification();
+        $notification->tourId = $tour->id;
+        $notification->isSeen = true;
+        $notification->to = 'users@'.$tour->organizerId;
+        $notification->channel = 'booth@reedit';
+        $notification->type = \App\Models\Notification::INFO;
+        $notification->title = "You requested re-edit a booth";
+        $notification->content = '<a href="/administrator/tours/'.$booth->tourId.'/booths/'.$booth->id.'">'.$booth->name.'</a>';
+        $notification->detail = json_encode(["booth" => $booth]);
+        $notification->save();
+
+        return json_encode([
+            "success" => true,
+        ]);
     }
 }

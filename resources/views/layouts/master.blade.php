@@ -101,7 +101,7 @@
                 });
 
                 var channel = pusher.subscribe('users@'+'{{$profile->id}}');
-                channel.bind('webinar@new', function(res) {
+                channel.bind('*', function(res) {
                     let notification = JSON.parse(res);
                     let text = $('#top-nav-notifications__count').text();
                     let notifCount = text == "" ? 1 : parseInt(text) + 1;
@@ -267,7 +267,7 @@
             });
         </script>
         <script>
-            $('table').not('.notDatatable').DataTable();
+           // $('table').not('.notDatatable').DataTable();
         </script>
     </body>
 </html>

@@ -15,7 +15,7 @@
             <span class="tab-header-btn btn btn-primary float-left active" data-tag="list" data-name="All Events"><i class="fas fa-stream"></i></span>
             <span class="tab-header-btn btn btn-primary float-left" data-tag="card" data-name="All Events"><i class="fas fa-clone"></i></span>
         </div>
-        <div class="card shadow mb-4 tag-body" style="display: {{ $tag == null || $tag == 'list' ? 'block' : 'none'}}" data-tag="list">
+        <div class="card shadow mb-4 tag-body" style="display: block" data-tag="list">
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -26,7 +26,7 @@
                                 <th>Requied by</th>
                                 <th>Date Request</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th>View Details</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,40 +34,33 @@
                             $number = 1;
                         @endphp
                         @foreach ($webinars as $webinar)
-                            @if ($webinar->isConfirmed === null || $webinar->isConfirmed === 0)
-                                <tr data-webinar-id="{{$webinar->id}}">
-                                    <td style="text-align: center">{{$number++}}</td>
-                                    <td><a href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="font-weight-bold text-primary">{{$webinar->topic}}</a></td>
-                                    <td>{{$webinar->registrant != null ? $webinar->registrant->name : 'N/A'}}</td>
-                                    <td>{{$webinar->created_at}}</td>
-                                    <td>
-                                        @if($webinar->isConfirmed === null && $webinar->isWaitingApproval == false)
-                                            Editting 
-                                        @elseif($webinar->isConfirmed == true && $webinar->isWaitingApproval == false)
-                                            Approved
-                                        @elseif($webinar->isConfirmed == false && $webinar->isWaitingApproval == false)
-                                            Rejected
-                                        @elseif($webinar->isWaitingApproval == true)
-                                            Waiting for approval
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($webinar->isConfirmed === 0)
-                                            <span class="badge bg-danger">Reject</span>
-                                        @else
-                                            <button type="button" class="btn btn-sm btn-success" onclick="onOpenPopupConfirmApprove({{$webinar->id}})" title="Edit" style="width: 32px;"><i class="fas fa-check"></i></button>
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="onOpenPopupConfirmReject({{$webinar->id}})" title="Delete" style="width: 32px;"><i class="fas fa-times"></i></button>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endif
+                        <tr data-webinar-id="{{$webinar->id}}">
+                            <td style="text-align: center">{{$number++}}</td>
+                            <td><a href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="font-weight-bold text-primary">{{$webinar->topic}}</a></td>
+                            <td>{{$webinar->registrant != null ? $webinar->registrant->name : 'N/A'}}</td>
+                            <td>{{$webinar->created_at}}</td>
+                            <td>
+                                @if($webinar->isConfirmed === null && $webinar->isWaitingApproval == false)
+                                    Editting 
+                                @elseif($webinar->isConfirmed == true && $webinar->isWaitingApproval == false)
+                                    Approved
+                                @elseif($webinar->isConfirmed == false && $webinar->isWaitingApproval == false)
+                                    Rejected
+                                @elseif($webinar->isWaitingApproval == true)
+                                    Waiting for approval
+                                @endif
+                            </td>
+                            <td>
+                                <a href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="font-weight-bold text-primary">View</a>
+                            </td>
+                        </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="tag-body row card-event" style="display: {{ $tag == 'card' ? 'block' : 'none'}};" data-tag="card">
+        <div class="tag-body row card-event" style="display: none" data-tag="card">
             @foreach ($webinars as $webinar)
                 @if ($webinar->isConfirmed === null || $webinar->isConfirmed === 0)
                     <div class="col-lg-4 webinar-item" data-webinar-id="{{$webinar->id}}">
@@ -104,158 +97,6 @@
             @endforeach
         </div>
     </div>
-    @include('components.add_event')
-    {{-- POPUP DELETE WEBINAR --}}
-    <div class="modal fade" id="popup-confirm-delete-webinar" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <form id="popup-edit-webinar__form" class="needs-validation" novalidate>
-                    <div class="modal-header">
-                        <h5 class="fw-light">Delete Webinar </h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        @csrf
-                        <p>Do you really want to delete it?</p>
-                    </div>
-                    <div class="modal-footer" style="padding: 0">
-                        <input id="popup-confirm-delete-webinar__id-hidden-input" type="hidden">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-delete-webinar__delete-btn" type="button" class="btn btn-danger">Delete</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    {{-- POPUP CONFIRM APPROVE WEBINAR --}}
-    <div class="modal fade" id="popup-confirm-approve-webinar" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <form id="popup-edit-webinar__form">
-                    <div class="modal-header">
-                        <h5 class="fw-light">Approve Webinar </h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        @csrf
-                        <p>Do you really want to approve it?</p>
-                    </div>
-                    <div class="modal-footer" style="padding: 0">
-                        <input id="popup-confirm-approve-webinar__id-hidden-input" type="hidden">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-approve-webinar__confirm-btn" type="button" class="btn btn-primary">Approve</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    {{-- POPUP CONFIRM REJECT WEBINAR --}}
-    <div class="modal fade" id="popup-confirm-reject-webinar" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <form id="popup-edit-webinar__form">
-                    <div class="modal-header">
-                        <h5 class="fw-light">Reject Webinar </h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        @csrf
-                        <p>Do you really want to reject it?</p>
-                    </div>
-                    <div class="modal-footer" style="padding: 0">
-                        <input id="popup-confirm-reject-webinar__id-hidden-input" type="hidden">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="popup-confirm-reject-webinar__confirm-btn" type="button" class="btn btn-danger">Reject</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function onOpenPopupConfirmReject(webinarId){
-            $('#popup-confirm-reject-webinar__id-hidden-input').val(webinarId);
-            $('#popup-confirm-reject-webinar').modal('show');
-        }
-
-        function onOpenPopupConfirmApprove(webinarId){
-            $('#popup-confirm-approve-webinar__id-hidden-input').val(webinarId);
-            $('#popup-confirm-approve-webinar').modal('show');
-        }
-
-        function onOpenPopupDeleteWebinar(target){
-            let webinarId = $(target).attr('data-webinar-id');
-            $('#popup-confirm-delete-webinar__id-hidden-input').val(webinarId);
-            $('#popup-confirm-delete-webinar').modal('show');
-        }
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('#popup-confirm-delete-webinar__delete-btn').click(function (){
-                let id = $('#popup-confirm-delete-webinar__id-hidden-input').val();
-                if(id != null && id != ""){
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        },
-                        url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/" + id,
-                        type: 'delete',
-                        dataType: 'json',
-                        success: function (res) { 
-                            if (res == 1) {
-                                $('#popup-confirm-delete-webinar').modal('hide');
-                                location.reload();
-                            }
-                        }
-                    });
-                }
-            });
-
-            $('#popup-confirm-approve-webinar__confirm-btn').click(function (){
-                let id = $('#popup-confirm-approve-webinar__id-hidden-input').val();
-                if(id != null && id != ""){
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        },
-                        url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/save-approve",
-                        type: 'post',
-                        dataType: 'json',
-                        data: {
-                            webinarId: id,
-                        },
-                        success: function (res) { 
-                            if (res == 1) {
-                                location.reload();
-                            }
-                        }
-                    });
-                }
-            });
-
-            $('#popup-confirm-reject-webinar__confirm-btn').click(function (){
-                let id = $('#popup-confirm-reject-webinar__id-hidden-input').val();
-                if(id != null && id != ""){
-                    let ajax = $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/events/webinars/save-reject",
-                        type: 'post',
-                        dataType: 'json',
-                        data: {
-                            webinarId: id,
-                        },
-                        success: function (res) { 
-                            if (res == 1) {
-                                location.reload();
-                            }
-                        }
-                    });
-                }
-            });
-        });
-    </script>
     <script>
          $('.tab-header-btn').click(function(){
             let area = $(this).parents('.tags-wrapper');
