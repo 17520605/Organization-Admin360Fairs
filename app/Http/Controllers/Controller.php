@@ -122,5 +122,17 @@ class Controller extends BaseController
         return $resObj;
     }
 
+    public function uploadFile1($file)
+    {   
+        $path = Storage::disk('temp')->putFile('/', $file);
+        $res = cloudinary()->upload(Storage::disk('temp')->path($file->hashName()), [
+            'resource_type' => 'auto'
+        ])->getResponse();
+        
+        // delete file
+        $path = Storage::disk('temp')->delete($path);
 
+        $resObj = json_decode(json_encode($res));
+        return $resObj;
+    }
 }

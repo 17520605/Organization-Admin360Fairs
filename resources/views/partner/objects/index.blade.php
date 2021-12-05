@@ -5,37 +5,19 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-body" style="color: #555; font-size: 14px;">
-                <div class="border shadow-none mb-2 card total_bar_object" style="padding: 0.5rem" >
+                <div class="border shadow-none mb-2 card total_bar_object" style="padding: 0.5rem">
                     <a class="text-body">
                         <div class="body">
-                            @php
-                                $storageLimit = floatval($booth->storageLimit);
-                                $totalSize = floatval($types->sum('size'))/(1048576);
-                                $totalPercent = ($storageLimit != 0) ? (number_format($totalSize * 100 / $storageLimit, 1)) : 0;
-                            @endphp
-                            <h4 style="color: #555">Used :{{ number_format($totalSize, 1)}} MB  <i class="fa fa-server float-right"></i></h4>
-                            <p class="mb-0">Storage <small class="text-muted float-right">of {{ $storageLimit}}MB</small></p>
+                                                        <h4 style="color: #555">Used :1.8 MB  <i class="fa fa-server float-right"></i></h4>
+                            <p class="mb-0">Storage <small class="text-muted float-right">of 10MB</small></p>
                             <div class="progress progress-striped" style="width: 100%; padding: 0; height: 20px;background: #bbbbbb77;">
-                                @if ($totalPercent < 10)
-                                    <div class="progress-bar progress-bar-success" style="border-radius: 5px; width: {{$totalPercent}}%;"></div>
-                                @elseif ($totalPercent < 40)
-                                    <div class="progress-bar progress-bar-success" style="border-radius: 5px; width: {{$totalPercent}}%;">{{$totalPercent}}%</div>
-                                @elseif ($totalPercent > 40)
-                                    <div class="progress-bar progress-bar-warning" style="border-radius: 5px; width: {{$totalPercent}}%;">{{$totalPercent}}%</div>
-                                @elseif ($totalPercent > 80)
-                                    <div class="progress-bar progress-bar-danger" style="border-radius: 5px; width: {{$totalPercent}}%;">{{$totalPercent}}%</div>
-                                @endif
-                            </div>
+                                                                    <div class="progress-bar progress-bar-success" style="border-radius: 5px; width: 17.5%;">17.5%</div>
+                                                            </div>
                         </div>
                     </a>
                 </div>
                 <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('all')">
-                    @php
-                        $totalCount =($types->sum('count'));
-                        $totalSize = floatval($types->sum('size'))/(1048576);
-                        $totalPercent = number_format($totalSize * 100 / $storageLimit, 1);
-                    @endphp
-                    <a class="text-body btn-item-object-hover">
+                                        <a class="text-body btn-item-object-hover">
                         <div class="p-2">
                             <div class="d-flex">
                                 <div class="avatar-xs-icon align-self-center me-2">
@@ -43,22 +25,17 @@
                                 </div>
                                 <div class="overflow-hidden me-auto">
                                     <h5 class="font-black-555 text-truncate mb-1">All</h5>
-                                    <p class="text-muted text-truncate mb-0">{{$totalCount}} Files</p>
+                                    <p class="text-muted text-truncate mb-0">5 Files</p>
                                 </div>
                             </div>
                         </div>
                     </a>
                     <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                        <div class="progress-bar bg-warning" data-transitiongoal="{{$totalPercent}}" aria-valuenow="{{$totalPercent}}" style="width: {{$totalPercent}}%;"></div>
+                        <div class="progress-bar bg-warning" data-transitiongoal="17.5" aria-valuenow="17.5" style="width: 17.5%;"></div>
                     </div>
                 </div>
                 <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('images')">
-                    @php
-                        $imageCount = ($types->where('type', 'image')->first() != null) ? ($types->where('type', 'image')->first()->count) : 0;
-                        $imageSize =  ($types->where('type', 'image')->first() != null) ? (number_format(floatval($types->where('type', 'image')->first()->size) / 1048576 , 1)) : 0;
-                        $imagePercent = ($totalSize != 0) ? (number_format($imageSize * 100 / $totalSize, 1)) : 0;
-                    @endphp
-                    <a class="text-body btn-item-object-hover">
+                                        <a class="text-body btn-item-object-hover">
                         <div class="p-2">
                             <div class="d-flex">
                                 <div class="avatar-xs-icon align-self-center me-2">
@@ -66,25 +43,20 @@
                                 </div>
                                 <div class="overflow-hidden me-auto">
                                     <h5 class="font-black-555 text-truncate mb-1">Images</h5>
-                                    <p class="text-muted text-truncate mb-0">{{$imageCount}} Files</p>
+                                    <p class="text-muted text-truncate mb-0">2 Files</p>
                                 </div>
                                 <div class="ml-2">
-                                    <p class="text-muted">{{ $imageSize }} MB</p>
+                                    <p class="text-muted">1.8 MB</p>
                                 </div>
                             </div>
                         </div>
                     </a>
                     <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                        <div class="progress-bar bg-success" data-transitiongoal="{{$imagePercent}}" aria-valuenow="{{$imagePercent}}" style="width: {{$imagePercent}}%;"></div>
+                        <div class="progress-bar bg-success" data-transitiongoal="102.8" aria-valuenow="102.8" style="width: 102.8%;"></div>
                     </div>
                 </div>
                 <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('videos')">
-                    @php
-                        $videoCount = ($types->where('type', 'video')->first() != null) ? ($types->where('type', 'video')->first()->count) : 0;
-                        $videoSize =  ($types->where('type', 'video')->first() != null) ? (number_format(floatval($types->where('type', 'video')->first()->size) / 1048576 , 1)) : 0;
-                        $videoPercent = ($totalSize != 0) ? (number_format($videoSize * 100 / $totalSize, 1)) : 0;
-                    @endphp
-                    <a class="text-body btn-item-object-hover">
+                                        <a class="text-body btn-item-object-hover">
                         <div class="p-2">
                             <div class="d-flex">
                                 <div class="avatar-xs-icon align-self-center me-2">
@@ -92,25 +64,20 @@
                                 </div>
                                 <div class="overflow-hidden me-auto">
                                     <h5 class="font-black-555 text-truncate mb-1">Video</h5>
-                                    <p class="text-muted text-truncate mb-0">{{$videoCount}} Files</p>
+                                    <p class="text-muted text-truncate mb-0">1 Files</p>
                                 </div>
                                 <div class="ml-2">
-                                    <p class="text-muted">{{$videoSize}} MB</p>
+                                    <p class="text-muted">0.0 MB</p>
                                 </div>
                             </div>
                         </div>
                     </a>
                     <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                        <div class="progress-bar bg-danger" data-transitiongoal="{{$videoPercent}}" aria-valuenow="{{$videoPercent}}" style="width: {{$videoPercent}}%;"></div>
+                        <div class="progress-bar bg-danger" data-transitiongoal="0.0" aria-valuenow="0.0" style="width: 0.0%;"></div>
                     </div>
                 </div>
                 <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('audios')">
-                    @php
-                        $audioCount = ($types->where('type', 'audio')->first() != null) ? ($types->where('type', 'audio')->first()->count) : 0;
-                        $audioSize =  ($types->where('type', 'audio')->first() != null) ? (number_format(floatval($types->where('type', 'audio')->first()->size) / 1048576 , 1)) : 0;
-                        $audioPercent = ($totalSize != 0) ? (number_format($audioSize * 100 / $totalSize, 1)) : 0;
-                    @endphp
-                    <a class="text-body btn-item-object-hover">
+                                        <a class="text-body btn-item-object-hover">
                         <div class="p-2">
                             <div class="d-flex">
                                 <div class="avatar-xs-icon align-self-center me-2">
@@ -118,25 +85,20 @@
                                 </div>
                                 <div class="overflow-hidden me-auto">
                                     <h5 class="font-black-555 text-truncate mb-1">Audios</h5>
-                                    <p class="text-muted text-truncate mb-0">{{$audioCount}} Files</p>
+                                    <p class="text-muted text-truncate mb-0">1 Files</p>
                                 </div>
                                 <div class="ml-2">
-                                    <p class="text-muted">{{ $audioSize }} MB</p>
+                                    <p class="text-muted">0.0 MB</p>
                                 </div>
                             </div>
                         </div>
                     </a>
                     <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                        <div class="progress-bar bg-info" data-transitiongoal="{{$audioPercent}}" aria-valuenow="{{ $audioPercent }}" style="width: {{$audioPercent}}%;"></div>
+                        <div class="progress-bar bg-info" data-transitiongoal="0.0" aria-valuenow="0.0" style="width: 0.0%;"></div>
                     </div>
                 </div>
                 <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('models')">
-                    @php
-                        $modelCount = ($types->where('type', 'model')->first() != null) ? ($types->where('type', 'model')->first()->count) : 0;
-                        $modelSize =  ($types->where('type', 'model')->first() != null) ? (number_format(floatval($types->where('type', 'model')->first()->size) / 1048576 , 1)) : 0;
-                        $modelPercent = ($totalSize != 0) ? (number_format($modelSize * 100 / $totalSize, 1)) : 0;
-                    @endphp
-                    <a class="text-body btn-item-object-hover">
+                                        <a class="text-body btn-item-object-hover">
                         <div class="p-2">
                             <div class="d-flex">
                                 <div class="avatar-xs-icon align-self-center me-2">
@@ -144,16 +106,16 @@
                                 </div>
                                 <div class="overflow-hidden me-auto">
                                     <h5 class="font-black-555  text-truncate mb-1">Model</h5>
-                                    <p class="text-muted text-truncate mb-0">{{$modelCount}} Files</p>
+                                    <p class="text-muted text-truncate mb-0">1 Files</p>
                                 </div>
                                 <div class="ml-2">
-                                    <p class="text-muted">{{$modelSize}} MB</p>
+                                    <p class="text-muted">0.0 MB</p>
                                 </div>
                             </div>
                         </div>
                     </a>
                     <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                        <div class="progress-bar bg-model1" data-transitiongoal="{{$modelPercent}}" aria-valuenow="{{$modelPercent}}" style="width: {{$modelPercent}}%;"></div>
+                        <div class="progress-bar bg-model1" data-transitiongoal="0.0" aria-valuenow="0.0" style="width: 0.0%;"></div>
                     </div>
                 </div>
             </div>
@@ -171,30 +133,30 @@
             </div>
             <div class="card-body" style="color: #555; font-size: 14px;">
                 <div class="row" style="height: 430px;">
-                    @foreach ($boothObjects as $object)
-                        @if ($object->type == 'image')
+                    @foreach ($assets as $asset)
+                        @if ($asset->type == 'image')
                         <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
                             <div class="card object-file-booth">
                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                     <a href="javascript:void(0);">
                                         <div class="image">
-                                            @if ($object->url != null || $object->url !='')
-                                                <img src="{{$object->url}}" alt="img" class="img-fluid">
+                                            @if ($asset->url != null || $asset->url !='')
+                                                <img src="{{$asset->url}}" alt="img" class="img-fluid">
                                             @else
                                                 <img src="https://res.cloudinary.com/virtual-tour/image/upload/v1634815623/error-404_ghj2tk.png" alt="img" class="img-fluid">
                                             @endif
                                         </div>
                                         <div class="file-name">
-                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                            <p class="m-b-5 text-muted">{{$asset->name}}</p>
                                         </div>
                                     </a>
                                 </div>
                             </div>
                         </div>
                         @endif
-                        @if ($object->type == 'video')
+                        @if ($asset->type == 'video')
                         <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                            @if ($object->source == 'local')
+                            @if ($asset->source == 'local')
                             <div class="card object-file-booth">
                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                     <a href="javascript:void(0);">
@@ -202,13 +164,13 @@
                                             <img src="" alt="img" class="img-fluid">
                                         </div>
                                         <div class="file-name">
-                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                            <p class="m-b-5 text-muted">{{$asset->name}}</p>
                                         </div>
                                     </a>
                                 </div>
                             </div>
                             @endif
-                            @if ($object->source == 'link')
+                            @if ($asset->source == 'link')
                             <div class="card object-file-booth">
                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                     <a href="javascript:void(0);">
@@ -219,7 +181,7 @@
                                             </div>
                                         </div>
                                         <div class="file-name">
-                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                            <p class="m-b-5 text-muted">{{$asset->name}}</p>
                                         </div>
                                     </a>
                                 </div>
@@ -227,7 +189,7 @@
                             @endif
                         </div>
                         @endif
-                        @if ($object->type == 'audio')
+                        @if ($asset->type == 'audio')
                         <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
                             <div class="card object-file-booth">
                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
@@ -239,23 +201,23 @@
                                             </div>
                                         </div>
                                         <div class="file-name">
-                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                            <p class="m-b-5 text-muted">{{$asset->name}}</p>
                                         </div>
                                     </a>
                                 </div>
                             </div>
                         </div>
                         @endif
-                        @if ($object->type == 'model')
+                        @if ($asset->type == 'model')
                         <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
                             <div class="card object-file-booth">
                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                     <a href="javascript:void(0);">
                                         <div class="image">
-                                            <model-viewer style="width: 100%; height: 120px;" src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
+                                            <model-viewer style="width: 100%; height: 120px;" src="{{$asset->url}}" ar-status="not-presenting"></model-viewer>
                                         </div>
                                         <div class="file-name">
-                                            <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                            <p class="m-b-5 text-muted">{{$asset->name}}</p>
                                         </div>
                                     </a>
                                 </div>
@@ -279,7 +241,7 @@
             <div class="card-body" style="color: #555; font-size: 14px;">
                 <div class="row" style="height: 430px;">
                     @php
-                        $images = $boothObjects->where('type', 'image')->all();
+                        $images = $assets->where('type', 'image')->all();
                     @endphp
                     @foreach ($images as $image)
                     <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
@@ -312,7 +274,7 @@
             <div class="card-body" style="color: #555; font-size: 14px;">
                 <div class="row" style="height: 430px;">
                     @php
-                        $videos = $boothObjects->where('type', 'video')->all();
+                        $videos = $assets->where('type', 'video')->all();
                     @endphp
                     @foreach ($videos as $video)
                     <div class="col-lg-3 col-md-4 col-sm-12">
@@ -366,7 +328,7 @@
             <div class="card-body" style="color: #555; font-size: 14px;">
                 <div class="row" style="height: 430px;">
                     @php
-                        $audios = $boothObjects->where('type', 'audio')->all();
+                        $audios = $assets->where('type', 'audio')->all();
                     @endphp
                     @foreach ($audios as $audio)
                     <div class="col-lg-3 col-md-4 col-sm-12">
@@ -420,7 +382,7 @@
             <div class="card-body" style="color: #555; font-size: 14px;">
                 <div class="row" style="height: 430px;">
                     @php
-                        $models = $boothObjects->where('type', 'model')->all();
+                        $models = $assets->where('type', 'model')->all();
                     @endphp
                     @foreach ($models as $model)
                     <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">

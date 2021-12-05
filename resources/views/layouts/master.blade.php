@@ -55,8 +55,11 @@
         <script src="{{ asset('admin-master/asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
         <script src="{{ asset('admin-master/asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
         <script src="{{ asset('admin-master/asset/js/demo/datatables-demo.js')}}"></script>
+        <script src="{{ asset('admin-master/asset/js/K.js')}}"></script>
         <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+        @yield('script-bottom')
 
         <script>
             $(function() {

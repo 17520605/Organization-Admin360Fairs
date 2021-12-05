@@ -29,10 +29,24 @@ class ObjectsController extends Controller
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
-        $objects = \App\Models\TObject::where([
-            ['tourId','=', $id]
-        ])->get();
-        return view('administrator.objects.dashboard', ['profile' => $profile, 'tour'=>$tour,'objects'=>$objects,]);
+        $assets = \App\Models\Asset::where([
+                ['tourId','=', $id],
+            ])
+            ->orderBy('updated_at', "DESC")
+            ->get();
+
+        $types = DB::table('asset')
+            ->where('tourId', $tour->id)
+            ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(asset.id) as count'))
+            ->groupBy('type')
+            ->get();
+    
+        return view('administrator.objects.dashboard', [
+            'profile' => $profile, 
+            'tour'=> $tour,
+            'assets'=> $assets,
+            'types' => $types
+        ]);
     }
 
     public function object($id, $objectId, Request $request)
@@ -112,6 +126,41 @@ class ObjectsController extends Controller
             ['type','=', 'document'],
         ])->get();
         return view('administrator.objects.documents', ['profile' => $profile, 'tour'=>$tour ,'documents' => $documents]);
+    }
+
+    public function saveCreateAsset($id, Request $request)
+    {  
+        $tourId = $id;
+        $boothId = $request->input('boothId');
+        $type = $request->input('type');
+        $source = $request->input('source');
+        $file = $request->file;
+        $url = $request->input('url');
+
+        $asset = new \App\Models\Asset();
+        $asset->tourId = $tourId;
+        $asset->boothId = $boothId;
+        $asset->type = $type;
+        $asset->source = $source;
+        $asset->url = $url;
+
+        if($source == 'local'){
+            $cloud = $this->uploadFile1($request->file('file'));
+            $asset->name = $request->file('file')->getClientOriginalName();
+            $asset->format = $request->file('file')->getClientOriginalExtension();
+            $asset->url = $cloud->url;
+            $asset->size = $cloud->bytes;
+        }
+        else
+        if($source == 'link'){
+            if(str_starts_with($asset->url, 'https://youtu.be/')){
+                $asset->source = 'youtube';
+            }
+        }
+        
+        $asset->save();
+
+        return $asset;
     }
 
     public function saveCreate($id, Request $request)
