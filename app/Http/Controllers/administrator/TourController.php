@@ -35,9 +35,9 @@ class TourController extends Controller
             $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
         }
 
-          
         $views = \App\Models\View::with('visitor')->where('tourId', $id)->get();
-        $interests = \App\Models\Interest::with('visitor')->where('tourId', $id)->get();
+        $interests = \App\Models\Interest::with('visitor')->where('tourId', $id)->orderBy('created_at', 'DESC')->get();
+        $comments = \App\Models\Comment::with('visitor')->where('tourId', $id)->orderBy('created_at', 'DESC')->get();
 
         return view('administrator.tour.index', [
             'profile' => $profile,
@@ -46,6 +46,7 @@ class TourController extends Controller
             'panoramas'=> $panoramas,
             'zones'=>$zones,
             'views'=>$views,
+            'comments'=>$comments,
             'interests'=>$interests
         ]);
     }

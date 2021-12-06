@@ -139,7 +139,10 @@ class BoothsController extends Controller
             ->get();
         
         $views = \App\Models\View::with('visitor')->where('boothId', $boothId)->get();
-        $interests = \App\Models\Interest::with('visitor')->where('boothId', $boothId)->get();
+        $comments = \App\Models\Comment::with('visitor')->where([
+            ['boothId', '=', $boothId],
+            ['isHidden', '=', false],
+        ])->orderBy('created_at', 'DESC')->get();
 
         return view('administrator.booths.booth', [
             'profile' => $profile, 
@@ -149,8 +152,8 @@ class BoothsController extends Controller
             'scene' => $scene,
             'objects' => $objects,
             'types' => $types,
-            'views' => $views,
-            'interests' => $interests
+            'views'=>$views,
+            'comments'=>$comments
         ]);
 
     }

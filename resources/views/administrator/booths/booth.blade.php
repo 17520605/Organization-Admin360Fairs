@@ -557,39 +557,35 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="margin-bottom: 1.5rem;">
+            <div class="row">
                 <div class="col-md-12">
-                    <div class="card mb-4" style="max-height: 500px;">
+                    <div class="card mb-4">
                         <div class="card-header">
-                            <span class="h5 font-weight-bold text-primary" style="margin: 0px">Interest</span>
+                            <span class="h6 font-weight-bold text-primary" style="margin: 0px">Comments</span>
                             <div class="div_cardheader_btn">
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="interest-table" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="comment-table" width="100%" cellspacing="0">
                                     <thead>
                                         <tr style="background: #eef2f7;">
-                                            <th style="text-align: center;width: 5%;">#</th>
+                                            <th style="text-align: center; width: 5%;">#</th>
                                             <th style="width: 20%;">Name</th>
-                                            <th style="width: 20%;">Email</th>
-                                            <th style="width: 12%;">Contact</th>
-                                            <th style="width: 170px;">Interest at</th>
-                                            <th>Message</th>
+                                            <th style="width: 170px;">Datetime</th>
+                                            <th>Comment</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @php
                                             $number = 1;
                                         @endphp
-                                        @foreach ($interests as $interest)
-                                        <tr class="zone-1">
+                                        @foreach ($comments as $comment)
+                                        <tr data-comment-id="{{$comment->id}}">
                                             <td style="text-align: center">{{$number++}}</td>
-                                            <td>{{$interest->visitor->name}}</td>
-                                            <td>{{$interest->visitor->email}}</td>
-                                            <td>{{$interest->visitor->contact}}</td>
-                                            <td>{{$interest->datetime}}</td>
-                                            <td>{{$interest->message}}</td>
+                                            <td>{{$comment->visitor->name}}</td>
+                                            <td>{{$comment->updated_at}}</td>
+                                            <td>{{$comment->text}}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -597,9 +593,7 @@
                             </div>
                         </div>
                         <div class="card-body" style="display: none; height: 100%; width:100%;">
-                            <div id="interest-chart-container" style="height: 100%; width:100%;">
-                                
-                            </div>
+                            <div id="interest-chart-container" style="height: 100%; width:100%;"></div>
                         </div>
                     </div>
                 </div>
@@ -756,28 +750,7 @@
     <script>
         var viewer;
         var container = document.getElementById('viewer-container');
-        var views = [
-            @for($i = 0; $i < count($views); $i++)
-                @if ($views[$i]->visitor != null)
-                {   
-                    id: '{{$views[$i]->id}}' ,
-                    name: '{{$views[$i]->visitor->name}}',
-                    email: '{{$views[$i]->visitor->email}}',
-                    contact: '{{$views[$i]->visitor->contact}}',
-                    visitAt: '{{$views[$i]->visitAt}}'
-                }
-                @else
-                {   
-                    id: '{{$views[$i]->id}}',
-                    name: 'Anonymous',
-                    email: 'N/A',
-                    contact: 'N/A',
-                    visitAt: '{{$views[$i]->visitAt}}'
-                }
-                @endif
-                @if ($i < count($views) - 1 ) , @endif
-            @endfor
-        ]
+        var views = {!! json_encode($views) !!};
 
         function switchObjectTypeTag(type) {  
             $('.objects-card').hide();
@@ -815,21 +788,39 @@
 
         function initViewChart() { 
             
-            let data = [];
-            let count = 0;
+            let dataView = [];
+            let dataVisitor = [];
+            let countView = 0;
+            let visitorIds = [];
+
             views.forEach(view => {
-                count ++;
-                data.push({
-                    x: new Date(view.visitAt).getTime(),
-                    y: count
-                })
+                countView ++;
+                dataView.push({
+                    x: new Date(view.created_at).getTime(),
+                    y: countView
+                });
+
+                if(!visitorIds.includes(view.visitor.id)){
+                    visitorIds.push(view.visitor.id);
+                }
+
+                dataVisitor.push({
+                    x: new Date(view.created_at).getTime(),
+                    y: visitorIds.length
+                });
             });
 
             var options = {
-                series:[{
-                    name: 'view',
-                    data: data
-                }],
+                series:[
+                    {
+                        name: 'view',
+                        data: dataView
+                    },
+                    {
+                        name: 'visitor',
+                        data: dataVisitor
+                    },
+                ],
                 chart: {
                     height: 400,
                     type: 'line',
@@ -842,7 +833,7 @@
                     enabled: false
                 },
                 stroke: {
-                    curve: 'smooth'
+                    curve: 'straight'
                 },
                 grid: {
                     row: {
@@ -857,13 +848,13 @@
                         },
                     },
                     title: {
-                        text: 'View count'
+                        text: 'count'
                     },
                 },
                 xaxis: {
                     type: 'datetime',
                     title: {
-                        text: 'Datetime'
+                        text: 'datetime'
                     },
                 }
             };
@@ -876,6 +867,7 @@
     <script>
         $(document).ready(function() {
             initViewer();
+            $('#comment-table').DataTable();
         });
     </script>
 @endsection

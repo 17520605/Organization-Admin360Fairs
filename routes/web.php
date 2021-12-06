@@ -97,6 +97,10 @@ Route::middleware('auth')->group(function (){
             // views
             Route::get('/{id}/viewer', 'administrator\ViewerController@index');
 
+            // comments
+            Route::post('/{id}/comments/show-comment', 'administrator\CommentController@showComment');
+            Route::post('/{id}/comments/hide-comment', 'administrator\CommentController@hideComment');
+
             // interest
             Route::get('/{id}/interest', 'administrator\InterestController@index');
 

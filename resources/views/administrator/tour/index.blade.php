@@ -177,6 +177,57 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <span class="h6 font-weight-bold text-primary" style="margin: 0px">Comments</span>
+                            <div class="div_cardheader_btn">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="comment-table" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr style="background: #eef2f7;">
+                                            <th style="text-align: center; width: 5%;">#</th>
+                                            <th style="width: 20%;">Name</th>
+                                            <th style="width: 170px;">Datetime</th>
+                                            <th>Comment</th>
+                                            <th style="width: 50px;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $number = 1;
+                                        @endphp
+                                        @foreach ($comments as $comment)
+                                        <tr data-comment-id="{{$comment->id}}">
+                                            @if ($comment->isHidden == false)
+                                                <td style="text-align: center">{{$number++}}</td>
+                                                <td>{{$comment->visitor->name}}</td>
+                                                <td>{{$comment->updated_at}}</td>
+                                                <td>{{$comment->text}}</td>
+                                                <td class="actions"><i class="fas fa-trash-alt" data-comment-id="{{$comment->id}}" onclick="hideComment(event)"></i></td>
+                                            @else 
+                                                <td style="text-align: center; opacity: 0.3">{{$number++}}</td>
+                                                <td style="opacity: 0.3">{{$comment->visitor->name}}</td>
+                                                <td style="opacity: 0.3">{{$comment->created_at}}</td>
+                                                <td style="opacity: 0.3">{{$comment->text}}</td>
+                                                <td class="actions"><i class="fas fa-eye" data-comment-id="{{$comment->id}}" onclick="showComment(event)"></i> hidden</td>
+                                            @endif
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-body" style="display: none; height: 100%; width:100%;">
+                            <div id="interest-chart-container" style="height: 100%; width:100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <div class="card mb-4" style="max-height: 500px;">
                         <div class="card-header">
                             <span class="h6 font-weight-bold text-primary" style="margin: 0px">Interest</span>
@@ -192,7 +243,7 @@
                                             <th style="width: 20%;">Name</th>
                                             <th style="width: 20%;">Email</th>
                                             <th style="width: 12%;">Contact</th>
-                                            <th style="width: 170px;">Interest at</th>
+                                            <th style="width: 170px;">Datetime</th>
                                             <th>Message</th>
                                         </tr>
                                     </thead>
@@ -213,9 +264,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        <div class="card-body" style="display: none; height: 100%; width:100%;">
-                            <div id="interest-chart-container" style="height: 100%; width:100%;"></div>
                         </div>
                     </div>
                 </div>
@@ -334,28 +382,7 @@
 <script>
     var viewer;
     var container = document.getElementById('viewer-container');
-    var views = [
-        @for($i = 0; $i < count($views); $i++)
-            @if ($views[$i]->visitor != null)
-            {   
-                id: '{{$views[$i]->id}}' ,
-                name: '{{$views[$i]->visitor->name}}',
-                email: '{{$views[$i]->visitor->email}}',
-                contact: '{{$views[$i]->visitor->contact}}',
-                visitAt: '{{$views[$i]->created_at}}'
-            }
-            @else
-            {   
-                id: '{{$views[$i]->id}}',
-                name: 'Anonymous',
-                email: 'N/A',
-                contact: 'N/A',
-                visitAt: '{{$views[$i]->visitAt}}'
-            }
-            @endif
-            @if ($i < count($views) - 1 ) , @endif
-        @endfor
-    ]
+    var views = {!! json_encode($views) !!};
 
 </script>
 <script>
@@ -373,6 +400,50 @@
         viewer.add(imagePanorama);
     }
 
+    function hideComment(e) {
+        let commentId = $(e.currentTarget).attr("data-comment-id");
+        let row = $(e.currentTarget).parents('tr');
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/administrator/tours/{{$tour->id}}/comments/hide-comment",
+            data: {
+                commentId : commentId
+            },
+            success: function (res) {  
+                if(res == true || res == '1'){
+                    row.find('td').not('.actions').css('opacity', 0.3);
+                    row.find('.actions').html('<i class="fas fa-eye" data-comment-id="'+ commentId +'" onclick="showComment(event)"> hidden');
+                }
+            }
+        });
+    }
+
+    function showComment(e) {
+        let commentId = $(e.currentTarget).attr("data-comment-id");
+        let row = $(e.currentTarget).parents('tr');
+        
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/administrator/tours/{{$tour->id}}/comments/show-comment",
+            data: {
+                commentId : commentId
+            },
+            success: function (res) {  
+                if(res == true || res == '1'){
+                    row.find('td').not('.actions').css('opacity', 1);
+                    row.find('.actions').html('<i class="fas fa-trash-alt" data-comment-id="'+ commentId +'" onclick="hideComment(event)">');
+                }
+            }
+        });
+    }
+
+
     function initViewer() {
         let container = document.getElementById('viewer-container');
         viewer = new PANOLENS.Viewer({
@@ -389,21 +460,39 @@
     }
 
     function initViewChart() {      
-        let data = [];
-        let count = 0;
+        let dataView = [];
+        let dataVisiter = [];
+        let countView = 0;
+        let visiterIds = [];
+
         views.forEach(view => {
-            count ++;
-            data.push({
-                x: new Date(view.visitAt).getTime(),
-                y: count
-            })
+            countView ++;
+            dataView.push({
+                x: new Date(view.created_at).getTime(),
+                y: countView
+            });
+
+            if(!visiterIds.includes(view.visitor.id)){
+                visiterIds.push(view.visitor.id);
+            }
+
+            dataVisiter.push({
+                x: new Date(view.created_at).getTime(),
+                y: visiterIds.length
+            });
         });
 
         var options = {
-            series:[{
-                name: 'view',
-                data: data
-            }],
+            series:[
+                {
+                    name: 'view',
+                    data: dataView
+                },
+                {
+                    name: 'visiter',
+                    data: dataVisiter
+                },
+            ],
             chart: {
                 height: 400,
                 type: 'line',
@@ -431,13 +520,13 @@
                     },
                 },
                 title: {
-                    text: 'View count'
+                    text: 'count'
                 },
             },
             xaxis: {
                 type: 'datetime',
                 title: {
-                    text: 'Datetime'
+                    text: 'datetime'
                 },
             }
         };
@@ -449,6 +538,8 @@
 <script>
     $(document).ready(function() {
         initViewer();
+        $('#comment-table').DataTable();
+        $('#interest-table').DataTable();
     });
 </script>
 
