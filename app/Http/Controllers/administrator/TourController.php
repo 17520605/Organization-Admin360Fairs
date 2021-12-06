@@ -29,14 +29,37 @@ class TourController extends Controller
             $zone->booths = $booths;
         }
 
-        $scene = DB::table('scene')->find($tour->sceneId);
+        
+
+        $scene = \App\Models\Scene::find($tour->sceneId);
         $panoramas = [];
+        $objects = [];
+
         if($scene != null){
             $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
+
+            $objects = DB::table('asset')
+                ->join('hotspot', 'asset.id', '=', 'hotspot.assetId')
+                ->join('panorama', 'panorama.id', '=', 'hotspot.panoramaId')
+                ->where([
+                    ['panorama.sceneId', '=', $scene->id],
+                ])
+                ->select('asset.*')
+                ->get();
+            foreach ($objects as $object) {
+                $viewCount = \App\Models\View::where('assetId', $object->id)->count();
+                $likeCount = \App\Models\Like::where('assetId', $object->id)->count();
+                $commentCount = \App\Models\Comment::where([
+                        ['assetId', '=', $object->id],
+                    ])->count();
+                $object->viewCount = $viewCount;
+                $object->likeCount = $likeCount;
+                $object->commentCount = $commentCount;
+            }
         }
 
-        $views = \App\Models\View::with('visitor')->where('tourId', $id)->get();
-        $interests = \App\Models\Interest::with('visitor')->where('tourId', $id)->orderBy('created_at', 'DESC')->get();
+        $likes = \App\Models\Like::where('tourId', $id)->get();
+        $views = \App\Models\View::where('tourId', $id)->get();
         $comments = \App\Models\Comment::with('visitor')->where('tourId', $id)->orderBy('created_at', 'DESC')->get();
 
         return view('administrator.tour.index', [
@@ -46,8 +69,9 @@ class TourController extends Controller
             'panoramas'=> $panoramas,
             'zones'=>$zones,
             'views'=>$views,
+            'likes'=>$likes,
             'comments'=>$comments,
-            'interests'=>$interests
+            'objects'=>$objects,
         ]);
     }
 

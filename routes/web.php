@@ -68,17 +68,13 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/booths/{boothId}/change-logo', 'administrator\BoothsController@changeLogo');
             Route::delete('/{id}/booths/{boothId}', 'administrator\BoothsController@saveDelete');
 
-            // objects
-            Route::get('/{id}/objects', 'administrator\ObjectsController@index');
-            Route::get('/{id}/objects/dashboard', 'administrator\ObjectsController@dashboard');
-            Route::get('/{id}/objects/images', 'administrator\ObjectsController@images');
-            Route::get('/{id}/objects/videos', 'administrator\ObjectsController@videos');
-            Route::get('/{id}/objects/audios', 'administrator\ObjectsController@audios');
-            Route::get('/{id}/objects/models', 'administrator\ObjectsController@models');
-            Route::get('/{id}/objects/documents', 'administrator\ObjectsController@documents');
-            Route::post('/{id}/objects/save-create', 'administrator\ObjectsController@saveCreate');
-            Route::get('/{id}/objects/{objectId}', 'administrator\ObjectsController@object');
-            Route::post('/{id}/objects/save-create-asset', 'administrator\ObjectsController@saveCreateAsset');
+            // assets
+            Route::get('/{id}/assets', 'administrator\AssetsController@index');
+            Route::get('/{id}/assets/{assetId}', 'administrator\AssetsController@object');
+            Route::get('/{id}/assets/{assetId}/get-infor', 'administrator\AssetsController@getInfor');
+            Route::post('/{id}/assets/save-create', 'administrator\AssetsController@saveCreate');
+            Route::post('/{id}/assets/save-edit-name', 'administrator\AssetsController@saveEditName');
+            Route::delete('/{id}/assets/{assetId}/save-delete', 'administrator\AssetsController@saveDelete');
 
             // event
             Route::get('/{id}/events/webinars', 'administrator\EventsController@webinars');
@@ -105,7 +101,8 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/interest', 'administrator\InterestController@index');
 
             // request
-            Route::get('/{id}/request', 'administrator\RequestController@index');
+            Route::get('/{id}/requests', 'administrator\RequestsController@index');
+            Route::get('/{id}/requests/get-request-count', 'administrator\RequestsController@getRequestCount');
 
             // notifications
             Route::get('/{id}/notifications', 'administrator\NotificationsController@index');

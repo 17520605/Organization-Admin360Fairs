@@ -227,7 +227,6 @@ class K_URL {
             watchUrl : 'https://www.youtube.com/watch?v=' + id,
             getInfo: async function () {  
                 var ytApiKey = "AIzaSyC66xDpUMpGAwmwHd45xfVY3qKmgiOMkfI";
-                debugger
                 let rs = await $.ajax({
                     //headers: {  'Access-Control-Allow-Origin': 'https://tools.360fairs.com' },
                     url: "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + id + "&key=" + ytApiKey,

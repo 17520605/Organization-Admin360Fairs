@@ -111,17 +111,21 @@
                 </div>
             </div>
             <div class="row  mb-3" >
-                <div class="col-md-4">
+                <div class="filemanager-sidebar col-md-3 card" style="padding: 0">
+                    @php
+                        $storageLimit = floatval(1000);
+                        $totalSize = floatval($types->sum('size'))/(1048576);
+                        $totalPercent = ($storageLimit != 0) ? (number_format($totalSize * 100 / $storageLimit, 1)) : 0;
+                    @endphp
+                    <div class="text-center mt-3">
+                        <h5 class="font-size-15">Storage</h5>
+                        <p class="text-muted mt-4">{{number_format($totalSize, 1)}} MB ({{number_format($totalPercent, 1)}}%) of {{$storageLimit}} MB</p>
+                    </div>
                     <div class="card">
                         <div class="card-body" style="color: #555; font-size: 14px;">
                             <div class="border shadow-none mb-2 card total_bar_object" style="padding: 0.5rem" >
                                 <a class="text-body">
                                     <div class="body">
-                                        @php
-                                            $storageLimit = floatval($booth->storageLimit);
-                                            $totalSize = floatval($types->sum('size'))/(1048576);
-                                            $totalPercent = ($storageLimit != 0) ? (number_format($totalSize * 100 / $storageLimit, 1)) : 0;
-                                        @endphp
                                         <h4 style="color: #555">Used :{{ number_format($totalSize, 1)}} MB  <i class="fa fa-server float-right"></i></h4>
                                         <p class="mb-0">Storage <small class="text-muted float-right">of {{ $storageLimit}}MB</small></p>
                                         <div class="progress progress-striped" style="width: 100%; padding: 0; height: 20px;background: #bbbbbb77;">
@@ -161,7 +165,7 @@
                                     <div class="progress-bar bg-warning" data-transitiongoal="{{$totalPercent}}" aria-valuenow="{{$totalPercent}}" style="width: {{$totalPercent}}%;"></div>
                                 </div>
                             </div>
-                            <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('images')">
+                            <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('image')">
                                 @php
                                     $imageCount = ($types->where('type', 'image')->first() != null) ? ($types->where('type', 'image')->first()->count) : 0;
                                     $imageSize =  ($types->where('type', 'image')->first() != null) ? (number_format(floatval($types->where('type', 'image')->first()->size) / 1048576 , 1)) : 0;
@@ -187,7 +191,7 @@
                                     <div class="progress-bar bg-success" data-transitiongoal="{{$imagePercent}}" aria-valuenow="{{$imagePercent}}" style="width: {{$imagePercent}}%;"></div>
                                 </div>
                             </div>
-                            <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('videos')">
+                            <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('video')">
                                 @php
                                     $videoCount = ($types->where('type', 'video')->first() != null) ? ($types->where('type', 'video')->first()->count) : 0;
                                     $videoSize =  ($types->where('type', 'video')->first() != null) ? (number_format(floatval($types->where('type', 'video')->first()->size) / 1048576 , 1)) : 0;
@@ -213,7 +217,7 @@
                                     <div class="progress-bar bg-danger" data-transitiongoal="{{$videoPercent}}" aria-valuenow="{{$videoPercent}}" style="width: {{$videoPercent}}%;"></div>
                                 </div>
                             </div>
-                            <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('audios')">
+                            <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('audio')">
                                 @php
                                     $audioCount = ($types->where('type', 'audio')->first() != null) ? ($types->where('type', 'audio')->first()->count) : 0;
                                     $audioSize =  ($types->where('type', 'audio')->first() != null) ? (number_format(floatval($types->where('type', 'audio')->first()->size) / 1048576 , 1)) : 0;
@@ -239,7 +243,7 @@
                                     <div class="progress-bar bg-info" data-transitiongoal="{{$audioPercent}}" aria-valuenow="{{ $audioPercent }}" style="width: {{$audioPercent}}%;"></div>
                                 </div>
                             </div>
-                            <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('models')">
+                            <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('model')">
                                 @php
                                     $modelCount = ($types->where('type', 'model')->first() != null) ? ($types->where('type', 'model')->first()->count) : 0;
                                     $modelSize =  ($types->where('type', 'model')->first() != null) ? (number_format(floatval($types->where('type', 'model')->first()->size) / 1048576 , 1)) : 0;
@@ -268,270 +272,452 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="card objects-card all-card" style="width: 100%; height: 100%; padding: 0.25rem;">
-                        <div class="card-body" style="color: #555; font-size: 14px;">
-                            <div class="d-flex">
-                                <div class="overflow-hidden">
-                                    <h5 class="font-size-15 font-weight-bold text-primary">All Objects</h5>
+                <div class="col-md-9" style="padding: 0;padding-left: 1rem;">
+                    <div class="card" style="padding-left: 1rem; padding-right: 1rem;">
+                        <div class="mt-4">
+                            <div class="d-flex flex-wrap">
+                                <h1 class="h6 font-weight-bold text-primary" style="margin: 0px"><i class="fab fa-cloudscale"></i> Recent  File</h1>
+                                <div class="div_cardheader_btn">
+                                    <span class="mb-0 btn float-right tab-btn" data-tab="card"><i class="far fa-clone"></i></span>
+                                    <span class="mb-0 btn float-right tab-btn" data-tab="table"><i class="fas fa-list-ul"></i> </span>
                                 </div>
                             </div>
-                            <div class="row" style="max-height: 450px; overflow-y: scroll;">
-                                @foreach ($objects as $object)
-                                    @if ($object->type == 'image')
-                                    <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                        <div class="card object-file-booth">
-                                            <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                                    <div class="image">
-                                                        @if ($object->url != null || $object->url !='')
-                                                            <img src="{{$object->url}}" alt="img" width="100%" class="img-fluid">
-                                                        @else
-                                                            <img src="https://res.cloudinary.com/virtual-tour/image/upload/v1634815623/error-404_ghj2tk.png" alt="img" class="img-fluid">
+                            <hr class="mt-3"/>
+                            <div class="tab-body" data-tab="table">
+                                <div class="assets-wrapper all">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col" style="width: 50%;">Name</th>
+                                                    <th scope="col" style="width: 10%;">Source</th>
+                                                    <th scope="col" style="width: 10%;">Size</th>
+                                                    <th scope="col" style="width: 25%">Uploaded at</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($assets as $asset)
+                                                <tr>
+                                                    <td style="width: 5%; text-align: center">
+                                                        @if ($asset->type == 'image')
+                                                           <span><i class="fas fa-image font-size-16 text-success"></i> <span style="display: none">1</span> </span> 
+                                                        @elseif($asset->type == 'video')
+                                                            <span><i class="far fa-play-circle font-size-16 text-danger"></i> <span style="display: none">2</span> </span> 
+                                                        @elseif($asset->type == 'audio')
+                                                            <span><i class="fas fa-music font-size-16 text-info"></i><span style="display: none">3</span></span> 
+                                                        @elseif($asset->type == 'model')
+                                                            <span><i class="fab fa-unity font-size-16 text-models"></i><span style="display: none">4</span></span> 
+                                                        @else 
+                                                           
                                                         @endif
-                                                    </div>
-                                                    <div class="file-name">
-                                                        <p class="m-b-5 text-muted">{{$object->name}}</p>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
+                                                    </td>
+                                                    <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
+                                                    <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
+                                                    <td>{{$asset->updated_at}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    @endif
-                                    @if ($object->type == 'video')
-                                    <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                        @if ($object->source == 'local')
-                                        <div class="card object-file-booth">
-                                            <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                                    <div class="image">
-                                                        <img src="" alt="img" class="img-fluid">
-                                                    </div>
-                                                    <div class="file-name">
-                                                        <p class="m-b-5 text-muted">{{$object->name}}</p>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        @endif
-                                        @if ($object->source == 'link')
-                                        <div class="card object-file-booth">
-                                            <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                                    <div class="image">
-                                                        <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
-                                                        <div class="icon">
-                                                            <i class="fab fa-soundcloud"></i>
+                                </div>
+                                <div class="assets-wrapper image" style="display: none">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col" style="width: 50%;">Name</th>
+                                                    <th scope="col" style="width: 10%;">Source</th>
+                                                    <th scope="col" style="width: 10%;">Size</th>
+                                                    <th scope="col" style="width: 25%">Uploaded at</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $images = $assets->where('type', 'image');
+                                                @endphp
+                                                @foreach ($assets as $asset)
+                                                <tr>
+                                                    <td style="width: 5%; text-align: center">
+                                                        <span><i class="fas fa-image font-size-16 text-success"></i> <span style="display: none">1</span> </span> 
+                                                    </td>
+                                                    <td>
+                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
+                                                    </td>
+                                                    <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
+                                                    <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
+                                                    <td>{{$asset->updated_at}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="assets-wrapper video" style="display: none">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col" style="width: 50%;">Name</th>
+                                                    <th scope="col" style="width: 10%;">Source</th>
+                                                    <th scope="col" style="width: 10%;">Size</th>
+                                                    <th scope="col" style="width: 25%">Uploaded at</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $videos = $assets->where('type', 'video');
+                                                @endphp
+                                                @foreach ($videos as $asset)
+                                                <tr>
+                                                    <td style="width: 5%; text-align: center">
+                                                        <span><i class="far fa-play-circle font-size-16 text-danger"></i> <span style="display: none">2</span> </span> 
+                                                    </td>
+                                                    <td>
+                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
+                                                    </td>
+                                                    <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
+                                                    <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
+                                                    <td>{{$asset->updated_at}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="assets-wrapper audio" style="display: none">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col" style="width: 50%;">Name</th>
+                                                    <th scope="col" style="width: 10%;">Source</th>
+                                                    <th scope="col" style="width: 10%;">Size</th>
+                                                    <th scope="col" style="width: 25%">Uploaded at</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $audios = $assets->where('type', 'audio');
+                                                @endphp
+                                                @foreach ($audios as $asset)
+                                                <tr>
+                                                    <td style="width: 5%; text-align: center">
+                                                        <span><i class="fas fa-music font-size-16 text-info"></i><span style="display: none">3</span></span> 
+                                                    </td>
+                                                    <td>
+                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
+                                                    </td>
+                                                    <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
+                                                    <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
+                                                    <td>{{$asset->updated_at}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="assets-wrapper model" style="display: none">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col" style="width: 50%;">Name</th>
+                                                    <th scope="col" style="width: 10%;">Source</th>
+                                                    <th scope="col" style="width: 10%;">Size</th>
+                                                    <th scope="col" style="width: 25%">Uploaded at</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $models = $assets->where('type', 'model');
+                                                @endphp
+                                                @foreach ($models as $asset)
+                                                <tr>
+                                                    <td style="width: 5%; text-align: center">
+                                                        <span><i class="fab fa-unity font-size-16 text-models"></i><span style="display: none">4</span></span> 
+                                                    </td>
+                                                    <td>
+                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
+                                                    </td>
+                                                    <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
+                                                    <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
+                                                    <td>{{$asset->updated_at}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-body" data-tab="card" style="display: none">
+                                <div class="card assets-wrapper all" style="width: 100%; height: 100%; padding: 0.25rem;">
+                                    <div class="card-body" style="color: #555; font-size: 14px;">
+                                        <div class="row" style="max-height: 450px; overflow-y: scroll;">
+                                            @foreach ($assets as $asset)
+                                                @if ($asset->type == 'image')
+                                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                                    <div class="card object-file-booth">
+                                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                            <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
+                                                                <div class="image">
+                                                                    @if ($asset->url != null || $asset->url !='')
+                                                                        <img src="{{$asset->miniUrl()}}" alt="img" width="100%" class="img-fluid">
+                                                                    @else
+                                                                        <img src="https://res.cloudinary.com/virtual-tour/image/upload/v1634815623/error-404_ghj2tk.png" alt="img" class="img-fluid">
+                                                                    @endif
+                                                                </div>
+                                                                <div class="file-name">
+                                                                    <p class="m-b-5 text-muted">{{$asset->name}}</p>
+                                                                </div>
+                                                            </a>
                                                         </div>
                                                     </div>
-                                                    <div class="file-name">
-                                                        <p class="m-b-5 text-muted">{{$object->name}}</p>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        @endif
-                                    </div>
-                                    @endif
-                                    @if ($object->type == 'audio')
-                                    <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                        <div class="card object-file-booth">
-                                            <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                                    <div class="image">
-                                                        <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
-                                                        <div class="icon">
-                                                            <i class="fab fa-soundcloud"></i>
+                                                </div>
+                                                @endif
+                                                @if ($asset->type == 'video')
+                                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                                    @if ($asset->source == 'youtube')
+                                                    <div class="card object-file-booth">
+                                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                            <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
+                                                                <div class="image">
+                                                                    <img class="repair-yt-url" src="{{$asset->url}}" style="background-color: black; width: 100%; height:100%;">
+                                                                </div>
+                                                                <div class="file-name">
+                                                                    <p class="m-b-5 text-muted">{{$asset->name}}</p>
+                                                                </div>
+                                                            </a>
                                                         </div>
                                                     </div>
-                                                    <div class="file-name">
-                                                        <p class="m-b-5 text-muted">{{$object->name}}</p>
+                                                    @else
+                                                    <div class="card object-file-booth">
+                                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                            <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
+                                                                <div class="image">
+                                                                    <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
+                                                                    <div class="image">
+                                                                        <video src="{{$asset->url}}#t=1">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="file-name">
+                                                                    <p class="m-b-5 text-muted">{{$asset->name}}</p>
+                                                                </div>
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                </a>
+                                                    @endif
+                                                </div>
+                                                @endif
+                                                @if ($asset->type == 'audio')
+                                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                                    <div class="card object-file-booth">
+                                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                            <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
+                                                                <div class="image">
+                                                                    <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
+                                                                    <div class="icon">
+                                                                        <i class="fab fa-soundcloud"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="file-name">
+                                                                    <p class="m-b-5 text-muted">{{$asset->name}}</p>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endif
+                                                @if ($asset->type == 'model')
+                                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                                    <div class="card object-file-booth">
+                                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                            <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
+                                                                <div class="image">
+                                                                    <model-viewer style="width: 100%; height: 120px;" src="{{$asset->url}}" ar-status="not-presenting"></model-viewer>
+                                                                </div>
+                                                                <div class="file-name">
+                                                                    <p class="m-b-5 text-muted">{{$asset->name}}</p>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endif
+                                                
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card assets-wrapper image" style="width: 100%;padding: 0.25rem; display: none">
+                                    <div class="card-body" style="color: #555; font-size: 14px;">
+                                        <div class="d-flex">
+                                            <div class="overflow-hidden">
+                                                <h5 class="font-size-15 font-weight-bold text-primary">Images</h5>
                                             </div>
                                         </div>
+                                        <div class="row" style="max-height: 450px; overflow-y: scroll;">
+                                            @php
+                                                $images = $assets->where('type', 'image')->all();
+                                            @endphp
+                                            @foreach ($images as $image)
+                                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                                <div class="card object-file-booth">
+                                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                        <a href="javascript:void(0);">
+                                                            <div class="image">
+                                                                <img src="{{$image->url}}" width="100%" alt="img" class="img-fluid">
+                                                            </div>
+                                                            <div class="file-name">
+                                                                <p class="m-b-5 text-muted">{{$image->name}}</p>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                    @endif
-                                    @if ($object->type == 'model')
-                                    <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                        <div class="card object-file-booth">
-                                            <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                <a href="/administrator/tours/{{$tour->id}}/objects/{{$object->id}}">
-                                                    <div class="image">
-                                                        <model-viewer style="width: 100%; height: 120px;" src="{{$object->url}}" ar-status="not-presenting"></model-viewer>
-                                                    </div>
-                                                    <div class="file-name">
-                                                        <p class="m-b-5 text-muted">{{$object->name}}</p>
-                                                    </div>
-                                                </a>
+                                </div>
+                                <div class="card assets-wrapper video" style="width: 100%;padding: 0.25rem; display: none">
+                                    <div class="card-body" style="color: #555; font-size: 14px;">
+                                        <div class="d-flex">
+                                            <div class="overflow-hidden">
+                                                <h5 class="font-size-15 font-weight-bold text-primary">Videos</h5>
                                             </div>
                                         </div>
-                                    </div>
-                                    @endif
-                                    
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card objects-card images-card" style="width: 100%;padding: 0.25rem; display: none">
-                        <div class="card-body" style="color: #555; font-size: 14px;">
-                            <div class="d-flex">
-                                <div class="overflow-hidden">
-                                    <h5 class="font-size-15 font-weight-bold text-primary">Images</h5>
-                                </div>
-                            </div>
-                            <div class="row" style="max-height: 450px; overflow-y: scroll;">
-                                @php
-                                    $images = $objects->where('type', 'image')->all();
-                                @endphp
-                                @foreach ($images as $image)
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card object-file-booth">
-                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <img src="{{$image->url}}" width="100%" alt="img" class="img-fluid">
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">{{$image->name}}</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card objects-card videos-card" style="width: 100%;padding: 0.25rem; display: none">
-                        <div class="card-body" style="color: #555; font-size: 14px;">
-                            <div class="d-flex">
-                                <div class="overflow-hidden">
-                                    <h5 class="font-size-15 font-weight-bold text-primary">Videos</h5>
-                                </div>
-                            </div>
-                            <div class="row" style="max-height: 450px; overflow-y: scroll;">
-                                @php
-                                    $videos = $objects->where('type', 'video')->all();
-                                @endphp
-                                @foreach ($videos as $video)
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    @if ($video->source == 'local')
-                                    <div class="card object-file-booth">
-                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <div class="icon">
-                                                        <i class="fas fa-film"></i>
+                                        <div class="row" style="max-height: 450px; overflow-y: scroll;">
+                                            @php
+                                                $videos = $assets->where('type', 'video')->all();
+                                            @endphp
+                                            @foreach ($videos as $video)
+                                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                                @if ($video->source == 'local')
+                                                <div class="card object-file-booth">
+                                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                        <a href="javascript:void(0);">
+                                                            <div class="image">
+                                                                <div class="icon">
+                                                                    <i class="fas fa-film"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="file-name">
+                                                                <p class="m-b-5 text-muted">{{$video->name}}</p>
+                                                            </div>
+                                                        </a>
                                                     </div>
                                                 </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">{{$video->name}}</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    @endif
-                                    @if ($video->source == 'link')
-                                    <div class="card object-file-booth">
-                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
-                                                    <div class="icon">
-                                                        <i class="fas fa-film"></i>
+                                                @endif
+                                                @if ($video->source == 'link')
+                                                <div class="card object-file-booth">
+                                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                        <a href="javascript:void(0);">
+                                                            <div class="image">
+                                                            <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
+                                                                <div class="icon">
+                                                                    <i class="fas fa-film"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="file-name">
+                                                                <p class="m-b-5 text-muted">{{$video->name}}</p>
+                                                            </div>
+                                                        </a>
                                                     </div>
                                                 </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">{{$video->name}}</p>
-                                                </div>
-                                            </a>
+                                                @endif
+                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
-                                    @endif
                                 </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card objects-card audios-card" style="width: 100%; padding: 0.25rem; display: none">
-                        <div class="card-body" style="color: #555; font-size: 14px;">
-                            <div class="d-flex">
-                                <div class="overflow-hidden">
-                                    <h5 class="font-size-15 font-weight-bold text-primary">Audios</h5>
-                                </div>
-                            </div>
-                            <div class="row" style="max-height: 450px; overflow-y: scroll;">
-                                @php
-                                    $audios = $objects->where('type', 'audio')->all();
-                                @endphp
-                                @foreach ($audios as $audio)
-                                <div class="col-lg-3 col-md-4 col-sm-12">
-                                    @if ($audio->source == 'local')
-                                    <div class="card object-file-booth">
-                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <div class="icon">
-                                                        <i class="fas fa-volume-up"></i>
+                                <div class="card assets-wrapper audio" style="width: 100%; padding: 0.25rem; display: none">
+                                    <div class="card-body" style="color: #555; font-size: 14px;">
+                                        <div class="d-flex">
+                                            <div class="overflow-hidden">
+                                                <h5 class="font-size-15 font-weight-bold text-primary">Audios</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="max-height: 450px; overflow-y: scroll;">
+                                            @php
+                                                $audios = $assets->where('type', 'audio')->all();
+                                            @endphp
+                                            @foreach ($audios as $audio)
+                                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                                @if ($audio->source == 'local')
+                                                <div class="card object-file-booth">
+                                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                        <a href="javascript:void(0);">
+                                                            <div class="image">
+                                                                <div class="icon">
+                                                                    <i class="fas fa-volume-up"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="file-name">
+                                                                <p class="m-b-5 text-muted">{{$audio->name}}</p>
+                                                            </div>
+                                                        </a>
                                                     </div>
                                                 </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">{{$audio->name}}</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    @endif
-                                    @if ($audio->source == 'link')
-                                    <div class="card object-file-booth">
-                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
-                                                    <div class="icon">
-                                                        <i class="fab fa-soundcloud"></i>
+                                                @endif
+                                                @if ($audio->source == 'link')
+                                                <div class="card object-file-booth">
+                                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                        <a href="javascript:void(0);">
+                                                            <div class="image">
+                                                            <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
+                                                                <div class="icon">
+                                                                    <i class="fab fa-soundcloud"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="file-name">
+                                                                <p class="m-b-5 text-muted">{{$audio->name}}</p>
+                                                            </div>
+                                                        </a>
                                                     </div>
                                                 </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">{{$audio->name}}</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    @endif
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card objects-card models-card" style="width: 100%;padding: 0.25rem; display: none">
-                        <div class="card-body" style="color: #555; font-size: 14px;">
-                            <div class="d-flex">
-                                <div class="overflow-hidden">
-                                    <h5 class="font-size-15 font-weight-bold text-primary">Models</h5>
-                                </div>
-                            </div>
-                            <div class="row" style="max-height: 500px; overflow-y: scroll;">
-                                @php
-                                    $models = $objects->where('type', 'model')->all();
-                                @endphp
-                                @foreach ($models as $model)
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                    <div class="card object-file-booth">
-                                        <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                            <a href="javascript:void(0);">
-                                                <div class="image">
-                                                    <model-viewer style="width: 100%;height: 120px;" src="{{$model->url}}" ar-status="not-presenting"></model-viewer>
-                                                </div>
-                                                <div class="file-name">
-                                                    <p class="m-b-5 text-muted">{{$model->name}}</p>
-                                                </div>
-                                            </a>
+                                                @endif
+                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
-                                @endforeach
+                                <div class="card assets-wrapper model" style="width: 100%;padding: 0.25rem; display: none">
+                                    <div class="card-body" style="color: #555; font-size: 14px;">
+                                        <div class="d-flex">
+                                            <div class="overflow-hidden">
+                                                <h5 class="font-size-15 font-weight-bold text-primary">Models</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="max-height: 500px; overflow-y: scroll;">
+                                            @php
+                                                $models = $assets->where('type', 'model')->all();
+                                            @endphp
+                                            @foreach ($models as $model)
+                                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                                <div class="card object-file-booth">
+                                                    <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
+                                                        <a href="javascript:void(0);">
+                                                            <div class="image">
+                                                                <model-viewer style="width: 100%;height: 120px;" src="{{$model->url}}" ar-status="not-presenting"></model-viewer>
+                                                            </div>
+                                                            <div class="file-name">
+                                                                <p class="m-b-5 text-muted">{{$model->name}}</p>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -641,7 +827,59 @@
             </div>
         </div>
     </div>
-
+    {{-- POPUP ASSET  DETAIL --}}
+    <div class="modal fade" id="popup-asset-detail" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Asset Detail </h5>
+                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 30px">
+                    <div class="row mb-3" >
+                        <div class="col-md-4">
+                            <div class="card" style="min-height:450px ; height: 100% ;">
+                                <div class="card-body" style="color: #555; font-size: 14px;">
+                                    <div class="flex-grow-1 overflow-hidden">
+                                        <h6 class="font-size-15 font-weight-bold">General </h6>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <p class="text-muted mb-2"> Name:  </p>
+                                                <p class="text-muted mb-2"> Type: </p>
+                                                <p class="text-muted mb-2"> Source: </p>
+                                                <p class="text-muted mb-2"> Format: </p>
+                                                <p class="text-muted mb-2"> size: </p>
+                                                <p class="text-muted mb-2"> Updated at: </p>
+                                            </div>
+                                            <div class="col-8">
+                                                <p class="text-muted mb-2"><span id="popup-asset-detail__name-text" class="ml-2 font-weight-bold"></span> </p>
+                                                <p class="text-muted mb-2"><span id="popup-asset-detail__type-text" class="ml-2 font-weight-bold"></span></p>
+                                                <p class="text-muted mb-2"><span id="popup-asset-detail__source-text" class="ml-2 font-weight-bold"></span></p>
+                                                <p class="text-muted mb-2"><span id="popup-asset-detail__format-text" class="ml-2 font-weight-bold"></span></p>
+                                                <p class="text-muted mb-2"><span id="popup-asset-detail__size-text" class="ml-2 font-weight-bold"></span></p>
+                                                <p class="text-muted mb-2"><span id="popup-asset-detail__uploadedat-text" class="ml-2 font-weight-bold"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 view_booth_panoles">
+                            <div class="card" style="width: 100% ; height: 300px; padding:20px;">
+                                <div class="preview-wrapper" style="width: 100%; height: 100%;">
+                                    <img src="" alt="" style="width: 100%; display: none">
+                                    <iframe src="" style="display: none" width="100%" height="400px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <video src="" alt="" controls style="width: 100%;display: none" controls></video>
+                                    <audio src="" alt="" controls style="width: 100%;display: none"></audio>
+                                    <model-viewer src="" style="width: 100%; height: 100%; display: none" shadow-intensity="1" camera-controls></model-viewer>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {{-- POPUP REJECT BOOTH --}}
     <div class="modal fade" id="popup-reject-booth" tabindex="-1" role="dialog" aria-modal="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -661,96 +899,13 @@
             </div>
         </div>
     </div>
-    <script>
 
-        $('.btn-tab-1').click(function(){
-            $('.div-tab-1').show();
-            $('.div-tab-2').hide();
-            $('.btn-tab-1').addClass('active');
-            $('.btn-tab-2').removeClass('active');
-        });
-        $('.btn-tab-2').click(function(){
-            $('.div-tab-2').show();
-            $('.div-tab-1').hide();
-            $('.btn-tab-1').removeClass('active');
-            $('.btn-tab-2').addClass('active');
-            initViewChart();
-        });
-
-        function approveBooth() {  
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/booths/save-approve",
-                type: 'post',
-                dataType: 'json',
-                data:{
-                    boothId: '{{$booth->id}}'
-                },
-                success: function (res) { 
-                    if(res.success == true){
-                        location.reload()
-                    }
-                    else{
-                        $('#popup-approve-booth').find(".error").text(res.error);
-                        $('#popup-approve-booth').find(".error").show();
-                    }
-                }
-            });
-        }
-
-        function reeditBooth() {  
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/booths/save-reedit",
-                type: 'post',
-                dataType: 'json',
-                data:{
-                    boothId: '{{$booth->id}}'
-                },
-                success: function (res) { 
-                    if(res.success == true){
-                        location.reload()
-                    }
-                    else{
-                        $('#popup-reedit-booth').find(".error").text(res.error);
-                        $('#popup-reedit-booth').find(".error").show();
-                    }
-                }
-            });
-        }
-
-        function rejectBooth() {  
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/booths/save-reject",
-                type: 'post',
-                dataType: 'json',
-                data:{
-                    boothId: '{{$booth->id}}'
-                },
-                success: function (res) { 
-                    if(res.success == true){
-                        location.reload()
-                    }
-                    else{
-                        $('#popup-reject-booth').find(".error").text(res.error);
-                        $('#popup-reject-booth').find(".error").show();
-                    }
-                }
-            });
-        }
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
         var viewer;
         var container = document.getElementById('viewer-container');
         var views = {!! json_encode($views) !!};
+        var assets = {!! json_encode($assets) !!}
 
         function switchObjectTypeTag(type) {  
             $('.objects-card').hide();
@@ -863,11 +1018,176 @@
             chart.render();
         }
 
+        function openPopupAssetDetail(id){ 
+            $('#popup-asset-detail').modal('show');
+            let asset = null;
+            assets.forEach(item => {
+                if(item.id == id){
+                    asset = item;
+                }
+            });
+            
+            $('#popup-asset-detail__name-text').text(asset.name);
+            $('#popup-asset-detail__type-text').text(asset.type);
+            $('#popup-asset-detail__source-text').text(asset.source);
+            $('#popup-asset-detail__format-text').text(asset.format);
+            $('#popup-asset-detail__size-text').text((asset.size / 1048576).toFixed(1) + " MB");
+            $('#popup-asset-detail__uploadedat-text').text( new Date(asset.updated_at).toLocaleString());
+
+            $('#popup-asset-detail').find(".preview-wrapper").children().hide();
+
+            if(asset.type == "image"){
+                let elm = $('#popup-asset-detail').find(".preview-wrapper").find('img');
+                elm.show();
+                elm.attr('src', asset.url);
+            }  
+            else
+            if(asset.type == "video"){
+                if(asset.source == 'youtube'){
+                    let elm = $('#popup-asset-detail').find(".preview-wrapper").find('iframe');
+                    elm.show();
+                    let yt = K_URL.YouTube(asset.url);
+                    elm.attr('src', yt.embedUrl + '?showinfo=0');
+                }
+                else
+                {
+                    let elm = $('#popup-asset-detail').find(".preview-wrapper").find('video');
+                    elm.show();
+                    elm.attr('src', asset.url + '#t=1');
+                }    
+            }
+            else
+            if(asset.type == "audio"){
+                let elm = $('#popup-asset-detail').find(".preview-wrapper").find('audio');
+                elm.show();
+                elm.attr('src', asset.url);
+            } 
+            else
+            if(asset.type == "model"){
+                let elm = $('#popup-asset-detail').find(".preview-wrapper").find('model-viewer');
+                elm.show();
+                elm.attr('src', asset.url);
+            }  
+        }
+
+        function closePopupAssetDetail(){ 
+            $('#popup-asset-detail').modal('hide');
+            $('#popup-asset-detail').find(".preview-wrapper").children().attr("src", "");
+        }
+
+        function approveBooth() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/booths/save-approve",
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    boothId: '{{$booth->id}}'
+                },
+                success: function (res) { 
+                    if(res.success == true){
+                        location.reload()
+                    }
+                    else{
+                        $('#popup-approve-booth').find(".error").text(res.error);
+                        $('#popup-approve-booth').find(".error").show();
+                    }
+                }
+            });
+        }
+
+        function reeditBooth() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/booths/save-reedit",
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    boothId: '{{$booth->id}}'
+                },
+                success: function (res) { 
+                    if(res.success == true){
+                        location.reload()
+                    }
+                    else{
+                        $('#popup-reedit-booth').find(".error").text(res.error);
+                        $('#popup-reedit-booth').find(".error").show();
+                    }
+                }
+            });
+        }
+
+        function rejectBooth() {  
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/tours/{{$tour->id}}/booths/save-reject",
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    boothId: '{{$booth->id}}'
+                },
+                success: function (res) { 
+                    if(res.success == true){
+                        location.reload()
+                    }
+                    else{
+                        $('#popup-reject-booth').find(".error").text(res.error);
+                        $('#popup-reject-booth').find(".error").show();
+                    }
+                }
+            });
+        }
     </script>
     <script>
         $(document).ready(function() {
+
             initViewer();
+
+            let elms = $('.repair-yt-url');
+            $.each(elms, function (i, elm) { 
+                let yt = K_URL.YouTube($(this).attr('src'));
+                if(yt){
+                    $(this).attr('src', "https://img.youtube.com/vi/"+ yt.id +"/mqdefault.jpg");
+                }
+            });
+
             $('#comment-table').DataTable();
+
+            $('.datatable').DataTable({
+                "order": [[ 4, "desc" ]]
+            });
+
+            $('#popup-asset-detail').on('hidden.bs.modal', function () {  
+                closePopupAssetDetail();
+            })
+
+            $('.tab-btn').click(function (e) { 
+                $('.tab-btn').removeClass('active');
+                $(this).addClass('active');
+                $('.tab-body').hide();
+                let tab = $(this).attr('data-tab');
+                $('.tab-body[data-tab="'+tab+'"]').show();
+            });
+            
+            $('.btn-tab-1').click(function(){
+                $('.div-tab-1').show();
+                $('.div-tab-2').hide();
+                $('.btn-tab-1').addClass('active');
+                $('.btn-tab-2').removeClass('active');
+            });
+            $('.btn-tab-2').click(function(){
+                $('.div-tab-2').show();
+                $('.div-tab-1').hide();
+                $('.btn-tab-1').removeClass('active');
+                $('.btn-tab-2').addClass('active');
+                initViewChart();
+            });
         });
     </script>
 @endsection

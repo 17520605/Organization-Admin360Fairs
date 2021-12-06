@@ -125,16 +125,19 @@ class BoothsController extends Controller
             $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
         }
 
-        $objects = DB::table('object')
-            ->join('booth_object', 'booth_object.objectId', '=', 'object.Id')
-            ->where('booth_object.boothId', '=', $boothId)
-            ->select('object.*')
+        $assets = \App\Models\Asset::where([
+                ['tourId','=', $id],
+                ['boothId','=', $booth->id],
+            ])
+            ->orderBy('updated_at', "DESC")
             ->get();
 
-        $types = DB::table('object')
-            ->join('booth_object', 'object.id', '=', 'booth_object.objectId')
-            ->where('booth_object.boothId', $boothId)
-            ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(object.id) as count'))
+        $types = DB::table('asset')
+            ->where([
+                ['tourId','=', $id],
+                ['boothId','=', $booth->id],
+            ])
+            ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(asset.id) as count'))
             ->groupBy('type')
             ->get();
         
@@ -150,7 +153,7 @@ class BoothsController extends Controller
             'booth' => $booth,
             'panoramas' => $panoramas,
             'scene' => $scene,
-            'objects' => $objects,
+            'assets' => $assets,
             'types' => $types,
             'views'=>$views,
             'comments'=>$comments

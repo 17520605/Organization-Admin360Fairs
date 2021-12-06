@@ -9,4 +9,8 @@ class Panorama extends Model
 {
     protected $table = 'panorama';
     public $timestamps = true;
+
+    public function hotspots() {
+        return $this->hasMany(Hotspot::class, 'panoramaId');
+    }
 }

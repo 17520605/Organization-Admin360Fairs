@@ -8,6 +8,13 @@
                 <div class="col-md-12" style="padding: 0;">
                     <div class="card p-3">
                         <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Files Manager</h1>
+                        <select id="collect-select">
+                            <option value="*" {{ $collect == '*' ? 'selected' : ''}}>All Assets</option>
+                            <option value="tour" {{ $collect == 'tour' ? 'selected' : ''}}>Only Tour</option>
+                            @foreach ($booths as $booth)
+                            <option value="booth:{{$booth->id}}" {{ $collect == 'booth:'.$booth->id ? 'selected' : ''}} >{{$booth->name}}</option>
+                            @endforeach
+                        </select>
                         <div class="div_cardheader_btn">
                             <button class="mb-0 btn float-right active" onclick="openPopupUploadAssets()"><i class="fas fa-plus"></i> Upload Assets </button>
                         </div>
@@ -202,7 +209,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($assets as $asset)
-                                                <tr>
+                                                <tr data-asset-id="{{$asset->id}}">
                                                     <td style="width: 5%; text-align: center">
                                                         @if ($asset->type == 'image')
                                                            <span><i class="fas fa-image font-size-16 text-success"></i> <span style="display: none">1</span> </span> 
@@ -217,11 +224,11 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
+                                                        <a class="text-primary asset-name" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
                                                     </td>
                                                     <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
                                                     <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
-                                                    <td>{{$asset->updated_at}}</td>
+                                                    <td>{{$asset->created_at}}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -250,11 +257,11 @@
                                                         <span><i class="fas fa-image font-size-16 text-success"></i> <span style="display: none">1</span> </span> 
                                                     </td>
                                                     <td>
-                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
+                                                        <a class="text-primary asset-name" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
                                                     </td>
                                                     <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
                                                     <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
-                                                    <td>{{$asset->updated_at}}</td>
+                                                    <td>{{$asset->created_at}}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -278,16 +285,16 @@
                                                     $videos = $assets->where('type', 'video');
                                                 @endphp
                                                 @foreach ($videos as $asset)
-                                                <tr>
+                                                <tr data-asset-id="{{$asset->id}}">
                                                     <td style="width: 5%; text-align: center">
                                                         <span><i class="far fa-play-circle font-size-16 text-danger"></i> <span style="display: none">2</span> </span> 
                                                     </td>
                                                     <td>
-                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
+                                                        <a class="text-primary asset-name" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
                                                     </td>
                                                     <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
                                                     <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
-                                                    <td>{{$asset->updated_at}}</td>
+                                                    <td>{{$asset->created_at}}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -311,16 +318,16 @@
                                                     $audios = $assets->where('type', 'audio');
                                                 @endphp
                                                 @foreach ($audios as $asset)
-                                                <tr>
+                                                <tr data-asset-id="{{$asset->id}}">
                                                     <td style="width: 5%; text-align: center">
                                                         <span><i class="fas fa-music font-size-16 text-info"></i><span style="display: none">3</span></span> 
                                                     </td>
                                                     <td>
-                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
+                                                        <a class="text-primary asset-name" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
                                                     </td>
                                                     <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
                                                     <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
-                                                    <td>{{$asset->updated_at}}</td>
+                                                    <td>{{$asset->created_at}}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -344,16 +351,16 @@
                                                     $models = $assets->where('type', 'model');
                                                 @endphp
                                                 @foreach ($models as $asset)
-                                                <tr>
+                                                <tr data-asset-id="{{$asset->id}}">
                                                     <td style="width: 5%; text-align: center">
                                                         <span><i class="fab fa-unity font-size-16 text-models"></i><span style="display: none">4</span></span> 
                                                     </td>
                                                     <td>
-                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
+                                                        <a class="text-primary asset-name" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
                                                     </td>
                                                     <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
                                                     <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
-                                                    <td>{{$asset->updated_at}}</td>
+                                                    <td>{{$asset->created_at}}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -362,24 +369,24 @@
                                 </div>
                             </div>
                             <div class="tab-body" data-tab="card" style="display: none">
-                                <div class="card assets-wrapper all" style="width: 100%; padding: 0.25rem;">
+                                <div class="card assets-wrapper all" style="width: 100%; height: 100%; padding: 0.25rem;">
                                     <div class="card-body" style="color: #555; font-size: 14px;">
-                                        <div class="row" style="height: 430px;">
+                                        <div class="row" style="max-height: 450px; overflow-y: scroll;">
                                             @foreach ($assets as $asset)
                                                 @if ($asset->type == 'image')
-                                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                                <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}"  style="padding: 5px;">
                                                     <div class="card object-file-booth">
                                                         <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                                             <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
                                                                 <div class="image">
                                                                     @if ($asset->url != null || $asset->url !='')
-                                                                        <img src="{{$asset->miniUrl()}}" alt="img" class="img-fluid">
+                                                                        <img src="{{$asset->miniUrl()}}" alt="img" width="100%" class="img-fluid">
                                                                     @else
                                                                         <img src="https://res.cloudinary.com/virtual-tour/image/upload/v1634815623/error-404_ghj2tk.png" alt="img" class="img-fluid">
                                                                     @endif
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <p class="m-b-5 text-muted">{{$asset->name != null ? $asset->name : 'unname'}}</p>
+                                                                    <p class="m-b-5 text-muted asset-name">{{$asset->name}}</p>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -387,33 +394,32 @@
                                                 </div>
                                                 @endif
                                                 @if ($asset->type == 'video')
-                                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
-                                                    @if ($asset->source == 'local')
+                                                <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}" style="padding: 5px;">
+                                                    @if ($asset->source == 'youtube')
                                                     <div class="card object-file-booth">
                                                         <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                                             <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
                                                                 <div class="image">
-                                                                    <img src="" alt="img" class="img-fluid">
+                                                                    <img class="repair-yt-url" src="{{$asset->url}}" style="background-color: black; width: 100%; height:100%;">
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <p class="m-b-5 text-muted">{{$asset->name != null ? $asset->name : 'unname'}}</p>
+                                                                    <p class="m-b-5 text-muted asset-name">{{$asset->name}}</p>
                                                                 </div>
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    @endif
-                                                    @if ($asset->source == 'link')
+                                                    @else
                                                     <div class="card object-file-booth">
                                                         <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                                             <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
                                                                 <div class="image">
                                                                     <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
-                                                                    <div class="icon">
-                                                                        <i class="fab fa-soundcloud"></i>
+                                                                    <div class="image">
+                                                                        <video src="{{$asset->url}}#t=1">
                                                                     </div>
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <p class="m-b-5 text-muted">{{$asset->name != null ? $asset->name : 'unname'}}</p>
+                                                                    <p class="m-b-5 text-muted asset-name">{{$asset->name}}</p>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -422,7 +428,7 @@
                                                 </div>
                                                 @endif
                                                 @if ($asset->type == 'audio')
-                                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                                <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}" style="padding: 5px;">
                                                     <div class="card object-file-booth">
                                                         <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                                             <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
@@ -433,7 +439,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <p class="m-b-5 text-muted">{{$asset->name != null ? $asset->name : 'unname'}}</p>
+                                                                    <p class="m-b-5 text-muted asset-name">{{$asset->name}}</p>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -441,7 +447,7 @@
                                                 </div>
                                                 @endif
                                                 @if ($asset->type == 'model')
-                                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                                <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}" style="padding: 5px;">
                                                     <div class="card object-file-booth">
                                                         <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                                             <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
@@ -449,7 +455,7 @@
                                                                     <model-viewer style="width: 100%; height: 120px;" src="{{$asset->url}}" ar-status="not-presenting"></model-viewer>
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <p class="m-b-5 text-muted">{{$asset->name != null ? $asset->name : 'unname'}}</p>
+                                                                    <p class="m-b-5 text-muted asset-name">{{$asset->name}}</p>
                                                                 </div>
                                                             </a>
                                                         </div>
@@ -463,17 +469,22 @@
                                 </div>
                                 <div class="card assets-wrapper image" style="width: 100%;padding: 0.25rem; display: none">
                                     <div class="card-body" style="color: #555; font-size: 14px;">
-                                        <div class="row" style="height: 430px;">
+                                        <div class="d-flex">
+                                            <div class="overflow-hidden">
+                                                <h5 class="font-size-15 font-weight-bold text-primary">Images</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="max-height: 450px; overflow-y: scroll;">
                                             @php
                                                 $images = $assets->where('type', 'image')->all();
                                             @endphp
                                             @foreach ($images as $image)
-                                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                            <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}" style="padding: 5px;">
                                                 <div class="card object-file-booth">
                                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                        <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
+                                                        <a href="javascript:void(0);">
                                                             <div class="image">
-                                                                <img src="{{$image->url}}" alt="img" class="img-fluid">
+                                                                <img src="{{$image->url}}" width="100%" alt="img" class="img-fluid">
                                                             </div>
                                                             <div class="file-name">
                                                                 <p class="m-b-5 text-muted">{{$image->name}}</p>
@@ -488,16 +499,21 @@
                                 </div>
                                 <div class="card assets-wrapper video" style="width: 100%;padding: 0.25rem; display: none">
                                     <div class="card-body" style="color: #555; font-size: 14px;">
-                                        <div class="row" style="height: 430px;">
+                                        <div class="d-flex">
+                                            <div class="overflow-hidden">
+                                                <h5 class="font-size-15 font-weight-bold text-primary">Videos</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="max-height: 450px; overflow-y: scroll;">
                                             @php
                                                 $videos = $assets->where('type', 'video')->all();
                                             @endphp
                                             @foreach ($videos as $video)
-                                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                            <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}">
                                                 @if ($video->source == 'local')
                                                 <div class="card object-file-booth">
                                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                        <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
+                                                        <a href="javascript:void(0);">
                                                             <div class="image">
                                                                 <div class="icon">
                                                                     <i class="fas fa-film"></i>
@@ -513,9 +529,9 @@
                                                 @if ($video->source == 'link')
                                                 <div class="card object-file-booth">
                                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                        <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
+                                                        <a href="javascript:void(0);">
                                                             <div class="image">
-                                                               <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
+                                                            <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                                                 <div class="icon">
                                                                     <i class="fas fa-film"></i>
                                                                 </div>
@@ -534,16 +550,21 @@
                                 </div>
                                 <div class="card assets-wrapper audio" style="width: 100%; padding: 0.25rem; display: none">
                                     <div class="card-body" style="color: #555; font-size: 14px;">
-                                        <div class="row" style="height: 430px;">
+                                        <div class="d-flex">
+                                            <div class="overflow-hidden">
+                                                <h5 class="font-size-15 font-weight-bold text-primary">Audios</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="max-height: 450px; overflow-y: scroll;">
                                             @php
                                                 $audios = $assets->where('type', 'audio')->all();
                                             @endphp
                                             @foreach ($audios as $audio)
-                                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                            <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}">
                                                 @if ($audio->source == 'local')
                                                 <div class="card object-file-booth">
                                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                        <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
+                                                        <a href="javascript:void(0);">
                                                             <div class="image">
                                                                 <div class="icon">
                                                                     <i class="fas fa-volume-up"></i>
@@ -559,9 +580,9 @@
                                                 @if ($audio->source == 'link')
                                                 <div class="card object-file-booth">
                                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                        <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
+                                                        <a href="javascript:void(0);">
                                                             <div class="image">
-                                                               <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
+                                                            <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
                                                                 <div class="icon">
                                                                     <i class="fab fa-soundcloud"></i>
                                                                 </div>
@@ -580,15 +601,20 @@
                                 </div>
                                 <div class="card assets-wrapper model" style="width: 100%;padding: 0.25rem; display: none">
                                     <div class="card-body" style="color: #555; font-size: 14px;">
-                                        <div class="row" style="height: 430px;">
+                                        <div class="d-flex">
+                                            <div class="overflow-hidden">
+                                                <h5 class="font-size-15 font-weight-bold text-primary">Models</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="max-height: 500px; overflow-y: scroll;">
                                             @php
                                                 $models = $assets->where('type', 'model')->all();
                                             @endphp
                                             @foreach ($models as $model)
-                                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                            <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}" style="padding: 5px;">
                                                 <div class="card object-file-booth">
                                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
-                                                        <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
+                                                        <a href="javascript:void(0);">
                                                             <div class="image">
                                                                 <model-viewer style="width: 100%;height: 120px;" src="{{$model->url}}" ar-status="not-presenting"></model-viewer>
                                                             </div>
@@ -619,6 +645,7 @@
                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="padding: 30px">
+                    <input id="popup-asset-detail__id-hidden-input" type="hidden">
                     <div class="row mb-3" >
                         <div class="col-md-4">
                             <div class="card" style="min-height:450px ; height: 100% ;">
@@ -634,7 +661,12 @@
                                                 <p class="text-muted mb-2"> Updated at: </p>
                                             </div>
                                             <div class="col-8">
-                                                <p class="text-muted mb-2"><span id="popup-asset-detail__name-text" class="ml-2 font-weight-bold"></span> </p>
+                                                <p class="text-muted mb-2"><span id="popup-asset-detail__name-text" class="ml-2 font-weight-bold"></span> 
+                                                    @if ($profile->id == $asset->ownerId)
+                                                        <i onclick="showInputNameAsset()" class="fas fa-pen"></i>  
+                                                    @endif
+                                                </p>
+                                                <p style="display: none"> <input id="popup-asset-detail__name-input" type="text"> <button onclick="editAssetName(event)"> Save</button></p>
                                                 <p class="text-muted mb-2"><span id="popup-asset-detail__source-text" class="ml-2 font-weight-bold"></span></p>
                                                 <p class="text-muted mb-2"><span id="popup-asset-detail__format-text" class="ml-2 font-weight-bold"></span></p>
                                                 <p class="text-muted mb-2"><span id="popup-asset-detail__size-text" class="ml-2 font-weight-bold"></span></p>
@@ -646,12 +678,12 @@
                             </div>
                         </div>
                         <div class="col-md-8 view_booth_panoles">
-                            <div class="card" style="width: 100% ; padding:20px;">
-                                <div class="preview-wrapper" style="width: 100%;">
+                            <div class="card" style="width: 100% ; height: 300px; padding:20px;">
+                                <div class="preview-wrapper" style="width: 100%; height: 100%;">
                                     <img src="" alt="" style="width: 100%; display: none">
                                     <iframe src="" style="display: none" width="100%" height="400px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                    <video src="" alt="" controls style="width: 100%;display: none" controls>
-                                    <audio src="" alt="" controls style="width: 100%;display: none">
+                                    <video src="" alt="" controls style="width: 100%;display: none" controls></video>
+                                    <audio src="" alt="" controls style="width: 100%;display: none"></audio>
                                     <model-viewer src="" style="width: 100%; height: 100%; display: none" shadow-intensity="1" camera-controls></model-viewer>
                                 </div>
                             </div>
@@ -824,63 +856,117 @@
     <script>
         var assets = {!! json_encode($assets) !!}
 
-        $('.datatable').DataTable();
-        $('#popup-asset-detail').on('hidden.bs.modal', function () {  
-            closePopupAssetDetail();
-        })
+        $(document).ready(function () {
+            $('.datatable').DataTable({
+                "order": [[ 4, "desc" ]]
+            });
 
-        $('#popup-upload-assets__file-hidden-input').change(async function () {  
-            let files = $(this).prop('files');
-            let count = files.length;
-            let success = 0;
-            let complete = 0;
-
-            $('#popup-upload-assets').find('.errors').find('ul').empty();
-            $('#popup-upload-assets').find('.input-wrapper').hide();
-            $('#popup-upload-assets').find('.progress-wrapper').show();
-
-            for (let i = 0; i < files.length; i++) {
-                $('#popup-upload-assets').attr('data-uploading', 1);
-                const file = files[i];
-                let type;
-                if(file.type.includes('/')){
-                    type = file.type.split('/')[0];
+            let elms = $('.repair-yt-url');
+            $.each(elms, function (i, elm) { 
+                let yt = K_URL.YouTube($(this).attr('src'));
+                if(yt){
+                    $(this).attr('src', "https://img.youtube.com/vi/"+ yt.id +"/mqdefault.jpg");
                 }
-                else if(file.name.split('.').pop() == 'glb'){
-                    type = 'model';
-                }
-               
-                try {
-                    await ajaxCreateAsset(type, 'local', file, null)
-                    .done(function () { 
-                        success++; 
-                    })
-                    .fail(function (xhd, status) {  
-                        let li = $(`<li> <span>`+ file.name +`</span><span> upload failed !</span></li>`);
-                        $('#popup-upload-assets').find('.errors').find('ul').append(li);
-                        $('#popup-upload-assets').find('.errors').show();
-                    })
-                    .always(function () {  
-                        complete++;
-                        $('#popup-upload-assets').find('.progress-value').attr('style', 'width: '+(complete * 100/count)+'% !important');
-                    })
-                } catch (error) {
-                    
-                } 
-            };
+            });
 
-            $('#popup-upload-assets').find('.result').show();
-            $('#popup-upload-assets').find('.result').text(success + "/" + count + ' files uploaded successfull.');
-            $('#popup-upload-assets__OK-btn').show();
+            $('#collect-select').change(function () {  
+                location.href = '?collect=' + $(this).val();
+            })
+
+            $('#popup-asset-detail').on('hidden.bs.modal', function () {  
+                closePopupAssetDetail();
+            })
+
+            $('#popup-upload-assets__OK-btn').click(function () {  
+                location.href = '/administrator/tours/{{$tour->id}}';
+            })
+
+            $('#popup-upload-assets__file-hidden-input').change(async function () {  
+                let files = $(this).prop('files');
+                let count = files.length;
+                let success = 0;
+                let complete = 0;
+
+                $('#popup-upload-assets').find('.errors').find('ul').empty();
+                $('#popup-upload-assets').find('.input-wrapper').hide();
+                $('#popup-upload-assets').find('.progress-wrapper').show();
+
+                for (let i = 0; i < files.length; i++) {
+                    $('#popup-upload-assets').attr('data-uploading', 1);
+                    const file = files[i];
+                    let type;
+                    if(file.type.includes('/')){
+                        type = file.type.split('/')[0];
+                    }
+                    else if(file.name.split('.').pop() == 'glb'){
+                        type = 'model';
+                    }
+                
+                    try {
+                        await ajaxCreateAsset(type, 'local', file, null)
+                        .done(function () { 
+                            success++; 
+                        })
+                        .fail(function (xhd, status) {  
+                            let li = $(`<li> <span>`+ file.name +`</span><span> upload failed !</span></li>`);
+                            $('#popup-upload-assets').find('.errors').find('ul').append(li);
+                            $('#popup-upload-assets').find('.errors').show();
+                        })
+                        .always(function () {  
+                            complete++;
+                            $('#popup-upload-assets').find('.progress-value').attr('style', 'width: '+(complete * 100/count)+'% !important');
+                        })
+                    } catch (error) {
+                        
+                    } 
+                };
+
+                $('#popup-upload-assets').find('.result').show();
+                $('#popup-upload-assets').find('.result').text(success + "/" + count + ' files uploaded successfull.');
+                $('#popup-upload-assets__OK-btn').show();
+            });
+
+            $('.tab-btn').click(function (e) { 
+                $('.tab-btn').removeClass('active');
+                $(this).addClass('active');
+                $('.tab-body').hide();
+                let tab = $(this).attr('data-tab');
+                $('.tab-body[data-tab="'+tab+'"]').show();
+            });
         });
 
-        $('.tab-btn').click(function (e) { 
-            $('.tab-btn').removeClass('active');
-            $(this).addClass('active');
-            $('.tab-body').hide();
-            let tab = $(this).attr('data-tab');
-            $('.tab-body[data-tab="'+tab+'"]').show();
-        });
+        function showInputNameAsset(){
+            $('#popup-asset-detail__name-text').parent().hide();
+            $('#popup-asset-detail__name-input').parent().show();
+        }
+
+        function hideInputNameAsset(){
+            $('#popup-asset-detail__name-text').parent().show();
+            $('#popup-asset-detail__name-input').parent().hide();
+        }
+
+        function editAssetName(){
+            let name = $('#popup-asset-detail__name-input').val();
+            let assetId = $('#popup-asset-detail__id-hidden-input').val();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "post",
+                url: "/administrator/tours/{{$tour->id}}/assets/save-edit-name",
+                data: {
+                    assetId: assetId,
+                    name : name
+                },
+                dataType: 'json',
+                success: function(res){
+                    $('#popup-asset-detail__name-text').val(name);
+                    $('tr[data-asset-id="'+assetId+'"]').find('.asset-name').text(name);
+                    $('div[data-asset-id="'+assetId+'"]').find('.asset-name').text(name);
+                    hideInputNameAsset();
+                }
+            });
+        }
 
         function ajaxCreateAsset(type, source , file, url){
             let data = new FormData();
@@ -894,7 +980,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "post",
-                url: "/administrator/tours/{{$tour->id}}/objects/save-create-asset",
+                url: "/administrator/tours/{{$tour->id}}/assets/save-create",
                 data: data,
                 processData: false,
                 contentType: false,
@@ -905,6 +991,8 @@
 
         function openPopupAssetDetail(id){ 
             $('#popup-asset-detail').modal('show');
+            $('#popup-asset-detail__id-hidden-input').val(id);
+
             let asset = null;
             assets.forEach(item => {
                 if(item.id == id){
@@ -916,7 +1004,7 @@
             $('#popup-asset-detail__source-text').text(asset.source);
             $('#popup-asset-detail__format-text').text(asset.format);
             $('#popup-asset-detail__size-text').text((asset.size / 1048576).toFixed(1) + " MB");
-            $('#popup-asset-detail__uploadedat-text').text( new Date(asset.updated_at).toLocaleString());
+            $('#popup-asset-detail__uploadedat-text').text( new Date(asset.created_at).toLocaleString());
 
             $('#popup-asset-detail').find(".preview-wrapper").children().hide();
 
@@ -952,6 +1040,7 @@
                 elm.show();
                 elm.attr('src', asset.url);
             }  
+        
         }
 
         function closePopupAssetDetail(){ 

@@ -20,6 +20,9 @@
                     <div style="position: absolute; top: 10px; right: 10px;">
                         @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
                             @if ($booth->ownerId == $profile->id)
+                                @if ($booth->ownerId != $tour->organizerId )
+                                    <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#popup-request-approval"> Request Approval </button>
+                                @endif
                                 <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-booth"><i class="fas fa-pen"></i> Edit</button>
                             @endif
                         @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)

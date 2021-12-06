@@ -132,8 +132,6 @@ class EventsController extends Controller
             ->orderBy('startAt', 'ASC')
             ->get();
 
-       
-
         return view('administrator.events.webinars', [
             'profile' => $profile , 
             'tour'=>$tour,

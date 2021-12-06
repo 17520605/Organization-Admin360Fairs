@@ -203,6 +203,23 @@
             }
         </script>
 
+        {{-- LOAD REQUEST COUNT --}}
+        <script>
+            $.ajax({
+                url: '/administrator/tours/{{$tour->id}}/requests/get-request-count',
+                type: 'get',
+                success: function (res) {
+                    if(res == 0 || res == "0"){
+                        $('#navbar-left__request-count').hide();
+                    }
+                    else{
+                        $('#navbar-left__request-count').text(res);
+                        $('#navbar-left__request-count').show();
+                    }
+                }
+            })
+        </script>
+
         <script>
             $(function() {
                 //Add text editor
