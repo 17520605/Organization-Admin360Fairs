@@ -47,7 +47,7 @@
         <div id="collapseresource" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"> Types </h6>
-                <a class="collapse-item btn-page-loader" href="/partner/booths/{{$booth->id}}/objects" >Objects</a>
+                <a class="collapse-item btn-page-loader" href="/partner/booths/{{$booth->id}}/assets" >Assets</a>
             </div>
         </div>
     </li>

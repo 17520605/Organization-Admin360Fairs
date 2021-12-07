@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.partner')
 
 @section('content')
      <div class="container-fluid">
@@ -11,19 +11,6 @@
                         <div class="div_cardheader_btn">
                             <button class="mb-0 btn float-right active" onclick="openPopupUploadAssets()"><i class="fas fa-plus"></i> Upload Assets </button>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12" style="padding: 0;">
-                    <div class="card p-3">
-                        <select id="collect-select" class="form-control">
-                                <option value="*" {{ $collect == '*' ? 'selected' : ''}}>All Assets</option>
-                                <option value="tour" {{ $collect == 'tour' ? 'selected' : ''}}>Only Tour</option>
-                            @foreach ($booths as $booth)
-                                <option value="booth:{{$booth->id}}" {{ $collect == 'booth:'.$booth->id ? 'selected' : ''}} >{{$booth->name}}</option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
             </div>
@@ -799,7 +786,7 @@
                                                 <p class="text-muted mb-2"> Updated at: </p>
                                             </div>
                                             <div class="col-8">
-                                                <p class="text-muted mb-2 btn-action-icon" style="text-align: left"><span id="popup-asset-detail__name-text" class="ml-2 font-weight-bold"></span> 
+                                                <p class="text-muted mb-2 btn-action-icon" style="position: relative;height: 22px; text-align: left"><span id="popup-asset-detail__name-text" class="ml-2 font-weight-bold"></span>
                                                     @if ($profile->id == $asset->ownerId)
                                                         <i onclick="showInputNameAsset()" class="fas fa-pen edit" style="margin-left: 160px"></i>  
                                                     @endif
@@ -889,7 +876,7 @@
                             </nav>
                         </div>
                         <div>
-                            <form class="form-step1 object__upload-box needs-validation" action="/administrator/tours/{{$tour->id}}/objects/save-create" method="POST" enctype="multipart/form-data" novalidate>
+                            <form class="form-step1 object__upload-box needs-validation" action="/partner/booths/{{$booth->id}}/assets/save-create" method="POST" enctype="multipart/form-data" novalidate>
                                 @csrf
                                 <input id="popup-add-new-object__source-hidden-input" class="form-control" type="hidden" name="source" value="local">
                                 <div class="mb-3">
@@ -939,7 +926,7 @@
                                     <button type="submit" id="popup-add-new-object__local-save-btn" class="btn btn-primary btn-block">Save Upload</button>
                                 </div>
                             </form>
-                            <form class="form-step2 object__upload-box needs-validation" action="/administrator/tours/{{$tour->id}}/objects/save-create" method="POST"  style="display: none" novalidate>
+                            <form class="form-step2 object__upload-box needs-validation" action="/partner/booths/{{$booth->id}}/assets/save-create" method="POST"  style="display: none" novalidate>
                                 @csrf
                                 <input type="hidden" name="source" value="link">
                                 <div class="mb-3">
@@ -991,8 +978,7 @@
             </div>
         </div>
     </div>
-@endsection
-@section('script-bottom')
+    @endsection
     <script>
         var assets = {!! json_encode($assets) !!}
 
@@ -1019,7 +1005,7 @@
             })
 
             $('#popup-upload-assets__OK-btn').click(function () {  
-                location.href = '/administrator/tours/{{$tour->id}}';
+                location.href = '/partner/booths/{{$booth->id}}';
             })
 
             $('#popup-upload-assets__file-hidden-input').change(async function () {  
@@ -1102,7 +1088,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "post",
-                url: "/administrator/tours/{{$tour->id}}/assets/save-edit-name",
+                url: "/partner/booths/{{$booth->id}}/assets/save-edit-name",
                 data: {
                     assetId: assetId,
                     name : name
@@ -1137,7 +1123,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "post",
-                url: "/administrator/tours/{{$tour->id}}/assets/save-create",
+                url: "/partner/booths/{{$booth->id}}/assets/save-create",
                 data: data,
                 processData: false,
                 contentType: false,
@@ -1192,8 +1178,7 @@
                 elm.show();
                 elm.attr('src', asset.url);
             }  
-            else
-            if(asset.type == "video"){
+            else if(asset.type == "video"){
                 if(asset.source == 'youtube'){
                     let elm = $('#popup-asset-detail').find(".preview-wrapper").find('iframe');
                     elm.show();
@@ -1207,18 +1192,21 @@
                     elm.attr('src', asset.url + '#t=1');
                 }    
             }
-            else
-            if(asset.type == "audio"){
+            else if(asset.type == "audio"){
                 let elm = $('#popup-asset-detail').find(".preview-wrapper").find('audio');
                 elm.show();
                 elm.attr('src', asset.url);
             } 
-            else
-            if(asset.type == "model"){
+            else if(asset.type == "model"){
                 let elm = $('#popup-asset-detail').find(".preview-wrapper").find('model-viewer');
                 elm.show();
                 elm.attr('src', asset.url);
-            }  
+            } 
+            else {
+                let elm = $('#popup-asset-detail').find(".preview-wrapper").find('img');
+                elm.show();
+                elm.attr('src', 'https://wallpaperaccess.com/full/2022184.jpg');
+            } 
         
         }
 
@@ -1254,5 +1242,4 @@
         }
 
     </script>
-@endsection
 

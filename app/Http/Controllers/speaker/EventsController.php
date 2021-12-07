@@ -6,16 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use MacsiDigital\Zoom\Support\Entry;
 use MacsiDigital\Zoom\Facades\Zoom;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Crypt;
-
 
 class EventsController extends Controller
 {
-    public function webinars($id, Request $request)
+    public function schedule($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
@@ -77,154 +74,423 @@ class EventsController extends Controller
             'tag' => $tag
         ]);
     }
-
-    public function webinar($id, $webinarId, Request $request)
+    public function webinars($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $tour = DB::table('tour')->find($id);
-        $tab = $request->get('tab');
+        $booth = DB::table('booth')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
 
+        $webinars = \App\Models\Webinar::with('details','registrant')
+            ->where([
+                ['tourId', '=',  $tour->id],
+                ['boothId', '=',  $booth->id],
+                ['isDeleted', '=', false],
+            ])
+            ->orderBy('startAt', 'ASC')
+            ->get();
+
+        return view('partner.events.webinars', [
+            'profile' => $profile , 
+            'tour'=>$tour,
+            'booth'=>$booth, 
+            'webinars'=>$webinars, 
+        ]);
+    }
+
+    public function webinar($id, $webinarId)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $booth = DB::table('booth')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
         $webinar = \App\Models\Webinar::with('details')
             ->where('id',$webinarId)
             ->first();
         foreach ($webinar->details as $detail) {
             $detail->speaker = DB::table('profile')->find($detail->speakerId);
-
-            $documents = \App\Models\Document::with('owner')
-                ->whereHas('webinar_detail_documents', function ($q) use($detail){
-                    $q->where('webinarDetailId', $detail->id);
-                })
-                ->where('isDeleted', false)
-                ->get();
-
-            $detail->documents = $documents;
         }
 
-        $documents = \App\Models\Document::where([
-            ['ownerId', '=', $profile->id],
-            ['isDeleted', '=', false],
-        ])
-        ->orderBy('created_at','DESC')
-        ->get();
+        $speakers = DB::table('tour_speaker')
+            ->join('profile', 'profile.id', '=', 'tour_speaker.speakerId')
+            ->where([
+                ['tour_speaker.tourId','=', $id],
+                ['tour_speaker.status','=', \App\Models\Tour_Speaker::CONFIRMED],
+            ])
+            ->select('profile.*')
+            ->get();
 
-        return view('speaker.events.webinar', [
+        return view('partner.events.webinar', [
             'profile' => $profile , 
             'tour'=>$tour,
             'webinar' => $webinar, 
-            'documents'=> $documents, 
-            'tab' => $tab
+            'speakers'=> $speakers, 
+            'booth'=>$booth
         ]);
     }
 
-    public function uploadDocuments($id, $webinarId, Request $request)
-    {
-        $files = $request->files;
-        $webinarDetailId = $request->webinarDetailId;
-
+    public function create($id, Request $request)
+    {     
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $documents = array();
+        $booth = DB::table('booth')->find($id);
 
-        if(count($files) > 0){
-            foreach ($files as $key => $file) {
-
-                // save file to storage
-                $path = Storage::disk('temp')->putFile('/',$request->file($key));
-                
-                $res = cloudinary()->upload(Storage::disk('temp')->path($request->file($key)->hashName()), [
-                    'resource_type' => 'auto'
-                ])->getResponse();
-                
-                // delete file
-                $path = Storage::disk('temp')->delete($path);
-
-                $resObj = json_decode(json_encode($res));
-
-                $name = $file->getClientOriginalName();
-                $url = $resObj->url;
-                $format = $file->getClientOriginalExtension();
-                $size = $resObj->bytes;
-                
-                $document = new \App\Models\Document();
-                $document->name =  $name ;
-                $document->format = $format;
-                $document->size = $size;
-                $document->url = $url;
-                $document->isUsed = true;
-                $document->ownerId = $profile->id;
-                $document->save();
-                array_push($documents, $document);
-
-                $webinar_detail_document = new \App\Models\Webinar_Detail_Document();
-                $webinar_detail_document->webinarDetailId = $webinarDetailId;
-                $webinar_detail_document->documentId = $document->id;
-                $webinar_detail_document->save();
-               
-            }
-        }
-
-        return response(json_encode($documents));
+        return view('partner.events.create', [
+            'profile' => $profile , 
+            'booth'=>$booth
+        ]);
     }
 
-    public function chooseDocuments($id, $webinarId, Request $request)
-    {
-        $documentIds = $request->documentIds;
-        $webinarDetailId = $request->webinarDetailId;
-
+    public function edit($id, $webinarId, Request $request)
+    {     
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
-        $documents = array();
+        $booth = DB::table('booth')->find($id);
 
-        foreach ($documentIds as $documentId) {
-            $document = \App\Models\Document::find($documentId);
-            if(isset($document)){
-                $document->isUsed = true;
-                $document->save();
-            }
+        $webinar = \App\Models\Webinar::with('details', 'speakers', 'registrant')
+            ->where('id',$webinarId)
+            ->first();
 
-            $webinar_detail_document = new \App\Models\Webinar_Detail_Document();
-            $webinar_detail_document->webinarDetailId = $webinarDetailId;
-            $webinar_detail_document->documentId =  $documentId;
-            $webinar_detail_document->save();
-        }
-
-        return response(json_encode($documents));
+        return view('partner.events.edit', [
+            'profile' => $profile , 
+            'booth'=>$booth,
+            'webinar' => $webinar
+        ]);
     }
 
-
-    public function deleteDocument($id, $webinarId, Request $request)
+    public function saveCreate($id, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $booth = DB::table('booth')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
 
-        $webinarDetailId = $request->webinarDetailId;
-        $documentId = $request->documentId;
+        $topic = $request->topic;
+        $poster = $request->poster;
+        $start = $request->start;
+        $end = $request->end;
+        $zoom = $request->zoom;
+        $description = $request->description;
 
+        $speakerNos = $request->speakerNos;
+        $speakerHonorifics = $request->speakerHonorifics;
+        $speakerNames = $request->speakerNames;
+        $speakerPositions = $request->speakerPositions;
+        $speakerAvatars = $request->speakerAvatars;
+        
+        $detailTitles = $request->detailTitles;
+        $detailDurations = $request->detailDurations;
+        $detailSpeakerNos = $request->detailSpeakerNos;
+        $detailContents = $request->detailContents;
 
-        $webinar_detail_document = \App\Models\Webinar_Detail_Document::where([
-            ['webinarDetailId', '=', $webinarDetailId],
-            ['documentId', '=', $documentId],
+        // save file to cloud
+        $posterUrl = isset($poster) ? $this->uploadFile($poster, true)->url : 'https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg';
+        $avatarUrls = [];
+        foreach ($speakerNames as $key => $value) {
+            $url = 'https://res.cloudinary.com/virtual-tour/image/upload/v1634458347/icons/default-avatar_muo2gc.jpg';
+            if(isset($speakerAvatars[$key])){
+                $file = $speakerAvatars[$key];
+                $url = $this->uploadFile($file, true)->url;
+            }
+            $avatarUrls[$key] = $url;
+        }
+
+        $webinar = new \App\Models\Webinar();
+        $webinar->tourId = $tour->id;
+        $webinar->boothId = $booth->id;
+        $webinar->registerBy = $profile->id;
+        $webinar->topic = $topic;
+        $webinar->poster = $posterUrl;
+        $webinar->zoom = $zoom;
+        $webinar->description = $description;
+        $webinar->startAt = $start;
+        $webinar->endAt = $end;
+        if($profile->id ==  $tour->organizerId){
+            $webinar->isConfirmed = true;
+        }
+        $webinar->save();
+
+        // create speakers
+        $speakers = [];
+        foreach ($speakerNos as $key => $value) {
+            $name = $speakerNames[$key];
+            $avatarUrl = $avatarUrls[$key];
+            $honorific = $speakerHonorifics[$key];
+            $position = $speakerPositions[$key];
+
+            $speaker = new \App\Models\Speaker();
+            $speaker->webinarId = $webinar->id;
+            $speaker->name = $name;
+            $speaker->avatar = $avatarUrl;
+            $speaker->honorific = $honorific;
+            $speaker->position = $position;
+            $speaker->save();
+            $speakers[$value] = $speaker;
+        }
+
+        // create details
+        foreach ($detailTitles as $key => $value) {
+            $detail = new \App\Models\Webinar_Detail();
+            $detail->webinarId = $webinar->id;
+            $detail->title = $detailTitles[$key];
+            $detail->duration = $detailDurations[$key];
+            $detail->content = $detailContents[$key];
+            $detail->speakerId = $speakers[$detailSpeakerNos[$key]]->id;
+            $detail->save();
+        }
+
+        if($profile->id ==  $tour->organizerId){
+             // send notification to who create webinar
+             $notification = new \App\Models\Notification();
+             $notification->tourId = $tour->id;
+             $notification->to = 'users@'.$webinar->registrant->id;
+             $notification->channel = 'webinar@new';
+             $notification->type = \App\Models\Notification::INFO;
+             $notification->title = "You create a new webinar";
+             $notification->content = '<a href="/partner/booths/'.$booth->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+             $notification->save();
+             $notification->send();
+        }
+
+        $webinar = \App\Models\Webinar::with('details', 'speakers', 'registrant')->find($webinar->id);
+        
+        return redirect('/partner/booths/'.$booth->id.'/events/webinars/'.$webinar->id);
+    }
+
+    public function saveEdit($id, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $booth = DB::table('booth')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
+        $webinarId = $request->webinarId;
+
+        $topic = $request->topic;
+        $poster = $request->poster;
+        $start = $request->start;
+        $end = $request->end;
+        $zoom = $request->zoom;
+        $description = $request->description;
+
+        $speakerNos = $request->speakerNos;
+        $speakerIds = $request->speakerIds;
+        $speakerHonorifics = $request->speakerHonorifics;
+        $speakerNames = $request->speakerNames;
+        $speakerPositions = $request->speakerPositions;
+        $speakerAvatars = $request->speakerAvatars;
+        
+        $detailTitles = $request->detailTitles;
+        $detailDurations = $request->detailDurations;
+        $detailSpeakerNos = $request->detailSpeakerNos;
+        $detailContents = $request->detailContents;
+
+        $webinar = \App\Models\Webinar::find($webinarId);
+
+        // save file to cloud
+        $posterUrl = isset($poster) ? $this->uploadFile($poster, true)->url : $webinar->poster;
+        $avatarUrls = [];
+        foreach ($speakerNames as $key => $value) {
+            $url = null;
+            if(isset($speakerAvatars[$key])){
+                $file = $speakerAvatars[$key];
+                $url = $this->uploadFile($file, true)->url;
+            }
+            else
+            if(isset($speakerIds[$key])){ // get old avatar if exist
+                $oldSpeaker = \App\Models\Speaker::find($speakerIds[$key]);
+                if(isset($oldSpeaker)){
+                    $url = $oldSpeaker->avatar;
+                }
+            }
+            $avatarUrls[$key] = $url;
+        }
+
+        // delete old speakers
+        $rs = \App\Models\Speaker::where('webinarId', $webinarId)->delete();
+
+        // create details
+        $speakers = [];
+        foreach ($speakerNos as $key => $value) {
+            $name = $speakerNames[$key];
+            $avatarUrl = $avatarUrls[$key];
+            $honorific = $speakerHonorifics[$key];
+            $position = $speakerPositions[$key];
+
+            $speaker = new \App\Models\Speaker();
+            $speaker->webinarId = $webinarId;
+            $speaker->name = $name;
+            $speaker->avatar = isset($avatarUrl) ? $avatarUrl : 'https://res.cloudinary.com/virtual-tour/image/upload/v1634458347/icons/default-avatar_muo2gc.jpg';
+            $speaker->honorific = $honorific;
+            $speaker->position = $position;
+            $speaker->save();
+            $speakers[$value] = $speaker;
+        }
+
+       
+        if(isset($webinar)){
+            $webinar->topic = $topic;
+            $webinar->poster = $posterUrl;
+            $webinar->startAt = $start;
+            $webinar->endAt = $end;
+            $webinar->zoom = $zoom;
+            $webinar->description = $description;
+            if($profile->id !=  $tour->organizerId){
+                $webinar->isConfirmed = null;
+            }
+            $webinar->save();
+        }
+
+        // delete old details
+        $details = \App\Models\Webinar_Detail::where('webinarId', $webinarId);
+        $details->delete();
+
+        // create details
+        foreach ($detailTitles as $key => $value) {
+            $detail = new \App\Models\Webinar_Detail();
+            $detail->webinarId = $webinar->id;
+            $detail->title = $detailTitles[$key];
+            $detail->duration = $detailDurations[$key];
+            $detail->content = $detailContents[$key];
+            $detail->speakerId = $speakers[$detailSpeakerNos[$key]]->id;
+            $detail->save();
+        }
+
+        if($profile->id !=  $tour->organizerId){
+            // // send notification to user registered webinar
+            // $notification = new \App\Models\Notification();
+            // $notification->tourId = $tour->id;
+            // $notification->to = 'users@'.$webinar->registrant->id;
+            // $notification->channel = 'webinar@new';
+            // $notification->type = \App\Models\Notification::INFO;
+            // $notification->title = "You have re-registered a webinar";
+            // $notification->content = '<a href="/partner/tours/'.$tour->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+            // $notification->save();
+            // $notification->send();
+
+            // // send notification to organizer
+            // $notification = new \App\Models\Notification();
+            // $notification->tourId = $tour->id;
+            // $notification->to = 'users@'.$tour->organizerId;
+            // $notification->channel = 'webinar@new';
+            // $notification->type = \App\Models\Notification::INFO;
+            // $notification->title = "A webinar has just been re-registered";
+            // $notification->content = '<a href="/administrator/tours/'.$tour->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+            // $notification->save();
+            // $notification->send();
+        }
+
+        return redirect('/partner/booths/'.$booth->id.'/events/webinars/'.$webinar->id);
+    }
+
+    public function saveDelete($id, $webinarId, Request $request)
+    {
+        $webinar = \App\Models\Webinar::find($webinarId);
+        $webinar->isDeleted = true ;
+        $webinar->save();
+        
+        return true;
+    }
+
+    public function saveRegister($id, Request $request)
+    {
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $booth = DB::table('booth')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
+
+        $webinarId = $request->webinarId;
+        $webinar = \App\Models\Webinar::where([
+            ['id', '=', $webinarId],
+            ['isDeleted', '=', false],
         ])->first();
 
-        if($webinar_detail_document != null){
-            $webinar_detail_document->delete();
+        if(!isset($webinar)){
+            return json_encode([
+                "success" => false,
+                'error' => "Webinar does not exist or has been deleted.",
+            ]);
+        }
+
+        if($webinar->isWaitingApproval == true){
+            return json_encode([
+                "success" => false,
+                'error' => "Webinar registration already exists.",
+            ]);
+        }
+
+        $webinar->isConfirmed = null;
+        $webinar->isWaitingApproval = true;
+        $webinar->save();
+        
+        if($profile->id != $tour->organizerId){
+            // send notification to user registered webinar
+            $notification = new \App\Models\Notification();
+            $notification->tourId = $tour->id;
+            $notification->isSeen = true;
+            $notification->to = 'users@'.$webinar->registrant->id;
+            $notification->channel = 'webinar@new';
+            $notification->type = \App\Models\Notification::INFO;
+            $notification->title = "You have submitted a webinar registration";
+            $notification->content = '<a href="/partner/booths/'.$booth->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+            $notification->detail = json_encode(["webinar" => $webinar]);
+            $notification->save();
+
+            // send notification to organizer
+            $notification = new \App\Models\Notification();
+            $notification->tourId = $tour->id;
+            $notification->to = 'users@'.$tour->organizerId;
+            $notification->channel = 'webinar@new';
+            $notification->type = \App\Models\Notification::INFO;
+            $notification->title = "You have a approval request for webinar";
+            $notification->content = '<a href="/administrator/tours/'.$tour->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+            $notification->detail = json_encode(["webinar" => $webinar]);
+            $notification->save();
+            $notification->send();
         }
 
         return true;
     }
 
-    public function saveEditWebinarDetail($id, $webinarId, Request $request)
+    public function saveCancel($id, Request $request)
     {
-        $webinarDetailId = $request->webinarDetailId;
-        $title = $request->title;
-        $content = $request->content;
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
+        $booth = DB::table('booth')->find($id);
+        $tour = DB::table('tour')->find($booth->tourId);
 
-        $webinar_detail = \App\Models\Webinar_Detail::find( $webinarDetailId );
-        if($webinar_detail != null){
-            $webinar_detail->title = $title;
-            $webinar_detail->content = $content;
-            $webinar_detail->save();
+        $webinarId = $request->webinarId;
+        $webinar = \App\Models\Webinar::find($webinarId);
+        if($webinar->isWaitingApproval == true && $webinar->isConfirmed == null){
+            $webinar->isWaitingApproval = false;
+            $webinar->isConfirmed = null;
+            $webinar->save();
 
-            return true;
+            // send notification to user send request
+            $notification = new \App\Models\Notification();
+            $notification->tourId = $tour->id;
+            $notification->to = 'users@'.$booth->owner->id;
+            $notification->channel = 'webinar@cancel';
+            $notification->type = \App\Models\Notification::INFO;
+            $notification->title = "You have cancel a webinar registration.";
+            $notification->content = '<a href="/partner/booths/'.$booth->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+            $notification->detail = json_encode(["webinar" => $webinar]);
+            $notification->save();
+            $notification->send();
+
+            // send notification to organizer
+            $notification = new \App\Models\Notification();
+            $notification->tourId = $tour->id;
+            $notification->to = 'users@'.$tour->organizerId;
+            $notification->channel = 'webinar@cancel';
+            $notification->type = \App\Models\Notification::INFO;
+            $notification->title = "A webinar registration has canceled.";
+            $notification->content = '<a href="/administrator/tours/'.$tour->id.'/events/webinars/'.$webinar->id.'">'.$webinar->topic.'</a>';
+            $notification->detail = json_encode(["webinar" => $webinar]);
+            $notification->save();
+            $notification->send();
+
+            return json_encode([
+                'success' => true,
+            ]);
         }
-
-        return false;
+        else{
+            return json_encode([
+                'success' => false,
+                'error' => "Can't cancel. The approval request has been canceled or processed",
+            ]);
+        }
     }
+
 }

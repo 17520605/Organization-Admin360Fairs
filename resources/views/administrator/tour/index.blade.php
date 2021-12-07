@@ -7,21 +7,21 @@
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$tour->name}}</h1>
                     <div class="div_cardheader_btn">
-                        <button class="mb-0 btn float-right active btn-icon-loader"><span class="icon-loader-form"></span> <i class="fas fa-globe"></i> Publish </button>
+                        <button class="mb-0 btn float-right active btn-icon-loader" style="padding: 5px 28px 5px 40px;"><span class="icon-loader-form" style="margin-left: -30px;" ></span><i class="fas fa-globe"></i> Publish </button>
                         <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-tour"><i class="fas fa-pen"></i> Edit</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="tab-header mb-3 webinar-tab" style="width: 100%; height: 40px; mb-2 ">
-            <span class="btn-tab-1 tab-header-btn btn btn-primary float-left active" ><i class="fas fa-stream"></i></span>
             <span class="btn-tab-2 tab-header-btn btn btn-primary float-left"><i class="fas fa-eye"></i></span>
+            <span class="btn-tab-1 tab-header-btn btn btn-primary float-left active" ><i class="fas fa-stream"></i></span>
             <span class="btn-tab-3 tab-header-btn btn btn-primary float-left"><i class="far fa-dot-circle"></i></span>
         </div>
         <div class="div-tab-1">
             <div class="row" style="margin-bottom: 1.5rem;">
                 <div class="col-md-5" style="height: 70vh;">
-                    <div class="card" style="height: 60vh;">
+                    <div class="card">
                         <div class="card-body" style="color: #555; font-size: 14px;">
                             <div class="d-flex process-overview">
                                 <div class="flex-grow-1 overflow-hidden">
@@ -55,11 +55,12 @@
                             <div class="d-flex">
                                 <div class="flex-grow-1 overflow-hidden">
                                     <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-building mr-3"></i></span> <span> {{$profile->name != null ? $profile->name : "N/A" }} </span></p>
+                                    <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-phone-alt mr-3"></i></span> <span> {{$profile->contact != null ? $profile->contact : "N/A" }} </span></p>
                                     <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-map-marker-alt mr-3"></i></span> <span>{{$tour->location != null ? $tour->location : "N/A" }}</span></p>
                                 </div>
                             </div>
                             <h6 class="font-size-15 font-weight-bold">Description: </h6>
-                            <div class="text-muted discription_tour_text" style="max-height: 10rem">
+                            <div class="text-muted discription_tour_text" style="height: 210px">
                                 {{$tour->description != null ? $tour->description : 'N/A'}}
                             </div>
                         </div>
@@ -93,18 +94,22 @@
                             <div class="tour__bottom-bar-slider-outer" id="booth-track">
                                 <div class="tour__bottom-bar-slider" style="width: 100%; position: relative;">
                                     {{-- <i class="fas fa-angle-left" id="left-button-scroll"></i> --}}
-                                    <div id="slider-track" class="tour__bottom-bar-slider-track" style=" overflow-x: hidden; height: 100%; display: flex;">
-                                        @if (count($panoramas) == 0)
-                                            <div><span>No panoramas</span></div>
-                                        @endif
-                                        @foreach ($panoramas as $panorama)
-                                        <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
-                                            <div style="width: 135px; height: 90px;">
-                                                <img src="{{$panorama->imageUrl}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
-                                                <span class="span-booth-name" style="font-weight: 600">{{$panorama->name}}</span>
-                                            </div>
+                                    <div id="slider-track" class="tour__bottom-bar-slider-track" style="height: 100%; display: flex;">
+                                        <div style="width: 3%;line-height: 85px;text-align: left"><i class="fas fa-chevron-circle-left icon_scroll_track_img" style="color:#dc3545;opacity: 0.6;" onclick="scroll_left_i();"></i></div>
+                                        <div style="width: 94%; overflow-x: hidden;display: flex;" id="container_track_img">
+                                            @if (count($panoramas) == 0)
+                                                <div><span>No panoramas</span></div>
+                                            @endif
+                                            @foreach ($panoramas as $panorama)
+                                                <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
+                                                    <div style="width: 135px; height: 90px;">
+                                                        <img src="{{$panorama->imageUrl}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
+                                                        <span class="span-booth-name" style="font-weight: 600">{{$panorama->name  != null ? $panorama->name : 'N/A'}}</span>
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                        @endforeach
+                                        <div style="width: 3%;line-height: 85px;text-align: right"><i class="fas fa-chevron-circle-right icon_scroll_track_img" onclick="scroll_right_i();"></i></div>
                                     </div>
                                     {{-- <i class="fas fa-angle-right" id="right-button-scroll"></i> --}}
                                 </div>
@@ -191,9 +196,9 @@
                                         <tr style="background: #eef2f7;">
                                             <th style="text-align: center; width: 5%;">#</th>
                                             <th style="width: 20%;">Name</th>
-                                            <th style="width: 170px;">Datetime</th>
+                                            <th style="width: 10%;">Datetime</th>
                                             <th>Comment</th>
-                                            <th style="width: 50px;">Actions</th>
+                                            <th style="width: 5%;">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -201,21 +206,24 @@
                                             $number = 1;
                                         @endphp
                                         @foreach ($comments as $comment)
-                                        <tr data-comment-id="{{$comment->id}}">
+                                        
                                             @if ($comment->isHidden == false)
-                                                <td style="text-align: center">{{$number++}}</td>
-                                                <td>{{$comment->visitor->name}}</td>
-                                                <td>{{$comment->updated_at}}</td>
-                                                <td>{{$comment->text}}</td>
-                                                <td class="actions"><i class="fas fa-trash-alt" data-comment-id="{{$comment->id}}" onclick="hideComment(event)"></i></td>
+                                                <tr data-comment-id="{{$comment->id}}">
+                                                    <td style="text-align: center">{{$number++}}</td>
+                                                    <td>{{$comment->visitor->name}}</td>
+                                                    <td>{{$comment->updated_at}}</td>
+                                                    <td><span class="span_comment_height">{{$comment->text}}</span></td>
+                                                    <td class="actions btn-action-icon"><i class="fas fa-trash-alt delete" data-comment-id="{{$comment->id}}" onclick="hideComment(event)"></i></td>
+                                                </tr>
                                             @else 
-                                                <td style="text-align: center; opacity: 0.3">{{$number++}}</td>
-                                                <td style="opacity: 0.3">{{$comment->visitor->name}}</td>
-                                                <td style="opacity: 0.3">{{$comment->created_at}}</td>
-                                                <td style="opacity: 0.3">{{$comment->text}}</td>
-                                                <td class="actions"><i class="fas fa-eye" data-comment-id="{{$comment->id}}" onclick="showComment(event)"></i> hidden</td>
+                                                <tr data-comment-id="{{$comment->id}}">
+                                                    <td style="text-align: center">{{$number++}}</td>
+                                                    <td>{{$comment->visitor->name}}</td>
+                                                    <td>{{$comment->created_at}}</td>
+                                                    <td><span class="span_comment_height">{{$comment->text}}</span></td>
+                                                    <td class="actions btn-action-icon"><i class="fas fa-eye view" data-comment-id="{{$comment->id}}" onclick="showComment(event)"></i></td>
+                                                </tr>   
                                             @endif
-                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -248,17 +256,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php
-                                            $number = 1;
-                                        @endphp
                                         @foreach ($objects as $object)
                                         <tr>
-                                            <td style="text-align: center"><span>{{$number++}}</span></td>
+                                            <td style="text-align: center">
+                                                @if ($object->type == 'image')
+                                                   <span><i class="fas fa-image font-size-16 text-success"></i> <span style="display: none">1</span> </span> 
+                                                @elseif($object->type == 'video')
+                                                    <span><i class="far fa-play-circle font-size-16 text-danger"></i> <span style="display: none">2</span> </span> 
+                                                @elseif($object->type == 'audio')
+                                                    <span><i class="fas fa-music font-size-16 text-info"></i><span style="display: none">3</span></span> 
+                                                @elseif($object->type == 'model')
+                                                    <span><i class="fab fa-unity font-size-16 text-models"></i><span style="display: none">4</span></span> 
+                                                @else 
+                                                    <span><i class="fab fa-question-circle font-size-16 text-primary"></i><span style="display: none">5</span></span>
+                                                @endif
+                                            </td>    
                                             <td><span>{{$object->name}}</span></td>
                                             <td><span>{{$object->viewCount}}</span></td>
                                             <td><span> {{$object->likeCount}}</span></td>
                                             <td><span>{{$object->commentCount}}</span></td>
-                                            <td class="actions"> <button onclick="openPopupObjectDetail({{$object->id}})">View Detail</button> </td>
+                                            <td class="actions"> <button class="btn-visit-now" onclick="openPopupObjectDetail({{$object->id}})">View Detail</button> </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -345,23 +362,22 @@
 
     {{-- POPUP OBJECT DETAIL --}}
     <div class="modal fade" id="popup-object-detail" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xls" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="fw-light"> Details </h5>
+                    <h5 class="fw-light"> Details <span id="popup-object-detail__name-text" class="text-primary font-weight-bold"></span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-5">
-                            <div id="popup-object-detail__preview-wrapper" style="width: 100%; height: 300px;">
-                                <img src="" alt="" style="width: 100%; height: 200px; display: none">
-                                <iframe src="" style="display: none; width=100%; height: 200px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                <video src="" alt="" controls style=" width=100%; height: 200px; display: none" controls></video>
-                                <audio src="" alt="" controls style=" width=100%; height: 200px;display: none"></audio>
-                                <model-viewer src="" style=" width=100%; height: 200px; display: none" shadow-intensity="1" camera-controls></model-viewer>
+                            <div id="popup-object-detail__preview-wrapper" style="width: 100%; height: 300px; border-radius: 5px;">
+                                <img src="" alt="" style="width: 100%; height: 300px; display: none; border-radius: 5px;">
+                                <iframe src="" style="display: none; width=100%; height: 300px ; border-radius: 5px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <video src="" alt="" controls style=" width=100%; height: 300px; display: none; border-radius: 5px;" controls></video>
+                                <audio src="" alt="" controls style=" width=100%; height: 300px;display: none; border-radius: 5px;"></audio>
+                                <model-viewer src="" style=" width=100%; 300px; display: none" shadow-intensity="1" camera-controls></model-viewer>
                             </div>
-                            <div id="popup-object-detail__name-text"></div>
                         </div>
                         <div class="col-7">
                             <div class="card mb-4">
@@ -402,8 +418,30 @@
                         </div>
                     </div>
                 </div>
-                <div id="popup-object-detail__cover" style="position: absolute; top: 100px; left: 0; width: 100%; height: 100%; background-color: white">
-                    <span>LOADING</span>
+                <div id="popup-object-detail__cover" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;border-radius: 5px;z-index: 10000;min-height: 70vh">
+                    <div class="pop-loader-wrapper">
+                        <div class="loader">
+                            <div class="m-t-30"><img src="{{ asset('admin-master/asset/images/logo-shortcut.svg')}}" width="48" height="48" alt="Lucid"></div>
+                            <p>
+                                </p><div class="waviy">
+                                    <span style="--i:1">P</span>
+                                    <span style="--i:2">l</span>
+                                    <span style="--i:3">e</span>
+                                    <span style="--i:4">a</span>
+                                    <span style="--i:5">s</span>
+                                    <span style="--i:6">e</span>
+                                    <span style="--i:7"></span>
+                                    <span style="--i:8">w</span>
+                                    <span style="--i:9">a</span>
+                                    <span style="--i:10">i</span>
+                                    <span style="--i:11">t</span>
+                                    <span style="--i:12">.</span>
+                                    <span style="--i:13">.</span>
+                                    <span style="--i:14">.</span>
+                                </div>
+                            <p></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -489,8 +527,8 @@
             },
             success: function (res) {  
                 if(res == true || res == '1'){
-                    row.find('td').not('.actions').find('span').css('opacity', 0.3);
-                    row.find('.actions').html('<i class="fas fa-eye" data-comment-id="'+ commentId +'" onclick="showComment(event)"> hidden');
+                    // row.find('td').not('.actions').find('span').css('opacity', 0.3);
+                    row.find('.actions').html('<i class="fas fa-eye view" data-comment-id="'+ commentId +'" onclick="showComment(event)"></i>');
                 }
             }
         });
@@ -511,8 +549,8 @@
             },
             success: function (res) {  
                 if(res == true || res == '1'){
-                    row.find('td').not('.actions').css('opacity', 1);
-                    row.find('.actions').html('<i class="fas fa-trash-alt" data-comment-id="'+ commentId +'" onclick="hideComment(event)">');
+                    // row.find('td').not('.actions').css('opacity', 1);
+                    row.find('.actions').html('<i class="fas fa-trash-alt delete" data-comment-id="'+ commentId +'" onclick="hideComment(event)"></i>');
                 }
             }
         });
@@ -676,7 +714,7 @@
                         <td> <span>`+ comment.visitor.name +`</span></td>
                         <td> <span> `+ new Date(comment.updated_at).toLocaleString()+` </span></td>
                         <td> <span>`+ comment.text +`</span></td>
-                        <td class="actions"><i class="fas fa-trash-alt" data-comment-id="`+comment.id+`" onclick="hideComment(event)"></i></td>
+                        <td class="actions btn-action-icon"><i class="fas fa-trash-alt delete" data-comment-id="`+comment.id+`" onclick="hideComment(event)"></i></td>
                     </tr>
                 `);
                 if(comment.isHidden){

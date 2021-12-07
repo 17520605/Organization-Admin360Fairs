@@ -166,8 +166,7 @@ class EventsController extends Controller
 
         return view('partner.events.edit', [
             'profile' => $profile , 
-            'tour'=>$tour,
-            'tour'=>$booth,
+            'booth'=>$booth,
             'webinar' => $webinar
         ]);
     }

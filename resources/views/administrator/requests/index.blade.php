@@ -24,10 +24,10 @@
                         @foreach ($webinars as $webinar)
                         <tr data-webinar-id="{{$webinar->id}}">
                             <td style="text-align: center">{{$number++}}</td>
-                            <td><a href="/partner/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="font-weight-bold text-primary">{{$webinar->topic}}</a></td>
+                            <td><a href="/speaker/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="font-weight-bold text-primary btn-page-loader">{{$webinar->topic}}</a></td>
                             <td>{{$webinar->registrant != null ? $webinar->registrant->name : 'N/A'}}</td>
                             <td>{{$webinar->updated_at}}</td>
-                            <td><a href="/administrator/tours/1/events/webinars/{{$webinar->id}}">View Details</a></td>
+                            <td><a href="/administrator/tours/1/events/webinars/{{$webinar->id}}" class="btn-visit-now btn-page-loader">View Details</a></td>
                         </tr>
                         @endforeach
                         </tbody>
@@ -58,10 +58,10 @@
                         @foreach ($booths as $booth)
                         <tr>
                             <td style="text-align: center">{{$number++}}</td>
-                            <td><a href="/partner/tours/{{$tour->id}}/boots/{{$booth->id}}" class="font-weight-bold text-primary">{{$booth->name}}</a></td>
+                            <td><a href="/partner/tours/{{$tour->id}}/booths/{{$booth->id}}" class="font-weight-bold text-primary btn-page-loader">{{$booth->name}}</a></td>
                             <td>{{$booth->owner != null ? $booth->owner->name : 'Host'}}</td>
                             <td>{{$booth->updated_at}}</td>
-                            <td><a href="/administrator/tours/1/events/webinars/{{$booth->id}}">View Details</a></td>
+                            <td><a href="/administrator/tours/1/booths/{{$booth->id}}" class="btn-visit-now btn-page-loader">View Details</a></td>
                         </tr>
                         @endforeach
                         </tbody>

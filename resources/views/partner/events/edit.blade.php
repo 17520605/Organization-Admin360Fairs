@@ -10,7 +10,7 @@
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Edit Webinar</h1>
                     <div class="div_cardheader_btn">
-                        <button type="submit" class="mb-0 btn float-right active"><span class="icon-loader-form"></span> Save Changes </button>
+                        <button type="submit" class="mb-0 btn float-right active btn-page-loader"><span class="icon-loader-form"></span> Save Changes </button>
                     </div>
                 </div>
             </div>

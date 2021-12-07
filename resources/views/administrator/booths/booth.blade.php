@@ -6,29 +6,39 @@
             <div class="col-md-12">
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$booth->name}}</h1>
-                    <h6 class="mt-2" style="font-size:15px">
-                        @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
-                            Editting 
+                    @if ($profile->id == $booth->ownerId || $booth->ownerId === null)
+                        <div class="div_cardheader_btn">
+                            <button class="mb-0 btn float-right active" onclick="window.open('/partner/booths/{{$booth->id}}')">Go to Management </button>
+                        </div>
+                    @else 
+                        @if ($booth->isWaitingApproval == true && $booth->isConfirmed === null)
+                            <div class="div_cardheader_btn">
+                                <button class="mb-0 btn float-right active"  data-toggle="modal" data-target="#popup-approve-booth">Approve</button>
+                                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-reject-booth"> Reject</button>
+                            </div>
                         @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
-                            Approved
+                            <div class="div_cardheader_btn">
+                                <button class="mb-0 btn float-right active"  data-toggle="modal" data-target="#popup-reedit-booth">Request Re-Edit</button>
+                            </div>
+                        @endif
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card p-1">
+                    <h6 class="mt-2" style="font-size:18px ;text-align: center"> 
+                        @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
+                            <span class="badge bg-info" style="font-size:18px ;text-align: center">Editting</span>
+                        @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
+                            <span class="badge bg-success" style="font-size:18px ;text-align: center">Approved</span>
                         @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false)
-                            Rejected
+                            <span class="badge bg-danger" style="font-size:18px ;text-align: center">Rejected</span>
                         @elseif($booth->isWaitingApproval == true)
-                            Waiting for approval
+                            <span class="badge bg-warning" style="font-size:18px ;text-align: center">Waiting for approval</span>
                         @endif
                     </h6>
-                    <div class="div_cardheader_btn">
-                        @if ($profile->id == $booth->ownerId || $booth->ownerId === null)
-                            <button class="mb-0 btn float-right active" onclick="window.open('/partner/booths/{{$booth->id}}')">Go to Management </button>
-                        @else 
-                            @if ($booth->isWaitingApproval == true && $booth->isConfirmed === null)
-                                <button class="mb-0 btn btn-edit_webinar "  data-toggle="modal" data-target="#popup-approve-booth">Approve</button>
-                                <button class="mb-0 btn btn-delete_webinar "  style=" margin-right: 40px; " data-toggle="modal" data-target="#popup-reject-booth"></span>Reject</button>
-                            @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
-                                <button class="mb-0 btn btn-delete_webinar "  style=" margin-right: 40px; " data-toggle="modal" data-target="#popup-reedit-booth"></span>Request Re-Edit</button>
-                            @endif
-                        @endif
-                    </div>
                 </div>
             </div>
         </div>
@@ -45,12 +55,12 @@
                         <div class="card-body" style="color: #555; font-size: 14px;">
                             <div class="flex-grow-1 overflow-hidden">
                                 <h6 class="font-size-15 font-weight-bold">General information : </h6>
-                                <p class="text-muted mb-2"><i class="fas fa-building"></i> <a  class="ml-2 font-weight-bold" > <ins style="text-decoration: none"> {{ $booth->owner != null ? ($booth->owner->name != null ? $booth->owner->name : "N/A") : "N/A"}} </ins></a></p>
+                                <p class="text-muted mb-2"><i class="fas fa-building"></i> <a  class="ml-2 font-weight-bold"  style="cursor: pointer;"> <ins style="text-decoration: none"> {{ $booth->owner != null ? ($booth->owner->name != null ? $booth->owner->name : "N/A") : "N/A"}} </ins></a></p>
                                 <p class="text-muted mb-2"><i class="fas fa-envelope"></i> <span class="ml-2"> {{ $booth->owner != null ? ($booth->owner->email != null ? $booth->owner->email : "N/A") : "N/A"}} </span></p>
                                 <p class="text-muted mb-2"><i class="fas fa-phone-alt"></i> <span class="ml-2"> {{ $booth->owner != null ? ($booth->owner->contact != null ? $booth->owner->contact : "N/A") : "N/A"}}</span></p>
                                 <p class="font-size-15 font-weight-bold">Description : </p>
                                 @if ($booth->description != null)
-                                    <div class="text-muted discription_tour_text" style="max-height: 105px ">{{$booth->description}} </div>
+                                    <div class="text-muted discription_tour_text" style="height: 165px ">{{$booth->description}} </div>
                                 @else
                                     <div class="text-muted" style="width: 100%; text-align: center ;">No description</div>
                                 @endif
@@ -90,18 +100,22 @@
                             <div class="tour__bottom-bar-slider-outer" id="booth-track">
                                 <div class="tour__bottom-bar-slider" style="width: 100%; position: relative;">
                                     {{-- <i class="fas fa-angle-left" id="left-button-scroll"></i> --}}
-                                    <div id="slider-track" class="tour__bottom-bar-slider-track" style=" overflow-x: hidden; height: 100%; display: flex;">
-                                        @if (count($panoramas) == 0)
-                                            <div><span>No panoramas</span></div>
-                                        @endif
-                                        @foreach ($panoramas as $panorama)
-                                        <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
-                                            <div style="width: 135px; height: 90px;">
-                                                <img src="{{$panorama->imageUrl}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
-                                                <span class="span-booth-name" style="font-weight: 600">{{$panorama->name}}</span>
-                                            </div>
+                                    <div id="slider-track" class="tour__bottom-bar-slider-track" style="height: 100%; display: flex;">
+                                        <div style="width: 3%;line-height: 85px;text-align: left"><i class="fas fa-chevron-circle-left icon_scroll_track_img" style="color:#dc3545;opacity: 0.6;" onclick="scroll_left_i();"></i></div>
+                                        <div style="width: 94%; overflow-x: hidden;display: flex;" id="container_track_img">
+                                            @if (count($panoramas) == 0)
+                                                <div><span>No panoramas</span></div>
+                                            @endif
+                                            @foreach ($panoramas as $panorama)
+                                                <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
+                                                    <div style="width: 135px; height: 90px;">
+                                                        <img src="{{$panorama->imageUrl}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
+                                                        <span class="span-booth-name" style="font-weight: 600">{{$panorama->name  != null ? $panorama->name : 'N/A'}}</span>
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                        @endforeach
+                                        <div style="width: 3%;line-height: 85px;text-align: right"><i class="fas fa-chevron-circle-right icon_scroll_track_img" onclick="scroll_right_i();"></i></div>
                                     </div>
                                     {{-- <i class="fas fa-angle-right" id="right-button-scroll"></i> --}}
                                 </div>
@@ -118,7 +132,7 @@
                         $totalPercent = ($storageLimit != 0) ? (number_format($totalSize * 100 / $storageLimit, 1)) : 0;
                     @endphp
                     <div class="text-center mt-3">
-                        <h5 class="font-size-15">Storage</h5>
+                        <h3 class="font-weight-bold text-primary">Storage</h3>
                         <p class="text-muted mt-4">{{number_format($totalSize, 1)}} MB ({{number_format($totalPercent, 1)}}%) of {{$storageLimit}} MB</p>
                     </div>
                     <div class="card">
@@ -273,10 +287,10 @@
                     </div>
                 </div>
                 <div class="col-md-9" style="padding: 0;padding-left: 1rem;">
-                    <div class="card" style="padding-left: 1rem; padding-right: 1rem;">
-                        <div class="mt-4">
+                    <div class="card" style="padding-left: 1rem; padding-right: 1rem; height: 100%;">
+                        <div class="mt-4 mb-4">
                             <div class="d-flex flex-wrap">
-                                <h1 class="h6 font-weight-bold text-primary" style="margin: 0px"><i class="fab fa-cloudscale"></i> Recent  File</h1>
+                                <h1 class="h6 font-weight-bold text-primary" style="margin: 0px"><i class="fab fa-cloudscale"></i> Recent File</h1>
                                 <div class="div_cardheader_btn">
                                     <span class="mb-0 btn float-right tab-btn" data-tab="card"><i class="far fa-clone"></i></span>
                                     <span class="mb-0 btn float-right tab-btn" data-tab="table"><i class="fas fa-list-ul"></i> </span>

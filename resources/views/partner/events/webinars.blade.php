@@ -41,17 +41,17 @@
                             <td>{{$webinar->created_at}}</td>
                             <td>
                                 @if($webinar->isConfirmed === null && $webinar->isWaitingApproval == false)
-                                    Editting 
+                                <span class="badge bg-info">Editting</span>
                                 @elseif($webinar->isConfirmed == true && $webinar->isWaitingApproval == false)
-                                    Approved
+                                <span class="badge bg-success">Approved</span>
                                 @elseif($webinar->isConfirmed == false && $webinar->isWaitingApproval == false)
-                                    Rejected
+                                <span class="badge bg-danger">Rejected</span>
                                 @elseif($webinar->isWaitingApproval == true)
-                                    Waiting for approval
+                                <span class="badge bg-warning">Waiting for approval</span>
                                 @endif
                             </td>
                             <td>
-                                <a href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="font-weight-bold text-primary">View</a>
+                                <a href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}" class="btn-visit-now btn-page-loader">View Detail</a>
                             </td>
                         </tr>
                         @endforeach
@@ -63,37 +63,44 @@
         <div class="tag-body row card-event" style="display: none" data-tag="card">
             @foreach ($webinars as $webinar)
                 @if ($webinar->isConfirmed === null || $webinar->isConfirmed === 0)
-                    <div class="col-lg-4 webinar-item" data-webinar-id="{{$webinar->id}}">
-                        <a class="card card-margin" href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}">
-                            <div class="card-header no-border">
-                                <h6 class="card-title text-primary" style="font-weight: 700">EVENT-{{$webinar->id}}</h6>
-                                <button class="btn btn-default btn-remove-event-card" data-webinar-id="{{$webinar->id}}" onclick="onOpenPopupDeleteWebinar(this);"><i class="far fa-times-circle"></i></button>
-                            </div>
-                            <div class="card-body pt-0">
-                                <div class="widget-49">
-                                    <div class="widget-49-title-wrapper">
-                                        <div class="widget-49-date-primary">
-                                            <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
-                                            <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
-                                        </div>
-                                        <div class="widget-49-meeting-info">
-                                            <span class="widget-49-pro-title">{{$webinar->topic}}</span>
-                                            <span class="widget-49-meeting-time">{{Carbon\Carbon::parse($webinar->startAt)->format('h:m')}} to {{Carbon\Carbon::parse($webinar->endAt)->format('h:m')}}</span>
-                                        </div>
+                <div class="col-lg-4 webinar-item" data-webinar-id="{{$webinar->id}}">
+                    <a class="card card-margin" href="/partner/booths/{{$booth->id}}/events/webinars/{{$webinar->id}}">
+                        <div class="card-header no-border">
+                            <h6 class="card-title text-primary" style="font-weight: 700">EVENT-{{$webinar->id}}</h6>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="widget-49">
+                                <div class="widget-49-title-wrapper">
+                                    <div class="widget-49-date-primary">
+                                        <span class="widget-49-date-day">{{Carbon\Carbon::parse($webinar->startAt)->format('d')}}</span>
+                                        <span class="widget-49-date-month">{{Carbon\Carbon::parse($webinar->startAt)->format('M')}}</span>
                                     </div>
-                                    <ol class="widget-49-meeting-points">
-                                        @foreach ($webinar->details as $detail)
-                                        <li class="widget-49-meeting-item"><span>{{$detail->title}}</span></li>
-                                        @endforeach
-                                    </ol>
-                                    <div class="widget-49-meeting-action">
-                                        Bị Từ Chối                      
+                                    <div class="widget-49-meeting-info">
+                                        <span class="widget-49-pro-title font-weight-bold">{{$webinar->topic}}</span>
+                                        <span class="widget-49-meeting-time">{{Carbon\Carbon::parse($webinar->startAt)->format('h:m')}} to {{Carbon\Carbon::parse($webinar->endAt)->format('h:m')}}</span>
                                     </div>
                                 </div>
+                                <ol class="widget-49-meeting-points">
+                                    @foreach ($webinar->details as $detail)
+                                        <li class="widget-49-meeting-item"><span>{{$detail->title}}</span></li>
+                                    @endforeach
+                                </ol>
+                                <div class="widget-49-meeting-action" >
+                                    @if($webinar->isConfirmed === null && $webinar->isWaitingApproval == false)
+                                        <span class="badge bg-info" style="font-size: 16px;position: absolute;right: 15px;top: 15px;">Editting</span>
+                                    @elseif($webinar->isConfirmed == true && $webinar->isWaitingApproval == false)
+                                        <span class="badge bg-success" style="font-size: 16px;position: absolute;right: 15px;top: 15px;">Approved</span>
+                                    @elseif($webinar->isConfirmed == false && $webinar->isWaitingApproval == false)
+                                        <span class="badge bg-danger" style="font-size: 16px;position: absolute;right: 15px;top: 15px;">Rejected</span>
+                                    @elseif($webinar->isWaitingApproval == true)
+                                        <span class="badge bg-warning" style="font-size: 16px;position: absolute;right: 15px;top: 15px;">Waiting for approval</span>
+                                    @endif     
+                                </div>
                             </div>
-                        </a>
-                    </div>
-                @endif
+                        </div>
+                    </a>
+                </div>
+            @endif
             @endforeach
         </div>
     </div>

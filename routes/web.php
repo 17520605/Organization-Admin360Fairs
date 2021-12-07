@@ -136,10 +136,18 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/save-add-objects', 'partner\BoothController@saveAddObjects');
             
             // objects
-            Route::get('/{id}/objects', 'partner\ObjectsController@index');
-            Route::get('/{id}/objects/dashboard', 'partner\ObjectsController@dashboard');
-            Route::post('/{id}/objects/save-create', 'partner\ObjectsController@saveCreate');
-            Route::get('/{id}/objects/{objectId}', 'partner\ObjectsController@object');
+            // Route::get('/{id}/objects', 'partner\ObjectsController@index');
+            // Route::get('/{id}/objects/dashboard', 'partner\ObjectsController@dashboard');
+            // Route::post('/{id}/objects/save-create', 'partner\ObjectsController@saveCreate');
+            // Route::get('/{id}/objects/{objectId}', 'partner\ObjectsController@object');
+
+            // assets
+            Route::get('/{id}/assets', 'partner\AssetsController@index');
+            Route::get('/{id}/assets/{assetId}', 'partner\AssetsController@object');
+            Route::get('/{id}/assets/{assetId}/get-infor', 'partner\AssetsController@getInfor');
+            Route::post('/{id}/assets/save-create', 'partner\AssetsController@saveCreate');
+            Route::post('/{id}/assets/save-edit-name', 'partner\AssetsController@saveEditName');
+            Route::delete('/{id}/assets/{assetId}/save-delete', 'partner\AssetsController@saveDelete');
 
             // event
             Route::get('/{id}/events/webinars', 'partner\EventsController@webinars');
@@ -164,7 +172,8 @@ Route::middleware('auth')->group(function (){
     });
 
     Route::group(['prefix' => 'speaker'], function(){
-        Route::get('/', 'speaker\ToursController@index');   
+        Route::get('/', 'speaker\ToursController@index'); 
+        Route::get('/tours', 'speaker\ToursController@index');  
         
         Route::group(['prefix' => 'tours'], function(){
             Route::get('/{id}', 'speaker\CalendarController@index');
@@ -180,13 +189,26 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/speakers/send-emails', 'speaker\SpeakersController@sendEmails');
             Route::delete('/{id}/speakers/{speakerId}', 'speaker\SpeakersController@saveDelete');
 
+
             // event
             Route::get('/{id}/events/webinars', 'speaker\EventsController@webinars');
+            Route::get('/{id}/events/webinars/schedule', 'speaker\EventsController@schedule');
+            Route::get('/{id}/events/webinars/create', 'speaker\EventsController@create');
             Route::get('/{id}/events/webinars/{webinarId}', 'speaker\EventsController@webinar');
-            Route::post('/{id}/events/webinars/{webinarId}/upload-documents', 'speaker\EventsController@uploadDocuments');
-            Route::post('/{id}/events/webinars/{webinarId}/choose-documents', 'speaker\EventsController@chooseDocuments');
-            Route::post('/{id}/events/webinars/{webinarId}/delete-document', 'speaker\EventsController@deleteDocument');
-            Route::post('/{id}/events/webinars/{webinarId}/save-edit-webinar-detail', 'speaker\EventsController@saveEditWebinarDetail');
+            Route::get('/{id}/events/webinars/{webinarId}/edit', 'speaker\EventsController@edit');
+            Route::post('/{id}/events/webinars/save-create', 'speaker\EventsController@saveCreate');
+            Route::post('/{id}/events/webinars/save-edit', 'speaker\EventsController@saveEdit');
+            Route::post('/{id}/events/webinars/save-register', 'speaker\EventsController@saveRegister');
+            Route::post('/{id}/events/webinars/save-cancel', 'speaker\EventsController@saveCancel');
+            Route::delete('/{id}/events/webinars/{webinarId}', 'speaker\EventsController@saveDelete');
+
+            // event
+            // Route::get('/{id}/events/webinars', 'speaker\EventsController@webinars');
+            // Route::get('/{id}/events/webinars/{webinarId}', 'speaker\EventsController@webinar');
+            // Route::post('/{id}/events/webinars/{webinarId}/upload-documents', 'speaker\EventsController@uploadDocuments');
+            // Route::post('/{id}/events/webinars/{webinarId}/choose-documents', 'speaker\EventsController@chooseDocuments');
+            // Route::post('/{id}/events/webinars/{webinarId}/delete-document', 'speaker\EventsController@deleteDocument');
+            // Route::post('/{id}/events/webinars/{webinarId}/save-edit-webinar-detail', 'speaker\EventsController@saveEditWebinarDetail');
             // Route::post('/{id}/events/webinars/save-edit', 'speaker\EventsController@saveEdit');
 
             // documents

@@ -28,27 +28,27 @@
                                     <span style="font-size:14px">Status</span>
                                     <h6 class="mt-2" style="font-size:15px">
                                         @if($webinar->isConfirmed === null && $webinar->isWaitingApproval == false)
-                                            Editting 
+                                            <span class="badge bg-info">Editting</span>
                                         @elseif($webinar->isConfirmed == true && $webinar->isWaitingApproval == false)
-                                            Approved
+                                            <span class="badge bg-success">Approved</span>
                                         @elseif($webinar->isConfirmed == false && $webinar->isWaitingApproval == false)
-                                            Rejected
+                                            <span class="badge bg-danger">Rejected</span>
                                         @elseif($webinar->isWaitingApproval == true)
-                                            Waiting for approval
+                                            <span class="badge bg-warning">Waiting for approval</span>
                                         @endif
                                     </h6>
                                 </div>
                             </div>
-                            <div style="position: absolute; top: 10px; right: 10px;">
+                            <div class="div_cardheader_btn">
                                 @if ($webinar->registerBy == $profile->id)
-                                <button class="mb-0 btn btn-edit_webinar btn-page-loader" onclick="window.location.href='/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}/edit'"><span class="icon-loader-form"></span><i class="fas fa-pen-alt"></i></button>
-                                <button class="mb-0 btn btn-delete_webinar"  data-toggle="modal" data-target="#popup-delete-webinar"><i class="fas fa-trash-alt"></i></button>
+                                    <button class="mb-0 btn float-right btn-page-loader" onclick="window.location.href='/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}/edit'"><i class="fas fa-pen-alt"></i> Edit</button>
+                                    <button class="mb-0 btn float-right del" data-toggle="modal" data-target="#popup-delete-webinar"><i class="fas fa-trash-alt"></i> Delete</button>
                                 @else
                                     @if ($webinar->isWaitingApproval == true && $webinar->isConfirmed === null)
-                                        <button class="mb-0 btn btn-edit_webinar "  data-toggle="modal" data-target="#popup-approve-webinar">Approve</button>
-                                        <button class="mb-0 btn btn-delete_webinar "  style=" margin-right: 40px; " data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
+                                        <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-approve-webinar">Approve</button>
+                                        <button class="mb-0 btn float-right del"  data-toggle="modal" data-target="#popup-reject-webinar"></span>Reject</button>
                                     @elseif($webinar->isConfirmed == true && $webinar->isWaitingApproval == false)
-                                        <button class="mb-0 btn btn-delete_webinar "  style=" margin-right: 40px; " data-toggle="modal" data-target="#popup-reedit-webinar"></span>Request Re-Edit</button>
+                                        <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#popup-reedit-webinar"></span>Request Re-Edit</button>
                                     @endif
                                 @endif
                             </div>
@@ -125,8 +125,8 @@
                                                     <div class="timeline-box" style="position: relative;">
                                                         <div class="event-content">
                                                             <div class="timeline-text">
-                                                                <h3 class=" text-primary" style="font-weight: 500 ; font-size: 17px"><i class="fas fa-hashtag"></i> {{$detail->title}}</h3>
-                                                                <h3 class="font-size-17" style="color: #727cf5"><i class="fas fa-user-tie"></i> {{ isset($detail->speaker) ?  $detail->speaker->honorific.'.'.$detail->speaker->name : "N/A"}} <span style="margin-left: 10px ;"><i class="fas fa-clock"></i> {{$time->format('g:i A')}}</span></h3>
+                                                                <h3 class=" text-primary title_event_content"><i class="fas fa-hashtag"></i> {{$detail->title}}</h3>
+                                                                <h3 class=" text-primary font-weight-bold"  style="font-size: 16px"><i class="fas fa-user-tie"></i> {{ isset($detail->speaker) ?  $detail->speaker->honorific.'.'.$detail->speaker->name : "N/A"}} <span style="margin-left: 10px ;"><i class="fas fa-clock"></i> {{$time->format('g:i A')}}</span></h3>
                                                                 <div class="content_show_event">
                                                                     {!! $detail->content !!}
                                                                 </div>

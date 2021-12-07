@@ -119,11 +119,18 @@
                 let elm = null;
                 switch (notification.type) {
                     case '{{\App\Models\Notification::INFO}}':
+                        var channel = notification.channel;
                         elm = $(`
                             <a class="nav-notification-item dropdown-item d-flex align-items-center btn-page-loader" data-notification-id="`+ notification.id +`" href="/administrator/tours/{{$tour->id}}/notifications?active=`+ notification.id +`">
                                 <div class="dropdown-list-image mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+                                    <div class="icon-circle bg-info">
+                                        @if(`+ channel +` == 'booth@booth' ||`+ channel +` == 'booth@approve'|| `+ channel +` == 'booth@cancel'||`+ channel +` == 'booth@reedit' ||`+ channel +` == 'booth@reject'||`+channel+` == 'booth@request' )
+                                            <i class="fas fa-store text-white"></i>
+                                        @elseif(`+ channel +` == 'webinar@new' ||`+ channel +` == 'webinar@approve'||`+ channel +`== 'webinar@reedit'||`+ channel +`== 'webinar@reject')
+                                            <i class="fas fa-calendar-check text-white"></i>
+                                        @else
+                                            <i class="fas fa-bell text-white"></i>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="font-weight-bold">
@@ -139,7 +146,13 @@
                             <a class="nav-notification-item dropdown-item d-flex align-items-center btn-page-loader" data-notification-id="`+ notification.id +`" href="/administrator/tours/{{$tour->id}}/notifications?active=`+ notification.id +`">
                                 <div class="dropdown-list-image mr-3">
                                     <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+                                        @if(`+ notification.channel +` == 'booth@booth' ||`+ notification.channel +` == 'booth@approve'|| `+ notification.channel +` == 'booth@cancel'||`+ notification.channel +` == 'booth@reedit' ||`+ notification.channel +` == 'booth@reject'||`+ notification.channel +` == 'booth@request' )
+                                            <i class="fas fa-store text-white"></i>
+                                        @elseif(`+ notification.channel +` == 'webinar@new' ||`+ notification.channel +` == 'webinar@approve'||`+ notification.channel +`== 'webinar@reedit'||`+ notification.channel +`== 'webinar@reject')
+                                            <i class="fas fa-calendar-check text-white"></i>
+                                        @else
+                                            <i class="fas fa-bell text-white"></i>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="font-weight-bold">
@@ -154,8 +167,14 @@
                         elm = $(`
                             <a class="nav-notification-item dropdown-item d-flex align-items-center btn-page-loader" data-notification-id="`+ notification.id +`" href="/administrator/tours/{{$tour->id}}/notifications?active=`+ notification.id +`">
                                 <div class="dropdown-list-image mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+                                    <div class="icon-circle bg-warning">
+                                        @if(`+ notification.channel +` == 'booth@booth' ||`+ notification.channel +` == 'booth@approve'|| `+ notification.channel +` == 'booth@cancel'||`+ notification.channel +` == 'booth@reedit' ||`+ notification.channel +` == 'booth@reject'||`+ notification.channel +` == 'booth@request' )
+                                            <i class="fas fa-store text-white"></i>
+                                        @elseif(`+ notification.channel +` == 'webinar@new' ||`+ notification.channel +` == 'webinar@approve'||`+ notification.channel +`== 'webinar@reedit'||`+ notification.channel +`== 'webinar@reject')
+                                            <i class="fas fa-calendar-check text-white"></i>
+                                        @else
+                                        <i class="fas fa-bell text-white"></i>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="font-weight-bold">
@@ -288,6 +307,25 @@
         </script>
         <script>
            // $('table').not('.notDatatable').DataTable();
+        </script>
+        <script>
+    
+            function scroll_left_i(){
+                document.getElementById('container_track_img').scrollLeft -= 140;
+                if($('#container_track_img').scrollLeft() == 0) {
+                    $('.fa-chevron-circle-left').css('opacity','0.7');
+                    $('.fa-chevron-circle-left').css('color','#dc3545');
+                }
+                else {
+                    $('.fa-chevron-circle-left').css('opacity','1');
+                    $('.fa-chevron-circle-left').css('color','#4e73df');
+                }
+            }
+            function scroll_right_i(){
+                document.getElementById('container_track_img').scrollLeft += 140;
+                $('.fa-chevron-circle-left').css('opacity','1');
+                $('.fa-chevron-circle-left').css('color','#4e73df');
+            }
         </script>
     </body>
 </html>

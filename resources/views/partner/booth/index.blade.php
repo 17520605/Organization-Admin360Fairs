@@ -6,33 +6,22 @@
             <div class="col-md-12">
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$booth->name}}</h1>
-                    <h6 class="mt-2" style="font-size:15px">
-                        @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
-                            Editting 
-                        @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
-                            Approved
-                        @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false)
-                            Rejected
-                        @elseif($booth->isWaitingApproval == true)
-                            Waiting for approval
-                        @endif
-                    </h6>
-                    <div style="position: absolute; top: 10px; right: 10px;">
+                    <div class="div_cardheader_btn">
                         @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
                             @if ($booth->ownerId == $profile->id)
                                 @if ($booth->ownerId != $tour->organizerId )
                                     <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#popup-request-approval"> Request Approval </button>
                                 @endif
-                                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-booth"><i class="fas fa-pen"></i> Edit</button>
+                                    <button class="mb-0 btn float-right"  data-toggle="modal" data-target="#popup-edit-booth"> <i class="fas fa-pen"></i> Edit</button>
                             @endif
                         @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
-                            
+
                         @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false)
                             @if ($booth->ownerId == $profile->id)
                                 @if ($booth->ownerId != $tour->organizerId )
                                     <button class="mb-0 btn float-right active" data-toggle="modal" data-target="#popup-request-approval"> Request Approval </button>
                                 @endif
-                                <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-booth"><i class="fas fa-pen"></i> Edit</button>
+                                    <button class="mb-0 btn float-right"  data-toggle="modal" data-target="#popup-edit-booth"> <i class="fas fa-pen"></i> Edit</button>
                             @endif
                         @elseif($booth->isWaitingApproval == true)
                             @if ($booth->ownerId == $profile->id)
@@ -40,6 +29,23 @@
                             @endif
                         @endif
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card p-1">
+                    <h6 class="mt-2" style="font-size:18px ;text-align: center"> 
+                        @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
+                            <span class="badge bg-info" style="font-size:18px ;text-align: center">Editting</span>
+                        @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
+                            <span class="badge bg-success" style="font-size:18px ;text-align: center">Approved</span>
+                        @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false)
+                            <span class="badge bg-danger" style="font-size:18px ;text-align: center">Rejected</span>
+                        @elseif($booth->isWaitingApproval == true)
+                            <span class="badge bg-warning" style="font-size:18px ;text-align: center">Waiting for approval</span>
+                        @endif
+                    </h6>
                 </div>
             </div>
         </div>
@@ -57,7 +63,7 @@
                             <p class="text-muted mb-2"><i class="fas fa-phone-alt"></i> <span class="ml-2"> {{ $booth->owner != null ? ($booth->owner->contact != null ? $booth->owner->contact : "N/A") : "N/A"}}</span></p>
                             <p class="font-size-15 font-weight-bold">Description : </p>
                             @if ($booth->description != null)
-                                <div class="text-muted discription_tour_text" style="max-height: 105px ">{{$booth->description}} </div>
+                                <div class="text-muted discription_tour_text" style="height: 160px ">{{$booth->description}} </div>
                             @else
                                 <div class="text-muted" style="width: 100%; text-align: center ;">No description</div>
                             @endif
@@ -102,18 +108,22 @@
                         <div class="tour__bottom-bar-slider-outer" id="booth-track">
                             <div class="tour__bottom-bar-slider" style="width: 100%; position: relative;">
                                 {{-- <i class="fas fa-angle-left" id="left-button-scroll"></i> --}}
-                                <div id="slider-track" class="tour__bottom-bar-slider-track" style=" overflow-x: hidden; height: 100%; display: flex;">
-                                    @if (count($panoramas) == 0)
-                                        <div><span>No panoramas</span></div>
-                                    @endif
-                                    @foreach ($panoramas as $panorama)
-                                    <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
-                                        <div style="width: 135px; height: 90px;">
-                                            <img src="{{$panorama->imageUrl}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
-                                            <span class="span-booth-name" style="font-weight: 600">{{$panorama->name}}</span>
-                                        </div>
+                                <div id="slider-track" class="tour__bottom-bar-slider-track" style="height: 100%; display: flex;">
+                                    <div style="width: 3%;line-height: 85px;text-align: left"><i class="fas fa-chevron-circle-left icon_scroll_track_img" style="color:#dc3545;opacity: 0.6;" onclick="scroll_left_i();"></i></div>
+                                    <div style="width: 94%; overflow-x: hidden;display: flex;" id="container_track_img">
+                                        @if (count($panoramas) == 0)
+                                            <div><span>No panoramas</span></div>
+                                        @endif
+                                        @foreach ($panoramas as $panorama)
+                                            <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
+                                                <div style="width: 135px; height: 90px;">
+                                                    <img src="{{$panorama->imageUrl}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
+                                                    <span class="span-booth-name" style="font-weight: 600">{{$panorama->name  != null ? $panorama->name : 'N/A'}}</span>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                    @endforeach
+                                    <div style="width: 3%;line-height: 85px;text-align: right"><i class="fas fa-chevron-circle-right icon_scroll_track_img" onclick="scroll_right_i();"></i></div>
                                 </div>
                                 {{-- <i class="fas fa-angle-right" id="right-button-scroll"></i> --}}
                             </div>
@@ -200,10 +210,6 @@
                             <input class="form-control" type="text" name="name" value="{{$booth->name}}" placeholder="Enter Booth Name">
                         </div>
                         <div class="row mb-3">
-                            <label class="small mb-1" for="">Description</label>
-                            <textarea class="form-control" type="text" name="description" placeholder="Enter Description">{{$booth->description}}</textarea>
-                        </div>
-                        <div class="row mb-3">
                             <label class="small mb-1" for="">Logo</label>
                             <div class="card" style="height: 300px; width: 100%">
                                 <div class="upload-box" style="display: {{$booth->logo == null ? 'block' : 'none'}}; height: 300px; width: 100%">
@@ -217,14 +223,18 @@
                                     </div>
                                 </div>
                                 <div class="preview-box" style="display: {{$booth->logo == null ? 'none' : 'block'}}; height: 300px; width: 100%; padding:1rem;">
-                                    <div class="upload-text text-center">
-                                        <img id="popup-edit-booth__preview-logo-img" src="{{$booth->logo}}" style="height: 100%; width:100%" alt="">
+                                    <div class="upload-text text-center" style="padding: 10px ; max-height: 250px">
+                                        <img id="popup-edit-booth__preview-logo-img" src="{{$booth->logo}}" style="height: 260px; width:100%" alt="">
                                     </div>
-                                    <div class="m-4">
-                                        <button type="button" id="popup-edit-booth__remove-btn">Remove</button>
+                                    <div style="position: absolute;top: 0;width: 95%;height: 100%;display: flex;justify-content: center; align-items: center;pointer-events: none">
+                                        <button type="button" class="btn btn-danger" style="pointer-events: all" id="popup-edit-booth__remove-btn">Remove</button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="small mb-1" for="">Description</label>
+                            <textarea class="form-control" rows="5" type="text" name="description" placeholder="Enter Description">{{$booth->description}}</textarea>
                         </div>
                     </form>
                 </div>

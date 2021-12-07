@@ -9,7 +9,7 @@
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Create New Webinar</h1>
                     <div class="div_cardheader_btn">
-                        <button type="submit" class="mb-0 btn float-right active "><span class="icon-loader-form"></span> Create </button>
+                        <button type="submit" class="mb-0 btn float-right active btn-page-loader"><span class="icon-loader-form"></span> Create </button>
                         <button type="reset" class="mb-0 btn float-right" onclick="clean()">Clean</button>
                     </div>
                 </div>
