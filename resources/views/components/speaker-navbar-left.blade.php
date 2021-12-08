@@ -28,9 +28,8 @@
         </a>
         <div id="collapsewebina" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Options</h6>
-                <a class="collapse-item btn-page-loader" href="/speaker/tour/{{$tour->id}}/events/webinars/schedule">Schedule</a>
-                <a class="collapse-item btn-page-loader" href="/speaker/tour/{{$tour->id}}/events/webinars">Webinars</a>
+                <h6 class="collapse-header">Event types</h6>
+                <a class="collapse-item btn-page-loader" href="/speaker/tours/{{$tour->id}}/events/webinars">Webinars</a>
             </div>
         </div>
     </li>
