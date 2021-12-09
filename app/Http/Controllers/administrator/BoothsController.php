@@ -18,9 +18,15 @@ class BoothsController extends Controller
 
         $tour = DB::table('tour')->find($id);
 
-        $zones = \App\Models\Zone::where('isDeleted', false)->get();
+        $zones = \App\Models\Zone::where([
+            ['tourId', '=', $id],
+            ['isDeleted', '=', false]
+        ])->get();
 
-        $groups = \App\Models\Zone::where('isDeleted', false)->get();
+        $groups = \App\Models\Zone::where([
+            ['tourId', '=', $id],
+            ['isDeleted', '=', false]
+        ])->get();
         foreach ($groups as $group) {
             $zoneId = $group->id;
             $booths = \App\Models\Booth::whereHas('zone_booths', function ($q) use($zoneId){
@@ -30,7 +36,10 @@ class BoothsController extends Controller
             $group->booths = $booths;
         }
 
-        $freeBooths = \App\Models\Booth::with('owner')->doesntHave('zone_booths')->get();
+        $freeBooths = \App\Models\Booth::where([
+            ['tourId', '=', $id],
+            ['isDeleted', '=', false]
+        ])->with('owner')->doesntHave('zone_booths')->get();
 
         $partners = DB::table('tour_partner')
             ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')

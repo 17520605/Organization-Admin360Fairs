@@ -15627,6 +15627,7 @@ select:focus {
 .notification_col .notification-list {
     display: -webkit-box;
     display: -ms-flexbox;
+    opacity: 0.7;
     display: flex;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
@@ -15813,7 +15814,7 @@ select:focus {
 .single-timeline-area .single-timeline-content {
     position: relative;
     z-index: 1;
-    padding: 30px 30px 25px;
+    padding: 10px;
     border-radius: 6px;
     margin-bottom: 15px;
     margin-top: 15px;
@@ -15824,14 +15825,14 @@ select:focus {
 
 @media only screen and (max-width: 575px) {
     .single-timeline-area .single-timeline-content {
-        padding: 20px;
+        padding: 10px;
     }
 }
 
 .single-timeline-area .single-timeline-content .timeline-banner {
     -webkit-transition-duration: 500ms;
     transition-duration: 500ms;
-    width: 25%;
+    width: 15%;
     height: 100%;
     background-color: #f1c40f;
     text-align: center;
@@ -15897,4 +15898,14 @@ select:focus {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.notification-list.active {
+    background: lightcyan;
+    opacity: 1;
+}
+
+.notification-list.unseen {
+    background: lavender;
+    opacity: 1;
 }
