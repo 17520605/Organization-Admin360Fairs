@@ -223,8 +223,10 @@
         </div>
     </div>
     <script>
+        var container, viewer ;
+        
         function initViewer() {
-            let container = document.getElementById('viewer-container');
+            container = document.getElementById('viewer-container');
             viewer = new PANOLENS.Viewer({
                 container: container,
                 autoRotate: true,
@@ -235,11 +237,11 @@
                 let imagePanorama = new PANOLENS.ImagePanorama("{{$panoramas->where('id', $scene->defaultPanoramaId)->first()->imageUrl}}");
                 viewer.add(imagePanorama);
             @endif
-        }
+        };
         function switchTag (tagName) {  
             $('.objects-wrapper').hide();     
             $('#'+tagName+'-wrapper').show();
-        }
+        };
         function onGoToPanorama(target) {  
             debugger;
             let imageUrl = $(target).attr('src');
@@ -254,20 +256,7 @@
             let imagePanorama = new PANOLENS.ImagePanorama(imageUrl);
             viewer.add(imagePanorama);
         }
-        
-        function initViewer() {
-            let container = document.getElementById('viewer-container');
-            viewer = new PANOLENS.Viewer({
-                container: container,
-                autoRotate: true,
-                autoRotateSpeed: 1.0,
-            });
-            viewer.OrbitControls.noZoom = true;
-            @if ($scene != null && $scene->defaultPanoramaId != null)
-                let imagePanorama = new PANOLENS.ImagePanorama("{{$panoramas->where('id', $scene->defaultPanoramaId)->first()->imageUrl}}");
-                viewer.add(imagePanorama);
-            @endif
-        }
+    
     </script>
     <script>
         $(document).ready(function() {
