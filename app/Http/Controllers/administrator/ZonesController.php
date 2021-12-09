@@ -19,6 +19,7 @@ class ZonesController extends Controller
             ['tourId', '=', $id],
             ['isDeleted', '=', false]
         ])->get();
+
         foreach ($zones as $zone) {
             $booths = DB::table('booth')
                 ->join('zone_booth', 'booth.id', '=', 'zone_booth.boothId')
@@ -44,8 +45,28 @@ class ZonesController extends Controller
         $zone = \App\Models\Zone::find($zoneId);
         $scene = \App\Models\Scene::find($zone->sceneId);
         $panoramas = [];
+        $objects = [];
         if($scene != null){
             $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
+
+            $objects = DB::table('asset')
+                ->join('hotspot', 'asset.id', '=', 'hotspot.assetId')
+                ->join('panorama', 'panorama.id', '=', 'hotspot.panoramaId')
+                ->where([
+                    ['panorama.sceneId', '=', $scene->id],
+                ])
+                ->select('asset.*')
+                ->get();
+            foreach ($objects as $object) {
+                $viewCount = \App\Models\View::where('assetId', $object->id)->count();
+                $likeCount = \App\Models\Like::where('assetId', $object->id)->count();
+                $commentCount = \App\Models\Comment::where([
+                        ['assetId', '=', $object->id],
+                    ])->count();
+                $object->viewCount = $viewCount;
+                $object->likeCount = $likeCount;
+                $object->commentCount = $commentCount;
+            }
         }
 
         $booths = \App\Models\Booth::with('owner')
@@ -66,6 +87,7 @@ class ZonesController extends Controller
             'zone'=>$zone,
             'booths' => $booths,
             'freeBooths' => $freeBooths,
+            'objects'=>$objects,
         ]);
     }
 

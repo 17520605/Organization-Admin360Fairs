@@ -247,11 +247,11 @@
                                     <thead>
                                         <tr style="background: #eef2f7;">
                                             <th style="text-align: center; width: 5%;">#</th>
-                                            <th style="width: 50%;">Name</th>
+                                            <th style="width: 40%;">Name</th>
                                             <th >Views</th>
                                             <th >Likes</th>
                                             <th>Comments</th>
-                                            <th style="width: 10%;">Actions</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>

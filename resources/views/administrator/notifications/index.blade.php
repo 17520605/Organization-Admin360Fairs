@@ -9,7 +9,7 @@
         </div>
         <div class="notification-ui_dd-content">
             @foreach ($notifications as $notification)
-            <div class="notification-list {{$notification->isSeen == false ? 'unseen' : ''}}" data-notification-id="{{$notification->id}}">
+            <div style="position: relative" class="notification-list {{$notification->isSeen == false ? 'unseen' : ''}}" data-notification-id="{{$notification->id}}">
                 <div class="notification-list_content" style="width: 100%;">
                     <div class="notification-list_img">
                         @if($notification->type == 'success')
@@ -50,6 +50,11 @@
                         <p class="text-muted"><small>{{Carbon\Carbon::parse($notification->created_at)->format('M d Y g:i A')}}</small></p>
                     </div>
                 </div>
+                @if($notification->isSeen == false ? 'unseen' : '')
+                    <i class="fas fa-envelope text-primary" style="position: absolute; right: 10px; top: 10px"></i>
+                @else
+                    <i class="fas fa-envelope-open text-primary" style="position: absolute; right: 10px; top: 10px"></i>
+                @endif
             </div>
             @endforeach
         </div>

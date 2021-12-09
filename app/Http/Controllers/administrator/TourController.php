@@ -30,7 +30,6 @@ class TourController extends Controller
         }
 
         
-
         $scene = \App\Models\Scene::find($tour->sceneId);
         $panoramas = [];
         $objects = [];

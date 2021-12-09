@@ -18,7 +18,6 @@
                                             <h6 class="mt-3">{{Carbon\Carbon::parse($tour->startTime)->format('M d g:i A')}}</h6>
                                         </div>
                                         <div class="timeline-continue">
-                                            
                                             @foreach ($all_dates as $date)
                                             <div class="row timeline-box-card">
                                                 @php

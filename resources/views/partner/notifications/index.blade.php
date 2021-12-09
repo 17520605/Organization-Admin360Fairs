@@ -50,6 +50,11 @@
                         <p class="text-muted"><small>{{Carbon\Carbon::parse($notification->created_at)->format('M d Y g:i A')}}</small></p>
                     </div>
                 </div>
+                @if($notification->isSeen == false ? 'unseen' : '')
+                    <i class="fas fa-envelope text-primary" style="position: absolute; right: 10px; top: 10px"></i>
+                @else
+                    <i class="fas fa-envelope-open text-primary" style="position: absolute; right: 10px; top: 10px"></i>
+                @endif
             </div>
             @endforeach
         </div>

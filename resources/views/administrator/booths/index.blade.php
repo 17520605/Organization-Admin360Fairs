@@ -51,13 +51,13 @@
                                 </td>  
                                 <td>
                                     @if($freeBooth->isConfirmed === null && $freeBooth->isWaitingApproval == false)
-                                        Editting 
+                                        <span class="badge bg-info">Editting</span>
                                     @elseif($freeBooth->isConfirmed == true && $freeBooth->isWaitingApproval == false)
-                                        Approved
+                                        <span class="badge bg-success">Approved</span>
                                     @elseif($freeBooth->isConfirmed == false && $freeBooth->isWaitingApproval == false)
-                                        Rejected
+                                        <span class="badge bg-danger">Rejected</span>
                                     @elseif($freeBooth->isWaitingApproval == true)
-                                        Waiting for approval
+                                        <span class="badge bg-warning">Waiting for approval</span>
                                     @endif
                                 </td>
                                 <td>{{$freeBooth->updated_at}}</td>
@@ -93,7 +93,7 @@
                                     <td><a class="font-weight-bold text-primary btn-page-loader" href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}">{{$booth->name}}</a></td>
                                     <td>
                                         @if ($booth->owner == null || $booth->owner->id == $profile->id)
-                                            <span class="text-muted"> Host </span
+                                            <span class="text-muted"> Host </span>
                                         @else
                                             <a href="/resume/{{$booth->owner->id}}" target="_blank" class="text-primary font-weight-bold">{{$booth->owner->name}}</a>
                                         @endif
@@ -101,13 +101,13 @@
                                     </td>
                                     <td>
                                         @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
-                                            Editting 
+                                        <span class="badge bg-info">Editting</span>
                                         @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
-                                            Approved
+                                        <span class="badge bg-success">Approved</span>
                                         @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false)
-                                            Rejected
+                                        <span class="badge bg-danger">Rejected</span>
                                         @elseif($booth->isWaitingApproval == true)
-                                            Waiting for approval
+                                        <span class="badge bg-warning">Waiting for approval</span>
                                         @endif
                                     </td>
                                     <td>{{$booth->updated_at}}</td>
@@ -145,7 +145,7 @@
                                 <label class="small mb-1" for="">Name</label>
                                 <input class="form-control" type="text" name="name" placeholder="Enter Booth Name">
                             </div>
-                            <div id="popup-create-booth__choose-zone-text" class="row row mb-3" style="color: #4e73df ; cursor: pointer;"> Choose zone </div>
+                            <div id="popup-create-booth__choose-zone-text" class="row row mb-3 font-weight-bold" style="color: #4e73df ; cursor: pointer;"> Choose zone </div>
                             <div class="row mb-3 p-3 border zones-wrapper" style="display: none;">
                                 @if (count($zones) == 0)
                                     <center><span>No zone</span></center>
@@ -184,7 +184,7 @@
                                 <label class="small mb-1" for="">Name</label>
                                 <input id="popup-edit-booth__name-input" class="form-control" type="text" name="name" placeholder="Enter Booth Name">
                             </div>
-                            <div id="popup-edit-booth__choose-zone-text" class="row row mb-3" > Choose zone </div>
+                            <div id="popup-edit-booth__choose-zone-text" class="row row mb-3 " style="cursor: pointer;color: #4e73df;font-weight: 600" > Choose zone </div>
                             <div class="row mb-3 p-3 border zones-wrapper" style="display: none;">
                                 @if (count($zones) == 0)
                                     <center><span>No zone</span></center>
