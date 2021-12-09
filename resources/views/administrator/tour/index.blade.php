@@ -710,7 +710,7 @@
                 let tr;
                 if(comment.isHidden){
                     tr = $(`
-                        <tr data-comment-id="{{$comment->id}}">
+                        <tr data-comment-id="`+ comment.id +`">
                             <td style="text-align: center"> <span>`+ number++ +`</span></td>
                             <td> <span style="opacity: 0.3">`+ comment.visitor.name +`</span></td>
                             <td> <span style="opacity: 0.3">`+ new Date(comment.updated_at).toLocaleString()+` </span></td>
@@ -721,7 +721,7 @@
                 }
                 else{
                     tr = $(`
-                        <tr data-comment-id="{{$comment->id}}">
+                    <tr data-comment-id="`+ comment.id +`">
                             <td style="text-align: center"> <span>`+ number++ +`</span></td>
                             <td> <span>`+ comment.visitor.name +`</span></td>
                             <td> <span> `+ new Date(comment.updated_at).toLocaleString()+` </span></td>
