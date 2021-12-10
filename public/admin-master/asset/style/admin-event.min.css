@@ -13640,7 +13640,7 @@ img {
 }
 
 .line-time .timeline .timeline-box-card:nth-child(odd) .timeline-box .event-content .timeline-text {
-    margin-right: 40px !important;
+    margin-right: 0px !important;
 }
 
 .line-time .timeline .timeline-box-card:nth-child(odd) .timeline-icon {
@@ -13816,7 +13816,7 @@ img {
 }
 
 .line-time .timeline .timeline-box-card:nth-child(even) .timeline-box .event-content .timeline-text {
-    margin-left: 65px !important;
+    margin-left: 35px !important;
 }
 
 .line-time .timeline .timeline-box-card:nth-child(even) .timeline-box .event-content .timeline-text h3.font-size-17 {

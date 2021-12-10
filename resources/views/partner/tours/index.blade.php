@@ -6,7 +6,7 @@
                 <h3>Hi, <span> {{$profile->name}}</span> 👋 </h3>
             </div>
             @foreach ($tours as $tour)
-                <div class="row partner_card">
+                <div class="row partner_card mb-3">
                     <div class="col-lg-12">
                         <div class="card card-margin">
                             <div class="card-body pt-4">

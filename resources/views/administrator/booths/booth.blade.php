@@ -104,7 +104,7 @@
                                         <div style="width: 3%;line-height: 85px;text-align: left"><i class="fas fa-chevron-circle-left icon_scroll_track_img" style="color:#dc3545;opacity: 0.6;" onclick="scroll_left_i();"></i></div>
                                         <div style="width: 94%; overflow-x: hidden;display: flex;" id="container_track_img">
                                             @if (count($panoramas) == 0)
-                                                <div><span>No panoramas</span></div>
+                                                 <div style="width: 100%; text-align: center;line-height: 83px;font-weight: 600"><span>No panoramas</span></div>
                                             @endif
                                             @foreach ($panoramas as $panorama)
                                                 <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">

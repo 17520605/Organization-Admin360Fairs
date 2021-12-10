@@ -121,16 +121,21 @@
                 switch (notification.type) {
                     case '{{\App\Models\Notification::INFO}}':
                         elm = $(`
-                            <a class="dropdown-item d-flex align-items-center" href="/partner/booths/{{$booth->id}}/notifications?active=`+ notification.id +`">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+                            <a class="nav-notification-item dropdown-item d-flex align-items-center btn-page-loader" data-notification-id="`+ notification.id +`" href="/partner/booths/{{$booth->id}}/notifications?active=`+ notification.id +`">
+                                <div class="dropdown-list-image mr-3">
+                                    <div class="icon-circle bg-info">
+                                        @if(`+ channel +` == 'booth@booth' ||`+ channel +` == 'booth@approve'|| `+ channel +` == 'booth@cancel'||`+ channel +` == 'booth@reedit' ||`+ channel +` == 'booth@reject'||`+channel+` == 'booth@request' )
+                                            <i class="fas fa-store text-white"></i>
+                                        @elseif(`+ channel +` == 'webinar@new' ||`+ channel +` == 'webinar@approve'||`+ channel +`== 'webinar@reedit'||`+ channel +`== 'webinar@reject')
+                                            <i class="fas fa-calendar-check text-white"></i>
+                                        @else
+                                            <i class="fas fa-bell text-white"></i>
+                                        @endif
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="small text-gray-500">`+ moment(notification.created_at).format('MMMM DD YYYY hh:mm') +`</div>
-                                    <span class="font-weight-bold">`+ notification.title +`</span>
-                                    <span>`+ notification.content +` </span>
+                                <div class="font-weight-bold">
+                                    <div class="text-truncate">`+ notification.title +`</div>
+                                    <div class="small text-gray-500 mb-0">`+ moment(notification.created_at).format('MMMM DD YYYY hh:mm') +`</div>
                                 </div>
                             </a>
                         `);
@@ -141,7 +146,13 @@
                             <a class="nav-notification-item dropdown-item d-flex align-items-center btn-page-loader" data-notification-id="`+ notification.id +`" href="/partner/booths/{{$booth->id}}/notifications?active=`+ notification.id +`">
                                 <div class="dropdown-list-image mr-3">
                                     <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+                                        @if(`+ notification.channel +` == 'booth@booth' ||`+ notification.channel +` == 'booth@approve'|| `+ notification.channel +` == 'booth@cancel'||`+ notification.channel +` == 'booth@reedit' ||`+ notification.channel +` == 'booth@reject'||`+ notification.channel +` == 'booth@request' )
+                                            <i class="fas fa-store text-white"></i>
+                                        @elseif(`+ notification.channel +` == 'webinar@new' ||`+ notification.channel +` == 'webinar@approve'||`+ notification.channel +`== 'webinar@reedit'||`+ notification.channel +`== 'webinar@reject')
+                                            <i class="fas fa-calendar-check text-white"></i>
+                                        @else
+                                            <i class="fas fa-bell text-white"></i>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="font-weight-bold">
@@ -156,8 +167,14 @@
                         elm = $(`
                             <a class="nav-notification-item dropdown-item d-flex align-items-center btn-page-loader" data-notification-id="`+ notification.id +`" href="/partner/booths/{{$booth->id}}/notifications?active=`+ notification.id +`">
                                 <div class="dropdown-list-image mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+                                    <div class="icon-circle bg-warning">
+                                        @if(`+ notification.channel +` == 'booth@booth' ||`+ notification.channel +` == 'booth@approve'|| `+ notification.channel +` == 'booth@cancel'||`+ notification.channel +` == 'booth@reedit' ||`+ notification.channel +` == 'booth@reject'||`+ notification.channel +` == 'booth@request' )
+                                            <i class="fas fa-store text-white"></i>
+                                        @elseif(`+ notification.channel +` == 'webinar@new' ||`+ notification.channel +` == 'webinar@approve'||`+ notification.channel +`== 'webinar@reedit'||`+ notification.channel +`== 'webinar@reject')
+                                            <i class="fas fa-calendar-check text-white"></i>
+                                        @else
+                                        <i class="fas fa-bell text-white"></i>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="font-weight-bold">

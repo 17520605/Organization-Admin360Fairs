@@ -112,7 +112,7 @@
                                     <div style="width: 3%;line-height: 85px;text-align: left"><i class="fas fa-chevron-circle-left icon_scroll_track_img" style="color:#dc3545;opacity: 0.6;" onclick="scroll_left_i();"></i></div>
                                     <div style="width: 94%; overflow-x: hidden;display: flex;" id="container_track_img">
                                         @if (count($panoramas) == 0)
-                                            <div><span>No panoramas</span></div>
+                                             <div style="width: 100%; text-align: center;line-height: 83px;font-weight: 600"><span>No panoramas</span></div>
                                         @endif
                                         @foreach ($panoramas as $panorama)
                                             <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
@@ -201,7 +201,7 @@
                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="border-radius:0 ;">
-                    <form id="popup-edit-booth__form" class="p-3" action="/partner/tours/{{$tour->id}}/booths/save-edit" method="post">
+                    <form id="popup-edit-booth__form" class="p-3" action="/partner/booths/{{$booth->id}}/save-edit" method="post">
                         @csrf
                         <input type="hidden" name="boothId" value="{{$booth->id}}">
                         <input type="hidden" name="logo" value="{{$booth->logo}}">
@@ -214,17 +214,17 @@
                             <div class="card" style="height: 300px; width: 100%">
                                 <div class="upload-box" style="display: {{$booth->logo == null ? 'block' : 'none'}}; height: 300px; width: 100%">
                                     <div class="upload-text text-center" style="height: 300px; width: 100%">
-                                        <div class="upload-form border-dashed" style="height: 100%;">
+                                        <div class="upload-form border-dashed" style="height:265px">
                                             <div class="m-4"> 
                                                 <input type="file" hidden id="popup-edit-booth__file-input">
-                                                <button type="button" id="popup-edit-booth__upload-logo-btn">Upload</button>
+                                                <button type="button" class="btn btn-primary" id="popup-edit-booth__upload-logo-btn"><i class="fas fa-upload"></i> Upload</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="preview-box" style="display: {{$booth->logo == null ? 'none' : 'block'}}; height: 300px; width: 100%; padding:1rem;">
                                     <div class="upload-text text-center" style="padding: 10px ; max-height: 250px">
-                                        <img id="popup-edit-booth__preview-logo-img" src="{{$booth->logo}}" style="height: 260px; width:100%" alt="">
+                                        <img id="popup-edit-booth__preview-logo-img" src="{{$booth->logo}}" style="height: 250px; width:100%" alt="">
                                     </div>
                                     <div style="position: absolute;top: 0;width: 95%;height: 100%;display: flex;justify-content: center; align-items: center;pointer-events: none">
                                         <button type="button" class="btn btn-danger" style="pointer-events: all" id="popup-edit-booth__remove-btn">Remove</button>
