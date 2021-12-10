@@ -277,9 +277,6 @@
             $('.icon-loader-form-delete').show();
         });
     </script>
-    <script>
-        $('table').DataTable();
-    </script>
      <script>
     
         function scroll_left_i(){

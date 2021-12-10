@@ -15,7 +15,8 @@ class AssetsController extends Controller
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $booth = DB::table('booth')->find($id);
         $assets = \App\Models\Asset::where([
-            ['boothId','=', $id]
+            ['boothId','=', $id],
+            ['isDeleted','=', false]
         ])
         ->orderBy('updated_at', "DESC")
         ->get();
@@ -23,6 +24,7 @@ class AssetsController extends Controller
         $types = DB::table('asset')
             ->where([
                 ['boothId','=', $id],
+                ['isDeleted','=', false]
             ])
             ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(asset.id) as count'))
             ->groupBy('type')
@@ -58,8 +60,9 @@ class AssetsController extends Controller
 
     public function saveCreate($id, Request $request)
     {  
-        $tourId = $id;
-        $boothId = $request->input('boothId');
+        $profile = \App\Models\Profile::where('userId', Auth::id())->first();
+        $booth = \App\Models\Booth::find($id);
+        $tourId = $booth->tourId;
         $type = $request->input('type');
         $source = $request->input('source');
         $file = $request->file;
@@ -67,7 +70,8 @@ class AssetsController extends Controller
 
         $asset = new \App\Models\Asset();
         $asset->tourId = $tourId;
-        $asset->boothId = $boothId;
+        $asset->boothId = $booth->id;
+        $asset->ownerId = $profile->id;
         $asset->type = $type;
         $asset->source = $source;
         $asset->url = $url;
@@ -81,7 +85,7 @@ class AssetsController extends Controller
         }
         else
         if($source == 'link'){
-            if(str_starts_with($asset->url, 'https://youtu.be/')){
+            if(str_starts_with($asset->url, 'https://youtu')){
                 $asset->source = 'youtube';
             }
         }

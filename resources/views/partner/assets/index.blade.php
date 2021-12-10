@@ -190,7 +190,7 @@
                             <div class="tab-body" data-tab="table">
                                 <div class="assets-wrapper all">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered data-table" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
@@ -230,7 +230,7 @@
                                 </div>
                                 <div class="assets-wrapper image" style="display: none">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered data-table" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
@@ -263,7 +263,7 @@
                                 </div>
                                 <div class="assets-wrapper video" style="display: none">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered data-table" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
@@ -296,7 +296,7 @@
                                 </div>
                                 <div class="assets-wrapper audio" style="display: none">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered data-table" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
@@ -329,7 +329,7 @@
                                 </div>
                                 <div class="assets-wrapper model" style="display: none">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered data-table" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
@@ -787,9 +787,9 @@
                                             </div>
                                             <div class="col-8">
                                                 <p class="text-muted mb-2 btn-action-icon" style="position: relative;height: 22px; text-align: left"><span id="popup-asset-detail__name-text" class="ml-2 font-weight-bold"></span>
-                                                    @if ($profile->id == $asset->ownerId)
+                                                    {{-- @if ($profile->id == $asset->ownerId)
                                                         <i onclick="showInputNameAsset()" class="fas fa-pen edit" style="margin-left: 160px"></i>  
-                                                    @endif
+                                                    @endif --}}
                                                 </p>
                                                 <input type="hidden" id="text_name_file">
                                                 <p style="display: none; margin-bottom: 0.2rem !important;"><input id="popup-asset-detail__name-input" style="padding-right: 20px;width: 160px;" type="text"> <button onclick="editAssetName(event)" style="position: absolute;right: 15px; top: 0">Save</button></p>
@@ -978,12 +978,11 @@
             </div>
         </div>
     </div>
-    @endsection
     <script>
         var assets = {!! json_encode($assets) !!}
 
         $(document).ready(function () {
-            $('.datatable').DataTable({
+            $('.data-table').DataTable({
                 "order": [[ 4, "desc" ]]
             });
 
@@ -1005,7 +1004,7 @@
             })
 
             $('#popup-upload-assets__OK-btn').click(function () {  
-                location.href = '/partner/booths/{{$booth->id}}';
+                location.href = '/partner/booths/{{$booth->id}}/assets';
             })
 
             $('#popup-upload-assets__file-hidden-input').change(async function () {  
@@ -1243,3 +1242,6 @@
 
     </script>
 
+    @endsection
+
+    
