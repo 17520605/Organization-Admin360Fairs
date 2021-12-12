@@ -25,7 +25,7 @@
                         </thead>
                         <tr style="background-color: #4e73dfcf !important; color:#fff;" onclick="toggleGroup(0)">
                             <td colspan="8">
-                                <span style="float: left"><i class="fas fa-asterisk" style="margin-right: 5px"></i>({{count($freeBooths)}}) </span>
+                                <span style="float: left"><i class="fas fa-asterisk" style="margin-right: 5px"></i>({{count($booths)}}) </span>
                                 <span style="float: right"> <i class="fas fa-caret-down"></i> </span>
                             </td>
                         </tr>
@@ -33,41 +33,41 @@
                             @php
                                 $number = 1;
                             @endphp
-                            @if (count($freeBooths) == 0)
+                            @if (count($booths) == 0)
                             <tr>
                                 <td colspan="10"><center><span>No booths</span></center></td>
                             </tr>
                             @endif
-                            @foreach ($freeBooths as $freeBooth)
-                            <tr class="booth-{{$freeBooth->id}}">
+                            @foreach ($booths as $booth)
+                            <tr class="booth-{{$booth->id}}">
                                 <td style="text-align: center">{{$number++}}</td>
-                                <td><a class="font-weight-bold text-primary" href="/administrator/tours/{{$tour->id}}/booths/{{$freeBooth->id}}">{{$freeBooth->name}}</a></td>
+                                <td><a class="font-weight-bold text-primary" href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}">{{$booth->name}}</a></td>
                                 <td>
-                                    @if ($freeBooth->owner == null || $freeBooth->owner->id == $profile->id)
+                                    @if ($booth->owner == null || $booth->owner->id == $profile->id)
                                         <span class="text-muted"> Host </span> 
                                     @else
-                                        <a href="/resume/{{$freeBooth->owner->id}}" target="_blank" class="text-primary font-weight-bold">{{$freeBooth->owner->name}}</a>
+                                        <a href="/resume/{{$booth->owner->id}}" target="_blank" class="text-primary font-weight-bold">{{$booth->owner->name}}</a>
                                     @endif
                                 </td>  
                                 <td>
-                                    @if($freeBooth->isConfirmed === null && $freeBooth->isWaitingApproval == false)
+                                    @if($booth->isConfirmed === null && $booth->isWaitingApproval == false)
                                         <span class="badge bg-info">Editting</span>
-                                    @elseif($freeBooth->isConfirmed == true && $freeBooth->isWaitingApproval == false)
+                                    @elseif($booth->isConfirmed == true && $booth->isWaitingApproval == false)
                                         <span class="badge bg-success">Approved</span>
-                                    @elseif($freeBooth->isConfirmed == false && $freeBooth->isWaitingApproval == false)
+                                    @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false)
                                         <span class="badge bg-danger">Rejected</span>
-                                    @elseif($freeBooth->isWaitingApproval == true)
+                                    @elseif($booth->isWaitingApproval == true)
                                         <span class="badge bg-warning">Waiting for approval</span>
                                     @endif
                                 </td>
-                                <td>{{$freeBooth->updated_at}}</td>
+                                <td>{{$booth->updated_at}}</td>
                                 <td>
-                                    <a href="/administrator/tours/{{$tour->id}}/booths/{{$freeBooth->id}}" class="btn-visit-now btn-page-loader" >Visit now <i class="fas fa-chevron-right"></i></a>
+                                    <a href="/administrator/tours/{{$tour->id}}/booths/{{$booth->id}}" class="btn-visit-now btn-page-loader" >Visit now <i class="fas fa-chevron-right"></i></a>
                                 </td>
                                 <td class="btn-action-icon">
-                                    <i onclick="onGrantOwner({{$freeBooth->id}}, '{{$freeBooth->name}}', {{$freeBooth->owner->id}})" class="fa fa-user-shield user"></i>
-                                    <i onclick="onEditBooth(this)" data-name="{{$freeBooth->name}}" data-id="{{$freeBooth->id}}" class="fa fa-pen edit"></i>
-                                    <i onclick="onDeleteBooth(this)" data-name="{{$freeBooth->name}}" data-id="{{$freeBooth->id}}" class="fa fa-trash-alt delete"></i>
+                                    <i onclick="onGrantOwner({{$booth->id}}, '{{$booth->name}}', {{$booth->owner->id}})" class="fa fa-user-shield user"></i>
+                                    <i onclick="onEditBooth(this)" data-name="{{$booth->name}}" data-id="{{$booth->id}}" class="fa fa-pen edit"></i>
+                                    <i onclick="onDeleteBooth(this)" data-name="{{$booth->name}}" data-id="{{$booth->id}}" class="fa fa-trash-alt delete"></i>
                                 </td>
                                 
                             </tr>
@@ -145,7 +145,7 @@
                                 <label class="small mb-1" for="">Name</label>
                                 <input class="form-control" type="text" name="name" placeholder="Enter Booth Name">
                             </div>
-                            <div id="popup-create-booth__choose-zone-text" class="row row mb-3 font-weight-bold" style="color: #4e73df ; cursor: pointer;"> Choose zone </div>
+                            <div id="popup-create-booth__choose-zone-text" class="row row mb-3" style="color: #4e73df ; cursor: pointer;"> + choose zone </div>
                             <div class="row mb-3 p-3 border zones-wrapper" style="display: none;">
                                 @if (count($zones) == 0)
                                     <center><span>No zone</span></center>
@@ -242,17 +242,13 @@
                         <div class="modal-body">
                             @csrf
                             <input type="hidden" name="boothId">
-                            <div class="row mb-3"> Partners Manager Booths:</div>
-                            @if (count($partners) == 0)
-                                <center><span>No zone</span></center>
-                            @else
-                                <select name="partnerId" id="popup-grant-owner__select-owner" class="form-control">
-                                    <option  value="{{$profile->id}}">--- Host ---</option>
-                                    @foreach ($partners as $partner)
-                                        <option id="popup-grant-owner__parter-{{$partner->id}}" value="{{$partner->id}}">{{$partner->name}}</option>
-                                    @endforeach
-                                </select>
-                            @endif
+                            <div class="row mb-3"> Select owner of booth : </div>
+                            <select name="partnerId" id="popup-grant-owner__select-owner" class="form-control">
+                                <option  value="{{$profile->id}}">--- Host ---</option>
+                                @foreach ($partners as $partner)
+                                    <option id="popup-grant-owner__parter-{{$partner->id}}" value="{{$partner->id}}">{{$partner->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -11,4 +11,8 @@ class Hotspot extends Model
     public function asset() {
         return $this->belongsTo(Asset::class, 'assetId');
     }
+
+    public function panorama() {
+        return $this->belongsTo(Panorama::class, 'panoramaId');
+    }
 }
