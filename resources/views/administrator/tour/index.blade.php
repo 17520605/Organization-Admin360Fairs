@@ -312,7 +312,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLastName">End at</label>
-                                <input class="form-control" name="end" value="{{ Carbon\Carbon::parse($tour->startTime)->format('Y-m-d\TH:i')}}" type="datetime-local" />
+                                <input class="form-control" name="end" value="{{ Carbon\Carbon::parse($tour->endTime)->format('Y-m-d\TH:i')}}" type="datetime-local" />
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
