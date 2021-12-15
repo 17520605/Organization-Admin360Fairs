@@ -116,7 +116,6 @@ class Controller extends BaseController
         $asset->url = $resObj->url;
         $asset->format = $file->getClientOriginalExtension();
         $asset->size = $resObj->bytes;
-        $asset->isUsed = $isUsed;
         $asset->save();
 
         return $resObj;
