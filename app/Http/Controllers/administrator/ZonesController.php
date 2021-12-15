@@ -15,26 +15,23 @@ class ZonesController extends Controller
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
 
-        $zones = DB::table('zone')->where([
+        $zones = \App\Models\Zone::with('booths')
+            ->where([
+                ['tourId', '=', $id],
+                ['isDeleted', '=', false]
+            ])->get();     
+
+        $booths = \App\Models\Booth::where([
             ['tourId', '=', $id],
-            ['isDeleted', '=', false]
-        ])->get();
+            ['zoneId', '=', null]
+        ]);
 
-        foreach ($zones as $zone) {
-            $booths = DB::table('booth')
-                ->join('zone_booth', 'booth.id', '=', 'zone_booth.boothId')
-                ->where('zone_booth.zoneId', $zone->id)
-                ->select('booth.*', )
-                ->get();
-            
-            $zone->booths = $booths;
-        }
-
-        $freeBooths = DB::table('booth')
-            ->whereRaw(" NOT EXISTS ( SELECT * FROM zone_booth  WHERE  zone_booth.boothId = booth.id )")
-            ->get();
-
-        return view('administrator.zones.index', ['profile' => $profile, 'tour'=> $tour, 'zones'=> $zones, 'freeBooths' => $freeBooths ]);
+        return view('administrator.zones.index', [
+            'profile' => $profile, 
+            'tour'=> $tour,
+            'zones'=> $zones, 
+            'booths' => $booths 
+        ]);
     }
 
     public function zone ($id, $zoneId)
@@ -45,38 +42,46 @@ class ZonesController extends Controller
         $zone = \App\Models\Zone::find($zoneId);
         $scene = \App\Models\Scene::find($zone->sceneId);
         $panoramas = [];
-        $objects = [];
+        $hotspots = [];
         if($scene != null){
             $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
-
-            $objects = DB::table('asset')
-                ->join('hotspot', 'asset.id', '=', 'hotspot.assetId')
-                ->join('panorama', 'panorama.id', '=', 'hotspot.panoramaId')
-                ->where([
-                    ['panorama.sceneId', '=', $scene->id],
+            $hotspots = \App\Models\Hotspot::where([
+                    ['isDeleted', '=', false],
+                    ['assetId', '!=', null],
                 ])
-                ->select('asset.*')
+                ->whereHas('panorama', function ($q) use($scene){
+                    $q->where('sceneId', '=', $scene->id);
+                })
                 ->get();
-            foreach ($objects as $object) {
-                $viewCount = \App\Models\View::where('assetId', $object->id)->count();
-                $likeCount = \App\Models\Like::where('assetId', $object->id)->count();
+            
+            foreach ($hotspots as $hotspot) {
+                $asset = \App\Models\Asset::find($hotspot->assetId);
+                $viewCount = \App\Models\View::where('assetId', $hotspot->assetId)->count();
+                $likeCount = \App\Models\Like::where('assetId',  $hotspot->assetId)->count();
                 $commentCount = \App\Models\Comment::where([
-                        ['assetId', '=', $object->id],
+                        ['assetId', '=', $hotspot->assetId],
+                        ['isHidden', '=', false],
                     ])->count();
-                $object->viewCount = $viewCount;
-                $object->likeCount = $likeCount;
-                $object->commentCount = $commentCount;
+                $hotspot->viewCount = $viewCount;
+                $hotspot->likeCount = $likeCount;
+                $hotspot->commentCount = $commentCount;
+                $hotspot->asset = $asset;
             }
         }
 
         $booths = \App\Models\Booth::with('owner')
-            ->whereHas('zone_booths', function ($q) use($zoneId){
-                $q->where('zoneId', '=', $zoneId);
-            })
+            ->where([
+                ['zoneId', '=', $zone->id],
+                ['isDeleted', '=', false],
+            ])
             ->get();
 
-        $freeBooths = DB::table('booth')
-            ->whereRaw(" NOT EXISTS ( SELECT * FROM zone_booth  WHERE  zone_booth.boothId = booth.id )")
+        $freeBooths = $booths = \App\Models\Booth::with('owner')
+            ->where([
+                ['zoneId', '=', null],
+                ['tourId', '=', $tour->id],
+                ['isDeleted', '=', false],
+            ])
             ->get();
 
         return view('administrator.zones.zone', [
@@ -87,7 +92,7 @@ class ZonesController extends Controller
             'zone'=>$zone,
             'booths' => $booths,
             'freeBooths' => $freeBooths,
-            'objects'=>$objects,
+            'hotspots'=>$hotspots,
         ]);
     }
 

@@ -23,7 +23,7 @@
                 <div class="col-md-5" style="height: 70vh;">
                     <div class="card">
                         <div class="card-body" style="color: #555; font-size: 14px;">
-                            <div class="d-flex process-overview">
+                            {{-- <div class="d-flex process-overview">
                                 <div class="flex-grow-1 overflow-hidden">
                                     <div class="row" style="margin-bottom: 0.5rem">
                                         <div class="col-lg-2">
@@ -50,7 +50,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <h6 class="font-size-15 font-weight-bold">General information: </h6>
                             <div class="d-flex">
                                 <div class="flex-grow-1 overflow-hidden">
@@ -255,26 +255,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($objects as $object)
+                                        @foreach ($hotspots as $hotspot)
                                         <tr>
                                             <td style="text-align: center">
-                                                @if ($object->type == 'image')
+                                                @if ($hotspot->type == 'image')
                                                    <span><i class="fas fa-image font-size-16 text-success"></i> <span style="display: none">1</span> </span> 
-                                                @elseif($object->type == 'video')
+                                                @elseif($hotspot->type == 'video')
                                                     <span><i class="far fa-play-circle font-size-16 text-danger"></i> <span style="display: none">2</span> </span> 
-                                                @elseif($object->type == 'audio')
+                                                @elseif($hotspot->type == 'audio')
                                                     <span><i class="fas fa-music font-size-16 text-info"></i><span style="display: none">3</span></span> 
-                                                @elseif($object->type == 'model')
+                                                @elseif($hotspot->type == 'model')
                                                     <span><i class="fab fa-unity font-size-16 text-models"></i><span style="display: none">4</span></span> 
                                                 @else 
                                                     <span><i class="fab fa-question-circle font-size-16 text-primary"></i><span style="display: none">5</span></span>
                                                 @endif
                                             </td>    
-                                            <td><span>{{$object->name}}</span></td>
-                                            <td><span>{{$object->viewCount}}</span></td>
-                                            <td><span> {{$object->likeCount}}</span></td>
-                                            <td><span>{{$object->commentCount}}</span></td>
-                                            <td class="actions"> <button class="btn-visit-now" onclick="openPopupObjectDetail({{$object->id}})">View Detail</button> </td>
+                                            <td><span>{{$hotspot->text}}</span></td>
+                                            <td><span>{{$hotspot->viewCount}}</span></td>
+                                            <td><span>{{$hotspot->likeCount}}</span></td>
+                                            <td><span>{{$hotspot->commentCount}}</span></td>
+                                            <td class="actions"> <button class="btn-visit-now" onclick="openPopupObjectDetail({{$hotspot->asset->id}})">View Detail</button> </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -489,6 +489,7 @@
 <script>
     var viewer;
     var container = document.getElementById('viewer-container');
+    var assetViewChart = null;
     var views = {!! json_encode($views) !!};
     var likes = {!! json_encode($likes) !!};
 
@@ -555,7 +556,7 @@
         });
     }
 
-    async function openPopupObjectDetail(objectId){
+    async function openPopupObjectDetail(assetId){
         $('#popup-object-detail').modal('show');
         $('#popup-object-detail__cover').show();
         $('#popup-object-detail__chart-wrapper').empty();
@@ -566,7 +567,7 @@
 
         let res = await $.ajax({
             type: "get",
-            url: "/administrator/tours/{{$tour->id}}/assets/"+ objectId +"/get-infor",
+            url: "/administrator/tours/{{$tour->id}}/assets/"+ assetId +"/get-infor",
             dataType: 'json',
         });
 
@@ -643,6 +644,7 @@
                     y: countLike
                 });
             });
+            
             $('#popup-object-detail__view-count').text(countView);
             $('#popup-object-detail__visitor-count').text(visiterIds.length);
             $('#popup-object-detail__like-count').text(countLike);
@@ -662,6 +664,7 @@
                     },
                 ],
                 chart: {
+                    id: 'view-chart',
                     height: 250,
                     type: 'line',
                     zoom: {
@@ -696,13 +699,13 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    title: {
-                        text: 'datetime'
-                    },
                 }
             };
-            var chart = new ApexCharts(document.querySelector("#popup-object-detail__chart-wrapper"), options);
-            chart.render();
+            if(assetViewChart != null){
+                assetViewChart.destroy();
+            }
+            assetViewChart = new ApexCharts(document.querySelector("#popup-object-detail__chart-wrapper"), options);
+            assetViewChart.render();
 
             // table
             comments.forEach(comment => {
@@ -743,6 +746,16 @@
 
     function closePopupObjectDetail(){
         $('#popup-object-detail__comments-table').dataTable().fnDestroy();
+    }
+
+    function convertToMinimizeImageUrl(url){
+        if(url != null && url != ""){
+            if(url.includes('res.cloudinary.com/virtual-tour/image/upload/')){
+                miniUrl = url.replace('upload/', 'upload/c_thumb,w_350,g_face/');
+                return miniUrl;
+            }
+        }
+        return url;
     }
 
     function initViewer() {

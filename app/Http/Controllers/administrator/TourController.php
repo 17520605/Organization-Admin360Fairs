@@ -16,44 +16,40 @@ class TourController extends Controller
         $user = Auth::user();
         $profile = DB::table('profile')->where('userId', $user->id)->first();
 
-        $zones = DB::table('zone')->where([
-            ['tourId', '=', $id],
-            ['isDeleted', '=', false]
-        ])->get();
-        foreach ($zones as $zone) {
-            $booths = DB::table('booth')
-                ->join('zone_booth', 'booth.id', '=', 'zone_booth.boothId')
-                ->where('zone_booth.zoneId', $zone->id)
-                ->select('booth.*', )
-                ->get();
-            $zone->booths = $booths;
-        }
-
+        $zones = \App\Models\Zone::where([
+                ['tourId', '=', $id],
+                ['isDeleted', '=', false]
+            ])
+            ->with('booths')
+            ->get();
         
         $scene = \App\Models\Scene::find($tour->sceneId);
         $panoramas = [];
-        $objects = [];
+        $hotspots = [];
 
         if($scene != null){
             $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
-
-            $objects = DB::table('asset')
-                ->join('hotspot', 'asset.id', '=', 'hotspot.assetId')
-                ->join('panorama', 'panorama.id', '=', 'hotspot.panoramaId')
-                ->where([
-                    ['panorama.sceneId', '=', $scene->id],
+            $hotspots = \App\Models\Hotspot::where([
+                    ['isDeleted', '=', false],
+                    ['assetId', '!=', null],
                 ])
-                ->select('asset.*')
+                ->whereHas('panorama', function ($q) use($scene){
+                    $q->where('sceneId', '=', $scene->id);
+                })
                 ->get();
-            foreach ($objects as $object) {
-                $viewCount = \App\Models\View::where('assetId', $object->id)->count();
-                $likeCount = \App\Models\Like::where('assetId', $object->id)->count();
+            
+            foreach ($hotspots as $hotspot) {
+                $asset = \App\Models\Asset::find($hotspot->assetId);
+                $viewCount = \App\Models\View::where('assetId', $hotspot->assetId)->count();
+                $likeCount = \App\Models\Like::where('assetId',  $hotspot->assetId)->count();
                 $commentCount = \App\Models\Comment::where([
-                        ['assetId', '=', $object->id],
+                        ['assetId', '=', $hotspot->assetId],
+                        ['isHidden', '=', false],
                     ])->count();
-                $object->viewCount = $viewCount;
-                $object->likeCount = $likeCount;
-                $object->commentCount = $commentCount;
+                $hotspot->viewCount = $viewCount;
+                $hotspot->likeCount = $likeCount;
+                $hotspot->commentCount = $commentCount;
+                $hotspot->asset = $asset;
             }
         }
 
@@ -70,7 +66,7 @@ class TourController extends Controller
             'views'=>$views,
             'likes'=>$likes,
             'comments'=>$comments,
-            'objects'=>$objects,
+            'hotspots'=>$hotspots,
         ]);
     }
 

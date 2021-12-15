@@ -19,27 +19,23 @@ class BoothsController extends Controller
         $tour = DB::table('tour')->find($id);
 
         $zones = \App\Models\Zone::where([
-            ['tourId', '=', $id],
-            ['isDeleted', '=', false]
-        ])->get();
+                ['tourId', '=', $id],
+                ['isDeleted', '=', false]
+            ])->get();
 
-        $groups = \App\Models\Zone::where([
-            ['tourId', '=', $id],
-            ['isDeleted', '=', false]
-        ])->get();
-        foreach ($groups as $group) {
-            $zoneId = $group->id;
-            $booths = \App\Models\Booth::whereHas('zone_booths', function ($q) use($zoneId){
-                    $q->where('zoneId', '=', $zoneId);
-                })->get();
-
-            $group->booths = $booths;
-        }
-
-        $freeBooths = \App\Models\Booth::where([
-            ['tourId', '=', $id],
-            ['isDeleted', '=', false]
-        ])->with('owner')->doesntHave('zone_booths')->get();
+        $groups = \App\Models\Zone::with('booths')
+            ->where([
+                ['tourId', '=', $id],
+                ['isDeleted', '=', false]
+            ])->get();
+        
+        $booths = \App\Models\Booth::where([
+                ['tourId', '=', $id],
+                ['zoneId', '=', null],
+                ['isDeleted', '=', false]
+            ])
+            ->with('owner')
+            ->get();
 
         $partners = DB::table('tour_partner')
             ->join('profile', 'profile.id', '=', 'tour_partner.partnerId')
@@ -55,7 +51,7 @@ class BoothsController extends Controller
             'tour'=> $tour, 
             'zones' => $zones, 
             'groups' => $groups, 
-            'freeBooths'=> $freeBooths,
+            'booths'=> $booths,
             'partners'=> $partners,
         ]);
     }

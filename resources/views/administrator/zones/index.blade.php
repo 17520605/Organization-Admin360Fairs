@@ -71,11 +71,11 @@
                                 <a class="link link-primary" id="popup-create-zone__toggle-booths-wrapper-btn">Choose booths</a>
                             </div>
                             <div class="mb-3 p-3 border booths-wrapper" style="display: none">
-                                @foreach ($freeBooths as $freeBooth)
+                                @foreach ($booths as $booth)
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="boothIds[]" value="{{$freeBooth->id}}" >
+                                        <input class="form-check-input" type="checkbox" name="boothIds[]" value="{{$booth->id}}" >
                                         <label class="form-check-label">
-                                            {{$freeBooth->name}}
+                                            {{$booth->name}}
                                         </label>
                                     </div>
                                 @endforeach
@@ -111,11 +111,11 @@
                             </div>
                             <div class="mb-3 p-3 border booths-wrapper" style="display: none">
                                 <div class="free-booths">
-                                    @foreach ($freeBooths as $freeBooth)
+                                    @foreach ($booths as $booth)
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="boothIds[]" value="{{$freeBooth->id}}" >
+                                        <input class="form-check-input" type="checkbox" name="boothIds[]" value="{{$booth->id}}" >
                                         <label class="form-check-label">
-                                            {{$freeBooth->name}}
+                                            {{$booth->name}}
                                         </label>
                                     </div>
                                     @endforeach

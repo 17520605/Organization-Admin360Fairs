@@ -206,7 +206,23 @@ class EventsController extends Controller
         $detailContents = $request->detailContents;
 
         // save file to cloud
-        $posterUrl = isset($poster) ? $this->uploadFile($poster, true)->url : 'https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg';
+        $posterUrl = 'https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg';
+        
+        if(isset($poster)){
+            $res = $this->uploadFile1($poster, true);
+            $asset = new \App\Models\Asset();
+            $asset->type = 'image';
+            $asset->target = 'webinar';
+            $asset->url = $res->url;
+            $asset->url = $res->url;
+            $asset->name = $poster->getClientOriginalName();
+            $asset->format = $poster->getClientOriginalExtension();
+            $asset->size = $res->bytes;
+            $asset->save();
+
+            $posterUrl = $asset->url;
+        }
+    
         $avatarUrls = [];
         foreach ($speakerNames as $key => $value) {
             $url = 'https://res.cloudinary.com/virtual-tour/image/upload/v1634458347/icons/default-avatar_muo2gc.jpg';
@@ -291,7 +307,22 @@ class EventsController extends Controller
         $webinar = \App\Models\Webinar::find($webinarId);
 
         // save file to cloud
-        $posterUrl = isset($poster) ? $this->uploadFile($poster, true)->url : $webinar->poster;
+        $posterUrl = $webinar->poster; 
+        if(isset($poster)){
+            $res = $this->uploadFile1($poster, true);
+            $asset = new \App\Models\Asset();
+            $asset->type = 'image';
+            $asset->target = 'webinar';
+            $asset->url = $res->url;
+            $asset->url = $res->url;
+            $asset->name = $poster->getClientOriginalName();
+            $asset->format = $poster->getClientOriginalExtension();
+            $asset->size = $res->bytes;
+            $asset->save();
+
+            $posterUrl = $asset->url;
+        }
+        
         $avatarUrls = [];
         foreach ($speakerNames as $key => $value) {
             $url = null;

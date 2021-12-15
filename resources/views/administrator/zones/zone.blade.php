@@ -150,26 +150,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($objects as $object)
+                                        @foreach ($hotspots as $hotspot)
                                         <tr>
                                             <td style="text-align: center">
-                                                @if ($object->type == 'image')
+                                                @if ($hotspot->type == 'image')
                                                    <span><i class="fas fa-image font-size-16 text-success"></i> <span style="display: none">1</span> </span> 
-                                                @elseif($object->type == 'video')
+                                                @elseif($hotspot->type == 'video')
                                                     <span><i class="far fa-play-circle font-size-16 text-danger"></i> <span style="display: none">2</span> </span> 
-                                                @elseif($object->type == 'audio')
+                                                @elseif($hotspot->type == 'audio')
                                                     <span><i class="fas fa-music font-size-16 text-info"></i><span style="display: none">3</span></span> 
-                                                @elseif($object->type == 'model')
+                                                @elseif($hotspot->type == 'model')
                                                     <span><i class="fab fa-unity font-size-16 text-models"></i><span style="display: none">4</span></span> 
                                                 @else 
                                                     <span><i class="fab fa-question-circle font-size-16 text-primary"></i><span style="display: none">5</span></span>
                                                 @endif
                                             </td>    
-                                            <td><span>{{$object->name}}</span></td>
-                                            <td><span>{{$object->viewCount}}</span></td>
-                                            <td><span> {{$object->likeCount}}</span></td>
-                                            <td><span>{{$object->commentCount}}</span></td>
-                                            <td class="actions"> <button class="btn-visit-now" onclick="openPopupObjectDetail({{$object->id}})">View Detail</button> </td>
+                                            <td><span>{{$hotspot->name}}</span></td>
+                                            <td><span>{{$hotspot->viewCount}}</span></td>
+                                            <td><span> {{$hotspot->likeCount}}</span></td>
+                                            <td><span>{{$hotspot->commentCount}}</span></td>
+                                            <td class="actions"> <button class="btn-visit-now" onclick="openPopupObjectDetail({{$hotspot->assetId}})">View Detail</button> </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -184,6 +184,7 @@
             </div>
         </div>
     </div>
+    {{-- POPUP ADD BOOTH TO ZONE--}}
     <div class="modal fade" id="popup-add-booth-to-zone" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -222,6 +223,92 @@
             </div>
         </div>
     </div>
+    {{-- POPUP OBJECT DETAIL --}}
+    <div class="modal fade" id="popup-object-detail" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xls" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light"> Details <span id="popup-object-detail__name-text" class="text-primary font-weight-bold"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <div id="popup-object-detail__preview-wrapper" style="width: 100%; height: 300px; border-radius: 5px;">
+                                <img src="" alt="" style="width: 100%; height: 300px; display: none; border-radius: 5px;">
+                                <iframe src="" style="display: none; width=100%; height: 300px ; border-radius: 5px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <video src="" alt="" controls style=" width=100%; height: 300px; display: none; border-radius: 5px;" controls></video>
+                                <audio src="" alt="" controls style=" width=100%; height: 300px;display: none; border-radius: 5px;"></audio>
+                                <model-viewer src="" style=" width=100%; 300px; display: none" shadow-intensity="1" camera-controls></model-viewer>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <span class="h6 font-weight-bold text-primary" style="margin: 0px">Views & Likes</span>
+                                    <div class="div_cardheader_btn">
+                                        <span class="mb-0 btn float-right"><i class="fas fa-thumbs-up"></i> <span id="popup-object-detail__like-count"></span> </span>
+                                        <span class="mb-0 btn float-right"><i class="fas fa-eye"></i> <span id="popup-object-detail__view-count"></span> </span>
+                                        <span class="mb-0 btn float-right"><i class="fas fa-user-friends"></i> <span id="popup-object-detail__visitor-count"></span> </span>
+                                    </div>
+                                </div> 
+                                <div class="card-body" style="height: 250px; width:100%;">
+                                    <div id="popup-object-detail__chart-wrapper" style="margin-top: -30px; width: 100%; height: 100%;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="popup-object-detail__comments-table" class="table table-bordered" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr style="background: #eef2f7;">
+                                            <th style="text-align: center; width: 5%;">#</th>
+                                            <th style="width: 20%;">Name</th>
+                                            <th style="width: 170px;">Datetime</th>
+                                            <th>Comment</th>
+                                            <th style="width: 50px;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="popup-object-detail__cover" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;border-radius: 5px;z-index: 10000;min-height: 70vh">
+                    <div class="pop-loader-wrapper">
+                        <div class="loader">
+                            <div class="m-t-30"><img src="{{ asset('admin-master/asset/images/logo-shortcut.svg')}}" width="48" height="48" alt="Lucid"></div>
+                            <p>
+                                </p><div class="waviy">
+                                    <span style="--i:1">P</span>
+                                    <span style="--i:2">l</span>
+                                    <span style="--i:3">e</span>
+                                    <span style="--i:4">a</span>
+                                    <span style="--i:5">s</span>
+                                    <span style="--i:6">e</span>
+                                    <span style="--i:7"></span>
+                                    <span style="--i:8">w</span>
+                                    <span style="--i:9">a</span>
+                                    <span style="--i:10">i</span>
+                                    <span style="--i:11">t</span>
+                                    <span style="--i:12">.</span>
+                                    <span style="--i:13">.</span>
+                                    <span style="--i:14">.</span>
+                                </div>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         var container, viewer ;
         
@@ -238,10 +325,12 @@
                 viewer.add(imagePanorama);
             @endif
         };
+
         function switchTag (tagName) {  
             $('.objects-wrapper').hide();     
             $('#'+tagName+'-wrapper').show();
         };
+
         function onGoToPanorama(target) {  
             debugger;
             let imageUrl = $(target).attr('src');
@@ -255,6 +344,194 @@
             viewer.OrbitControls.noZoom = true;
             let imagePanorama = new PANOLENS.ImagePanorama(imageUrl);
             viewer.add(imagePanorama);
+        }
+
+        async function openPopupObjectDetail(assetId){
+            $('#popup-object-detail').modal('show');
+            $('#popup-object-detail__cover').show();
+            $('#popup-object-detail__chart-wrapper').empty();
+            $("#popup-object-detail__preview-wrapper").children().hide();
+            $('#popup-object-detail__comments-table').find('tbody').empty();
+
+            sleep(500);
+
+            let res = await $.ajax({
+                type: "get",
+                url: "/administrator/tours/{{$tour->id}}/assets/"+ assetId +"/get-infor",
+                dataType: 'json',
+            });
+
+            if(res != null){
+
+                let asset = res.asset;
+                let views = res.views;
+                let likes = res.likes;
+                let comments = res.comments;
+
+                $('#popup-object-detail__name-text').text(asset.name || 'unnamed');
+
+                // show object
+                if(asset.type == "image"){
+                    let elm = $("#popup-object-detail__preview-wrapper").find('img');
+                    elm.show();
+                    elm.attr('src', asset.url);
+                }  
+                else
+                if(asset.type == "video"){
+                    if(asset.source == 'youtube'){
+                        let elm = $("#popup-object-detail__preview-wrapper").find('iframe');
+                        elm.show();
+                        let yt = K_URL.YouTube(asset.url);
+                        elm.attr('src', yt.embedUrl + '?showinfo=0');
+                    }
+                    else
+                    {
+                        let elm = $("#popup-object-detail__preview-wrapper").find('video');
+                        elm.show();
+                        elm.attr('src', asset.url + '#t=1');
+                    }    
+                }
+                else
+                if(asset.type == "audio"){
+                    let elm = $("#popup-object-detail__preview-wrapper").find('audio');
+                    elm.show();
+                    elm.attr('src', asset.url);
+                } 
+                else
+                if(asset.type == "model"){
+                    let elm = $("#popup-object-detail__preview-wrapper").find('model-viewer');
+                    elm.show();
+                    elm.attr('src', asset.url);
+                }  
+
+                // draw chart
+                let dataView = [];
+                let dataLike = [];
+                let dataVisiter = [];
+                let countView = 0;
+                let countLike = 0;
+                let visiterIds = [];
+                views.forEach(view => {
+                    countView ++;
+                    dataView.push({
+                        x: new Date(view.created_at).getTime(),
+                        y: countView
+                    });
+
+                    if(!visiterIds.includes(view.visitorId)){
+                        visiterIds.push(view.visitorId);
+                    }
+
+                    dataVisiter.push({
+                        x: new Date(view.created_at).getTime(),
+                        y: visiterIds.length
+                    });
+                });
+                likes.forEach(like => {
+                    countLike ++;
+                    dataLike.push({
+                        x: new Date(like.created_at).getTime(),
+                        y: countLike
+                    });
+                });
+                
+                $('#popup-object-detail__view-count').text(countView);
+                $('#popup-object-detail__visitor-count').text(visiterIds.length);
+                $('#popup-object-detail__like-count').text(countLike);
+                var options = {
+                    series:[
+                        {
+                            name: 'view',
+                            data: dataView
+                        },
+                        {
+                            name: 'like',
+                            data: dataLike
+                        },
+                        {
+                            name: 'visiter',
+                            data: dataVisiter
+                        },
+                    ],
+                    chart: {
+                        id: 'view-chart',
+                        height: 250,
+                        type: 'line',
+                        zoom: {
+                            type: 'x',
+                            enabled: true,
+                        },
+                        toolbar: {
+                            show: false,
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'straight'
+                    },
+                    grid: {
+                        row: {
+                            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                            opacity: 0.5
+                        },
+                    },
+                    yaxis: {
+                        labels: {
+                            formatter: function (val) {
+                            return (val / 1).toFixed(0);
+                            },
+                        },
+                        title: {
+                            text: 'count'
+                        },
+                    },
+                    xaxis: {
+                        type: 'datetime',
+                    }
+                };
+                if(assetViewChart != null){
+                    assetViewChart.destroy();
+                }
+                assetViewChart = new ApexCharts(document.querySelector("#popup-object-detail__chart-wrapper"), options);
+                assetViewChart.render();
+
+                // table
+                comments.forEach(comment => {
+                    let number = 1;
+                    let tr;
+                    if(comment.isHidden){
+                        tr = $(`
+                            <tr data-comment-id="`+ comment.id +`">
+                                <td style="text-align: center"> <span>`+ number++ +`</span></td>
+                                <td> <span style="opacity: 0.3">`+ comment.visitor.name +`</span></td>
+                                <td> <span style="opacity: 0.3">`+ new Date(comment.updated_at).toLocaleString()+` </span></td>
+                                <td> <span style="opacity: 0.3">`+ comment.text +`</span></td>
+                                <td class="actions btn-action-icon"><i class="fas fa-eye view" data-comment-id="`+comment.id+`" onclick="showComment(event)"></i></td>
+                            </tr>
+                        `);
+                    }
+                    else{
+                        tr = $(`
+                        <tr data-comment-id="`+ comment.id +`">
+                                <td style="text-align: center"> <span>`+ number++ +`</span></td>
+                                <td> <span>`+ comment.visitor.name +`</span></td>
+                                <td> <span> `+ new Date(comment.updated_at).toLocaleString()+` </span></td>
+                                <td> <span>`+ comment.text +`</span></td>
+                                <td class="actions btn-action-icon"><i class="fas fa-trash-alt delete" data-comment-id="`+comment.id+`" onclick="hideComment(event)"></i></td>
+                            </tr>
+                        `);
+                    }
+
+                    $('#popup-object-detail__comments-table').find('tbody').append(tr);
+                });
+                $('#popup-object-detail__comments-table').DataTable({
+                    "order": [[ 2, "desc" ]]
+                });
+
+                $('#popup-object-detail__cover').hide();
+            }
         }
     
     </script>

@@ -10,6 +10,6 @@ class Zone extends Model
     protected $table = 'zone';
 
     public function booths() {
-        return $this->hasMany(Zone_Booth::class, 'zoneId');
+        return $this->hasMany(Booth::class, 'zoneId');
     }
 }
