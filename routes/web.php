@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function (){
         Route::group(['prefix' => 'tours'], function(){
             // tour
             Route::get('/{id}', 'administrator\TourController@index');
+            Route::post('/{id}/tour/publictour', 'administrator\TourController@publicTour');
             Route::get('/{id}/tour', 'administrator\TourController@index');
             Route::get('/{id}/tour/edit', 'administrator\TourController@edit');
             Route::post('/{id}/tour/save-edit', 'administrator\TourController@saveEdit');

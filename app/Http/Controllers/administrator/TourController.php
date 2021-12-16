@@ -88,11 +88,21 @@ class TourController extends Controller
                 'endTime' => $end,
                 'image' => $image,
                 'location' => $location,
+                'isPublic' => false,
                 'description' => $description,
                 'image' => $image,
             ]);
 
         return back();
     }
+    public function publicTour($id, Request $request)
+    {
+        $tour = DB::table('tour')
+            ->where('id', $id)
+            ->update([
+                'isPublic' => true,
+            ]);
 
+        return back();
+    }
 }
