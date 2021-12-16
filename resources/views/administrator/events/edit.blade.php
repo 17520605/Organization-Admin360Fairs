@@ -365,7 +365,7 @@
         
         wrapper.find('input[name="detailTitles[]"]').val(title);
         wrapper.find('input[name="detailDurations[]"]').val(duration);
-        wrapper.find('.speaker-select-wrapper').preppend(select);
+        wrapper.find('.speaker-select-wrapper').append(select);
         wrapper.find('.speaker-content-wrapper').append(content);
         content.summernote({
             toolbar: [
