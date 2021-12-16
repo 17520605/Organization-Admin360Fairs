@@ -38,7 +38,6 @@ class AssetsController extends Controller
         ]);
     }
 
-
     public function object($id, $objectId, Request $request)
     {
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
