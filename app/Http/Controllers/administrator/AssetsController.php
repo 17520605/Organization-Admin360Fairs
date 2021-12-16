@@ -122,6 +122,7 @@ class AssetsController extends Controller
 
     public function saveCreate($id, Request $request)
     {  
+        $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tourId = $id;
         $boothId = $request->input('boothId');
         $type = $request->input('type');
@@ -131,6 +132,7 @@ class AssetsController extends Controller
 
         $asset = new \App\Models\Asset();
         $asset->tourId = $tourId;
+        $asset->ownerId = $profile->id;
         $asset->boothId = $boothId;
         $asset->type = $type;
         $asset->source = $source;

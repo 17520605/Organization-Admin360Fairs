@@ -850,6 +850,7 @@
                         </div>
                     </div>
                     <div class="progress-wrapper">
+                        <div class="uploading text-muted">Uploading...</div>
                         <div class="progress">
                             <div class="progress-value progress-bar progress-bar-striped progress-animations" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -1019,7 +1020,7 @@
             })
 
             $('#popup-upload-assets__OK-btn').click(function () {  
-                location.href = '/administrator/tours/{{$tour->id}}';
+                location.reload();
             })
 
             $('#popup-upload-assets__file-hidden-input').change(async function () {  
@@ -1027,44 +1028,46 @@
                 let count = files.length;
                 let success = 0;
                 let complete = 0;
+                if(files.length > 0){
+                    $('#popup-upload-assets').find('.errors').find('ul').empty();
+                    $('#popup-upload-assets').find('.input-wrapper').hide();
+                    $('#popup-upload-assets').find('.progress-wrapper').show();
+                    $('#popup-upload-assets').find('.uploading').show();
+                    for (let i = 0; i < files.length; i++) {
+                        $('#popup-upload-assets').attr('data-uploading', 1);
+                        const file = files[i];
+                        let type;
+                        if(file.type.includes('/')){
+                            type = file.type.split('/')[0];
+                        }
+                        else if(file.name.split('.').pop() == 'glb'){
+                            type = 'model';
+                        }
+                    
+                        try {
+                            await ajaxCreateAsset(type, 'local', file, null)
+                            .done(function () { 
+                                success++; 
+                            })
+                            .fail(function (xhd, status) {  
+                                let li = $(`<li> <span>`+ file.name +`</span><span> upload failed !</span></li>`);
+                                $('#popup-upload-assets').find('.errors').find('ul').append(li);
+                                $('#popup-upload-assets').find('.errors').show();
+                            })
+                            .always(function () {  
+                                complete++;
+                                $('#popup-upload-assets').find('.progress-value').attr('style', 'width: '+(complete * 100/count)+'% !important');
+                            })
+                        } catch (error) {
+                            
+                        } 
+                    };
 
-                $('#popup-upload-assets').find('.errors').find('ul').empty();
-                $('#popup-upload-assets').find('.input-wrapper').hide();
-                $('#popup-upload-assets').find('.progress-wrapper').show();
-
-                for (let i = 0; i < files.length; i++) {
-                    $('#popup-upload-assets').attr('data-uploading', 1);
-                    const file = files[i];
-                    let type;
-                    if(file.type.includes('/')){
-                        type = file.type.split('/')[0];
-                    }
-                    else if(file.name.split('.').pop() == 'glb'){
-                        type = 'model';
-                    }
-                
-                    try {
-                        await ajaxCreateAsset(type, 'local', file, null)
-                        .done(function () { 
-                            success++; 
-                        })
-                        .fail(function (xhd, status) {  
-                            let li = $(`<li> <span>`+ file.name +`</span><span> upload failed !</span></li>`);
-                            $('#popup-upload-assets').find('.errors').find('ul').append(li);
-                            $('#popup-upload-assets').find('.errors').show();
-                        })
-                        .always(function () {  
-                            complete++;
-                            $('#popup-upload-assets').find('.progress-value').attr('style', 'width: '+(complete * 100/count)+'% !important');
-                        })
-                    } catch (error) {
-                        
-                    } 
-                };
-
-                $('#popup-upload-assets').find('.result').show();
-                $('#popup-upload-assets').find('.result').text(success + "/" + count + ' files uploaded successfull.');
-                $('#popup-upload-assets__OK-btn').show();
+                    $('#popup-upload-assets').find('.uploading').hide();
+                    $('#popup-upload-assets').find('.result').show();
+                    $('#popup-upload-assets').find('.result').text(success + "/" + count + ' files uploaded successfull.');
+                    $('#popup-upload-assets__OK-btn').show();
+                }
             });
 
             $('.tab-btn').click(function (e) { 
