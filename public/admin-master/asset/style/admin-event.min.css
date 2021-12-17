@@ -15909,3 +15909,8 @@ select:focus {
     background: lavender;
     opacity: 1;
 }
+
+.content_show_event table {
+    /* max-width: 520px !important; */
+    width: 100% !important;
+}

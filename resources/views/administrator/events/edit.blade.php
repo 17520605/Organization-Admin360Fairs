@@ -97,7 +97,7 @@
                                         <button type="button" class="avatar-upload-btn" onclick="selectAvatar(event)" style="position: relative; width: 100px; height: 100px; border: none; border-radius: 50px">
                                             <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;">
                                                 <img type="image" src="{{$speaker->avatar}}" style="width: 100px; height: 100px; border-radius: 50px"/>
-                                                <i class="fas fa-sync-alt" style=" position: absolute; margin-top: 37px; margin-left: -64px; font-size: 26px;color: #FFF; "></i>
+                                                <i class="fas fa-sync-alt" style=" position: absolute; margin-top: 37px; margin-left: -64px; font-size: 26px;color: #2653d4; "></i>
                                             </div>
                                         </button>
                                         <input class="avatar-file-input" type="file" name="speakerAvatars[]" accept="image/*" hidden onchange="changeAvatar(event)">

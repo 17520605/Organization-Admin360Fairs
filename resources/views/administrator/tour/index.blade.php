@@ -7,7 +7,12 @@
                 <div class="card p-3">
                     <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">{{$tour->name}}</h1>
                     <div class="div_cardheader_btn">
-                        <button class="mb-0 btn float-right active btn-icon-loader" style="padding: 5px 28px 5px 40px;"><span class="icon-loader-form" style="margin-left: -30px;" ></span><i class="fas fa-globe"></i> Publish </button>
+                        @if ($tour->isPublic == 0)
+                            <button class="mb-0 btn float-right active btn-icon-loader" id="button_public_tour" style="padding: 5px 28px 5px 40px;"><span class="icon-loader-form" style="margin-left: -30px;" ></span><i class="fas fa-globe"></i> Publish </button>
+                        @else
+                            
+                        @endif
+                       
                         <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-tour"><i class="fas fa-pen"></i> Edit</button>
                     </div>
                 </div>
@@ -872,7 +877,23 @@
         $('#interest-table').DataTable();
     });
 </script>
-
+<script>
+    $('#button_public_tour').click(function(){
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/administrator/tours/{{$tour->id}}/tour/publictour",
+            data: {
+                isPublic : 1
+            },
+            success: function (res) {  
+                location.reload();  
+            }
+        });
+    });
+</script>
 <script>
     $('#popup-object-detail').on("hidden.bs.modal", function () {
         closePopupObjectDetail();
