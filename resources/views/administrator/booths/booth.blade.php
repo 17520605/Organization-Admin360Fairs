@@ -969,8 +969,8 @@
                     y: countView
                 });
 
-                if(!visitorIds.includes(view.visitor.id)){
-                    visitorIds.push(view.visitor.id);
+                if(!visitorIds.includes(view.visitorId)){
+                    visitorIds.push(view.visitorId);
                 }
 
                 dataVisitor.push({
