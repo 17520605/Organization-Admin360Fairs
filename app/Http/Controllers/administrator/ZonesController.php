@@ -44,28 +44,34 @@ class ZonesController extends Controller
         $panoramas = [];
         $hotspots = [];
         if($scene != null){
-            $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
-            $hotspots = \App\Models\Hotspot::where([
-                    ['isDeleted', '=', false],
-                    ['assetId', '!=', null],
+            $panoramas = \App\Models\Panorama::with('asset')
+                ->where([
+                    ['sceneId', '=', $scene->id],
+                    ['isDeleted', '=', false]
+                ])->get();
+            $objects = DB::table('asset')
+                ->join('hotspot', 'asset.id', '=', 'hotspot.assetId')
+                ->join('panorama', 'hotspot.panoramaId', '=', 'panorama.id')
+                ->where([
+                    ['hotspot.isDeleted', '=', false],
+                    ['panorama.sceneId', '=', $scene->id],
+                    ['panorama.isDeleted', '=', false],
+                    ['asset.id', '!=', null],
+                    ['asset.isDeleted', '=', false],
                 ])
-                ->whereHas('panorama', function ($q) use($scene){
-                    $q->where('sceneId', '=', $scene->id);
-                })
+                ->select('asset.*')
+                ->distinct()
                 ->get();
-            
-            foreach ($hotspots as $hotspot) {
-                $asset = \App\Models\Asset::find($hotspot->assetId);
-                $viewCount = \App\Models\View::where('assetId', $hotspot->assetId)->count();
-                $likeCount = \App\Models\Like::where('assetId',  $hotspot->assetId)->count();
+            foreach ($objects as $object) {
+                $viewCount = \App\Models\View::where('assetId', $object->id)->count();
+                $likeCount = \App\Models\Like::where('assetId',  $object->id)->count();
                 $commentCount = \App\Models\Comment::where([
-                        ['assetId', '=', $hotspot->assetId],
+                        ['assetId', '=', $object->id],
                         ['isHidden', '=', false],
                     ])->count();
-                $hotspot->viewCount = $viewCount;
-                $hotspot->likeCount = $likeCount;
-                $hotspot->commentCount = $commentCount;
-                $hotspot->asset = $asset;
+                $object->viewCount = $viewCount;
+                $object->likeCount = $likeCount;
+                $object->commentCount = $commentCount;
             }
         }
 
@@ -86,13 +92,14 @@ class ZonesController extends Controller
 
         return view('administrator.zones.zone', [
             'profile' => $profile,
+            'user' => Auth::user(),
             'tour'=> $tour,
             'panoramas'=> $panoramas, 
             'scene' => $scene,
             'zone'=>$zone,
             'booths' => $booths,
             'freeBooths' => $freeBooths,
-            'hotspots'=>$hotspots,
+            'objects'=> $objects,
         ]);
     }
 

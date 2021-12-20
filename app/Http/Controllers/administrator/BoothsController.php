@@ -126,8 +126,37 @@ class BoothsController extends Controller
         $booth = \App\Models\Booth::with('owner')->find($boothId);
         $scene = DB::table('scene')->find($booth->sceneId);
         $panoramas = [];
+        $hotspots = [];
         if($scene != null){
-            $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
+            $panoramas = \App\Models\Panorama::with('asset')
+                ->where([
+                    ['sceneId', '=', $scene->id],
+                    ['isDeleted', '=', false]
+                ])->get();
+            $objects = DB::table('asset')
+                ->join('hotspot', 'asset.id', '=', 'hotspot.assetId')
+                ->join('panorama', 'hotspot.panoramaId', '=', 'panorama.id')
+                ->where([
+                    ['hotspot.isDeleted', '=', false],
+                    ['panorama.sceneId', '=', $scene->id],
+                    ['panorama.isDeleted', '=', false],
+                    ['asset.id', '!=', null],
+                    ['asset.isDeleted', '=', false],
+                ])
+                ->select('asset.*')
+                ->distinct()
+                ->get();
+            foreach ($objects as $object) {
+                $viewCount = \App\Models\View::where('assetId', $object->id)->count();
+                $likeCount = \App\Models\Like::where('assetId',  $object->id)->count();
+                $commentCount = \App\Models\Comment::where([
+                        ['assetId', '=', $object->id],
+                        ['isHidden', '=', false],
+                    ])->count();
+                $object->viewCount = $viewCount;
+                $object->likeCount = $likeCount;
+                $object->commentCount = $commentCount;
+            }
         }
 
         $assets = \App\Models\Asset::where([
@@ -153,6 +182,7 @@ class BoothsController extends Controller
         ])->orderBy('created_at', 'DESC')->get();
 
         return view('administrator.booths.booth', [
+            'user' => $user,
             'profile' => $profile, 
             'tour'=> $tour, 
             'booth' => $booth,
@@ -161,7 +191,8 @@ class BoothsController extends Controller
             'assets' => $assets,
             'types' => $types,
             'views'=>$views,
-            'comments'=>$comments
+            'comments'=>$comments,
+            'objects'=>$objects,
         ]);
 
     }

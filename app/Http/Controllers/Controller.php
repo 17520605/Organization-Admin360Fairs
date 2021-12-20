@@ -57,38 +57,6 @@ class Controller extends BaseController
                                     return response(view('others.permission_denied'));
                                 }
                             } 
-                            else
-                            if($role == 'partner'){
-                                $tour_partner = DB::table('tour_partner')
-                                ->where([
-                                    ['tour_partner.tourId', '=', $tourId],
-                                    ['tour_partner.partnerId', '=', $profile->id],
-                                    ['tour_partner.status', '!=', \App\Models\Tour_Partner::UNCONFIRMED]
-                                ])
-                                ->first();
-    
-                                if($tour_partner != null){
-                                    return $next($request);
-                                }else{
-                                    return response(view('others.permission_denied'));
-                                }
-                            }
-                            else
-                            if($role == 'speaker'){
-                                $tour_speaker = DB::table('tour_speaker')
-                                ->where([
-                                    ['tour_speaker.tourId', '=', $tourId],
-                                    ['tour_speaker.speakerId', '=', $profile->id],
-                                    ['tour_speaker.status', '!=', \App\Models\Tour_Speaker::UNCONFIRMED]
-                                ])
-                                ->first();
-    
-                                if($tour_speaker != null){
-                                    return $next($request);
-                                }else{
-                                    return response(view('others.permission_denied'));
-                                }
-                            }
                         }
                     }
                 }
