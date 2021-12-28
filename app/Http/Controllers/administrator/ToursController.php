@@ -50,7 +50,7 @@ class ToursController extends Controller
 
     public function saveCreate(Request $request)
     {
-        
+        $profile = DB::table('profile')->where('userId', Auth::id())->first();
         $name = $request->name;
         $start_at = $request->start_at;
         $end_at = $request->end_at;

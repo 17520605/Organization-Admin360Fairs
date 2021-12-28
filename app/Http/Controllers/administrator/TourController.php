@@ -25,7 +25,7 @@ class TourController extends Controller
         
         $scene = \App\Models\Scene::find($tour->sceneId);
         $panoramas = [];
-        $hotspots = [];
+        $objects = [];
 
         if($scene != null){
             $panoramas = \App\Models\Panorama::with('asset')
