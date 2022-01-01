@@ -214,21 +214,21 @@
 </div>
 {{-- POPUP CONFIRM SENT EMAIL --}}
 <div class="modal fade" id="popup-confirm-send-email" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="fw-light">Send Email</h5>
                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="padding: 30px">
-                <div class="form-group p-3">
+            <div class="modal-body" style="padding: 20px">
+                <div class="form-group">
                     <span>You sure to send emails to partners</span>
                 </div>
             </div>
             <div class="modal-footer">
                 <input id="popup-confirm-delete-partner__id-hidden-input" type="hidden">
-                <button class="btn" type="submit">Cancel</button>
-                <button id="popup-confirm-send-email__send-btn" class="btn btn-primary btn-block" type="submit">Send</button>
+                <button class="btn btn-danger" type="submit" style="width: 120px;">Cancel</button>
+                <button id="popup-confirm-send-email__send-btn btn-icon-loader"  style="width: 120px;" class="btn btn-primary" type="submit"><span class="icon-loader-form"></span> Send</button>
             </div>
         </div>
     </div>
