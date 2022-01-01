@@ -25,37 +25,9 @@
         </div>
         <div class="div-tab-1">
             <div class="row" style="margin-bottom: 1.5rem;">
-                <div class="col-md-5" style="height: 70vh;">
+                <div class="col-md-5">
                     <div class="card">
-                        <div class="card-body" style="color: #555; font-size: 14px;">
-                            {{-- <div class="d-flex process-overview">
-                                <div class="flex-grow-1 overflow-hidden">
-                                    <div class="row" style="margin-bottom: 0.5rem">
-                                        <div class="col-lg-2">
-                                            <span style="color: #555;font-weight: 600 ;" >Zones : </span> 
-                                        </div>
-                                        <div class="col-lg-9">
-                                            <span>
-                                                <div id="progress-striped progress-xs" class="progress progress-striped mb-0">
-                                                    <div class="progress-bar progress-bar-warning" data-transitiongoal="43" aria-valuenow="43" style="width: 43%;">43%</div>
-                                                </div>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-bottom: 1rem">
-                                        <div class="col-lg-2">
-                                            <span style="color: #555;font-weight: 600 ;" >Booths :</span> 
-                                        </div>
-                                        <div class="col-lg-9">
-                                            <span>
-                                                <div id="progress-striped progress-xs" class="progress progress-striped mb-0">
-                                                    <div class="progress-bar progress-bar-warning" data-transitiongoal="43" aria-valuenow="43" style="width: 43%;">43%</div>
-                                                </div>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
+                        <div class="card-body" style="color: #555; font-size: 14px;height: 450px;">
                             <h6 class="font-size-15 font-weight-bold">General information: </h6>
                             <div class="d-flex">
                                 <div class="flex-grow-1 overflow-hidden">
@@ -70,15 +42,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card" style="margin-top: 2vh; height: 10vh;">
+                    <div class="card mt-3" style="margin-top: 2vh; height: 105px;">
                         <div class="row">
                             <div class="col-5" style="margin-left: 20px;margin-top: 10px;">
-                                <span style="font-size:12px">Start at</span>
-                                <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->startTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
+                                <span style="font-size:17px">Start at</span>
+                                <h6 style="font-size:18px;margin-top: 10px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->startTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
                             </div>
                             <div class="col-5" style="margin-left: 20px;margin-top: 10px;">
-                                <span style="font-size:12px">End at</span>
-                                <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->endTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
+                                <span style="font-size:17px">End at</span>
+                                <h6 style="font-size:18px;margin-top: 10px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->endTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
                             </div>
                         </div>
                     </div>
@@ -90,7 +62,7 @@
                         <div class="bg-config-overview">
                             <a href="{{env('TOOL_URL')}}/login?token={{$user->accessToken}}&url=/editor/{{$tour->id}}" target="_blank" class="btn-config-overview ">
                                 <i class="fas fa-cog"></i>
-                                <span>Config</span>
+                                <span>Go to VR Studio</span>
                             </a>
                         </div>
                     </div>

@@ -12,7 +12,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link btn-page-loader" href="/administrator/tours/{{$tour->id}}/dashboard">
+        <a class="nav-link btn-page-loader" href="#">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>

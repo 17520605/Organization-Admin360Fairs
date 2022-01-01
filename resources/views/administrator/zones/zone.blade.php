@@ -68,7 +68,7 @@
                         <div class="bg-config-overview">
                             <a href="{{env('TOOL_URL')}}/login?token={{$user->accessToken}}&url=/editor/{{$tour->id}}?z={{$zone->id}}" class="btn-config-overview ">
                                 <i class="fas fa-cog"></i>
-                                <span>Config</span>
+                                <span>Go to VR Studio</span>
                             </a>
                         </div>
                     </div>
