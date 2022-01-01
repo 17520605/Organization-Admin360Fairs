@@ -309,8 +309,11 @@
             </div>
         </div>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
         var container, viewer ;
+        var assetViewChart = null;
         
         function initViewer() {
             container = document.getElementById('viewer-container');
@@ -326,6 +329,10 @@
             @endif
         };
 
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
         function switchTag (tagName) {  
             $('.objects-wrapper').hide();     
             $('#'+tagName+'-wrapper').show();
