@@ -126,7 +126,7 @@ class BoothsController extends Controller
         $booth = \App\Models\Booth::with('owner')->find($boothId);
         $scene = DB::table('scene')->find($booth->sceneId);
         $panoramas = [];
-        $hotspots = [];
+        $objects = [];
         if($scene != null){
             $panoramas = \App\Models\Panorama::with('asset')
                 ->where([

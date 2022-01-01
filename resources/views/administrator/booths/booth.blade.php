@@ -90,10 +90,17 @@
                         <div id="viewer-container" style="width: 100%; height: 100%;">
                         </div>
                         <div class="bg-config-overview">
-                            <a href="{{env('TOOL_URL')}}/login?token={{$user->accessToken}}&url=/editor/{{$tour->id}}?b={{$booth->id}}" class="btn-config-overview ">
+                            @if ($booth->ownerId == $profile->id)
+                            <a target="_blank" href="{{env('TOOL_URL')}}/login?token={{$user->accessToken}}&url=/editor/{{$tour->id}}?b={{$booth->id}}" class="btn-config-overview ">
                                 <i class="fas fa-cog"></i>
-                                <span>View</span>
+                                <span>Go to VR Studio</span>
                             </a>
+                            @else
+                            <a target="_blank" href="{{env('TOOL_URL')}}/login?token={{$user->accessToken}}&url=/preview/{{$tour->id}}?b={{$booth->id}}" class="btn-config-overview ">
+                                <i class="fas fa-cog"></i>
+                                <span>Go to Preview</span>
+                            </a>
+                            @endif
                         </div> 
                     </div>
                     <div class="card mt-3" style="width: 100%; height: 105px; padding:8px;">
