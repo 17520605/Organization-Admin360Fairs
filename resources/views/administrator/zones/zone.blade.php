@@ -47,8 +47,8 @@
                                             @foreach ($panoramas as $panorama)
                                             <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
                                                 <div style="width: 135px; height: 90px;">
-                                                    <img src="{{$panorama->asset->url}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
-                                                    <span class="span-booth-name" style="font-weight: 600">{{$panorama->name}}</span>
+                                                    <img src="{{$panorama->asset->miniUrl()}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
+                                                    <span class="span-booth-name" style="font-weight: 600">{{$panorama->name != null ? $panorama->name : ($panorama->asset->name != null ? $panorama->asset->name : 'unnamed')}}</span>
                                                 </div>
                                             </div>
                                             @endforeach
@@ -68,7 +68,7 @@
                         <div class="bg-config-overview">
                             <a href="{{env('TOOL_URL')}}/login?token={{$user->accessToken}}&url=/editor/{{$tour->id}}?z={{$zone->id}}" class="btn-config-overview ">
                                 <i class="fas fa-cog"></i>
-                                <span>Config</span>
+                                <span>Go to VR Studio</span>
                             </a>
                         </div>
                     </div>
