@@ -61,8 +61,9 @@ class BoothController extends Controller
         $interests = \App\Models\Interest::with('visitor')->where('boothId', $id)->get();
 
         return view('partner.booth.index', [
+            'user' => $user,
             'profile' => $profile, 
-            'tour'=> $tour, 
+            'tour'=> $tour,
             'booth' => $booth,
             'panoramas' => $panoramas,
             'scene' => $scene,
@@ -72,7 +73,7 @@ class BoothController extends Controller
             'views' => $views,
             'interests' => $interests
         ]);
-    } 
+    }
 
     public function saveEdit($id, Request $request)
     {

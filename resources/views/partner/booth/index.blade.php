@@ -94,11 +94,17 @@
                     @if ($profile->id == $booth->ownerId || $booth->ownerId === null)
                     <div class="bg-config-overview">
                         @if($booth->isConfirmed === null && $booth->isWaitingApproval == false && $booth->ownerId == $profile->id)
-                            <a href="https://360fairs.com/" class="btn-config-overview "> <i class="fas fa-cog"></i><span>Config</span></a>
+                            <a href="{{env('TOOL_URL')}}/login?token={{$user->accessToken}}&url=/editor/{{$tour->id}}?b={{$booth->id}}" target="_blank" class="btn-config-overview ">
+                                <i class="fas fa-cog"></i>
+                                <span>Go to VR Studio</span>
+                            </a>
                         @elseif($booth->isConfirmed == false && $booth->isWaitingApproval == false && $booth->ownerId == $profile->id)
                             <button class="mb-0 btn float-right" data-toggle="modal" data-target="#popup-edit-booth"><i class="fas fa-pen"></i> Edit</button>
                         @else 
-                            <a href="https://360fairs.com/" class="btn-config-overview "> <i class="fas fa-eye"></i><span>View</span></a>
+                            <a href="{{env('TOOL_URL')}}/login?token={{$user->accessToken}}&url=/preview/{{$tour->id}}?b={{$booth->id}}" target="_blank" class="btn-config-overview ">
+                                <i class="fas fa-cog"></i>
+                                <span>Go to VR Preview</span>
+                            </a>
                         @endif
                     </div>
                     @endif 
