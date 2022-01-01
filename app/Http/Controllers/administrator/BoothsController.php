@@ -209,14 +209,8 @@ class BoothsController extends Controller
         $booth->name =  $name;
         $booth->tourId =  $id;
         $booth->ownerId =  $profile->id;
+        $booth->zoneId = $zoneId;
         $booth->save();
-
-        if(isset($zoneId)){
-            $zone_booth = new \App\Models\Zone_Booth();
-            $zone_booth->zoneId =  $zoneId;
-            $zone_booth->boothId =  $booth->id;
-            $zone_booth->save();
-        }
 
         return back();
     }
@@ -231,25 +225,8 @@ class BoothsController extends Controller
 
         $booth = \App\Models\Booth::find($boothId); 
         $booth->name =  $name;
+        $booth->zoneId = $zoneId;
         $booth->save();
-
-        $zone_booth = \App\Models\Zone_Booth::where('boothId', $boothId)->first();
-        
-        if(isset($zoneId) && isset($zone_booth)){ // booth chuyen tu zone nay sang zone khac
-            $zone_booth->zoneId =  $zoneId;
-            $zone_booth->save();
-        }
-        else
-        if(isset($zoneId) && !isset($zone_booth)){ //booth chuyen vao zone
-            $zone_booth = new \App\Models\Zone_Booth();
-            $zone_booth->boothId = $boothId;
-            $zone_booth->zoneId = $zoneId;
-            $zone_booth->save();
-        }
-        else
-        if(isset($zone_booth)){ //booth ra khoi zone
-            $zone_booth ->delete();
-        }
 
         return back();
     }
