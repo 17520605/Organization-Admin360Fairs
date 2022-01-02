@@ -907,14 +907,26 @@
     </div>
     {{-- POPUP ASSET  DETAIL --}}
     <div class="modal fade" id="popup-asset-detail" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="fw-light">Asset Detail </h5>
-                   <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="padding: 30px">
+                    <input id="popup-asset-detail__id-hidden-input" type="hidden">
                     <div class="row mb-3" >
+                        <div class="col-md-8 view_booth_panoles">
+                            <div class="card" style="width: 100% ; height: 100%; padding:20px;">
+                                <div class="preview-wrapper" style="width: 100%; height: 100%;">
+                                    <img src="" alt="" style="width: 100%;height: 450px; display: none">
+                                    <iframe src="" style="display: none" width="100%" height="450px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <video src="" alt="" controls style="width: 100%;max-height: 450px;display: none" controls></video>
+                                    <audio src="" alt="" controls style="width: 100%;max-height: 450px;display: none"></audio>
+                                    <model-viewer src="" style="width: 100%; height: 100%;max-height: 450px; display: none" shadow-intensity="1" camera-controls></model-viewer>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-4">
                             <div class="card" style="min-height:450px ; height: 100% ;">
                                 <div class="card-body" style="color: #555; font-size: 14px;">
@@ -923,15 +935,15 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <p class="text-muted mb-2"> Name:  </p>
-                                                <p class="text-muted mb-2"> Type: </p>
                                                 <p class="text-muted mb-2"> Source: </p>
                                                 <p class="text-muted mb-2"> Format: </p>
                                                 <p class="text-muted mb-2"> size: </p>
                                                 <p class="text-muted mb-2"> Updated at: </p>
                                             </div>
                                             <div class="col-8">
-                                                <p class="text-muted mb-2"><span id="popup-asset-detail__name-text" class="ml-2 font-weight-bold"></span> </p>
-                                                <p class="text-muted mb-2"><span id="popup-asset-detail__type-text" class="ml-2 font-weight-bold"></span></p>
+                                                <p class="text-muted mb-2"><span id="popup-asset-detail__name-input" class="ml-2 font-weight-bold" style="max-width: 90%; overflow: hidden;
+                                                    text-overflow: ellipsis;
+                                                    white-space: nowrap;"></span></p>
                                                 <p class="text-muted mb-2"><span id="popup-asset-detail__source-text" class="ml-2 font-weight-bold"></span></p>
                                                 <p class="text-muted mb-2"><span id="popup-asset-detail__format-text" class="ml-2 font-weight-bold"></span></p>
                                                 <p class="text-muted mb-2"><span id="popup-asset-detail__size-text" class="ml-2 font-weight-bold"></span></p>
@@ -939,17 +951,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-8 view_booth_panoles">
-                            <div class="card" style="width: 100% ; height: 300px; padding:20px;">
-                                <div class="preview-wrapper" style="width: 100%; height: 100%;">
-                                    <img src="" alt="" style="width: 100%; display: none">
-                                    <iframe src="" style="display: none" width="100%" height="400px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                    <video src="" alt="" controls style="width: 100%;display: none" controls></video>
-                                    <audio src="" alt="" controls style="width: 100%;display: none"></audio>
-                                    <model-viewer src="" style="width: 100%; height: 100%; display: none" shadow-intensity="1" camera-controls></model-viewer>
                                 </div>
                             </div>
                         </div>
@@ -1196,7 +1197,7 @@
                 }
             });
             
-            $('#popup-asset-detail__name-text').text(asset.name);
+            $('#popup-asset-detail__name-input').text(asset.name);
             $('#popup-asset-detail__type-text').text(asset.type);
             $('#popup-asset-detail__source-text').text(asset.source);
             $('#popup-asset-detail__format-text').text(asset.format);

@@ -280,7 +280,8 @@
      <script>
     
         function scroll_left_i(){
-            document.getElementById('container_track_img').scrollLeft -= 140;
+            // document.getElementById('container_track_img').scrollLeft -= 240;
+            $('#container_track_img').animate( { scrollLeft: '-=260' }, 1000);
             if($('#container_track_img').scrollLeft() == 0) {
                 $('.fa-chevron-circle-left').css('opacity','0.7');
                 $('.fa-chevron-circle-left').css('color','#dc3545');
@@ -291,7 +292,8 @@
             }
         }
         function scroll_right_i(){
-            document.getElementById('container_track_img').scrollLeft += 140;
+            // document.getElementById('container_track_img').scrollLeft += 240;
+            $('#container_track_img').animate( { scrollLeft: '+=260' }, 1000);
             $('.fa-chevron-circle-left').css('opacity','1');
             $('.fa-chevron-circle-left').css('color','#4e73df');
         }
