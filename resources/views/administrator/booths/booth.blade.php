@@ -110,7 +110,7 @@
                                             @foreach ($panoramas as $panorama)
                                                 <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
                                                     <div style="width: 135px; height: 90px;">
-                                                        <img src="{{$panorama->asset->miniUrl()}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
+                                                        <img src="{{$panorama->asset->miniUrl()}}" onclick="onGoToPanorama({{$panorama->id}})" class="slide_track__image panorama-thumbnail__image">
                                                         <span class="span-booth-name" style="font-weight: 600">{{$panorama->name  != null ? $panorama->name : 'unnamed'}}</span>
                                                     </div>
                                                 </div>
