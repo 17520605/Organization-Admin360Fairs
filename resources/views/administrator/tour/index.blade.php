@@ -189,7 +189,7 @@
                                                     <td> <span>{{$comment->visitor->name}}</span></td>
                                                     <td> <span>{{$comment->updated_at}}</span></td>
                                                     <td> <span class="span_comment_height">{{$comment->text}}</span></td>
-                                                    <td class="actions btn-action-icon"><i class="fas fa-trash-alt delete" data-comment-id="{{$comment->id}}" onclick="hideComment(event)"></i></td>
+                                                    <td class="actions btn-action-icon"><i class="fas fa-eye-slash delete" data-comment-id="{{$comment->id}}" onclick="hideComment(event)"></i></td>
                                                 </tr>
                                             @else 
                                                 <tr data-comment-id="{{$comment->id}}">
@@ -527,7 +527,7 @@
             success: function (res) {  
                 if(res == true || res == '1'){
                     row.find('td').not('.actions').find('span').css('opacity', 1);
-                    row.find('.actions').html('<i class="fas fa-trash-alt delete" data-comment-id="'+ commentId +'" onclick="hideComment(event)"></i>');
+                    row.find('.actions').html('<i class="fas fa-eye-slash delete" data-comment-id="'+ commentId +'" onclick="hideComment(event)"></i>');
                 }
             }
         });
@@ -706,7 +706,7 @@
                             <td> <span>`+ comment.visitor.name +`</span></td>
                             <td> <span> `+ new Date(comment.updated_at).toLocaleString()+` </span></td>
                             <td> <span>`+ comment.text +`</span></td>
-                            <td class="actions btn-action-icon"><i class="fas fa-trash-alt delete" data-comment-id="`+comment.id+`" onclick="hideComment(event)"></i></td>
+                            <td class="actions btn-action-icon"><i class="fas fa-eye-slash delete" data-comment-id="`+comment.id+`" onclick="hideComment(event)"></i></td>
                         </tr>
                     `);
                 }

@@ -526,7 +526,7 @@
                                 <td> <span>`+ comment.visitor.name +`</span></td>
                                 <td> <span> `+ new Date(comment.updated_at).toLocaleString()+` </span></td>
                                 <td> <span>`+ comment.text +`</span></td>
-                                <td class="actions btn-action-icon"><i class="fas fa-trash-alt delete" data-comment-id="`+comment.id+`" onclick="hideComment(event)"></i></td>
+                                <td class="actions btn-action-icon"><i class="fas fa-eye-slash delete" data-comment-id="`+comment.id+`" onclick="hideComment(event)"></i></td>
                             </tr>
                         `);
                     }
