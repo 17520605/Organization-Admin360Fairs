@@ -785,6 +785,7 @@
         var assetViewChart = null;
         var views = {!! json_encode($views) !!};
         var assets = {!! json_encode($assets) !!}
+        var panoramas = {!! json_encode($panoramas) !!};
 
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
@@ -795,18 +796,17 @@
             $('.' + type + '-card').show();
         }
 
-        function onGoToPanorama(target) {  
-            let imageUrl = $(target).attr('src');
-            viewer.destroy();
-            container.innerHTML = "";
-            viewer = new PANOLENS.Viewer({
-                container: container,
-                autoRotate: true,
-                autoRotateSpeed: 1.0,
-            });
-            viewer.OrbitControls.noZoom = true;
-            let imagePanorama = new PANOLENS.ImagePanorama(imageUrl);
+        function onGoToPanorama(panoramaId) {  
+            let panorama;
+            for (const p of panoramas) {
+                if(p.id == panoramaId){
+                    panorama = p;
+                }
+            }
+            viewer.remove(viewer.panorama);
+            let imagePanorama = new PANOLENS.ImagePanorama(panorama.asset.url);
             viewer.add(imagePanorama);
+            viewer.setPanorama(imagePanorama);
         }
 
         function initViewer() {

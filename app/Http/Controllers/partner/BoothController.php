@@ -70,11 +70,9 @@ class BoothController extends Controller
             ->groupBy('type')
             ->get();
         
-        $views = \App\Models\View::with('visitor')->where('boothId', $id)->get();
-        $comments = \App\Models\Comment::with('visitor')->where([
-            ['boothId', '=', $id],
-            ['isHidden', '=', false],
-        ])->orderBy('created_at', 'DESC')->get();
+        $views = \App\Models\View::where('boothId', $id)->get();
+        $likes = \App\Models\Like::where('boothId', $id)->get();
+        $comments = \App\Models\Comment::with('visitor')->where('boothId', $id)->orderBy('created_at', 'DESC')->get();
 
         return view('partner.booth.index', [
             'user' => $user,
@@ -86,6 +84,7 @@ class BoothController extends Controller
             'assets' => $assets,
             'types' => $types,
             'views'=>$views,
+            'likes'=>$likes,
             'comments'=>$comments,
             'objects'=>$objects,
         ]);

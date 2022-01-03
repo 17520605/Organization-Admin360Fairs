@@ -1253,29 +1253,16 @@
 
     <script>
         var viewer;
+        var assetViewChart = null;
         var container = document.getElementById('viewer-container');
-        var views = [
-            @for($i = 0; $i < count($views); $i++)
-                @if ($views[$i]->visitor != null)
-                {   
-                    id: '{{$views[$i]->id}}' ,
-                    name: '{{$views[$i]->visitor->name}}',
-                    email: '{{$views[$i]->visitor->email}}',
-                    contact: '{{$views[$i]->visitor->contact}}',
-                    visitAt: '{{$views[$i]->visitAt}}'
-                }
-                @else
-                {   
-                    id: '{{$views[$i]->id}}',
-                    name: 'Anonymous',
-                    email: 'N/A',
-                    contact: 'N/A',
-                    visitAt: '{{$views[$i]->visitAt}}'
-                }
-                @endif
-                @if ($i < count($views) - 1 ) , @endif
-            @endfor
-        ]
+        var views = {!! json_encode($views) !!};
+        var likes = {!! json_encode($likes) !!};
+        var panoramas = {!! json_encode($panoramas) !!};
+
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
 
         function cancelRequest() {  
             $.ajax({
@@ -1323,23 +1310,21 @@
             $('.' + type + '-card').show();
         }
 
-        function onGoToPanorama(target) {  
-            let imageUrl = $(target).attr('src');
-            viewer.destroy();
-            container.innerHTML = "";
-            viewer = new PANOLENS.Viewer({
-                container: container,
-                autoRotate: true,
-                autoRotateSpeed: 1.0,
-            });
-            viewer.OrbitControls.noZoom = true;
-            let imagePanorama = new PANOLENS.ImagePanorama(imageUrl);
+        function onGoToPanorama(panoramaId) {  
+            let panorama;
+            for (const p of panoramas) {
+                if(p.id == panoramaId){
+                    panorama = p;
+                }
+            }
+            viewer.remove(viewer.panorama);
+            let imagePanorama = new PANOLENS.ImagePanorama(panorama.asset.url);
             viewer.add(imagePanorama);
+            viewer.setPanorama(imagePanorama);
         }
 
         function initViewer() {
             let container = document.getElementById('viewer-container');
-            container.innerHTML = "";
             viewer = new PANOLENS.Viewer({
                 container: container,
                 autoRotate: true,
@@ -1348,28 +1333,61 @@
             viewer.OrbitControls.noZoom = true;
 
             @if ($scene != null && $scene->defaultPanoramaId != null)
-                ma("{{$panoramas->where('id', $scene->defaultPanoramaId)->first()->asset->url}}");
-                viewer.add(imagePanorama);
+            let imagePanorama = new PANOLENS.ImagePanorama("{{$panoramas->where('id', $scene->defaultPanoramaId)->first()->asset->url}}");
+            viewer.add(imagePanorama);
             @endif
         }
 
-        function initViewChart() { 
-            
-            let data = [];
-            let count = 0;
+        function initViewChart() {      
+            let dataView = [];
+            let dataLike = [];
+            let dataVisiter = [];
+            let countView = 0;
+            let countLike = 0;
+            let visiterIds = [];
             views.forEach(view => {
-                count ++;
-                data.push({
-                    x: new Date(view.visitAt).getTime(),
-                    y: count
-                })
+                countView ++;
+                dataView.push({
+                    x: new Date(view.created_at).getTime(),
+                    y: countView
+                });
+
+                if(!visiterIds.includes(view.visitorId)){
+                    visiterIds.push(view.visitorId);
+                }
+
+                dataVisiter.push({
+                    x: new Date(view.created_at).getTime(),
+                    y: visiterIds.length
+                });
+            });
+            likes.forEach(like => {
+                countLike ++;
+                dataLike.push({
+                    x: new Date(like.created_at).getTime(),
+                    y: countLike
+                });
             });
 
+            $('#views__view-count').text(countView);
+            $('#views__visitor-count').text(visiterIds.length);
+            $('#views__like-count').text(countLike);
+
             var options = {
-                series:[{
-                    name: 'view',
-                    data: data
-                }],
+                series:[
+                    {
+                        name: 'view',
+                        data: dataView
+                    },
+                    {
+                        name: 'like',
+                        data: dataLike
+                    },
+                    {
+                        name: 'visiter',
+                        data: dataVisiter
+                    },
+                ],
                 chart: {
                     height: 400,
                     type: 'line',
@@ -1382,7 +1400,7 @@
                     enabled: false
                 },
                 stroke: {
-                    curve: 'smooth'
+                    curve: 'straight'
                 },
                 grid: {
                     row: {
@@ -1397,13 +1415,13 @@
                         },
                     },
                     title: {
-                        text: 'View count'
+                        text: 'count'
                     },
                 },
                 xaxis: {
                     type: 'datetime',
                     title: {
-                        text: 'Datetime'
+                        text: 'datetime'
                     },
                 }
             };
@@ -1464,8 +1482,6 @@
     </script>
     <script>
         $(document).ready(function() {
-
-            initViewer();
 
             let elms = $('.repair-yt-url');
             $.each(elms, function (i, elm) { 
