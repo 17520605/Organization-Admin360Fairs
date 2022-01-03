@@ -129,7 +129,7 @@
                                             @foreach ($panoramas as $panorama)
                                                 <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
                                                     <div style="width: 135px; height: 90px;">
-                                                        <img src="{{$panorama->asset->miniUrl()}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
+                                                        <img src="{{$panorama->asset->miniUrl()}}" onclick="onGoToPanorama({{$panorama->id}})" class="slide_track__image panorama-thumbnail__image">
                                                         <span class="span-booth-name" style="font-weight: 600">{{$panorama->name  != null ? $panorama->name : 'unnamed'}}</span>
                                                     </div>
                                                 </div>
@@ -1340,6 +1340,7 @@
 
         function initViewer() {
             let container = document.getElementById('viewer-container');
+            container.innerHTML = "";
             viewer = new PANOLENS.Viewer({
                 container: container,
                 autoRotate: true,
@@ -1348,7 +1349,7 @@
             viewer.OrbitControls.noZoom = true;
 
             @if ($scene != null && $scene->defaultPanoramaId != null)
-                let imagePanorama = new PANOLENS.ImagePanorama("{{$panoramas->where('id', $scene->defaultPanoramaId)->first()->imageUrl}}");
+                ma("{{$panoramas->where('id', $scene->defaultPanoramaId)->first()->asset->url}}");
                 viewer.add(imagePanorama);
             @endif
         }

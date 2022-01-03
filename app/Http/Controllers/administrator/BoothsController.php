@@ -175,11 +175,9 @@ class BoothsController extends Controller
             ->groupBy('type')
             ->get();
         
-        $views = \App\Models\View::with('visitor')->where('boothId', $boothId)->get();
-        $comments = \App\Models\Comment::with('visitor')->where([
-            ['boothId', '=', $boothId],
-            ['isHidden', '=', false],
-        ])->orderBy('created_at', 'DESC')->get();
+        $views = \App\Models\View::where('boothId', $boothId)->get();
+        $likes = \App\Models\Like::where('boothId', $boothId)->get();
+        $comments = \App\Models\Comment::with('visitor')->where('boothId', $boothId)->orderBy('created_at', 'DESC')->get();
 
         return view('administrator.booths.booth', [
             'user' => $user,
