@@ -13703,6 +13703,8 @@ img {
     left: -8px;
 }
 
+
+
 .line-time .timeline .timeline-box {
     position: relative;
     display: inline-block;
@@ -13798,6 +13800,16 @@ img {
     -webkit-transform: rotate( 45deg);
     transform: rotate(45deg);
     margin: 0 auto;
+}
+
+
+.line-time .timeline .timeline-box-card:nth-child(odd) .hover-a-webinar {
+    margin-right: 50px !important;
+}
+
+
+.line-time .timeline .timeline-box-card:nth-child(even) .hover-a-webinar{
+    margin-left: 50px !important;
 }
 
 .line-time .timeline .timeline-box-card:nth-child(even) {

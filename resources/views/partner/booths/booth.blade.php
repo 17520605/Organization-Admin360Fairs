@@ -259,7 +259,7 @@
                         <div class="row" style="height: 430px;">
                             @foreach ($boothObjects as $object)
                                 @if ($object->type == 'image')
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" style="padding: 5px;">
                                     <div class="card object-file-booth">
                                         <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                             <a href="javascript:void(0);">
@@ -279,7 +279,7 @@
                                 </div>
                                 @endif
                                 @if ($object->type == 'video')
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" style="padding: 5px;">
                                     @if ($object->source == 'local')
                                     <div class="card object-file-booth">
                                         <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
@@ -314,7 +314,7 @@
                                 </div>
                                 @endif
                                 @if ($object->type == 'audio')
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" style="padding: 5px;">
                                     <div class="card object-file-booth">
                                         <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                             <a href="javascript:void(0);">
@@ -333,7 +333,7 @@
                                 </div>
                                 @endif
                                 @if ($object->type == 'model')
-                                <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" style="padding: 5px;">
                                     <div class="card object-file-booth">
                                         <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                             <a href="javascript:void(0);">
@@ -369,7 +369,7 @@
                                 $images = $boothObjects->where('type', 'image')->all();
                             @endphp
                             @foreach ($images as $image)
-                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" style="padding: 5px;">
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                         <a href="javascript:void(0);">
@@ -403,7 +403,7 @@
                                 $videos = $boothObjects->where('type', 'video')->all();
                             @endphp
                             @foreach ($videos as $video)
-                            <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12">
                                 @if ($video->source == 'local')
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
@@ -458,7 +458,7 @@
                                 $audios = $boothObjects->where('type', 'audio')->all();
                             @endphp
                             @foreach ($audios as $audio)
-                            <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12">
                                 @if ($audio->source == 'local')
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
@@ -513,7 +513,7 @@
                                 $models = $boothObjects->where('type', 'model')->all();
                             @endphp
                             @foreach ($models as $model)
-                            <div class="col-lg-3 col-md-4 col-sm-12" style="padding: 5px;">
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" style="padding: 5px;">
                                 <div class="card object-file-booth">
                                     <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                         <a href="javascript:void(0);">
