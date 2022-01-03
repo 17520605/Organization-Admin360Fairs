@@ -42,13 +42,6 @@
                 </div>
             </div>
         </div>
-        @if ($profile->id == $booth->ownerId || $booth->ownerId === null)
-        <div class="tab-header mb-3 webinar-tab" style="width: 100%; height: 40px; mb-2 ">
-            <span class="btn-tab-2 tab-header-btn btn btn-primary float-left"><i class="fas fa-eye"></i></span>
-            <span class="btn-tab-1 tab-header-btn btn btn-primary float-left active" ><i class="fas fa-stream"></i></span>
-            <span class="btn-tab-3 tab-header-btn btn btn-primary float-left"><i class="far fa-dot-circle"></i></span>
-        </div>
-        @endif
         <div class="div-tab-1">
             <div class="row mb-3">
                 <div class="col-md-5">
@@ -134,24 +127,19 @@
             </div>
             <div class="row  mb-3" >
                 <div class="filemanager-sidebar col-md-3 card" style="padding: 0">
-                    @php
-                        $storageLimit = floatval(1000);
-                        $totalSize = floatval($types->sum('size'))/(1048576);
-                        $totalPercent = ($storageLimit != 0) ? (number_format($totalSize * 100 / $storageLimit, 1)) : 0;
-                    @endphp
                     <div class="text-center mt-3">
                         <h3 class="font-weight-bold text-primary">Storage</h3>
-                        <p class="text-muted mt-4">{{number_format($totalSize, 1)}} MB ({{number_format($totalPercent, 1)}}%) of {{$storageLimit}} MB</p>
+                        <p class="text-muted mt-4"> MB  of  MB</p>
                     </div>
                     <div class="card">
                         <div class="card-body" style="color: #555; font-size: 14px;">
                             <div class="border shadow-none mb-2 card total_bar_object" style="padding: 0.5rem" >
                                 <a class="text-body">
                                     <div class="body">
-                                        <h4 style="color: #555">Used :{{ number_format($totalSize, 1)}} MB  <i class="fa fa-server float-right"></i></h4>
-                                        <p class="mb-0">Storage <small class="text-muted float-right">of {{ $storageLimit}}MB</small></p>
+                                        <h4 style="color: #555">Used : MB  <i class="fa fa-server float-right"></i></h4>
+                                        <p class="mb-0">Storage <small class="text-muted float-right">of MB</small></p>
                                         <div class="progress progress-striped" style="width: 100%; padding: 0; height: 20px;background: #bbbbbb77;">
-                                            @if ($totalPercent < 10)
+                                            {{-- @if ($totalPercent < 10)
                                                 <div class="progress-bar progress-bar-success" style="border-radius: 5px; width: {{$totalPercent}}%;"></div>
                                             @elseif ($totalPercent < 40)
                                                 <div class="progress-bar progress-bar-success" style="border-radius: 5px; width: {{$totalPercent}}%;">{{$totalPercent}}%</div>
@@ -159,17 +147,12 @@
                                                 <div class="progress-bar progress-bar-warning" style="border-radius: 5px; width: {{$totalPercent}}%;">{{$totalPercent}}%</div>
                                             @elseif ($totalPercent > 80)
                                                 <div class="progress-bar progress-bar-danger" style="border-radius: 5px; width: {{$totalPercent}}%;">{{$totalPercent}}%</div>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                     </div>
                                 </a>
                             </div>
                             <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('all')">
-                                @php
-                                    $totalCount =($types->sum('count'));
-                                    $totalSize = floatval($types->sum('size'))/(1048576);
-                                    $totalPercent = number_format($totalSize * 100 / $storageLimit, 1);
-                                @endphp
                                 <a class="text-body btn-item-object-hover">
                                     <div class="p-2">
                                         <div class="d-flex">
@@ -178,21 +161,16 @@
                                             </div>
                                             <div class="overflow-hidden me-auto">
                                                 <h5 class="font-black-555 text-truncate mb-1">All</h5>
-                                                <p class="text-muted text-truncate mb-0">{{$totalCount}} Files</p>
+                                                <p class="text-muted text-truncate mb-0"> Files</p>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                                 <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                    <div class="progress-bar bg-warning" data-transitiongoal="{{$totalPercent}}" aria-valuenow="{{$totalPercent}}" style="width: {{$totalPercent}}%;"></div>
+                                    <div class="progress-bar bg-warning" data-transitiongoal="" aria-valuenow="" style="width: %;"></div>
                                 </div>
                             </div>
                             <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('image')">
-                                @php
-                                    $imageCount = ($types->where('type', 'image')->first() != null) ? ($types->where('type', 'image')->first()->count) : 0;
-                                    $imageSize =  ($types->where('type', 'image')->first() != null) ? (number_format(floatval($types->where('type', 'image')->first()->size) / 1048576 , 1)) : 0;
-                                    $imagePercent = ($totalSize != 0) ? (number_format($imageSize * 100 / $totalSize, 1)) : 0;
-                                @endphp
                                 <a class="text-body btn-item-object-hover">
                                     <div class="p-2">
                                         <div class="d-flex">
@@ -201,24 +179,19 @@
                                             </div>
                                             <div class="overflow-hidden me-auto">
                                                 <h5 class="font-black-555 text-truncate mb-1">Images</h5>
-                                                <p class="text-muted text-truncate mb-0">{{$imageCount}} Files</p>
+                                                <p class="text-muted text-truncate mb-0"> Files</p>
                                             </div>
                                             <div class="ml-2">
-                                                <p class="text-muted">{{ $imageSize }} MB</p>
+                                                <p class="text-muted"> MB</p>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                                 <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                    <div class="progress-bar bg-success" data-transitiongoal="{{$imagePercent}}" aria-valuenow="{{$imagePercent}}" style="width: {{$imagePercent}}%;"></div>
+                                    <div class="progress-bar bg-success" data-transitiongoal="" aria-valuenow="" style="width: %;"></div>
                                 </div>
                             </div>
                             <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('video')">
-                                @php
-                                    $videoCount = ($types->where('type', 'video')->first() != null) ? ($types->where('type', 'video')->first()->count) : 0;
-                                    $videoSize =  ($types->where('type', 'video')->first() != null) ? (number_format(floatval($types->where('type', 'video')->first()->size) / 1048576 , 1)) : 0;
-                                    $videoPercent = ($totalSize != 0) ? (number_format($videoSize * 100 / $totalSize, 1)) : 0;
-                                @endphp
                                 <a class="text-body btn-item-object-hover">
                                     <div class="p-2">
                                         <div class="d-flex">
@@ -227,24 +200,19 @@
                                             </div>
                                             <div class="overflow-hidden me-auto">
                                                 <h5 class="font-black-555 text-truncate mb-1">Video</h5>
-                                                <p class="text-muted text-truncate mb-0">{{$videoCount}} Files</p>
+                                                <p class="text-muted text-truncate mb-0">Files</p>
                                             </div>
                                             <div class="ml-2">
-                                                <p class="text-muted">{{$videoSize}} MB</p>
+                                                <p class="text-muted"> MB</p>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                                 <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                    <div class="progress-bar bg-danger" data-transitiongoal="{{$videoPercent}}" aria-valuenow="{{$videoPercent}}" style="width: {{$videoPercent}}%;"></div>
+                                    <div class="progress-bar bg-danger" data-transitiongoal="" aria-valuenow="" style="width: %;"></div>
                                 </div>
                             </div>
                             <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('audio')">
-                                @php
-                                    $audioCount = ($types->where('type', 'audio')->first() != null) ? ($types->where('type', 'audio')->first()->count) : 0;
-                                    $audioSize =  ($types->where('type', 'audio')->first() != null) ? (number_format(floatval($types->where('type', 'audio')->first()->size) / 1048576 , 1)) : 0;
-                                    $audioPercent = ($totalSize != 0) ? (number_format($audioSize * 100 / $totalSize, 1)) : 0;
-                                @endphp
                                 <a class="text-body btn-item-object-hover">
                                     <div class="p-2">
                                         <div class="d-flex">
@@ -253,24 +221,19 @@
                                             </div>
                                             <div class="overflow-hidden me-auto">
                                                 <h5 class="font-black-555 text-truncate mb-1">Audios</h5>
-                                                <p class="text-muted text-truncate mb-0">{{$audioCount}} Files</p>
+                                                <p class="text-muted text-truncate mb-0"> Files</p>
                                             </div>
                                             <div class="ml-2">
-                                                <p class="text-muted">{{ $audioSize }} MB</p>
+                                                <p class="text-muted"> MB</p>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                                 <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                    <div class="progress-bar bg-info" data-transitiongoal="{{$audioPercent}}" aria-valuenow="{{ $audioPercent }}" style="width: {{$audioPercent}}%;"></div>
+                                    <div class="progress-bar bg-info" data-transitiongoal="" aria-valuenow="" style="width: %;"></div>
                                 </div>
                             </div>
                             <div class="card border shadow-none mb-2 btn-set-active-object-type" onclick="switchObjectTypeTag('model')">
-                                @php
-                                    $modelCount = ($types->where('type', 'model')->first() != null) ? ($types->where('type', 'model')->first()->count) : 0;
-                                    $modelSize =  ($types->where('type', 'model')->first() != null) ? (number_format(floatval($types->where('type', 'model')->first()->size) / 1048576 , 1)) : 0;
-                                    $modelPercent = ($totalSize != 0) ? (number_format($modelSize * 100 / $totalSize, 1)) : 0;
-                                @endphp
                                 <a class="text-body btn-item-object-hover">
                                     <div class="p-2">
                                         <div class="d-flex">
@@ -279,16 +242,16 @@
                                             </div>
                                             <div class="overflow-hidden me-auto">
                                                 <h5 class="font-black-555  text-truncate mb-1">Model</h5>
-                                                <p class="text-muted text-truncate mb-0">{{$modelCount}} Files</p>
+                                                <p class="text-muted text-truncate mb-0"> Files</p>
                                             </div>
                                             <div class="ml-2">
-                                                <p class="text-muted">{{$modelSize}} MB</p>
+                                                <p class="text-muted"> MB</p>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                                 <div class="progress progress-xs progress-transparent custom-color-blue mb-0" style="height: 5px; margin: 0; border-radius: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
-                                    <div class="progress-bar bg-model1" data-transitiongoal="{{$modelPercent}}" aria-valuenow="{{$modelPercent}}" style="width: {{$modelPercent}}%;"></div>
+                                    <div class="progress-bar bg-model1" data-transitiongoal="" aria-valuenow="" style="width: %;"></div>
                                 </div>
                             </div>
                         </div>
@@ -333,138 +296,6 @@
                                                         @else 
                                                            
                                                         @endif
-                                                    </td>
-                                                    <td>
-                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
-                                                    </td>
-                                                    <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
-                                                    <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
-                                                    <td>{{$asset->updated_at}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="assets-wrapper image" style="display: none">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col" style="width: 50%;">Name</th>
-                                                    <th scope="col" style="width: 10%;">Source</th>
-                                                    <th scope="col" style="width: 10%;">Size</th>
-                                                    <th scope="col" style="width: 25%">Uploaded at</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $images = $assets->where('type', 'image');
-                                                @endphp
-                                                @foreach ($assets as $asset)
-                                                <tr>
-                                                    <td style="width: 5%; text-align: center">
-                                                        <span><i class="fas fa-image font-size-16 text-success"></i> <span style="display: none">1</span> </span> 
-                                                    </td>
-                                                    <td>
-                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
-                                                    </td>
-                                                    <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
-                                                    <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
-                                                    <td>{{$asset->updated_at}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="assets-wrapper video" style="display: none">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col" style="width: 50%;">Name</th>
-                                                    <th scope="col" style="width: 10%;">Source</th>
-                                                    <th scope="col" style="width: 10%;">Size</th>
-                                                    <th scope="col" style="width: 25%">Uploaded at</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $videos = $assets->where('type', 'video');
-                                                @endphp
-                                                @foreach ($videos as $asset)
-                                                <tr>
-                                                    <td style="width: 5%; text-align: center">
-                                                        <span><i class="far fa-play-circle font-size-16 text-danger"></i> <span style="display: none">2</span> </span> 
-                                                    </td>
-                                                    <td>
-                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
-                                                    </td>
-                                                    <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
-                                                    <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
-                                                    <td>{{$asset->updated_at}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="assets-wrapper audio" style="display: none">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col" style="width: 50%;">Name</th>
-                                                    <th scope="col" style="width: 10%;">Source</th>
-                                                    <th scope="col" style="width: 10%;">Size</th>
-                                                    <th scope="col" style="width: 25%">Uploaded at</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $audios = $assets->where('type', 'audio');
-                                                @endphp
-                                                @foreach ($audios as $asset)
-                                                <tr>
-                                                    <td style="width: 5%; text-align: center">
-                                                        <span><i class="fas fa-music font-size-16 text-info"></i><span style="display: none">3</span></span> 
-                                                    </td>
-                                                    <td>
-                                                        <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
-                                                    </td>
-                                                    <td>{{$asset->source != null ? $asset->source : 'N/A'}}</td>
-                                                    <td>{{$asset->size != null ? strval(number_format(floatval($asset->size)/(1048576), 1)).' MB' : 'N/A'}}</td>
-                                                    <td>{{$asset->updated_at}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="assets-wrapper model" style="display: none">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered datatable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col" style="width: 50%;">Name</th>
-                                                    <th scope="col" style="width: 10%;">Source</th>
-                                                    <th scope="col" style="width: 10%;">Size</th>
-                                                    <th scope="col" style="width: 25%">Uploaded at</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $models = $assets->where('type', 'model');
-                                                @endphp
-                                                @foreach ($models as $asset)
-                                                <tr>
-                                                    <td style="width: 5%; text-align: center">
-                                                        <span><i class="fab fa-unity font-size-16 text-models"></i><span style="display: none">4</span></span> 
                                                     </td>
                                                     <td>
                                                         <a class="text-primary" href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">{{$asset->name != null ? $asset->name : 'unname'}}</a>
@@ -746,124 +577,6 @@
                 </div>
             </div>
         </div>
-        @if ($profile->id == $booth->ownerId || $booth->ownerId === null)
-        <div class="div-tab-2" style="display: none">
-            <div class="row mb-3 tags-area">
-                <div class="col-md-12">
-                    <div class="card mb-4" style="max-height: 500px;">
-                        <div class="card-header">
-                            <span class="h5 font-weight-bold text-primary" style="margin: 0px">Views</span>
-                            <div class="div_cardheader_btn">
-                                <span class="mb-0 btn float-right"><i class="fas fa-eye"></i> {{ count($views)}} </span>
-                            </div>
-                        </div>
-                        <div class="card-body" style="height: 100%; width:100%;">
-                            <div id="view-chart-container" style="height: 100%; width:100%;">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <span class="h6 font-weight-bold text-primary" style="margin: 0px">Comments</span>
-                            <div class="div_cardheader_btn">
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="comment-table" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr style="background: #eef2f7;">
-                                            <th style="text-align: center; width: 5%;">#</th>
-                                            <th style="width: 20%;">Name</th>
-                                            <th style="width: 170px;">Datetime</th>
-                                            <th>Comment</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $number = 1;
-                                        @endphp
-                                        @foreach ($comments as $comment)
-                                        <tr data-comment-id="{{$comment->id}}">
-                                            <td style="text-align: center">{{$number++}}</td>
-                                            <td>{{$comment->visitor->name}}</td>
-                                            <td>{{$comment->updated_at}}</td>
-                                            <td>{{$comment->text}}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="card-body" style="display: none; height: 100%; width:100%;">
-                            <div id="interest-chart-container" style="height: 100%; width:100%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="div-tab-3" style="display: none">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <span class="h6 font-weight-bold text-primary" style="margin: 0px">Objects</span>
-                            <div class="div_cardheader_btn">
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="comment-table" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr style="background: #eef2f7;">
-                                            <th style="text-align: center; width: 5%;">#</th>
-                                            <th style="width: 40%;">Name</th>
-                                            <th >Views</th>
-                                            <th >Likes</th>
-                                            <th>Comments</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($objects as $object)
-                                        <tr>
-                                            <td style="text-align: center">
-                                                @if ($object->type == 'image')
-                                                   <span><i class="fas fa-image font-size-16 text-success"></i> <span style="display: none">1</span> </span> 
-                                                @elseif($object->type == 'video')
-                                                    <span><i class="far fa-play-circle font-size-16 text-danger"></i> <span style="display: none">2</span> </span> 
-                                                @elseif($object->type == 'audio')
-                                                    <span><i class="fas fa-music font-size-16 text-info"></i><span style="display: none">3</span></span> 
-                                                @elseif($object->type == 'model')
-                                                    <span><i class="fab fa-unity font-size-16 text-models"></i><span style="display: none">4</span></span> 
-                                                @else 
-                                                    <span><i class="fab fa-question-circle font-size-16 text-primary"></i><span style="display: none">5</span></span>
-                                                @endif
-                                            </td>    
-                                            <td><span>{{$object->text}}</span></td>
-                                            <td><span>{{$object->viewCount}}</span></td>
-                                            <td><span>{{$object->likeCount}}</span></td>
-                                            <td><span>{{$object->commentCount}}</span></td>
-                                            <td class="actions"> <button class="btn-visit-now" onclick="openPopupObjectDetail({{$object->id}})">View Detail</button> </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="card-body" style="display: none; height: 100%; width:100%;">
-                            <div id="interest-chart-container" style="height: 100%; width:100%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endif
     </div>
 
     {{-- POPUP APPROVE BOOTH --}}
@@ -1505,6 +1218,29 @@
                 }
             });
         }
+
+        function loadAssets() {  
+            for (const asset of assets) {
+                let elm = null;
+                if(asset.type == 'image'){
+                    elm = $(`
+
+                    `);
+                }
+                else
+                if(asset.type == 'video'){
+                    if(asset.source == 'youtube'){
+                        elm = $(`
+                            <ifram src=`+K_URL.YouTube(asset.url).embedUrl+`></ifram>
+                        `); 
+                    }
+                    else{
+                    
+                    }
+                }
+            }
+        }
+
     </script>
     <script>
         $(document).ready(function() {

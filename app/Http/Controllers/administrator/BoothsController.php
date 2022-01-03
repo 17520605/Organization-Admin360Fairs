@@ -163,23 +163,12 @@ class BoothsController extends Controller
                 ['tourId','=', $id],
                 ['boothId','=', $booth->id],
             ])
-            ->orderBy('updated_at', "DESC")
-            ->get();
-
-        $types = DB::table('asset')
-            ->where([
-                ['tourId','=', $id],
-                ['boothId','=', $booth->id],
-            ])
-            ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(asset.id) as count'))
-            ->groupBy('type')
+            ->orderBy('created_at', "DESC")
             ->get();
         
-        $views = \App\Models\View::with('visitor')->where('boothId', $boothId)->get();
-        $comments = \App\Models\Comment::with('visitor')->where([
-            ['boothId', '=', $boothId],
-            ['isHidden', '=', false],
-        ])->orderBy('created_at', 'DESC')->get();
+        $views = \App\Models\View::where('boothId', $boothId)->get();
+        $likes = \App\Models\Like::where('boothId', $boothId)->get();
+        $comments = \App\Models\Comment::with('visitor')->where('boothId', $boothId)->orderBy('created_at', 'DESC')->get();
 
         return view('administrator.booths.booth', [
             'user' => $user,
@@ -189,7 +178,6 @@ class BoothsController extends Controller
             'panoramas' => $panoramas,
             'scene' => $scene,
             'assets' => $assets,
-            'types' => $types,
             'views'=>$views,
             'comments'=>$comments,
             'objects'=>$objects,

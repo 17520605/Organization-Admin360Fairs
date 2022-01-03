@@ -80,7 +80,7 @@
                                             @foreach ($panoramas as $panorama)
                                                 <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
                                                     <div style="width: 135px; height: 90px;">
-                                                        <img src="{{$panorama->asset->miniUrl()}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
+                                                        <img src="{{$panorama->asset->miniUrl()}}" onclick="onGoToPanorama({{$panorama->id}})" class="slide_track__image panorama-thumbnail__image">
                                                         <span class="span-booth-name" style="font-weight: 600">{{ $panorama->name != null ? $panorama->name : ($panorama->asset->name != null ? $panorama->asset->name : 'unnamed') }}</span>
                                                     </div>
                                                 </div>
@@ -469,6 +469,7 @@
     var assetViewChart = null;
     var views = {!! json_encode($views) !!};
     var likes = {!! json_encode($likes) !!};
+    var panoramas = {!! json_encode($panoramas) !!};
 
 </script>
 <script>
@@ -476,18 +477,17 @@
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    function onGoToPanorama(target) {  
-        let imageUrl = $(target).attr('src');
-        viewer.destroy();
-        container.innerHTML = "";
-        viewer = new PANOLENS.Viewer({
-            container: container,
-            autoRotate: true,
-            autoRotateSpeed: 1.0,
-        });
-        viewer.OrbitControls.noZoom = true;
-        let imagePanorama = new PANOLENS.ImagePanorama(imageUrl);
+    function onGoToPanorama(panoramaId) {  
+        let panorama;
+        for (const p of panoramas) {
+            if(p.id == panoramaId){
+                panorama = p;
+            }
+        }
+        viewer.remove(viewer.panorama);
+        let imagePanorama = new PANOLENS.ImagePanorama(panorama.asset.url);
         viewer.add(imagePanorama);
+        viewer.setPanorama(imagePanorama);
     }
 
     function hideComment(e) {
@@ -713,6 +713,7 @@
 
                 $('#popup-object-detail__comments-table').find('tbody').append(tr);
             });
+            
             $('#popup-object-detail__comments-table').DataTable({
                 "order": [[ 2, "desc" ]]
             });
@@ -736,7 +737,6 @@
     }
 
     function initViewer() {
-        let container = document.getElementById('viewer-container');
         viewer = new PANOLENS.Viewer({
             container: container,
             autoRotate: true,
