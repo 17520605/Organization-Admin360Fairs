@@ -18,7 +18,10 @@ class ToursController extends Controller
         $role = "administrator";
         $roles = array();
        
-        $tours = DB::table('tour')->where('organizerId', '=', $profile->id)->get();
+        $tours = DB::table('tour')->where([
+            ['organizerId', '=', $profile->id],
+            ['isDeleted', '=' , false]
+        ])->get();
         $roles['administrator'] = 'Administrator';
 
         // check Partner

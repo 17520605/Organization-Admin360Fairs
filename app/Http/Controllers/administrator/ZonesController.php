@@ -82,7 +82,7 @@ class ZonesController extends Controller
             ])
             ->get();
 
-        $freeBooths = $booths = \App\Models\Booth::with('owner')
+        $freeBooths = \App\Models\Booth::with('owner')
             ->where([
                 ['zoneId', '=', null],
                 ['tourId', '=', $tour->id],
