@@ -819,7 +819,7 @@
                         <div class="col-md-8 view_booth_panoles">
                             <div class="card" style="width: 100% ; height: 100%; padding:20px;">
                                 <div class="preview-wrapper" style="width: 100%; height: 100%;">
-                                    <img src="" alt="" style="width: 100%;height: 450px; display: none">
+                                    <img src="" alt="" style="width: 100%;height: 450px; object-fit: contain; display: none">
                                     <iframe src="" style="display: none" width="100%" height="450px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     <video src="" alt="" controls style="width: 100%;max-height: 450px;display: none" controls></video>
                                     <audio src="" alt="" controls style="width: 100%;max-height: 450px;display: none"></audio>

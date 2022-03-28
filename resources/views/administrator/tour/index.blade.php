@@ -25,9 +25,9 @@
         </div>
         <div class="div-tab-1">
             <div class="row" style="margin-bottom: 1.5rem;">
-                <div class="col-md-5" style="height: 70vh;">
+                <div class="col-md-5">
                     <div class="card">
-                        <div class="card-body" style="color: #555; font-size: 14px;">
+                        <div class="card-body" style="color: #555; font-size: 14px; height: 450px;">
                             {{-- <div class="d-flex process-overview">
                                 <div class="flex-grow-1 overflow-hidden">
                                     <div class="row" style="margin-bottom: 0.5rem">
@@ -58,27 +58,27 @@
                             </div> --}}
                             <h6 class="font-size-15 font-weight-bold">General information: </h6>
                             <div class="d-flex">
-                                <div class="flex-grow-1 overflow-hidden">
+                                <div class="flex-grow-1 overflow-hidden" style="font-size: 16px">
                                     <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-building mr-3"></i></span> <span> {{$profile->name != null ? $profile->name : "N/A" }} </span></p>
                                     <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-phone-alt mr-3"></i></span> <span> {{$profile->contact != null ? $profile->contact : "N/A" }} </span></p>
                                     <p class="text-muted"><span style="color: #555;font-weight: 600"><i class="fas fa-map-marker-alt mr-3"></i></span> <span>{{$tour->location != null ? $tour->location : "N/A" }}</span></p>
                                 </div>
                             </div>
                             <h6 class="font-size-15 font-weight-bold">Description: </h6>
-                            <div class="text-muted discription_tour_text" style="height: 210px">
+                            <div class="text-muted discription_tour_text" style="height: 210px;font-size: 16px">
                                 {{$tour->description != null ? $tour->description : 'N/A'}}
                             </div>
                         </div>
                     </div>
-                    <div class="card" style="margin-top: 2vh; height: 10vh;">
+                    <div class="card mt-3" style="height: 102px;">
                         <div class="row">
                             <div class="col-5" style="margin-left: 20px;margin-top: 10px;">
-                                <span style="font-size:12px">Start at</span>
-                                <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->startTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
+                                <span class="font-weight-bold" style="font-size:15px">Start at</span>
+                                <h6 class="mt-2" style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->startTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
                             </div>
                             <div class="col-5" style="margin-left: 20px;margin-top: 10px;">
-                                <span style="font-size:12px">End at</span>
-                                <h6 style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->endTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
+                                <span class="font-weight-bold"  style="font-size:15px">End at</span>
+                                <h6 class="mt-2" style="font-size:15px"><i class="fas fa-calendar-alt mr-3" style="color: #4348dfb0;"></i><span>{{$tour->endTime != null ? Carbon\Carbon::parse($tour->endTime)->format('M-d  h:m') : 'N/A'}}</span></h6>
                             </div>
                         </div>
                     </div>
