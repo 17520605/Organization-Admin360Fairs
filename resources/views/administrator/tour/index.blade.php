@@ -27,7 +27,6 @@
             <div class="row" style="margin-bottom: 1.5rem;">
                 <div class="col-md-5">
                     <div class="card">
-<<<<<<< HEAD
                         <div class="card-body" style="color: #555; font-size: 14px; height: 450px;">
                             {{-- <div class="d-flex process-overview">
                                 <div class="flex-grow-1 overflow-hidden">

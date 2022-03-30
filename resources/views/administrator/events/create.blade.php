@@ -146,7 +146,7 @@
                 <div class="row pl-3 mb-3 speaker-wrapper">
                     <div class="col-auto" style="margin-right: 30px;"> 
                         <div class="avatar-lg">
-                            <img style="width: 150px;height: 150px;object-fit: scale-down;border: 2px;background-color: #FFF;border: 5px solid #5873c4;" src="http://res.cloudinary.com/virtual-tour/image/upload/v1635327878/rk5ex6hwu5kwebeqrf4k.jpg" alt="" class="rounded-circle img-thumbnail">
+                            <img style="width: 150px;height: 150px;object-fit: cover;border: 2px;background-color: #FFF;border: 5px solid #5873c4;" src="http://res.cloudinary.com/virtual-tour/image/upload/v1635327878/rk5ex6hwu5kwebeqrf4k.jpg" alt="" class="rounded-circle img-thumbnail">
                             <button onclick="selectAvatar(event)" style="background: #5873c4" class="btn btn-default change-avatar-profile"><i style="color: #FFF" class="fas fa-pen"></i></button>
                             <input class="avatar-file-input" type="file" name="speakerAvatars[]" accept="image/*" hidden onchange="changeAvatar(event)">
                         </div>

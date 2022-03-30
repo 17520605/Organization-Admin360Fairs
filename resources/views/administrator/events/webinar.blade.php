@@ -20,7 +20,7 @@
                                 <div class="col-3" style="margin-left: 20px;margin-top: 10px;">
                                     <span style="font-size:14px">Register by</span>
                                     <h6 class="mt-2" style="font-size:15px">
-                                        <span><img src="{{(isset($webinar->registrant) && isset($webinar->registrant->avatar)) ? $webinar->registrant->avatar : 'https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg'}}" style="width: 30px; height: 30px; border-radius: 15px;">
+                                        <span><img src="{{(isset($webinar->registrant) && isset($webinar->registrant->avatar)) ? $webinar->registrant->avatar : 'https://res.cloudinary.com/virtual-tour/image/upload/v1637651914/Background/webinar-default-poster_f23c8z.jpg'}}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 25px;">
                                         </span><span style="line-height: 30px ;font-weight: 600">{{isset($webinar->registrant) ? $webinar->registrant->name : 'N/A'}}</span>
                                     </h6>
                                 </div>
@@ -79,7 +79,7 @@
                                 <div class="row mb-4 pl-3 speaker-wrapper">
                                     <div style="float: left; width: 120px;"> 
                                         <div style="width: 100%; height: 100%;">
-                                            <img type="image" src="{{$speaker->avatar}}" style="object-fit: scale-down;width: 80px; height: 80px; border-radius: 40px"/>
+                                            <img type="image" src="{{$speaker->avatar}}" style="object-fit: cover;width: 80px; height: 80px; border-radius: 40px"/>
                                         </div>
                                     </div>
                                     <div style="float: left; width: calc(100% - 120px); height: 80px;">

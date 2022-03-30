@@ -65,12 +65,12 @@
 
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" id="dropdown-toggle-menu" style="cursor: pointer">
                 <span class="mr-2 d-none d-lg-inline text-gray-600" style="font-size: 0.9rem;">{{$profile->name}}</span>
                 <img class="img-profile rounded-circle"src="{{ $profile->avatar != null ? $profile->avatar : '/admin-master/asset/images/undraw_profile.svg' }}" />
             </a>
             <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" id="dropdown-toggle-menu-show">
                 <a class="dropdown-item" href="#"> <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings </a>
                 <a class="dropdown-item" href="#"> <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity Log </a>
                 <div class="dropdown-divider"></div>
@@ -79,3 +79,8 @@
         </li>
     </ul>
 </nav>
+<script>
+    $('#dropdown-toggle-menu').click(function(){
+        $('#dropdown-toggle-menu-show').toggleClass( "show" );
+    })
+</script>

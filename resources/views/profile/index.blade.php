@@ -13,9 +13,9 @@
                                 <div class="col-auto">
                                     <div class="avatar-lg">
                                         @if ($profile->avatar != null || $profile->avatar !='')
-                                            <img style="width: 150px; height: 150px; border: 2px" src="{{$profile->avatar}}" alt="" class="rounded-circle img-thumbnail">
+                                            <img style="width: 150px; height: 150px; border: 2px ;object-fit: cover;" src="{{$profile->avatar}}" alt="" class="rounded-circle img-thumbnail">
                                         @else
-                                            <img style="width: 150px; height: 150px; border: 2px" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634823839/icons/default_avatar_jeqa4w.png" alt="" class="rounded-circle img-thumbnail">
+                                            <img style="width: 150px; height: 150px; border: 2px ;object-fit: cover;" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634823839/icons/default_avatar_jeqa4w.png" alt="" class="rounded-circle img-thumbnail">
                                         @endif
                                         <button onclick="onOpenPopupUploadAvatar(this)" data-id-profile="{{$profile->id}}" class="btn btn-default change-avatar-profile"><i class="fas fa-pen"></i></button>
                                     </div>
