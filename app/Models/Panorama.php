@@ -13,4 +13,8 @@ class Panorama extends Model
     public function hotspots() {
         return $this->hasMany(Hotspot::class, 'panoramaId');
     }
+
+    public function asset() {
+        return $this->belongsTo(Asset::class, 'assetId');
+    }
 }

@@ -381,7 +381,7 @@
                                             @foreach ($assets as $asset)
                                                 @if ($asset->type == 'image')
                                                     @if ($asset->source == 'link')
-                                                        <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}"  style="padding: 5px;">
+                                                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" data-asset-id="{{$asset->id}}"  style="padding: 5px;">
                                                             <div class="card object-file-booth">
                                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                                                     <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
@@ -401,7 +401,7 @@
                                                             </div>
                                                         </div>
                                                     @else   
-                                                        <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}"  style="padding: 5px;">
+                                                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" data-asset-id="{{$asset->id}}"  style="padding: 5px;">
                                                             <div class="card object-file-booth">
                                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                                                     <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
@@ -422,7 +422,7 @@
                                                     @endif    
                                                 @endif
                                                 @if ($asset->type == 'video')
-                                                    <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}" style="padding: 5px;">
+                                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" data-asset-id="{{$asset->id}}" style="padding: 5px;">
                                                         @if ($asset->source == 'youtube')
                                                         <div class="card object-file-booth">
                                                             <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
@@ -479,7 +479,7 @@
                                                     </div>
                                                 @endif
                                                 @if ($asset->type == 'audio')
-                                                    <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}" style="padding: 5px;">
+                                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" data-asset-id="{{$asset->id}}" style="padding: 5px;">
                                                         @if ($asset->source == 'link')
                                                             <div class="card object-file-booth">
                                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
@@ -515,14 +515,14 @@
                                                     </div>
                                                 @endif
                                                 @if ($asset->type == 'model')
-                                                    <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$asset->id}}" style="padding: 5px;">
+                                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" data-asset-id="{{$asset->id}}" style="padding: 5px;">
                                                         @if ($asset->source == 'link')
                                                             <div class="card object-file-booth">
                                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                                                     <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
                                                                         <div class="image">
                                                                             <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
-                                                                            <model-viewer style="width: 100%; height: 120px;" src="{{$asset->url}}" ar-status="not-presenting"></model-viewer>
+                                                                            <model-viewer style="width: 100%; height: 150px;" src="{{$asset->url}}" ar-status="not-presenting"></model-viewer>
                                                                         </div>
                                                                         <div class="file-name">
                                                                             <p class="m-b-5 text-muted asset-name">{{$asset->name != null ? $asset->name : 'unnamed'}}</p>
@@ -535,7 +535,7 @@
                                                                 <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                                                     <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$asset->id}})">
                                                                         <div class="image">
-                                                                            <model-viewer style="width: 100%; height: 120px;" src="{{$asset->url}}" ar-status="not-presenting"></model-viewer>
+                                                                            <model-viewer style="width: 100%; height: 150px;" src="{{$asset->url}}" ar-status="not-presenting"></model-viewer>
                                                                         </div>
                                                                         <div class="file-name">
                                                                             <p class="m-b-5 text-muted asset-name">{{$asset->name != null ? $asset->name : 'unnamed'}}</p>
@@ -563,7 +563,7 @@
                                                 $images = $assets->where('type', 'image')->all();
                                             @endphp
                                             @foreach ($images as $image)
-                                                <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$image->id}}" style="padding: 5px;">
+                                                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" data-asset-id="{{$image->id}}" style="padding: 5px;">
                                                     @if ($image->source == 'link')
                                                     <div class="card object-file-booth">
                                                         <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
@@ -610,7 +610,7 @@
                                                 $videos = $assets->where('type', 'video')->all();
                                             @endphp
                                             @foreach ($videos as $video)
-                                                <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$video->id}}" style="padding: 5px;">
+                                                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" data-asset-id="{{$video->id}}" style="padding: 5px;">
                                                     @if ($video->source == 'youtube')
                                                     <div class="card object-file-booth">
                                                         <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
@@ -682,7 +682,7 @@
                                                 $audios = $assets->where('type', 'audio')->all();
                                             @endphp
                                             @foreach ($audios as $audio)
-                                                <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$audio->id}}">
+                                                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" data-asset-id="{{$audio->id}}">
                                                     @if ($audio->source == 'link')
                                                         <div class="card object-file-booth">
                                                             <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
@@ -733,14 +733,14 @@
                                                 $models = $assets->where('type', 'model')->all();
                                             @endphp
                                             @foreach ($models as $model)
-                                                <div class="col-lg-3 col-md-4 col-sm-12" data-asset-id="{{$model->id}}" style="padding: 5px;">
+                                                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12" data-asset-id="{{$model->id}}" style="padding: 5px;">
                                                     @if ($asset->source == 'link')
                                                         <div class="card object-file-booth">
                                                             <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                                                 <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$model->id}})">
                                                                     <div class="image">
                                                                         <i class="fas fa-link" style="font-size: 20px; position: absolute;top: 10px;left: 10px;color:#727cf5 "></i>
-                                                                        <model-viewer style="width: 100%; height: 120px;" src="{{$model->url}}" ar-status="not-presenting"></model-viewer>
+                                                                        <model-viewer style="width: 100%; height: 150px;" src="{{$model->url}}" ar-status="not-presenting"></model-viewer>
                                                                     </div>
                                                                     <div class="file-name">
                                                                         <p class="m-b-5 text-muted asset-name">{{$model->name != null ? $model->name : 'unnamed'}}</p>
@@ -753,7 +753,7 @@
                                                             <div class="file" style="position: relative; border-radius: .30rem; overflow: hidden;">
                                                                 <a href="javascript:void(0);" onclick="openPopupAssetDetail({{$model->id}})">
                                                                     <div class="image">
-                                                                        <model-viewer style="width: 100%; height: 120px;" src="{{$model->url}}" ar-status="not-presenting"></model-viewer>
+                                                                        <model-viewer style="width: 100%; height: 150px;" src="{{$model->url}}" ar-status="not-presenting"></model-viewer>
                                                                     </div>
                                                                     <div class="file-name">
                                                                         <p class="m-b-5 text-muted asset-name">{{$model->name != null ? $model->name : 'unnamed'}}</p>
@@ -785,6 +785,17 @@
                 <div class="modal-body" style="padding: 30px">
                     <input id="popup-asset-detail__id-hidden-input" type="hidden">
                     <div class="row mb-3" >
+                        <div class="col-md-8 view_booth_panoles">
+                            <div class="card" style="width: 100% ; height: 100%; padding:20px;">
+                                <div class="preview-wrapper" style="width: 100%; height: 100%;">
+                                    <img src="" alt="" style="width: 100%;height: 450px; display: none">
+                                    <iframe src="" style="display: none" width="100%" height="450px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <video src="" alt="" controls style="width: 100%;max-height: 450px;display: none" controls></video>
+                                    <audio src="" alt="" controls style="width: 100%;max-height: 450px;display: none"></audio>
+                                    <model-viewer src="" style="width: 100%; height: 100%;max-height: 450px; display: none" shadow-intensity="1" camera-controls></model-viewer>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-4">
                             <div class="card" style="min-height:450px ; height: 100% ;">
                                 <div class="card-body" style="color: #555; font-size: 14px;">
@@ -811,6 +822,9 @@
                                                 <p class="text-muted mb-2"><span id="popup-asset-detail__size-text" class="ml-2 font-weight-bold"></span></p>
                                                 <p class="text-muted mb-2"><span id="popup-asset-detail__uploadedat-text" class="ml-2 font-weight-bold"></span></p>
                                             </div>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <button onclick="openPopupConfirmDelete();" class="btn btn-danger btn-block" >Delete</button>
                                         </div>
                                     </div>
                                 </div>
@@ -988,6 +1002,27 @@
                             </form>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- POPUP CONFIRM DELETE ASSET --}}
+    <div class="modal fade" id="popup-confirm-delete" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content " style="background: linear-gradient(#404040, #151415); margin-top: 225px">
+                <div class="modal-header" style="border-bottom: 1px solid #5d5f64;">
+                    <h5 class="fw-light" style="color: #fff">Delete Asset</h5>
+                </div>
+                <div class="modal-body" style="padding: 20px">
+                    <div class="form-group" style="text-align: center ;color: #fff">
+                        <i class="fas fa-exclamation-triangle" style="color: #ffa217 ; margin-right: 3px"></i>
+                        Are you sure to delete this file?
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid #5d5f64;">
+                    <button class="btn btn-secondary" type="submit" style="width: 120px;" data-dismiss="modal" aria-label="Close">Cancel</button>
+                    <button class="btn btn-danger btn-icon-loader"  style="width: 120px;" type="submit"><span class="icon-loader-form"></span> Delete</button>
                 </div>
             </div>
         </div>
@@ -1256,6 +1291,11 @@
             return url;
         }
 
+    </script>
+    <script>
+        function openPopupConfirmDelete(){
+            $('#popup-confirm-delete').modal('show');
+        }
     </script>
 @endsection
 

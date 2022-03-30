@@ -330,7 +330,7 @@
                 }
             });
 
-
+                
             $('#popup-upload-avatar__local-remove-btn').click(function (e) { 
                 $('#popup-upload-avatar__local-preview-img').attr('src', null);
                 $('#popup-upload-avatar').find(".form_upload").show();
@@ -342,7 +342,6 @@
             });
 
             $('#popup-confirm-delete-cv__delete-btn').click(function (){
-debugger;
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

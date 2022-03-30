@@ -13517,6 +13517,18 @@ img {
     white-space: nowrap;
 }
 
+/* .object-file-booth .file .image .fa-times-circle {
+    opacity: 0;
+    transition: 0.3s ease-in;
+    font-size: 24px; position: absolute;top: 10px;right: 10px;color:#E88246 ;
+}
+.object-file-booth:hover .file .image .fa-times-circle {
+    opacity: 1;
+    transition: 0.3s ease-in;
+}
+.object-file-booth .file .image .fa-times-circle:hover {
+    opacity: 0.7;
+} */
 .m-b-5,
 .auth-box .btn-signin-social,
 .weather .days li img,
@@ -13694,6 +13706,8 @@ img {
     left: -8px;
 }
 
+
+
 .line-time .timeline .timeline-box {
     position: relative;
     display: inline-block;
@@ -13789,6 +13803,16 @@ img {
     -webkit-transform: rotate( 45deg);
     transform: rotate(45deg);
     margin: 0 auto;
+}
+
+
+.line-time .timeline .timeline-box-card:nth-child(odd) .hover-a-webinar {
+    margin-right: 50px !important;
+}
+
+
+.line-time .timeline .timeline-box-card:nth-child(even) .hover-a-webinar{
+    margin-left: 50px !important;
 }
 
 .line-time .timeline .timeline-box-card:nth-child(even) {
@@ -15801,7 +15825,7 @@ select:focus {
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background-color: #f1c40f;
+    background-color: #fd9800;
     content: "";
     top: 50%;
     right: 26px;
@@ -15838,15 +15862,16 @@ select:focus {
 .single-timeline-area .single-timeline-content .timeline-banner {
     -webkit-transition-duration: 500ms;
     transition-duration: 500ms;
-    width: 15%;
+    width: 22%;
     height: 100%;
     background-color: #f1c40f;
     text-align: center;
-    margin-right: 15px;
+    margin-right: 25px;
 }
 
 .single-timeline-area .single-timeline-content .timeline-banner img {
     border-radius: 5px;
+    min-height: 150px;
 }
 
 .single-timeline-area .single-timeline-content .timeline-icon {

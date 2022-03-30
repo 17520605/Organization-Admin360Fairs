@@ -126,42 +126,61 @@ class BoothsController extends Controller
         $booth = \App\Models\Booth::with('owner')->find($boothId);
         $scene = DB::table('scene')->find($booth->sceneId);
         $panoramas = [];
+        $objects = [];
         if($scene != null){
-            $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
+            $panoramas = \App\Models\Panorama::with('asset')
+                ->where([
+                    ['sceneId', '=', $scene->id],
+                    ['isDeleted', '=', false]
+                ])->get();
+            $objects = DB::table('asset')
+                ->join('hotspot', 'asset.id', '=', 'hotspot.assetId')
+                ->join('panorama', 'hotspot.panoramaId', '=', 'panorama.id')
+                ->where([
+                    ['hotspot.isDeleted', '=', false],
+                    ['panorama.sceneId', '=', $scene->id],
+                    ['panorama.isDeleted', '=', false],
+                    ['asset.id', '!=', null],
+                    ['asset.isDeleted', '=', false],
+                ])
+                ->select('asset.*')
+                ->distinct()
+                ->get();
+            foreach ($objects as $object) {
+                $viewCount = \App\Models\View::where('assetId', $object->id)->count();
+                $likeCount = \App\Models\Like::where('assetId',  $object->id)->count();
+                $commentCount = \App\Models\Comment::where([
+                        ['assetId', '=', $object->id],
+                        ['isHidden', '=', false],
+                    ])->count();
+                $object->viewCount = $viewCount;
+                $object->likeCount = $likeCount;
+                $object->commentCount = $commentCount;
+            }
         }
 
         $assets = \App\Models\Asset::where([
                 ['tourId','=', $id],
                 ['boothId','=', $booth->id],
             ])
-            ->orderBy('updated_at', "DESC")
-            ->get();
-
-        $types = DB::table('asset')
-            ->where([
-                ['tourId','=', $id],
-                ['boothId','=', $booth->id],
-            ])
-            ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(asset.id) as count'))
-            ->groupBy('type')
+            ->orderBy('created_at', "DESC")
             ->get();
         
-        $views = \App\Models\View::with('visitor')->where('boothId', $boothId)->get();
-        $comments = \App\Models\Comment::with('visitor')->where([
-            ['boothId', '=', $boothId],
-            ['isHidden', '=', false],
-        ])->orderBy('created_at', 'DESC')->get();
+        $views = \App\Models\View::where('boothId', $boothId)->get();
+        $likes = \App\Models\Like::where('boothId', $boothId)->get();
+        $comments = \App\Models\Comment::with('visitor')->where('boothId', $boothId)->orderBy('created_at', 'DESC')->get();
 
         return view('administrator.booths.booth', [
+            'user' => $user,
             'profile' => $profile, 
             'tour'=> $tour, 
             'booth' => $booth,
             'panoramas' => $panoramas,
             'scene' => $scene,
             'assets' => $assets,
-            'types' => $types,
             'views'=>$views,
-            'comments'=>$comments
+            'comments'=>$comments,
+            'objects'=>$objects,
         ]);
 
     }
@@ -178,14 +197,8 @@ class BoothsController extends Controller
         $booth->name =  $name;
         $booth->tourId =  $id;
         $booth->ownerId =  $profile->id;
+        $booth->zoneId = $zoneId;
         $booth->save();
-
-        if(isset($zoneId)){
-            $zone_booth = new \App\Models\Zone_Booth();
-            $zone_booth->zoneId =  $zoneId;
-            $zone_booth->boothId =  $booth->id;
-            $zone_booth->save();
-        }
 
         return back();
     }
@@ -200,25 +213,8 @@ class BoothsController extends Controller
 
         $booth = \App\Models\Booth::find($boothId); 
         $booth->name =  $name;
+        $booth->zoneId = $zoneId;
         $booth->save();
-
-        $zone_booth = \App\Models\Zone_Booth::where('boothId', $boothId)->first();
-        
-        if(isset($zoneId) && isset($zone_booth)){ // booth chuyen tu zone nay sang zone khac
-            $zone_booth->zoneId =  $zoneId;
-            $zone_booth->save();
-        }
-        else
-        if(isset($zoneId) && !isset($zone_booth)){ //booth chuyen vao zone
-            $zone_booth = new \App\Models\Zone_Booth();
-            $zone_booth->boothId = $boothId;
-            $zone_booth->zoneId = $zoneId;
-            $zone_booth->save();
-        }
-        else
-        if(isset($zone_booth)){ //booth ra khoi zone
-            $zone_booth ->delete();
-        }
 
         return back();
     }

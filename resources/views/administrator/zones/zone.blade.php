@@ -47,8 +47,8 @@
                                             @foreach ($panoramas as $panorama)
                                             <div class="slide_track panorama-item panorama-slide-item" data-panorama-id="{{$panorama->id}}" style="margin: 0 5px">
                                                 <div style="width: 135px; height: 90px;">
-                                                    <img src="{{$panorama->imageUrl}}" onclick="onGoToPanorama(this)" class="slide_track__image panorama-thumbnail__image">
-                                                    <span class="span-booth-name" style="font-weight: 600">{{$panorama->name}}</span>
+                                                    <img src="{{$panorama->asset->miniUrl()}}" onclick="onGoToPanorama({{$panorama->id}})" class="slide_track__image panorama-thumbnail__image">
+                                                    <span class="span-booth-name" style="font-weight: 600">{{$panorama->name != null ? $panorama->name : ($panorama->asset->name != null ? $panorama->asset->name : 'unnamed')}}</span>
                                                 </div>
                                             </div>
                                             @endforeach
@@ -66,9 +66,9 @@
                         <div id="viewer-container" style="width: 100%; height: 100%;">
                         </div>
                         <div class="bg-config-overview">
-                            <a href="https://360fairs.com/" class="btn-config-overview ">
+                            <a href="{{env('TOOL_URL')}}/login?token={{$user->accessToken}}&url=/editor/{{$tour->id}}?z={{$zone->id}}" class="btn-config-overview ">
                                 <i class="fas fa-cog"></i>
-                                <span>Config</span>
+                                <span>Go to VR Studio</span>
                             </a>
                         </div>
                     </div>
@@ -150,26 +150,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($hotspots as $hotspot)
+                                        @foreach ($objects as $object)
                                         <tr>
                                             <td style="text-align: center">
-                                                @if ($hotspot->type == 'image')
+                                                @if ($object->type == 'image')
                                                    <span><i class="fas fa-image font-size-16 text-success"></i> <span style="display: none">1</span> </span> 
-                                                @elseif($hotspot->type == 'video')
+                                                @elseif($object->type == 'video')
                                                     <span><i class="far fa-play-circle font-size-16 text-danger"></i> <span style="display: none">2</span> </span> 
-                                                @elseif($hotspot->type == 'audio')
+                                                @elseif($object->type == 'audio')
                                                     <span><i class="fas fa-music font-size-16 text-info"></i><span style="display: none">3</span></span> 
-                                                @elseif($hotspot->type == 'model')
+                                                @elseif($object->type == 'model')
                                                     <span><i class="fab fa-unity font-size-16 text-models"></i><span style="display: none">4</span></span> 
                                                 @else 
                                                     <span><i class="fab fa-question-circle font-size-16 text-primary"></i><span style="display: none">5</span></span>
                                                 @endif
                                             </td>    
-                                            <td><span>{{$hotspot->name}}</span></td>
-                                            <td><span>{{$hotspot->viewCount}}</span></td>
-                                            <td><span> {{$hotspot->likeCount}}</span></td>
-                                            <td><span>{{$hotspot->commentCount}}</span></td>
-                                            <td class="actions"> <button class="btn-visit-now" onclick="openPopupObjectDetail({{$hotspot->assetId}})">View Detail</button> </td>
+                                            <td><span>{{$object->text != null ? $object->text : 'unnamed'}}</span></td>
+                                            <td><span>{{$object->viewCount}}</span></td>
+                                            <td><span>{{$object->likeCount}}</span></td>
+                                            <td><span>{{$object->commentCount}}</span></td>
+                                            <td class="actions"> <button class="btn-visit-now" onclick="openPopupObjectDetail({{$object->id}})">View Detail</button> </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -228,7 +228,7 @@
         <div class="modal-dialog modal-xls" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="fw-light"> Details <span id="popup-object-detail__name-text" class="text-primary font-weight-bold"></span></h5>
+                    <h5 class="fw-light"> <span id="popup-object-detail__name-text" class="text-primary font-weight-bold"></span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
@@ -309,41 +309,48 @@
             </div>
         </div>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
-        var container, viewer ;
+        var viewer ;
+        var container = document.getElementById('viewer-container');
+        var assetViewChart = null;
+        var panoramas = {!! json_encode($panoramas) !!};
         
         function initViewer() {
-            container = document.getElementById('viewer-container');
             viewer = new PANOLENS.Viewer({
                 container: container,
                 autoRotate: true,
                 autoRotateSpeed: 1.0,
             });
             viewer.OrbitControls.noZoom = true;
+
             @if ($scene != null && $scene->defaultPanoramaId != null)
-                let imagePanorama = new PANOLENS.ImagePanorama("{{$panoramas->where('id', $scene->defaultPanoramaId)->first()->imageUrl}}");
+                let imagePanorama = new PANOLENS.ImagePanorama("{{$panoramas->where('id', $scene->defaultPanoramaId)->first()->asset->url}}");
                 viewer.add(imagePanorama);
             @endif
-        };
+        }
 
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
         function switchTag (tagName) {  
             $('.objects-wrapper').hide();     
             $('#'+tagName+'-wrapper').show();
         };
 
-        function onGoToPanorama(target) {  
-            debugger;
-            let imageUrl = $(target).attr('src');
-            viewer.destroy();
-            container.innerHTML = "";
-            viewer = new PANOLENS.Viewer({
-                container: container,
-                autoRotate: true,
-                autoRotateSpeed: 1.0,
-            });
-            viewer.OrbitControls.noZoom = true;
-            let imagePanorama = new PANOLENS.ImagePanorama(imageUrl);
+        function onGoToPanorama(panoramaId) {  
+            let panorama;
+            for (const p of panoramas) {
+                if(p.id == panoramaId){
+                    panorama = p;
+                }
+            }
+            viewer.remove(viewer.panorama);
+            let imagePanorama = new PANOLENS.ImagePanorama(panorama.asset.url);
             viewer.add(imagePanorama);
+            viewer.setPanorama(imagePanorama);
         }
 
         async function openPopupObjectDetail(assetId){
@@ -368,7 +375,7 @@
                 let likes = res.likes;
                 let comments = res.comments;
 
-                $('#popup-object-detail__name-text').text(asset.name || 'unnamed');
+                $('#popup-object-detail__name-text').text(asset.text || 'unnamed');
 
                 // show object
                 if(asset.type == "image"){
@@ -519,7 +526,7 @@
                                 <td> <span>`+ comment.visitor.name +`</span></td>
                                 <td> <span> `+ new Date(comment.updated_at).toLocaleString()+` </span></td>
                                 <td> <span>`+ comment.text +`</span></td>
-                                <td class="actions btn-action-icon"><i class="fas fa-trash-alt delete" data-comment-id="`+comment.id+`" onclick="hideComment(event)"></i></td>
+                                <td class="actions btn-action-icon"><i class="fas fa-eye-slash delete" data-comment-id="`+comment.id+`" onclick="hideComment(event)"></i></td>
                             </tr>
                         `);
                     }
@@ -533,13 +540,20 @@
                 $('#popup-object-detail__cover').hide();
             }
         }
-    
+        
+        function closePopupObjectDetail(){
+            $('#popup-object-detail__comments-table').dataTable().fnDestroy();
+        }
     </script>
     <script>
         $(document).ready(function() {
             initViewer();
         });
-        
+
+        $('#popup-object-detail').on("hidden.bs.modal", function () {
+            closePopupObjectDetail();
+        });
+
         $('.btn-tab-1').click(function(){
             $('.div-tab-1').show();
             $('.div-tab-2').hide();

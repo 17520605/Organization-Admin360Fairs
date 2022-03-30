@@ -85,7 +85,7 @@
                                 <div class="row mb-4 pl-3 speaker-wrapper">
                                     <div style="float: left; width: 120px;"> 
                                         <div style="width: 100%; height: 100%;">
-                                            <img type="image" src="{{$speaker->avatar}}" style="width: 80px; height: 80px; border-radius: 40px"/>
+                                            <img type="image" src="{{$speaker->avatar}}" style="object-fit: scale-down;width: 80px; height: 80px; border-radius: 40px"/>
                                         </div>
                                     </div>
                                     <div style="float: left; width: calc(100% - 120px); height: 80px;">

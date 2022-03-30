@@ -26,14 +26,14 @@
                             @endphp
                                 <div class="single-timeline-area">
                                     <div class="timeline-date wow fadeInLeft" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInLeft;">
-                                        <p class="btn btn-primary font-weight-bold" style="background: #f1c40f;color: #FFF; border: 3px solid #f1c40faa;border-radius:25px ;box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">{{$time->format('M')}} {{$time->format('d')}}  {{$time->format('Y')}} </p>
+                                        <p class="btn btn-primary font-weight-bold" style="background: #fd9800;color: #FFF; border: 3px solid #f1c40faa;border-radius:25px ;box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">{{$time->format('M')}} {{$time->format('d')}}  {{$time->format('Y')}} </p>
                                     </div>
                                     <div class="row">
                                         @foreach ($date->webinars as $webinar)
                                             @if ($webinar->registerBy == $profile->id)
                                                 {{-- Webinar của chính mình  --}}
                                                 <div class="col-12">
-                                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn-page-loader single-timeline-content d-flex wow fadeInLeft" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;">
+                                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn-page-loader single-timeline-content d-flex wow fadeInLeft" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;min-height: 170px;">
                                                         <div class="timeline-banner">
                                                             <img src="{{$webinar->poster}}" width="100%" height="100%" alt="">
                                                         </div>
@@ -44,13 +44,13 @@
                                                                 <p><i class="fas fa-check text-primary"></i> {{$detail->title}}</p>
                                                             @endforeach
                                                         </div>
-                                                        <img src="https://res.cloudinary.com/virtual-tour/image/upload/v1638954644/Star_icon_stylized.svg_j0edvw.png" style="position: absolute;width: 30px;right: 10px; top: 10px" alt="">
+                                                        <img src="https://res.cloudinary.com/virtual-tour/image/upload/v1641139547/icons/user_pw9vhf.png" style="position: absolute;width: 30px;right: 10px; top: 10px" alt="">
                                                     </a>
                                                 </div>
                                             @else  
                                             {{-- Webinar không phải của mình  --}}
                                                 <div class="col-12">
-                                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn-page-loader single-timeline-content d-flex wow fadeInLeft" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;">
+                                                    <a href="/administrator/tours/{{$tour->id}}/events/webinars/{{$webinar->id}}" class="btn-page-loader single-timeline-content d-flex wow fadeInLeft" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;min-height: 170px;">
                                                         <div class="timeline-banner">
                                                             <img src="{{$webinar->poster}}" width="100%" height="100%" alt="">
                                                         </div>

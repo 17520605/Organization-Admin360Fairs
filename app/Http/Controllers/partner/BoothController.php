@@ -15,64 +15,81 @@ class BoothController extends Controller
     {
         $user = Auth::user();
         $profile = DB::table('profile')->where('userId', $user->id)->first();
-        
+
+
         $booth = \App\Models\Booth::with('owner')->find($id);
         $tour = DB::table('tour')->find($booth->tourId);
-
         $scene = DB::table('scene')->find($booth->sceneId);
         $panoramas = [];
+        $objects = [];
         if($scene != null){
-            $panoramas = DB::table('panorama')->where('sceneId', $scene->id)->get();
+            $panoramas = \App\Models\Panorama::with('asset')
+                ->where([
+                    ['sceneId', '=', $scene->id],
+                    ['isDeleted', '=', false]
+                ])->get();
+            $objects = DB::table('asset')
+                ->join('hotspot', 'asset.id', '=', 'hotspot.assetId')
+                ->join('panorama', 'hotspot.panoramaId', '=', 'panorama.id')
+                ->where([
+                    ['hotspot.isDeleted', '=', false],
+                    ['panorama.sceneId', '=', $scene->id],
+                    ['panorama.isDeleted', '=', false],
+                    ['asset.id', '!=', null],
+                    ['asset.isDeleted', '=', false],
+                ])
+                ->select('asset.*')
+                ->distinct()
+                ->get();
+            foreach ($objects as $object) {
+                $viewCount = \App\Models\View::where('assetId', $object->id)->count();
+                $likeCount = \App\Models\Like::where('assetId',  $object->id)->count();
+                $commentCount = \App\Models\Comment::where([
+                        ['assetId', '=', $object->id],
+                        ['isHidden', '=', false],
+                    ])->count();
+                $object->viewCount = $viewCount;
+                $object->likeCount = $likeCount;
+                $object->commentCount = $commentCount;
+            }
         }
 
-        $boothObjects = \App\Models\TObject::whereHas('booth_objects', function($q) use ($id)
-            {
-                $q->where('boothId', '=', $id);
-            })
-            ->where([
+        $assets = \App\Models\Asset::where([
                 ['tourId','=', $id],
-                ['ownerId', '=', $profile->id]
+                ['boothId','=', $booth->id],
             ])
-            ->get();
-        
-        $otherObjects = \App\Models\TObject::where([
-                ['tourId','=', $id],
-                ['ownerId', '=', $profile->id]
-            ])
-            ->doesntHave('booth_objects')
-            ->orWhereHas('booth_objects', function($q) use ($id)
-            {
-                $q->where('boothId', '!=', $id)->orWhere('boothId', null);
-            })
-            ->where([
-                ['tourId','=', $id],
-                ['ownerId', '=', $profile->id]
-            ])
+            ->orderBy('updated_at', "DESC")
             ->get();
 
-        $types = DB::table('object')
-            ->join('booth_object', 'object.id', '=', 'booth_object.objectId')
-            ->where('booth_object.boothId', $id)
-            ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(object.id) as count'))
+        $types = DB::table('asset')
+            ->where([
+                ['tourId','=', $id],
+                ['boothId','=', $booth->id],
+            ])
+            ->select('type', DB::raw('sum(size) as size'),  DB::raw('count(asset.id) as count'))
             ->groupBy('type')
             ->get();
         
-        $views = \App\Models\View::with('visitor')->where('boothId', $id)->get();
-        $interests = \App\Models\Interest::with('visitor')->where('boothId', $id)->get();
+        $views = \App\Models\View::where('boothId', $id)->get();
+        $likes = \App\Models\Like::where('boothId', $id)->get();
+        $comments = \App\Models\Comment::with('visitor')->where('boothId', $id)->orderBy('created_at', 'DESC')->get();
 
         return view('partner.booth.index', [
+            'user' => $user,
             'profile' => $profile, 
             'tour'=> $tour, 
             'booth' => $booth,
             'panoramas' => $panoramas,
             'scene' => $scene,
-            'boothObjects' => $boothObjects,
-            'otherObjects' => $otherObjects,
+            'assets' => $assets,
             'types' => $types,
-            'views' => $views,
-            'interests' => $interests
+            'views'=>$views,
+            'likes'=>$likes,
+            'comments'=>$comments,
+            'objects'=>$objects,
         ]);
-    } 
+
+    }
 
     public function saveEdit($id, Request $request)
     {

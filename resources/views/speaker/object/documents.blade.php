@@ -12,7 +12,7 @@
             @endif
                 @foreach ($documents as $document) 
 
-                <div class="col-lg-3 col-md-4 col-sm-12">
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-sm-12">
                     <div class="card">
                         <div class="file">
                             <a href="javascript:void(0);">
