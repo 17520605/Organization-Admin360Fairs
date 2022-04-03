@@ -28,6 +28,7 @@ class ProfileController extends Controller
             $profile->website = $request->website;
             $profile->facebook = $request->facebook;
             $profile->youtube = $request->youtube;
+            $profile->description = $request->description;
             $profile->type = $request->type;
             $profile->save();
         }
@@ -44,6 +45,19 @@ class ProfileController extends Controller
         }
         return back();
     }
+
+    public function saveLogo(Request $request)
+    {
+        $profileId = $request->id;
+        $profile = \App\Models\Profile::find($profileId);
+        if($profile != null)
+        {
+            $profile->logo = $request->logo;
+            $profile->save();
+        }
+        return back();
+    }
+    
     public function deleteCv(Request $request)
     {
         $profileId = $request->id;

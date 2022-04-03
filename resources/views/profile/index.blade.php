@@ -15,7 +15,7 @@
                                         @if ($profile->avatar != null || $profile->avatar !='')
                                             <img style="width: 150px; height: 150px; border: 2px ;object-fit: cover;" src="{{$profile->avatar}}" alt="" class="rounded-circle img-thumbnail">
                                         @else
-                                            <img style="width: 150px; height: 150px; border: 2px ;object-fit: cover;" src="https://res.cloudinary.com/virtual-tour/image/upload/v1634823839/icons/default_avatar_jeqa4w.png" alt="" class="rounded-circle img-thumbnail">
+                                            <img style="width: 150px; height: 150px; border: 2px ;object-fit: cover;" src="{{asset('/admin-master/asset/images/undraw_profile.svg')}}" alt="" class="rounded-circle img-thumbnail">
                                         @endif
                                         <button onclick="onOpenPopupUploadAvatar(this)" data-id-profile="{{$profile->id}}" class="btn btn-default change-avatar-profile"><i class="fas fa-pen"></i></button>
                                     </div>
@@ -39,12 +39,19 @@
                     </div>
                 </div>
             </div>
+            <div class="row mt-4 mb-4">
+                <div class="mt-2 mb-2" style="position: relative; display: flex;align-items: center;justify-content: center;width: 100%;">
+                    <img src="{{$profile->logo != null ? $profile->logo : 'https://davidmeessen.com/wp-content/uploads/2019/11/yourlogohere-1-2-3-1-1.png'}}" style="max-width: 300px;" alt="">
+                    <button onclick="onOpenPopupUploadLogo(this)" data-id-profile="{{$profile->id}}" class="btn btn-default change-avatar-profile" style="background: #4666c7;color:#FFF;position: relative"><i class="fas fa-pen"></i></button>
+                </div>
+                <span style="padding: 10px;font-size: 20px;color: #444">{{$profile->description != null ? $profile->description : 'This is description of company'}} </span>
+            </div>
             <div class="row mt-4 mb-4" id="box-cv-up">
                 <div class="col-12" id="upload-box-cv" style="display: {{$profile->profile == '' ? 'block' : 'none'}}">
                     <div class="dropify-wrapper">
                         <div class="dropify-message">
                             <i class="fas fa-upload" style="font-size: 40px;"></i>
-                            <p>Drag and drop a file CV here or click</p>
+                            <p>Drag and drop a file intro company here or click</p>
                         </div>
                         <div class="dropify-loader"></div>
                         <input type="hidden" id="popup-upload-cv__url-hidden-input">
@@ -119,6 +126,10 @@
                                             <input class="form-control" name="youtube" id="profile_business_edit_youtube" type="text" placeholder="Enter your link youtube" value="{{$profile->type == 'company' ? $profile->youtube : ''}}">
                                         </div>
                                     </div>
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="">Discription</label>
+                                        <textarea class="form-control" name="description" id="profile_business_edit_discription" rows="6" placeholder="Enter description">{{$profile->type == 'company' ? $profile->description : ''}}</textarea>
+                                    </div>
                                     <div class="modal-footer" style="padding: 0.85rem 0px;">
                                         <button class="btn btn-primary btn-block btn-icon-loader" type="submit"> <span class="icon-loader-form"></span>  Save Organization Profile</button>
                                     </div>
@@ -163,6 +174,10 @@
                                             <label class="small mb-1" for="">Link Youtube</label>
                                             <input class="form-control" name="youtube" id="profile_personal_edit_youtube" type="text" placeholder="Enter your link youtube" value="{{$profile->type == 'personal' ? $profile->youtube : ''}}"> 
                                         </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="">Discription</label>
+                                        <textarea class="form-control" name="description" id="profile_personal_edit_discription" rows="6" placeholder="Enter description">{{$profile->type == 'personal' ? $profile->description : ''}}</textarea>
                                     </div>
                                     <div class="modal-footer" style="padding: 0.85rem 0px;">
                                         <button class="btn btn-primary btn-block btn-icon-loader" type="submit"> <span class="icon-loader-form"></span>  Save Personal Profile</button>
@@ -214,6 +229,46 @@
         </div>
     </div>
 
+    {{-- POPUP UPLOAD AVATAR --}}
+    <div class="modal fade" id="popup-upload-logo" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-light">Upload Logo</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-column" style="flex-grow: 1;">
+                        <div>
+                            <form action="/profile/save-logo" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <div class="form_upload">
+                                        <input type="hidden" name="logo" id="popup-upload-logo__url-hidden-input" >
+                                        <input type="hidden" name="id" value="{{$profile->id}}">
+                                        <input type="file"  id="popup-upload-logo__local-file-hidden-input" style="display: none">
+                                        <button type="button" id="popup-upload-logo__local-upload-btn" class="btn"><i class="fas fa-upload" style="font-size: 50px;"></i></button>
+                                        <p>Drop your file here or Click to browse</p>
+                                    </div>
+                                    <div class="form_preview" style="display: none;">
+                                        <img id="popup-upload-logo__local-preview-img" src="" style="border-radius: 5px;" >
+                                        <div class="remove_item_object">
+                                            <div id="popup-upload-logo__local-remove-btn" class="btn_remove ">Remove</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer"  style="padding: 0.85rem 0px;">
+                                    <button id="popup-upload-logo__local-save-btn" class="btn btn-primary btn-block" disabled><span class="icon-loader-form"></span> Save New Logo</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
     {{-- POPUP DELETE CV --}}
     <div class="modal fade" id="popup-confirm-delete-cv" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
@@ -245,6 +300,10 @@
             let profileId = $(target).attr('data-profile-id');
             $('#popup-upload-avatar').modal('show');
         }
+        function onOpenPopupUploadLogo(target){
+            let profileId = $(target).attr('data-profile-id');
+            $('#popup-upload-logo').modal('show');
+        }
         function onOpenPopupDeleteCV(target){
             let cvId = $(target).attr('data-cv-id');
             $('#popup-confirm-delete-cv').modal('show');
@@ -254,6 +313,9 @@
         $(document).ready(function () {
             $('#popup-upload-avatar__local-upload-btn').click(function (e) {  
                 $('#popup-upload-avatar__local-file-hidden-input').trigger('click');
+            });
+            $('#popup-upload-logo__local-upload-btn').click(function (e) {  
+                $('#popup-upload-logo__local-file-hidden-input').trigger('click');
             });
             $('#popup-upload-avatar__local-file-hidden-input').change(function () { 
                 let type =$('#popup-upload-avatar').find('input[name="type"]').val();
@@ -287,6 +349,40 @@
                     });
                 }
             });
+
+            $('#popup-upload-logo__local-file-hidden-input').change(function () { 
+                let type =$('#popup-upload-logo').find('input[name="type"]').val();
+                let file = this.files[0];
+                if(file != null){
+                    $('#popup-upload-logo__local-preview-img').attr('src', URL.createObjectURL(this.files[0]));
+                    $('#popup-upload-logo').find(".form_upload").hide();
+                    $('#popup-upload-logo').find(".form_preview").show();
+                    $('#popup-create-upload-logo-save-btn').prop('disabled', true);
+                    $('#popup-create-upload-logo-remove-btn').hide();
+                    
+                    let data = new FormData();
+                    data.append('file', file);
+                    let ajax = $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{env('APP_URL')}}/storage/upload",
+                        method: 'post',
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        dataType: 'json',
+                        success: function (res) { 
+                            if (res != null) {
+                                $('#popup-upload-logo__local-save-btn').prop('disabled', false);
+                                $('#popup-upload-logo__url-hidden-input').val(res.url);
+                                $('#popup-upload-logo__local-remove-btn').show();
+                            }
+                        }
+                    });
+                }
+            });
+
 
             $('#upload-cv__local-file-hidden-input').change(function () { 
                 let file = this.files[0];
@@ -341,6 +437,16 @@
 
             });
 
+            $('#popup-upload-logo__local-remove-btn').click(function (e) { 
+                $('#popup-upload-logo__local-preview-img').attr('src', null);
+                $('#popup-upload-logo').find(".form_upload").show();
+                $('#popup-upload-logo').find(".form_preview").hide();
+                $('#popup-upload-logo__local-save-btn').prop('disabled', true);
+                $('#popup-upload-logo__local-remove-btn').hide();
+                $('#popup-upload-logo').find('input[name="url"]').val(null);
+
+            });
+
             $('#popup-confirm-delete-cv__delete-btn').click(function (){
                 $.ajax({
                     headers: {
@@ -359,6 +465,7 @@
             });
         });
     </script>
+    
     {{-- AJAX UPLOAD AVATAR --}}
     <script>
         $('#popup-upload-avatar__local-save-btn').click(function(){
@@ -372,6 +479,21 @@
                 dataType: 'json',
                 success: function () { 
                     $('#popup-upload-avatar').find('.icon-loader-form').hide();
+                    location.reload();
+                }
+            });
+        });
+        $('#popup-upload-logo__local-save-btn').click(function(){
+            $('#popup-upload-logo').find('.icon-loader-form').show();
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{env('APP_URL')}}/administrator/profile/save-logo",
+                type: 'POST',
+                dataType: 'json',
+                success: function () { 
+                    $('#popup-upload-logo').find('.icon-loader-form').hide();
                     location.reload();
                 }
             });

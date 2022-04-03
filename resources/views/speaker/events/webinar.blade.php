@@ -179,7 +179,7 @@
                                     <div class="dropify-wrapper upload-form-document">
                                         <div class="dropify-message">
                                             <i class="fas fa-upload" style="font-size: 40px;"></i>
-                                            <p>Drag and drop a file CV here or click</p>
+                                            <p>Drag and drop a file document here or click</p>
                                         </div>
                                         <div class="dropify-loader"></div>
                                         <input type="file" class="dropify" id="popup-add-documents__file-input" multiple>
