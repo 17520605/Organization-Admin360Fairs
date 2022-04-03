@@ -63,6 +63,12 @@
             </div>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="/administrator/tours/{{$tour->id}}/articles">
+            <i class="fas fa-store"></i>
+            <span>Articles</span>
+        </a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider" />
     <!-- Heading -->

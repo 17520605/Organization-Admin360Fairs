@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "bensampo/laravel-enum": "^3.4",
         "cloudinary-labs/cloudinary-laravel": "^1.0",
         "cloudinary/cloudinary_php": "^2.3",
         "firebase/php-jwt": "^5.4",

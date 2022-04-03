@@ -91,6 +91,14 @@ Route::middleware('auth')->group(function (){
             Route::post('/{id}/events/webinars/save-reedit', 'administrator\EventsController@saveReedit');
             Route::delete('/{id}/events/webinars/{webinarId}', 'administrator\EventsController@saveDelete');
 
+            Route::get('/{id}/articles/', 'administrator\ArticlesController@index');
+            Route::get('/{id}/articles/create', 'administrator\ArticlesController@create');
+            Route::post('/{id}/articles/save-create', 'administrator\ArticlesController@saveCreate');
+            Route::get('/{id}/articles/{articleId}/edit/', 'administrator\ArticlesController@edit');
+            Route::post('/{id}/articles/{articleId}/save-edit/', 'administrator\ArticlesController@saveEdit');
+            Route::post('/{id}/articles/{articleId}/toggle-visiable', 'administrator\ArticlesController@toggleVisiable');
+            Route::delete('/{id}/articles/{articleId}', 'administrator\ArticlesController@delete');
+
             // views
             Route::get('/{id}/viewer', 'administrator\ViewerController@index');
 
