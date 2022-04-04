@@ -17,7 +17,7 @@ class ArticlesController extends Controller
         $profile = DB::table('profile')->where('userId', Auth::user()->id)->first();
         $tour = DB::table('tour')->find($id);
 
-        $articles = \App\Models\Article::get();
+        $articles = \App\Models\Article::where('tourId', $id)->get();
         return view('administrator.articles.index', [
             'articles'=> $articles,
             'profile' => $profile , 
@@ -38,6 +38,8 @@ class ArticlesController extends Controller
 
     public function saveCreate($id, Request $request)
     {
+        $tourId = $id;
+        $userId = Auth::user()->id;
         $title = $request->input('title');
         $slug = $request->input('slug');
         $shortDescription = $request->input('short_description');
@@ -61,7 +63,9 @@ class ArticlesController extends Controller
         $article->shortDescription = $shortDescription;
         $article->content = $content;
         $article->author = $author;
-        $article->type = 'system';
+        $article->type = 'tour';
+        $article->userId = $userId;
+        $article->tourId = $tourId;
         $article->isPublic = isset($isPublic);
         $article->save();
 
@@ -84,6 +88,8 @@ class ArticlesController extends Controller
 
     public function saveEdit($id, $articleId,  Request $request)
     {
+        $tourId = $id;
+        $userId = Auth::user()->id;
         $article = \App\Models\Article::where('id', $articleId)->first();
         $title = $request->input('title');
         $slug = $request->input('slug');
@@ -113,7 +119,9 @@ class ArticlesController extends Controller
             $article->shortDescription = $shortDescription;
             $article->content = $content;
             $article->author = $author;
-            $article->type = 'system';
+            $article->type = 'tour';
+            $article->userId = $userId;
+            $article->tourId = $tourId;
             $article->isPublic = isset($isPublic);
             $article->save();
 

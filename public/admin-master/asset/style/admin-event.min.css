@@ -15944,3 +15944,18 @@ select:focus {
     /* max-width: 520px !important; */
     width: 100% !important;
 }
+
+.input-half-bd{
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-right: 0px;
+}
+
+.dropify-font-upload:before, .dropify-wrapper .dropify-message span.file-icon:before {
+    content: '\e800';
+}
+
+.dataTable  td {
+height: 50px;
+vertical-align: middle;
+}

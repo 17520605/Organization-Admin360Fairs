@@ -62,7 +62,7 @@
 
             <div class="card shadow mb-4">
                 <div class="card-header">
-                    <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Articles</h1>
+                    <h1 class="h4 font-weight-bold text-primary" style="margin: 0px">Articles <span style="font-size: 16px;margin-left: 20px">(<i class="far fa-eye-slash"></i> : Published - <i class="far fa-eye"></i> : Unpublished)</span></h1>
                     <div class="div_cardheader_btn" >
                         <a href="/administrator/tours/{{$tour->id}}/articles/create"><button class="mb-0 btn float-right active" data-toggle="modal"><i class="fas fa-plus"></i> Add </button></a>
                     </div>
@@ -96,11 +96,11 @@
                                             <img src="{{$article->banner}}" class="rounded" height="70" width="140" style="object-fit: cover;">
                                         </td>
                                         <td>
-                                            <button onclick="toggleVisiable(this)" class="btn btn-light">
+                                            <button onclick="toggleVisiable(this)" class="btn {{$article->isPublic != 0 ? 'btn-secondary' : 'btn-primary'}}">
                                                 @if ($article->isPublic)
-                                                <i class="far fa-eye"></i>
+                                                    <i class="far fa-eye-slash"></i>
                                                 @else
-                                                <i class="far fa-eye-slash"></i>
+                                                    <i class="far fa-eye"></i>
                                                 @endif
                                             </button>
                                         </td>
@@ -110,7 +110,8 @@
                                         <td>
                                             {{$article->created_at}}
                                         </td>
-                                        <td>
+                                        <td class="btn-action-icon"> 
+                                            
                                             <a href="/administrator/tours/{{$tour->id}}/articles/{{$article->id}}/edit"> <i class="fas fa-pen edit"></i></a>
                                             <a href=""><i class="fas fa-trash-alt delete" onclick="openPopupDelete('{{$article->id}}')"></i></a> 
                                         </td>
@@ -205,10 +206,15 @@
             success: function (res) {
                 if(res.success === true){
                     if(res.isPublic){
-                        $(target).html('<i class="far fa-eye"></i>')
+                        $(target).removeClass('btn-primary');
+                        $(target).addClass('btn-secondary');
+                        $(target).html('<i class="far fa-eye-slash"></i>')
                     }
                     else{
-                        $(target).html('<i class="far fa-eye-slash"></i>')
+                        $(target).removeClass('btn-secondary');
+                        $(target).addClass('btn-primary');
+                        $(target).html('<i class="far fa-eye"></i>')
+                        
                     }
 
                     tata.success('Thành công', 'Đã thay đổi thành công', {

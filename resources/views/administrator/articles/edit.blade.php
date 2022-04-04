@@ -15,8 +15,8 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Slug :</label>
                     <div class="col-sm-10">
-                        <div class="input-group--sa-slug input-group"><span class="input-group-text"
-                                id="form-category/slug-addon">https://hoangthinhsg.com/category/</span>
+                        <div class="input-group--sa-slug input-group"><span class="input-group-text input-half-bd"
+                                id="form-category/slug-addon"> https://360fairs.com/article/</span>
                             <input id="input-slug" type="text" class="form-control" name="slug"
                                 value="{{ $article->slug }}">
                         </div>

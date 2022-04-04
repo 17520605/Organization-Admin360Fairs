@@ -14,7 +14,7 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Slug :</label>
                     <div class="col-sm-10">
-                        <div class="input-group--sa-slug input-group"><span class="input-group-text"
+                        <div class="input-group--sa-slug input-group"><span class="input-group-text input-half-bd"
                                 id="form-category/slug-addon">https://360fairs.com/article/</span>
                             <input id="input-slug" type="text" class="form-control" name="slug">
                         </div>
@@ -90,7 +90,7 @@
                 error: "Ooops, something wrong appended."
             },
             error: {
-                fileSize: "The file size is too big (1M max)."
+                fileSize: "The file size is too big (10M max)."
             }
         });
     </script>
