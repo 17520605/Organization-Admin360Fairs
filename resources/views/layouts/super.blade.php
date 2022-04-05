@@ -19,7 +19,6 @@
     <script src="{{ asset('admin-master/asset/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('admin-master/asset/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
     <script>
         function onActiveTourCard() {
             let icon = document.querySelector('.icon_show_hide_card');

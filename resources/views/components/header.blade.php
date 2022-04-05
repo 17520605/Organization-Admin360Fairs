@@ -30,4 +30,5 @@
     <script src="{{ asset('admin-master/asset/plugins/tata/tata.js')}}"></script>
     <script src="{{ asset('admin-master/asset/plugins/ckeditor/ckeditor.js')}}"></script>
     <script src="{{ asset('admin-master/asset/js/utils.js')}}"></script>
+    <script src="{{ asset('admin-master/asset/plugins/dropify/dropify.min.js')}}"></script>
 </head>

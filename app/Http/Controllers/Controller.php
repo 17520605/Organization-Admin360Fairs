@@ -89,6 +89,30 @@ class Controller extends BaseController
         return $resObj;
     }
 
+    public function uploadFileImagePopular($file, $isUsed = false)
+    {   
+        $path = Storage::disk('temp')->putFile('/', $file);
+        $res = cloudinary()->upload(Storage::disk('temp')->path($file->hashName()), [
+            'resource_type' => 'auto'
+        ])->getResponse();
+        
+        // delete file
+        $path = Storage::disk('temp')->delete($path);
+
+        $resObj = json_decode(json_encode($res));
+
+        // save asset
+        $asset = new \App\Models\Asset();
+        $asset->name = $file->getClientOriginalName();
+        $asset->url = $resObj->url;
+        $asset->format = $file->getClientOriginalExtension();
+        $asset->size = $resObj->bytes;
+        $asset->target = 'landingpage';
+        $asset->save();
+
+        return $asset->id;
+    }
+
     public function uploadFile1($file)
     {   
         $path = Storage::disk('temp')->putFile('/', $file);

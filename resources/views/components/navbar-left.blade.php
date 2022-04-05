@@ -1,6 +1,6 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center btn-page-loader" href="/administrator/tours/{{$tour->id}}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center btn-page-loader" href="{{env('APP_URL')}}">
         <div class="sidebar-brand-icon">
             <i class="fab fa-korvue"></i>
         </div>
@@ -12,7 +12,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link btn-page-loader" href="#">
+        <a class="nav-link btn-page-loader">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>

@@ -46,23 +46,76 @@
                 </div>
                 <span style="padding: 10px;font-size: 20px;color: #444">{{$profile->description != null ? $profile->description : 'This is description of company'}} </span>
             </div>
-            <div class="row mt-4 mb-4" id="box-cv-up">
-                <div class="col-12" id="upload-box-cv" style="display: {{$profile->profile == '' ? 'block' : 'none'}}">
-                    <div class="dropify-wrapper">
-                        <div class="dropify-message">
-                            <i class="fas fa-upload" style="font-size: 40px;"></i>
-                            <p>Drag and drop a file intro company here or click</p>
+            <div class="row mt-4 mb-5">
+                <div class="col-lg-12" style="min-height: 450px">
+                    <div>
+                        <ul class="nav nav-pills" id="myTabalt" role="tablist" style="padding: 15px ">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="profile-tab1" data-toggle="tab" href="#profile1" role="tab" aria-controls="profile" aria-expanded="true">List Images Popular</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="home-tab1" data-toggle="tab" href="#home1" role="tab" aria-controls="home" aria-expanded="true">Image Introduce</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="video-tab1" data-toggle="tab" href="#video1" role="tab" aria-controls="video">Video Introduce</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content text-muted" id="myTabaltContent">
+                            <div role="tabpanel" class="tab-pane fade in active show" id="profile1"  aria-labelledby="profile-tab">
+                                <div class="mt-4">
+                                    <div class="col-sm-12 popular_img" >
+                                        <form action="/profile/save-edit-image-popular" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{$profile->id}}">
+                                            <div class="row">
+                                                @php
+                                                    $images = json_decode($profile->imagesId, TRUE);
+                                                @endphp
+                                                @for ( $i = 0; $i < count($images); $i++)
+                                                <div class="col-sm-4 mb-3 dropify-file-wrapper">
+                                                    <input type="hidden" class="changed" name="changedFiles[]" value="0">
+                                                    <input type="file" name="file{{$i+1}}" class="dropify" data-default-file="{{\App\Services\StorageService::getUrl($images[$i])}}" data-max-file-size="10M">
+                                                </div>
+                                                @endfor
+                                                @for (; $i < 6; $i++)
+                                                <div class="col-sm-4 mb-3 dropify-file-wrapper">
+                                                    <input type="hidden" class="changed" name="changedFiles[]" value="0">
+                                                    <input type="file" name="file{{$i+1}}" class="dropify" data-max-file-size="10M">
+                                                </div>
+                                                @endfor
+                                            </div>
+                                            <button class="btn btn-primary btn-block btn-icon-loader" disabled type="submit" id="save-edit-images-popular"> <span class="icon-loader-form"></span>Save Edit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="home1" aria-labelledby="home-tab">
+                                <div class="row mt-4 mb-4" id="box-cv-up">
+                                    <div class="col-12 box-dropify" id="upload-box-cv" style="display: {{$profile->profile == '' ? 'block' : 'none'}}">
+                                        <input type="file" class="dropify" id="upload-cv__local-file-hidden-input">
+                                    </div>
+                                    <div class="col-12" id="preview-box-cv" style="display: {{$profile->profile == '' ? 'none' : 'block'}}"> 
+                                        <button class="btn btn-edit-cv" data-cv-id="{{$profile->id}}" onclick="onOpenPopupDeleteCV(this)"><i class="far fa-trash-alt"></i></button>
+                                        <img id="preview-box-cv-img" style="width: 100%; border-radius: 5px;" src="{{$profile->profile == '' ? '':$profile->profile}}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="video1" role="tabpanel" aria-labelledby="video-tab">
+                                <div class="row mt-4 mb-4 box-dropify" id="box-vd-up">
+                                    <div class="col-12" id="upload-box-video" style="display: {{$profile->video == '' ? 'block' : 'none'}}">
+                                        <input type="file" class="dropify" id="upload-vd__local-file-hidden-input">
+                                    </div>
+                                    <div class="col-12" id="preview-box-video" style="display: {{$profile->video == '' ? 'none' : 'block'}}"> 
+                                        <button class="btn btn-edit-video" style="z-index: 100" data-video-id="{{$profile->id}}" onclick="onOpenPopupDeleteVD(this)"><i class="far fa-trash-alt"></i></button>
+                                        <video id="preview-box-video-vd" controls style="width: 100%; border-radius: 5px;" src="{{$profile->video == '' ? '':$profile->video}}#t=5"></video>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="dropify-loader"></div>
-                        <input type="hidden" id="popup-upload-cv__url-hidden-input">
-                        <input type="file" class="dropify" id="upload-cv__local-file-hidden-input">
                     </div>
                 </div>
-                <div class="col-12" id="preview-box-cv" style="display: {{$profile->profile == '' ? 'none' : 'block'}}"> 
-                    <button class="btn btn-edit-cv" data-cv-id="{{$profile->id}}" onclick="onOpenPopupDeleteCV(this)"><i class="far fa-trash-alt"></i></button>
-                    <img id="preview-box-cv-img" style="width: 100%; border-radius: 5px;" src="{{$profile->profile == '' ? '':$profile->profile}}" alt="">
-                </div>
             </div>
+            <!-- end row -->
         </div>
     </div>
     {{-- POPUP UPLOAD INFO --}}
@@ -75,112 +128,61 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex flex-column" style="flex-grow: 1;">
-                        <div class="modal-body" style="flex: 0 1 0%;">
-                            <nav class="nav_profile">
-                                <a href="javascript:void(0)" class="{{$profile->type == 'company' ? 'active' : ''}}" id="btn-form-business-profile" style="width: 50%;">
-                                    <div class="d-block d-sm-inline">Profile Business</div>
-                                </a>
-                                <a href="javascript:void(0)" class="{{$profile->type == 'personal' ? 'active' : ''}}" id="btn-form-personal-profile" style="width: 50%;">
-                                    <div class="d-block d-sm-inline">Profile Personal</div>
-                                </a>
-                            </nav>
-                        </div>
                         <div class="">
-                        {{-- BUSINESS --}}
-                            <div class="form-step1 profile__upload-box" style="display: {{$profile->type == 'company' ? 'block' : 'none'}}">
-                                <form action="/profile/save-edit" method="POST">
-                                    @csrf
-                                    <input type="hidden" id="profile_business_edit_id" name="id" value="{{$profile->type == 'company' ? $profile->id : ''}}">
-                                    <input type="hidden" id="profile_business_edit_type" name="type" value="company">
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="">Organization Name</label>
-                                        <input class="form-control" name="name" id="profile_business_edit_name" type="text" placeholder="Enter Organization Name" value="{{$profile->type == 'company' ? $profile->name : ''}}">
-                                    </div>
-                                    <div class="row gx-3 mb-3">
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="">Organization Email</label>
-                                            <input class="form-control" name="email" id="profile_business_edit_email" disabled type="email" placeholder="Enter Type Email" value="{{$profile->email}}">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="">Organization Phone</label>
-                                            <input class="form-control" name="contact" id="profile_business_edit_contact" type="tel" placeholder="Enter your Phone" value="{{$profile->type == 'company' ? $profile->contact : ''}}">
-                                        </div>
-                                    </div>
-                                    <div class="row gx-3 mb-3">
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="">Organization Address</label>
-                                            <input class="form-control" name="address" id="profile_business_edit_address" type="text" placeholder="Enter location company" value="{{$profile->type == 'company' ? $profile->address : ''}}">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="">Link Website Organization</label>
-                                            <input class="form-control" name="website" id="profile_business_edit_website" type="text" placeholder="Enter your website" value="{{$profile->type == 'company' ? $profile->website : ''}}">
-                                        </div>
-                                    </div>
-                                    <div class="row gx-3 mb-3">
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="">Link Facebook Organization</label>
-                                            <input class="form-control" name="facebook" id="profile_business_edit_facebook" type="text" placeholder="Enter your link facebook" value="{{$profile->type == 'company' ? $profile->facebook : ''}}">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="">Link Youtube Organization</label>
-                                            <input class="form-control" name="youtube" id="profile_business_edit_youtube" type="text" placeholder="Enter your link youtube" value="{{$profile->type == 'company' ? $profile->youtube : ''}}">
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="">Discription</label>
-                                        <textarea class="form-control" name="description" id="profile_business_edit_discription" rows="6" placeholder="Enter description">{{$profile->type == 'company' ? $profile->description : ''}}</textarea>
-                                    </div>
-                                    <div class="modal-footer" style="padding: 0.85rem 0px;">
-                                        <button class="btn btn-primary btn-block btn-icon-loader" type="submit"> <span class="icon-loader-form"></span>  Save Organization Profile</button>
-                                    </div>
-                                </form>
-                            </div>
                             {{-- PESONAL --}}
-                            <div class="form-step2 profile__upload-box" style="display: {{$profile->type == 'personal' ? 'block' : 'none'}}">
+                            <div class="form-step2 profile__upload-box">
                                 <form action="/profile/save-edit" method="POST">
                                     @csrf
-                                    <input type="hidden" name="id" id="profile_personal_edit_id" value="{{$profile->type == 'personal' ? $profile->id : ''}}">
-                                    <input type="hidden" name="type" id="profile_personal_edit_type" value="personal">
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="">Presonal Name</label>
-                                        <input class="form-control" name="name" id="profile_personal_edit_name" type="text" placeholder="Enter Your Full Name" value="{{$profile->type == 'personal' ? $profile->name : ''}}">
+                                    <input type="hidden" name="id" id="profile_personal_edit_id" value="{{$profile->id}}">
+                                    <div class="row gx-3 mb-3">
+                                        <div class="col-md-9">
+                                            <label class="small mb-1" for="">Name Organization</label>
+                                        <input class="form-control" name="name" type="text" placeholder="Enter Your Full Name" value="{{$profile->name}}">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="small mb-1" for="">Type</label>
+                                            <select name="type" id="type_profile"  class="form-control">
+                                                <option value="bussiness">Bussiness</option>
+                                                <option value="personal">Personal</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="">Email</label>
-                                            <input class="form-control" name="email" id="profile_personal_edit_email" disabled type="email" placeholder="Enter Your Email" value="{{$profile->email}}">
+                                            <input class="form-control" name="email" disabled type="email" placeholder="Enter Your Email" value="{{$profile->email}}">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="">Phone</label>
-                                            <input class="form-control" name="contact" id="profile_personal_edit_contact" type="tel" placeholder="Enter Your Phone" value="{{$profile->type == 'personal' ? $profile->contact : ''}}">
+                                            <input class="form-control" name="contact" type="tel" placeholder="Enter Your Phone" value="{{$profile->contact}}">
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="">Address</label>
-                                            <input class="form-control" name="address" id="profile_personal_edit_address" type="text" placeholder="Enter Your Address" value="{{$profile->type == 'personal' ? $profile->address : ''}}">
+                                            <input class="form-control" name="address" type="text" placeholder="Enter Your Address" value="{{$profile->address}}">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="">Link Website</label>
-                                            <input class="form-control" name="website" id="profile_personal_edit_website" type="text" placeholder="Enter your website" value="{{$profile->type == 'personal' ? $profile->website : ''}}">
+                                            <input class="form-control" name="website" type="text" placeholder="Enter your website" value="{{$profile->website}}">
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="">Link Facebook</label>
-                                            <input class="form-control" name="facebook" id="profile_personal_edit_facebook" type="text" placeholder="Enter your link facebook" value="{{$profile->type == 'personal' ? $profile->facebook : ''}}">
+                                            <input class="form-control" name="facebook" type="text" placeholder="Enter your link facebook" value="{{$profile->facebook}}">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="">Link Youtube</label>
-                                            <input class="form-control" name="youtube" id="profile_personal_edit_youtube" type="text" placeholder="Enter your link youtube" value="{{$profile->type == 'personal' ? $profile->youtube : ''}}"> 
+                                            <input class="form-control" name="youtube" type="text" placeholder="Enter your link youtube" value="{{$profile->youtube}}"> 
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="small mb-1" for="">Discription</label>
-                                        <textarea class="form-control" name="description" id="profile_personal_edit_discription" rows="6" placeholder="Enter description">{{$profile->type == 'personal' ? $profile->description : ''}}</textarea>
+                                        <textarea class="form-control" name="description" rows="6" placeholder="Enter description">{{$profile->description}}</textarea>
                                     </div>
                                     <div class="modal-footer" style="padding: 0.85rem 0px;">
-                                        <button class="btn btn-primary btn-block btn-icon-loader" type="submit"> <span class="icon-loader-form"></span>  Save Personal Profile</button>
+                                        <button class="btn btn-primary btn-block btn-icon-loader" type="submit"> <span class="icon-loader-form"></span>Save Profile</button>
                                     </div>
                                 </form>
                             </div>
@@ -190,6 +192,7 @@
             </div>
         </div>
     </div>
+
     {{-- POPUP UPLOAD AVATAR --}}
     <div class="modal fade" id="popup-upload-avatar" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -229,7 +232,7 @@
         </div>
     </div>
 
-    {{-- POPUP UPLOAD AVATAR --}}
+    {{-- POPUP UPLOAD LOGO --}}
     <div class="modal fade" id="popup-upload-logo" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -268,14 +271,13 @@
         </div>
     </div>
     
-
     {{-- POPUP DELETE CV --}}
     <div class="modal fade" id="popup-confirm-delete-cv" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <form id="popup-edit-partner__form" class="needs-validation" novalidate>
                     <div class="modal-header">
-                        <h5 class="fw-light">Delete Partner </h5>
+                        <h5 class="fw-light">Delete introduce company </h5>
                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -291,6 +293,31 @@
             </div>
         </div>
     </div>
+
+        
+    {{-- POPUP DELETE CV --}}
+    <div class="modal fade" id="popup-confirm-delete-video" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="popup-edit-partner__form" class="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="fw-light">Delete Video Introduce </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <p>Do you really want to delete it?</p>
+                    </div>
+                    <div class="modal-footer" style="padding: 0">
+                        <span class="icon-loader-form-delete" style="left: 10px; margin-left: 2px; margin-top: 6px;"></span>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="popup-confirm-delete-video__delete-btn" type="button" class="btn btn-danger btn-icon-loader"> Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         function onOpenPopupEditProfile(target){
             let profileId = $(target).attr('data-profile-id');
@@ -308,7 +335,12 @@
             let cvId = $(target).attr('data-cv-id');
             $('#popup-confirm-delete-cv').modal('show');
         }
+        function onOpenPopupDeleteVD(target){
+            let vdId = $(target).attr('data-video-id');
+            $('#popup-confirm-delete-video').modal('show');
+        }
     </script>
+
     <script>
         $(document).ready(function () {
             $('#popup-upload-avatar__local-upload-btn').click(function (e) {  
@@ -405,7 +437,6 @@
                         dataType: 'json',
                         success: function (res) { 
                             if (res != null) {
-                                $('#popup-upload-cv__url-hidden-input').val(res.url);
                                 $.ajax({
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -415,9 +446,50 @@
                                     data : { id: {{$profile->id}} , url: res.url} ,
                                     dataType: 'json',
                                     success: function (res) { 
-                                        if (res == 1) {
-                                            location.reload();
-                                        }
+                                        // if (res == 1) {
+                                        //     location.reload();
+                                        // }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#upload-vd__local-file-hidden-input').change(function () { 
+                let file = this.files[0];
+                if(file != null){
+                    $('#box-vd-up').find("#preview-box-video-vd").attr('src', URL.createObjectURL(this.files[0]));
+                    $('#box-vd-up').find("#upload-box-video").hide();
+                    $('#box-vd-up').find("#preview-box-video").show();
+
+                    let data = new FormData();
+                    data.append('file', file);
+                    let ajax = $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{env('APP_URL')}}/storage/upload",
+                        method: 'post',
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        dataType: 'json',
+                        success: function (res) { 
+                            if (res != null) {
+                                $.ajax({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    url: "{{env('APP_URL')}}/profile/save-vd",
+                                    type: 'POST',
+                                    data : { id: {{$profile->id}} , url: res.url} ,
+                                    dataType: 'json',
+                                    success: function (res) { 
+                                        // if (res == 1) {
+                                        //     location.reload();
+                                        // }
                                     }
                                 });
                             }
@@ -463,6 +535,23 @@
                     }
                 });
             });
+
+            $('#popup-confirm-delete-video__delete-btn').click(function (){
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{env('APP_URL')}}/profile/delete-vd",
+                    type: 'POST',
+                    data :{ id: {{$profile->id}} , url:''} ,
+                    dataType: 'json',
+                    success: function (res) { 
+                        if (res == 1) {
+                            location.reload();
+                        }
+                    }
+                });
+            });
         });
     </script>
     
@@ -498,6 +587,27 @@
                 }
             });
         });
+        $('.dropify').dropify();
+    </script>
+
+    <script>
+        $('.dropify-clear').click(function() {
+            let wrapper = $(this).parents('.dropify-file-wrapper');
+            wrapper.find('.changed').val(1);
+            let inputFile = wrapper.find('.dropify');
+        });
+
+        $('.dropify').click(function() {
+            let wrapper = $(this).parents('.dropify-file-wrapper');
+            wrapper.find('.changed').val(1);
+        });
+        //dropify change 
+        $('.dropify').change(function(){
+            $('#save-edit-images-popular').prop('disabled', false);
+        })
+        $('#save-edit-images-popular').click(function(){
+            $('#save-edit-images-popular').find('.icon-loader-form').show();
+        })
     </script>
 @endsection
 

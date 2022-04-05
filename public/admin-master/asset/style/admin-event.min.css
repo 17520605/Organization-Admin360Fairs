@@ -15210,6 +15210,29 @@ img {
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
+.btn-edit-video {
+    position: absolute;
+    top: 5px;
+    right: 25px;
+    border-radius: 3px;
+    margin-top: .5rem!important;
+    margin-bottom: .5rem!important;
+    font-size: 14px!important;
+    font-weight: 600;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: #9b0505;
+    background-color: #FFF;
+    border-color: #FFFF;
+}
+
+.btn-edit-video:hover {
+    color: #264ab6;
+    background-color: #FFF;
+    border-color: #FFFF;
+    opacity: 0.8;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
 .btn-edit_webinar {
     position: absolute;
     top: 5px;
@@ -15951,11 +15974,29 @@ select:focus {
     border-right: 0px;
 }
 
-.dropify-font-upload:before, .dropify-wrapper .dropify-message span.file-icon:before {
-    content: '\e800';
-}
+
 
 .dataTable  td {
 height: 50px;
 vertical-align: middle;
+}
+
+.popular_img .dropify-wrapper .dropify-message p {
+    margin: 5px 0 0;
+    font-size: 15px !important;
+}
+
+.popular_img .dropify-wrapper .dropify-preview .dropify-render img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.box-dropify .dropify-wrapper .dropify-message p {
+    margin: 5px 0 0;
+    font-size: 20px;
+}
+
+.box-dropify .dropify-wrapper{
+    height: 350px;
 }

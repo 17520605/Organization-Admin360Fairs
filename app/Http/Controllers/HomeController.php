@@ -24,12 +24,12 @@ class HomeController extends Controller
         $speakerTours = DB::table('tour_speaker')->where([
             ['speakerId', '=', $profile->id]
         ])->get();
-            
-        if(count($myTours) > 0){
+
+        if(count($myTours) >= 0){
             return redirect('/administrator/tours');
         }
 
-        if(count($partnerTours) > 0){
+        if(count($partnerTours) > 0 && count($myTours) == 0){
             return redirect('/partner/tours');
         }
 

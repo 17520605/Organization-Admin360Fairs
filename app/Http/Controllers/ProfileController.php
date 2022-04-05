@@ -84,4 +84,55 @@ class ProfileController extends Controller
         return true;
     }
 
+    public function deleteVd(Request $request)
+    {
+        $profileId = $request->id;
+        $url = $request->url;
+        $profile = \App\Models\Profile::find($profileId);
+        if($profile != null)
+        {
+            $profile->video = $url ;
+            $profile->save();
+        }
+        return true;
+    }
+
+    public function saveVd(Request $request)
+    {
+        $profileId = $request->id;
+        $url = $request->url;
+        $profile = \App\Models\Profile::find($profileId);
+        if($profile != null)
+        {
+            $profile->video = $url;
+            $profile->save();
+        }
+        return true;
+    }
+
+    public function saveEditPopularImages(Request $request)
+    {
+        $changedFiles = $request->input('changedFiles');
+        $profileId = $request->id;
+        $profile = \App\Models\Profile::find($profileId);
+
+        $images = json_decode($profile->imagesId);
+        for ($i=0; $i < count($changedFiles); $i++) { 
+            if($changedFiles[$i] == "1"){
+                $file = $request->file('file'.$i+1);
+                if(isset($file)){
+                    $imageId = $this->uploadFileImagePopular($file,true);
+                    $images[$i] = $imageId;
+                }
+                else{
+                    $images[$i] = null;
+                }
+            }
+        }
+
+        $profile->imagesId = json_encode($images);
+        $profile->save();
+        return back();
+    }
+
 }
