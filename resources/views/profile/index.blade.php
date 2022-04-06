@@ -102,12 +102,17 @@
                             </div>
                             <div class="tab-pane fade" id="video1" role="tabpanel" aria-labelledby="video-tab">
                                 <div class="row mt-4 mb-4 box-dropify" id="box-vd-up">
-                                    <div class="col-12" id="upload-box-video" style="display: {{$profile->video == '' ? 'block' : 'none'}}">
-                                        <input type="file" class="dropify" id="upload-vd__local-file-hidden-input">
+                                    <div class="col-12" id="upload-box-video">
+                                        <div class="row gx-3 mb-3">
+                                            <div class="col-md-12">
+                                                <label class="small mb-1" for="">Link Youtube</label>
+                                                <input class="form-control" id="upload-vd__local-file-hidden-input" name="youtube" type="text" placeholder="Enter your link youtube" value="{{$profile->video}}"> 
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-12" id="preview-box-video" style="display: {{$profile->video == '' ? 'none' : 'block'}}"> 
-                                        <button class="btn btn-edit-video" style="z-index: 100" data-video-id="{{$profile->id}}" onclick="onOpenPopupDeleteVD(this)"><i class="far fa-trash-alt"></i></button>
-                                        <video id="preview-box-video-vd" controls style="width: 100%; border-radius: 5px;" src="{{$profile->video == '' ? '':$profile->video}}#t=5"></video>
+                                    <div class="col-12" id="preview-box-video">
+                                        <img id="preview-box-video-img" style="width: 100%;height: 600px; border-radius: 5px; display: {{$profile->profile != null ? 'none' : 'block'}} " src="http://baidich.com/images/noyoutube.jpg" />
+                                        <iframe id="preview-box-video-iframe" style="width: 100%;height: 600px; border-radius: 5px; display: {{$profile->profile == null ? 'none' : 'block'}}" src="{{$profile->video == '' ? '':$profile->video}}" frameborder="0"></iframe>
                                     </div>
                                 </div>
                             </div>
@@ -207,15 +212,15 @@
                             <form action="/profile/save-avatar" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <div class="form_upload">
+                                    <div class="form_upload" style="display: {{$profile->avatar != null ? 'none' : 'block'}};">
                                         <input type="hidden" name="avatar" id="popup-upload-avatar__url-hidden-input" >
                                         <input type="hidden" name="id" value="{{$profile->id}}">
                                         <input type="file"  id="popup-upload-avatar__local-file-hidden-input" style="display: none">
                                         <button type="button" id="popup-upload-avatar__local-upload-btn" class="btn"><i class="fas fa-upload" style="font-size: 50px;"></i></button>
                                         <p>Drop your file here or Click to browse</p>
                                     </div>
-                                    <div class="form_preview" style="display: none;">
-                                        <img id="popup-upload-avatar__local-preview-img" src="" style="border-radius: 5px;" >
+                                    <div class="form_preview avatar" style="display: {{$profile->avatar != null ? 'block' : 'none'}};">
+                                        <img id="popup-upload-avatar__local-preview-img" src="{{$profile->avatar?$profile->avatar:''}}" style="border-radius: 5px;" >
                                         <div class="remove_item_object">
                                             <div id="popup-upload-avatar__local-remove-btn" class="btn_remove ">Remove</div>
                                         </div>
@@ -246,15 +251,15 @@
                             <form action="/profile/save-logo" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <div class="form_upload">
+                                    <div class="form_upload" style="display: {{$profile->logo != null ? 'none' : 'block'}};">
                                         <input type="hidden" name="logo" id="popup-upload-logo__url-hidden-input" >
                                         <input type="hidden" name="id" value="{{$profile->id}}">
                                         <input type="file"  id="popup-upload-logo__local-file-hidden-input" style="display: none">
                                         <button type="button" id="popup-upload-logo__local-upload-btn" class="btn"><i class="fas fa-upload" style="font-size: 50px;"></i></button>
                                         <p>Drop your file here or Click to browse</p>
                                     </div>
-                                    <div class="form_preview" style="display: none;">
-                                        <img id="popup-upload-logo__local-preview-img" src="" style="border-radius: 5px;" >
+                                    <div class="form_preview logo" style="display: {{$profile->logo != null ? 'block' : 'none'}};">
+                                        <img id="popup-upload-logo__local-preview-img" src="{{$profile->logo?$profile->logo:''}}" style="border-radius: 5px;" >
                                         <div class="remove_item_object">
                                             <div id="popup-upload-logo__local-remove-btn" class="btn_remove ">Remove</div>
                                         </div>
@@ -415,7 +420,6 @@
                 }
             });
 
-
             $('#upload-cv__local-file-hidden-input').change(function () { 
                 let file = this.files[0];
                 if(file != null){
@@ -457,48 +461,54 @@
                 }
             });
 
-            $('#upload-vd__local-file-hidden-input').change(function () { 
-                let file = this.files[0];
-                if(file != null){
-                    $('#box-vd-up').find("#preview-box-video-vd").attr('src', URL.createObjectURL(this.files[0]));
-                    $('#box-vd-up').find("#upload-box-video").hide();
-                    $('#box-vd-up').find("#preview-box-video").show();
+            function youtube_parser(url){
+                var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+                var match = url.match(regExp);
+                return (match&&match[7].length==11)? match[7] : false;
+            }
 
-                    let data = new FormData();
-                    data.append('file', file);
-                    let ajax = $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{env('APP_URL')}}/storage/upload",
-                        method: 'post',
-                        processData: false,
-                        contentType: false,
-                        data: data,
-                        dataType: 'json',
-                        success: function (res) { 
-                            if (res != null) {
-                                $.ajax({
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    url: "{{env('APP_URL')}}/profile/save-vd",
-                                    type: 'POST',
-                                    data : { id: {{$profile->id}} , url: res.url} ,
-                                    dataType: 'json',
-                                    success: function (res) { 
-                                        // if (res == 1) {
-                                        //     location.reload();
-                                        // }
-                                    }
-                                });
+            $('#upload-vd__local-file-hidden-input').change(function () { 
+                let file = $('#upload-vd__local-file-hidden-input').val();
+                debugger;
+                if(file != null){
+                    let youtubeId = youtube_parser(file);
+                    let linkYoutube = 'https://www.youtube.com/embed/'+youtubeId;
+                    if(youtubeId != null)
+                    {
+                        $('#preview-box-video-iframe').show();
+                        $('#preview-box-video-img').hide();
+                        $('#preview-box-video-iframe').attr('src',linkYoutube);
+                        $('#box-vd-up').find("#preview-box-video-vd").attr('src', file);
+                        let data = new FormData();
+                        data.append('file', file);
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: "{{env('APP_URL')}}/profile/save-vd",
+                            type: 'POST',
+                            data : { id: {{$profile->id}} , url: linkYoutube} ,
+                            dataType: 'json',
+                            success: function (res) { 
+                                tata.success('Thành công', 'Đã thay đổi thành công', {
+                                    animate: 'slide',
+                                    closeBtn: true,
+                                })
                             }
-                        }
-                    });
+                        });
+                    }
+                    else
+                    {
+                        $('#preview-box-video-iframe').hide();
+                        $('#preview-box-video-img').show();
+                    }
+                }
+                else{
+                    $('#preview-box-video-iframe').hide();
+                    $('#preview-box-video-img').show();
                 }
             });
 
-                
             $('#popup-upload-avatar__local-remove-btn').click(function (e) { 
                 $('#popup-upload-avatar__local-preview-img').attr('src', null);
                 $('#popup-upload-avatar').find(".form_upload").show();
@@ -530,24 +540,7 @@
                     dataType: 'json',
                     success: function (res) { 
                         if (res == 1) {
-                            location.reload();
-                        }
-                    }
-                });
-            });
-
-            $('#popup-confirm-delete-video__delete-btn').click(function (){
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{env('APP_URL')}}/profile/delete-vd",
-                    type: 'POST',
-                    data :{ id: {{$profile->id}} , url:''} ,
-                    dataType: 'json',
-                    success: function (res) { 
-                        if (res == 1) {
-                            location.reload();
+                           
                         }
                     }
                 });
@@ -572,6 +565,7 @@
                 }
             });
         });
+
         $('#popup-upload-logo__local-save-btn').click(function(){
             $('#popup-upload-logo').find('.icon-loader-form').show();
             $.ajax({
@@ -587,6 +581,7 @@
                 }
             });
         });
+
         $('.dropify').dropify();
     </script>
 

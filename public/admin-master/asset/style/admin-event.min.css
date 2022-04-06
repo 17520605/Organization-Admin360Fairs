@@ -14166,7 +14166,14 @@ img {
     justify-content: center;
     align-items: center;
 }
-
+.form_preview.avatar img {
+    height: 400px;
+    object-fit: cover;
+}
+.form_preview.logo img {
+    height: 400px;
+    object-fit: contain;
+}
 .form_preview video {
     max-height: 400px;
     object-fit: fill;
@@ -15999,4 +16006,22 @@ vertical-align: middle;
 
 .box-dropify .dropify-wrapper{
     height: 350px;
+}
+
+.load-upload-vd{
+    position: absolute;
+    left: 48%;
+    transform: scale(3.5);
+    margin-top: 300px;
+    display: none;
+    top: 0px;
+}
+.message-upload-file{
+    font-size: 20px;
+    color: #c00;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 36px;
+    display: none;
 }

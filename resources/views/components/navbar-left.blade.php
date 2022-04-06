@@ -12,9 +12,9 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link btn-page-loader">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
+        <a class="nav-link btn-page-loader" href="{{env('APP_URL')}}">
+            <i class="fas fa-align-left"></i>
+            <span>List Tours</span>
         </a>
     </li>
 
@@ -26,6 +26,12 @@
         Interface
     </div>
 
+    <li class="nav-item">
+        <a class="nav-link btn-page-loader">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed btn-page-loader" href="/administrator/tours/{{$tour->id}}">
