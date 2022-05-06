@@ -1,6 +1,6 @@
 <head>
     <meta charset="utf-8" />
-    <title>Admin Event - Dashboard</title>
+    <title>Admin Gallery - Dashboard</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('admin-master/asset/images/logo-shortcut.svg')}}" />
     <link href="{{ asset('admin-master/asset/style/admin-event.min.css')}}" rel="stylesheet" />

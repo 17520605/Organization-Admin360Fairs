@@ -450,9 +450,12 @@
                                     data : { id: {{$profile->id}} , url: res.url} ,
                                     dataType: 'json',
                                     success: function (res) { 
-                                        // if (res == 1) {
-                                        //     location.reload();
-                                        // }
+                                        if (res == 1) {
+                                            tata.success('Thành công', 'Đã thay đổi thành công', {
+                                                animate: 'slide',
+                                                closeBtn: true,
+                                            })
+                                        }
                                     }
                                 });
                             }
@@ -478,7 +481,6 @@
                         $('#preview-box-video-iframe').show();
                         $('#preview-box-video-img').hide();
                         $('#preview-box-video-iframe').attr('src',linkYoutube);
-                        $('#box-vd-up').find("#preview-box-video-vd").attr('src', file);
                         let data = new FormData();
                         data.append('file', file);
                         $.ajax({
@@ -540,8 +542,12 @@
                     dataType: 'json',
                     success: function (res) { 
                         if (res == 1) {
-                           
+                           $('#popup-confirm-delete-cv').modal('hide');
+                           $('#box-cv-up').find('#upload-box-cv').show();
+                           $('#box-cv-up').find('#preview-box-cv').hide();
+                           $('#box-cv-up').find('#preview-box-cv-img').attr('src','');
                         }
+                        $('#save-edit-images-popular').find('.icon-loader-form').hide();
                     }
                 });
             });
@@ -597,10 +603,8 @@
             wrapper.find('.changed').val(1);
         });
         //dropify change 
-        $('.dropify').change(function(){
+        $('#profile1').find('.dropify').change(function(){
             $('#save-edit-images-popular').prop('disabled', false);
-        })
-        $('#save-edit-images-popular').click(function(){
             $('#save-edit-images-popular').find('.icon-loader-form').show();
         })
     </script>
