@@ -2,7 +2,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center btn-page-loader" href="/speaker/tours/{{$tour->id}}">
         <div class="sidebar-brand-icon">
-            <i class="fab fa-korvue"></i>
+            <img src="{{ asset('admin-master/asset/images/S-logo.png')}}" width="40" alt="">
         </div>
         <div class="sidebar-brand-text mx-3">Speaker AD</div>
     </a>
