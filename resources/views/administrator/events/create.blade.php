@@ -388,7 +388,7 @@
     }
 
     function changePoster(e) {  
-        debugger;
+        
         let files = $(e.currentTarget).prop('files');;
         if(files.length > 0){
             let file = files[0];

@@ -2,9 +2,9 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center btn-page-loader" href="{{env('APP_URL')}}">
         <div class="sidebar-brand-icon">
-            <i class="fab fa-korvue"></i>
+            <img src="{{ asset('admin-master/asset/images/S-logo.png')}}" width="40" alt="">
         </div>
-        <div class="sidebar-brand-text mx-3">Tour Admin</div>
+        <div class="sidebar-brand-text mx-3" style="margin-top: 4px">Tour Admin</div>
     </a>
 
     <!-- Divider -->

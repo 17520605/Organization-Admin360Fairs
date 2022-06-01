@@ -143,7 +143,7 @@
                             @csrf
                             <div class="row mb-3">
                                 <label class="small mb-1" for="">Name</label>
-                                <input class="form-control" type="text" name="name" placeholder="Enter Booth Name">
+                                <input class="form-control" type="text" name="name" placeholder="Enter Booth Name" required>
                             </div>
                             <div id="popup-create-booth__choose-zone-text" class="row row mb-3" style="color: #4e73df ; cursor: pointer;"> + choose zone </div>
                             <div class="row mb-3 p-3 border zones-wrapper" style="display: none;">
@@ -161,7 +161,7 @@
                         </div>
                     </div>
                     <div class="modal-footer" >
-                        <button class="btn btn-block btn-df btn-icon-loader" type="submit"><span class="icon-loader-form"></span> Create new booths</button>
+                        <button class="btn btn-block btn-df" type="submit"><span class="icon-loader-form"></span> Create new booths</button>
                     </div>
                 </form>
             </div>
@@ -182,7 +182,7 @@
                             <input id="popup-edit-booth__id-hidden-input" type="hidden" name="id">
                             <div class="row mb-3">
                                 <label class="small mb-1" for="">Name</label>
-                                <input id="popup-edit-booth__name-input" class="form-control" type="text" name="name" placeholder="Enter Booth Name">
+                                <input id="popup-edit-booth__name-input" class="form-control" type="text" name="name" placeholder="Enter Booth Name" required>
                             </div>
                             <div id="popup-edit-booth__choose-zone-text" class="row row mb-3 " style="cursor: pointer;color: #4e73df;font-weight: 600" > Choose zone </div>
                             <div class="row mb-3 p-3 border zones-wrapper" style="display: none;">

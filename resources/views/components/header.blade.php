@@ -2,7 +2,7 @@
     <meta charset="utf-8" />
     <title>Admin Gallery - Dashboard</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('admin-master/asset/images/logo-shortcut.svg')}}" />
+    <link rel="shortcut icon" href="{{ asset('admin-master/asset/images/logo-shortcut.png')}}" />
     <link href="{{ asset('admin-master/asset/style/admin-event.min.css')}}" rel="stylesheet" />
     <link href="{{ asset('admin-master/asset/style/bootstrap.css')}}" rel="stylesheet" />
     <link href="{{ asset('admin-master/asset/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">

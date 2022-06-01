@@ -44,22 +44,22 @@
                         @csrf
                         <div class="mb-3">
                             <label class="small mb-1">Tour Name</label>
-                            <input class="form-control" name="name" type="text" placeholder="Enter email address">
+                            <input class="form-control" name="name" type="text" placeholder="Enter name tour" required>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1" >Start time</label>
-                                <input class="form-control" name="start_at" type="date">
+                                <input class="form-control" name="start_at" type="date" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLastName">End time</label>
-                                <input class="form-control"  name="end_at" type="date">
+                                <input class="form-control"  name="end_at" type="date" required>
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-12">
                                 <label class="small mb-1" >Location</label>
-                                <input class="form-control"  name="location" type="text" placeholder="Enter your location">
+                                <input class="form-control"  name="location" type="text" placeholder="Enter your location" required>
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
@@ -90,10 +90,10 @@
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1">Tour Description</label>
-                            <textarea name="description"  placeholder="Enter your tour description" class="form-control" rows="6"></textarea>
+                            <textarea name="description"  placeholder="Enter your tour description" class="form-control" rows="6" required></textarea>
                         </div>
                         <!-- Form Group (create account submit)-->
-                        <button id="popup-create-tour__save-btn" type="submit" class="btn btn-primary btn-block btn-icon-loader"> <span class="icon-loader-form"></span> Create New Tour</button>
+                        <button id="popup-create-tour__save-btn" type="submit" class="btn btn-primary btn-block"> <span class="icon-loader-form"></span> Create New Tour</button>
                     </form>
                 </div>
             </div>

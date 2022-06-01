@@ -65,7 +65,7 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="small mb-1" for="">Name</label>
-                                <input class="form-control" id="popup-create-zone__name-input" type="text" name="name" placeholder="Enter Name">
+                                <input class="form-control" id="popup-create-zone__name-input" type="text" name="name" placeholder="Enter Name" required>
                             </div>
                             <div class="mb-3">
                                 <a class="link link-primary" id="popup-create-zone__toggle-booths-wrapper-btn">Choose booths</a>
@@ -81,7 +81,7 @@
                                 @endforeach
                             </div>
                             <div class="modal-footer"  style="padding: 0.85rem 0px;">
-                                <button type="submit" id="popup-create-zone__save-btn" class="btn btn-primary btn-block btn-icon-loader"><span class="icon-loader-form"></span> Save Upload</button>
+                                <button type="submit" id="popup-create-zone__save-btn" class="btn btn-primary btn-block"><span class="icon-loader-form"></span> Save Upload</button>
                             </div>
                         </form>
                     </div>
@@ -104,7 +104,7 @@
                             <input id="popup-edit-zone__id-hidden-input" type="hidden" name="id">
                             <div class="mb-3">
                                 <label class="small mb-1" for="">Name</label>
-                                <input class="form-control" id="popup-edit-zone__name-input" type="text" name="name" placeholder="Enter Name">
+                                <input class="form-control" id="popup-edit-zone__name-input" type="text" name="name" placeholder="Enter Name" required>
                             </div>
                             <div class="mb-3">
                                 <a class="link link-primary" id="popup-edit-zone__toggle-booths-wrapper-btn">Choose booths</a>
@@ -125,7 +125,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer"  style="padding: 0.85rem 0px;">
-                                <button type="submit" id="popup-edit-zone__save-btn" data-zone-id="" class="btn btn-primary btn-block btn-icon-loader"> <span class="icon-loader-form"></span> Save Change</button>
+                                <button type="submit" id="popup-edit-zone__save-btn" data-zone-id="" class="btn btn-primary btn-block"> <span class="icon-loader-form"></span> Save Change</button>
                             </div>
                         </form>
                     </div>

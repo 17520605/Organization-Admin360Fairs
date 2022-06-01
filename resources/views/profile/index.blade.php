@@ -84,7 +84,7 @@
                                                 </div>
                                                 @endfor
                                             </div>
-                                            <button class="btn btn-primary btn-block btn-icon-loader" disabled type="submit" id="save-edit-images-popular"> <span class="icon-loader-form"></span>Save Edit</button>
+                                            <button class="btn btn-primary btn-block btn-icon-loader" disabled type="submit" id="save-edit-images-popular">Save Edit</button>
                                         </form>
                                     </div>
                                 </div>
@@ -472,7 +472,7 @@
 
             $('#upload-vd__local-file-hidden-input').change(function () { 
                 let file = $('#upload-vd__local-file-hidden-input').val();
-                debugger;
+                
                 if(file != null){
                     let youtubeId = youtube_parser(file);
                     let linkYoutube = 'https://www.youtube.com/embed/'+youtubeId;

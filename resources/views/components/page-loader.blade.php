@@ -1,7 +1,7 @@
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
-            <div class="m-t-30"><img src="{{ asset('admin-master/asset/images/logo-shortcut.svg')}}" width="48" height="48" alt="Lucid"></div>
+            <div class="m-t-30"><h1 style="color: #FFF; font-weight: bold">Sgallery</h1></div>
             <p>
                 <div class="waviy">
                     <span style="--i:1">P</span>

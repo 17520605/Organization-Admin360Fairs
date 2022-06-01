@@ -752,7 +752,7 @@
                 <div id="popup-object-detail__cover" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;border-radius: 5px;z-index: 10000;min-height: 70vh">
                     <div class="pop-loader-wrapper">
                         <div class="loader">
-                            <div class="m-t-30"><img src="{{ asset('admin-master/asset/images/logo-shortcut.svg')}}" width="48" height="48" alt="Lucid"></div>
+                            <div class="m-t-30"><img src="{{ asset('admin-master/asset/images/logo-shortcut.png')}}" width="48" height="48" alt="Lucid"></div>
                             <p>
                                 </p><div class="waviy">
                                     <span style="--i:1">P</span>

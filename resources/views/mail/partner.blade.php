@@ -76,7 +76,7 @@
                         @endphp
                                                                         <tr>
                                                                             <td style="padding-bottom: 80px; padding-top: 37px; padding-left: 60px; font-size: 25px; font-weight: bold; color: #6a4bce;">
-                                                                                <i class="fab fa-korvue"></i> 360Fairs
+                                                                                <img src="{{ asset('admin-master/asset/images/S-logo.png')}}" width="40" alt=""> 360Fairs
                                                                             </td>
                                                                         </tr>
                                                                         <tr>

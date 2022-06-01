@@ -107,7 +107,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary btn-block  btn-icon-loader" type="submit"><span class="icon-loader-form"></span> Save Change</button>
+                    <button class="btn btn-primary btn-block" type="submit"><span class="icon-loader-form"></span> Save Change</button>
                 </div>
             </form>
         </div>

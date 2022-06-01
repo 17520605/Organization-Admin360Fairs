@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background-color: #4e73df !important;">
     <div class="d-flex flex-column text-sm-left text-center justify-content-center" style="color: #fff;">
-        <a href="#" class="navbar-brand mr-0 mr-md-3 active"><i class="fab fa-korvue" style="color: #fff;font-size: 35px;margin-right: 5px;"></i> <span style="font-size: 35px; font-weight: bold; margin-right: 30px;color: #fff;">VIRTUAL ADMIN</span> </a>
+        <a href="#" class="navbar-brand mr-0 mr-md-3 active"><img src="{{ asset('admin-master/asset/images/S-logo.png')}}" width="50" style="position: absolute;" alt=""> <span style="font-size: 35px; font-weight: bold; margin-right: 30px;color: #fff; margin-left: 60px">Sgallery Admin</span> </a>
     </div>
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">

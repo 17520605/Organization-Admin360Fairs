@@ -308,16 +308,16 @@
                         @csrf
                         <div class="mb-3">
                             <label class="small mb-1">Tour Name</label>
-                            <input class="form-control" name="name" type="text" value="{{$tour->name}}" placeholder="Enter tour name" />
+                            <input class="form-control" name="name" type="text" value="{{$tour->name}}" placeholder="Enter tour name" required/>
                         </div>
                         <div class="row gx-3 mb-3">
                             <div class="col-md-6">
                                 <label class="small mb-1">Start at</label>
-                                <input class="form-control" name="start" value="{{ Carbon\Carbon::parse($tour->startTime)->format('Y-m-d\TH:i')}}" type="datetime-local" />
+                                <input class="form-control" name="start" value="{{ Carbon\Carbon::parse($tour->startTime)->format('Y-m-d\TH:i')}}" type="datetime-local" required/>
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLastName">End at</label>
-                                <input class="form-control" name="end" value="{{ Carbon\Carbon::parse($tour->endTime)->format('Y-m-d\TH:i')}}" type="datetime-local" />
+                                <input class="form-control" name="end" value="{{ Carbon\Carbon::parse($tour->endTime)->format('Y-m-d\TH:i')}}" type="datetime-local" required/>
                             </div>
                         </div>
                         <div class="row gx-3 mb-3">
@@ -349,15 +349,15 @@
                         <div class="row gx-3 mb-3">
                             <div class="col-md-12">
                                 <label class="small mb-1">Location</label>
-                                <input class="form-control" name="location" value="{{$tour->location}}" type="text" placeholder="Enter your location" />
+                                <input class="form-control" name="location" value="{{$tour->location}}" type="text" placeholder="Enter your location" required/>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1">Tour Description</label>
-                            <textarea name="description" placeholder="Enter your tour description" class="form-control" rows="6"> {{$tour->description}} </textarea>
+                            <textarea name="description" placeholder="Enter your tour description" class="form-control" rows="6" required> {{$tour->description}} </textarea>
                         </div>
                         <!-- Form Group (create account submit)-->
-                        <button id="popup-edit-tour__save-btn" type="submit" class="btn btn-primary btn-block btn-icon-loader">  <span class="icon-loader-form"></span> Update Edit Tour</button>
+                        <button id="popup-edit-tour__save-btn" type="submit" class="btn btn-primary btn-block">  <span class="icon-loader-form"></span> Update Edit Tour</button>
                     </form>
                 </div>
             </div>
@@ -425,7 +425,7 @@
                 <div id="popup-object-detail__cover" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;border-radius: 5px;z-index: 10000;min-height: 70vh">
                     <div class="pop-loader-wrapper">
                         <div class="loader">
-                            <div class="m-t-30"><img src="{{ asset('admin-master/asset/images/logo-shortcut.svg')}}" width="48" height="48" alt="Lucid"></div>
+                            <div class="m-t-30"><img src="{{ asset('admin-master/asset/images/logo-shortcut.png')}}" width="48" height="48" alt="Lucid"></div>
                             <p>
                                 </p><div class="waviy">
                                     <span style="--i:1">P</span>
