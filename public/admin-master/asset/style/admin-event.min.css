@@ -16025,3 +16025,7 @@ vertical-align: middle;
     top: 36px;
     display: none;
 }
+
+.filemanager-sidebar .progress-striped .progress-bar{
+    height: 100%;
+}

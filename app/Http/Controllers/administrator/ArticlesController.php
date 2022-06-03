@@ -149,9 +149,9 @@ class ArticlesController extends Controller
     }
 
 
-    public function delete($id, Request $request)
+    public function delete($id, $articleId, Request $request)
     {
-        $article = \App\Models\Article::where('id', $id)->first();
+        $article = \App\Models\Article::where('id', $articleId,)->first();
         if(isset($article)){
             $article->delete();
             return [

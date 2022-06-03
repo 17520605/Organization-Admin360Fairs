@@ -113,7 +113,7 @@
                                         <td class="btn-action-icon"> 
                                             
                                             <a href="/administrator/tours/{{$tour->id}}/articles/{{$article->id}}/edit"> <i class="fas fa-pen edit"></i></a>
-                                            <a href=""><i class="fas fa-trash-alt delete" onclick="openPopupDelete('{{$article->id}}')"></i></a> 
+                                            <a href="#"><i class="fas fa-trash-alt delete" onclick="openPopupDelete('{{$article->id}}')"></i></a> 
                                         </td>
                                     </tr>
                                     @endforeach
@@ -173,6 +173,7 @@
                     var table = $('#datatable').DataTable();
                     var row = $('#datatable').find('tr[data-article-id="'+ id +'"]');
                     table.row(row).remove().draw();
+                    location.reload();
                     tata.success('Thành công', 'Đã xóa bài viết', {
                         animate: 'slide',
                         closeBtn: true,

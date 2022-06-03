@@ -67,7 +67,14 @@
 @stop
 @section('script')
     <script>
-        CKEDITOR.replace(document.getElementById('editor'));
+        // CKEDITOR.replace(document.getElementById('editor'));
+        // var editor = CKEDITOR.replace( document.getElementById('editor'));
+        // CKFinder.setupCKEditor( editor );
+
+        CKEDITOR.replace( 'editor', {
+            filebrowserBrowseUrl: '../../../../admin-master/asset/plugins/ckfinder/ckfinder.html',
+            filebrowserUploadUrl: '../../../../admin-master/asset/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files'
+        } );
     </script>
     <script>
         $('#title_article').on('input', function() {

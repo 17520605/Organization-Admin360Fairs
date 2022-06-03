@@ -787,8 +787,8 @@
                     <div class="row mb-3" >
                         <div class="col-md-8 view_booth_panoles">
                             <div class="card" style="width: 100% ; height: 100%; padding:20px;">
-                                <div class="preview-wrapper" style="width: 100%; height: 100%;">
-                                    <img src="" alt="" style="width: 100%;height: 450px; display: none">
+                                <div class="preview-wrapper" style="width: 100%; height: 100%; display: flex;justify-content: center">
+                                    <img src="" alt="" style="max-width: 100%; height: 450px; display: none">
                                     <iframe src="" style="display: none" width="100%" height="450px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     <video src="" alt="" controls style="width: 100%;max-height: 450px;display: none" controls></video>
                                     <audio src="" alt="" controls style="width: 100%;max-height: 450px;display: none"></audio>
@@ -811,8 +811,12 @@
                                             </div>
                                             <div class="col-8">
                                                 <p class="text-muted mb-2 btn-action-icon" style="text-align: left"><span id="popup-asset-detail__name-text" class="ml-2 font-weight-bold"></span> 
-                                                    @if ($profile->id == $asset->ownerId)
-                                                        <i onclick="showInputNameAsset()" class="fas fa-pen edit" style="margin-left: 160px"></i>  
+                                                    @if (count($assets)>0)
+                                                        @if ($profile->id == $asset->ownerId )
+                                                            <i onclick="showInputNameAsset()" class="fas fa-pen edit" style="margin-left: 160px"></i>  
+                                                        @endif
+                                                    @else
+                                                        
                                                     @endif
                                                 </p>
                                                 <input type="hidden" id="text_name_file">
@@ -827,17 +831,6 @@
                                             <button onclick="openPopupConfirmDelete();" class="btn btn-danger btn-block" >Delete</button>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-8 view_booth_panoles">
-                            <div class="card" style="width: 100% ; height: 100%; padding:20px;">
-                                <div class="preview-wrapper" style="width: 100%; height: 100%;">
-                                    <img src="" alt="" style="width: 100%;height: 450px; object-fit: contain; display: none">
-                                    <iframe src="" style="display: none" width="100%" height="450px" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                    <video src="" alt="" controls style="width: 100%;max-height: 450px;display: none" controls></video>
-                                    <audio src="" alt="" controls style="width: 100%;max-height: 450px;display: none"></audio>
-                                    <model-viewer src="" style="width: 100%; height: 100%;max-height: 450px; display: none" shadow-intensity="1" camera-controls></model-viewer>
                                 </div>
                             </div>
                         </div>
