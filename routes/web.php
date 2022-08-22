@@ -119,6 +119,9 @@ Route::middleware('auth')->group(function (){
             Route::get('/{id}/notifications/get-all', 'administrator\NotificationsController@getAll');
             Route::post('/{id}/notifications/{notificationId}/set-seen', 'administrator\NotificationsController@setSeen');
 
+            // settings
+            Route::get('/{id}/settings', 'administrator\SettingsController@index');
+            Route::post('/{id}/settings/save-configs-color', 'administrator\SettingsController@saveConfigsColor');
         }); 
     });
 
@@ -232,11 +235,14 @@ Route::middleware('auth')->group(function (){
     Route::group(['prefix' => 'profile'], function(){
         Route::get('/', 'ProfileController@index');
         Route::post('/save-edit', 'ProfileController@saveEdit');
+        Route::post('/save-configs-color', 'ProfileController@saveConfigsColor');
         Route::post('/save-edit-image-popular', 'ProfileController@saveEditPopularImages');
         Route::post('/save-avatar', 'ProfileController@saveAvatar');
         Route::post('/save-logo', 'ProfileController@saveLogo');
         Route::post('/save-cv', 'ProfileController@saveCv');
         Route::post('/delete-cv', 'ProfileController@deleteCv');
+        Route::post('/save-background', 'ProfileController@saveBackground');
+        Route::post('/delete-background', 'ProfileController@deleteBackground');
         Route::post('/save-vd', 'ProfileController@saveVd');
         Route::post('/delete-vd', 'ProfileController@deleteVd');
     });

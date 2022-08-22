@@ -13,7 +13,6 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $profile = DB::table('profile')->where('userId', $user->id)->first();
-        
         return view('profile.index', compact('profile'));
     }
     public function saveEdit(Request $request)
@@ -34,6 +33,22 @@ class ProfileController extends Controller
         }
         return back();
     }
+
+    public function saveConfigsColor(Request $request)
+    {
+        $profileId = $request->id;
+        $profile = \App\Models\Profile::find($profileId);
+        if($profile != null)
+        {
+            $profile->color1 =$request->color1;
+            $profile->color2 =$request->color2;
+            $profile->color3 =$request->color3;
+            $profile->color4 =$request->color4;
+            $profile->save();
+        }
+        return back();
+    }
+    
     public function saveAvatar(Request $request)
     {
         $profileId = $request->id;
@@ -58,6 +73,19 @@ class ProfileController extends Controller
         return back();
     }
     
+    public function saveCv(Request $request)
+    {
+        $profileId = $request->id;
+        $url = $request->url;
+        $profile = \App\Models\Profile::find($profileId);
+        if($profile != null)
+        {
+            $profile->profile = $url;
+            $profile->save();
+        }
+        return true;
+    }
+
     public function deleteCv(Request $request)
     {
         $profileId = $request->id;
@@ -71,14 +99,27 @@ class ProfileController extends Controller
         return true;
     }
 
-    public function saveCv(Request $request)
+    public function saveBackground(Request $request)
     {
         $profileId = $request->id;
         $url = $request->url;
         $profile = \App\Models\Profile::find($profileId);
         if($profile != null)
         {
-            $profile->profile = $url;
+            $profile->background = $url;
+            $profile->save();
+        }
+        return true;
+    }
+
+    public function deleteBackground(Request $request)
+    {
+        $profileId = $request->id;
+        $url = $request->url;
+        $profile = \App\Models\Profile::find($profileId);
+        if($profile != null)
+        {
+            $profile->background = $url ;
             $profile->save();
         }
         return true;

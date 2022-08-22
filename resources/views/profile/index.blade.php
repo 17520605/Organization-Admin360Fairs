@@ -44,7 +44,7 @@
                     <img src="{{$profile->logo != null ? $profile->logo : 'https://davidmeessen.com/wp-content/uploads/2019/11/yourlogohere-1-2-3-1-1.png'}}" style="max-width: 300px;" alt="">
                     <button onclick="onOpenPopupUploadLogo(this)" data-id-profile="{{$profile->id}}" class="btn btn-default change-avatar-profile" style="background: #4666c7;color:#FFF;position: relative"><i class="fas fa-pen"></i></button>
                 </div>
-                <span style="padding: 10px;font-size: 20px;color: #444">{{$profile->description != null ? $profile->description : 'This is description of company'}} </span>
+                <span style="margin: 70px 0px;width: 100%; padding: 10px;font-size: 20px;color: #444 ;text-align: center">{{$profile->description != null ? $profile->description : 'This is description of company'}} </span>
             </div>
             <div class="row mt-4 mb-5">
                 <div class="col-lg-12" style="min-height: 450px">
@@ -54,10 +54,16 @@
                                 <a class="nav-link active" id="profile-tab1" data-toggle="tab" href="#profile1" role="tab" aria-controls="profile" aria-expanded="true">List Images Popular</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" id="background-tab1" data-toggle="tab" href="#background1" role="tab" aria-controls="home" aria-expanded="true">Background Image</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" id="home-tab1" data-toggle="tab" href="#home1" role="tab" aria-controls="home" aria-expanded="true">Image Introduce</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="video-tab1" data-toggle="tab" href="#video1" role="tab" aria-controls="video">Video Introduce</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="setting-tab1" data-toggle="tab" href="#setting1" role="tab" aria-controls="setting">Settings</a>
                             </li>
                         </ul>
                         <div class="tab-content text-muted" id="myTabaltContent">
@@ -89,6 +95,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div role="tabpanel" class="tab-pane fade" id="background1" aria-labelledby="home-tab">
+                                <div class="row mt-4 mb-4" id="box-background-up">
+                                    <div class="col-12 box-dropify" id="upload-box-background" style="display: {{$profile->background == '' ? 'block' : 'none'}}">
+                                        <input type="file" class="dropify" id="upload-background__local-file-hidden-input">
+                                    </div>
+                                    <div class="col-12" id="preview-box-background" style="display: {{$profile->background == '' ? 'none' : 'block'}}"> 
+                                        <button class="btn btn-edit-cv" data-background-id="{{$profile->id}}" onclick="onOpenPopupDeleteBackground(this)"><i class="far fa-trash-alt"></i></button>
+                                        <img id="preview-box-background-img" style="width: 100%; border-radius: 5px;" src="{{$profile->background == '' ? '':$profile->background}}" alt="">
+                                    </div>
+                                </div>
+                            </div>
                             <div role="tabpanel" class="tab-pane fade" id="home1" aria-labelledby="home-tab">
                                 <div class="row mt-4 mb-4" id="box-cv-up">
                                     <div class="col-12 box-dropify" id="upload-box-cv" style="display: {{$profile->profile == '' ? 'block' : 'none'}}">
@@ -114,6 +131,55 @@
                                         <img id="preview-box-video-img" style="width: 100%;height: 600px; border-radius: 5px; display: {{$profile->profile != null ? 'none' : 'block'}} " src="http://baidich.com/images/noyoutube.jpg" />
                                         <iframe id="preview-box-video-iframe" style="width: 100%;height: 600px; border-radius: 5px; display: {{$profile->profile == null ? 'none' : 'block'}}" src="{{$profile->video == '' ? '':$profile->video}}" frameborder="0"></iframe>
                                     </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="setting1" aria-labelledby="setting-tab">
+                                <div class="row mt-4 mb-4 d-flex justify-content-center" id="setting-color">
+                                    <form action="/profile/save-configs-color" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" id="profile_personal_edit_id" value="{{$profile->id}}">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-sm">
+                                                    <div class="swatch">
+                                                        <input type="color" class="color" onchange="ChangeColorInput(this)" name="color1" value="{{$profile->color1?$profile->color1:''}}">
+                                                        <input class="form-control mt-2 color1" onchange="ChangeColorInput1(this)" type="text" value="{{$profile->color1?$profile->color1:''}}">
+                                                        <div class="info">
+                                                        <h2>Default1</h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="swatch">
+                                                        <input type="color" class="color" onchange="ChangeColorInput(this)" name="color2" value="{{$profile->color2?$profile->color2:''}}">
+                                                        <input class="form-control mt-2 color1" onchange="ChangeColorInput1(this)" type="text" value="{{$profile->color2?$profile->color2:''}}">
+                                                        <div class="info">
+                                                            <h2>Default1</h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="swatch">
+                                                        <input type="color" class="color" onchange="ChangeColorInput(this)" name="color3" value="{{$profile->color3?$profile->color3:''}}">
+                                                        <input class="form-control mt-2 color1" onchange="ChangeColorInput1(this)" type="text" value="{{$profile->color3?$profile->color3:''}}">
+                                                        <div class="info">
+                                                        <h2>Default1</h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm">
+                                                    <div class="swatch">
+                                                        <input type="color" class="color" onchange="ChangeColorInput(this)" name="color4" value="{{$profile->color4?$profile->color4:''}}">
+                                                        <input class="form-control mt-2 color1" onchange="ChangeColorInput1(this)" type="text" value="{{$profile->color4?$profile->color4:''}}">
+                                                        <div class="info">
+                                                        <h2>Default1</h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-primary btn-block btn-icon-loader mt-4" type="submit" id="save-edit-conifg-color">Save Edit</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -299,6 +365,30 @@
         </div>
     </div>
 
+    {{-- POPUP DELETE Background --}}
+    <div class="modal fade" id="popup-confirm-delete-background" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="popup-edit-partner__form" class="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="fw-light">Delete Background company </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <p>Do you really want to delete it?</p>
+                    </div>
+                    <div class="modal-footer" style="padding: 0">
+                        <span class="icon-loader-form-delete" style="left: 10px; margin-left: 2px; margin-top: 6px;"></span>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="popup-confirm-delete-background__delete-btn" type="button" class="btn btn-danger btn-icon-loader"> Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
         
     {{-- POPUP DELETE CV --}}
     <div class="modal fade" id="popup-confirm-delete-video" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
@@ -339,6 +429,10 @@
         function onOpenPopupDeleteCV(target){
             let cvId = $(target).attr('data-cv-id');
             $('#popup-confirm-delete-cv').modal('show');
+        }
+        function onOpenPopupDeleteBackground(target){
+            let bgId = $(target).attr('data-background-id');
+            $('#popup-confirm-delete-background').modal('show');
         }
         function onOpenPopupDeleteVD(target){
             let vdId = $(target).attr('data-video-id');
@@ -464,6 +558,50 @@
                 }
             });
 
+            $('#upload-background__local-file-hidden-input').change(function () { 
+                let file = this.files[0];
+                if(file != null){
+                    $('#box-background-up').find("#preview-box-background-img").attr('src', URL.createObjectURL(this.files[0]));
+                    $('#box-background-up').find("#upload-box-background").hide();
+                    $('#box-background-up').find("#preview-box-background").show();
+
+                    let data = new FormData();
+                    data.append('file', file);
+                    let ajax = $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{env('APP_URL')}}/storage/upload",
+                        method: 'post',
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        dataType: 'json',
+                        success: function (res) { 
+                            if (res != null) {
+                                $.ajax({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    url: "{{env('APP_URL')}}/profile/save-background",
+                                    type: 'POST',
+                                    data : { id: {{$profile->id}} , url: res.url} ,
+                                    dataType: 'json',
+                                    success: function (res) { 
+                                        if (res == 1) {
+                                            tata.success('Thành công', 'Đã thay đổi thành công', {
+                                                animate: 'slide',
+                                                closeBtn: true,
+                                            })
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
             function youtube_parser(url){
                 var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
                 var match = url.match(regExp);
@@ -551,6 +689,28 @@
                     }
                 });
             });
+
+
+            $('#popup-confirm-delete-background__delete-btn').click(function (){
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{env('APP_URL')}}/profile/delete-background",
+                    type: 'POST',
+                    data :{ id: {{$profile->id}} , url:''} ,
+                    dataType: 'json',
+                    success: function (res) { 
+                        if (res == 1) {
+                           $('#popup-confirm-delete-background').modal('hide');
+                           $('#box-background-up').find('#upload-box-background').show();
+                           $('#box-background-up').find('#preview-box-background').hide();
+                           $('#box-background-up').find('#preview-box-background-img').attr('src','');
+                        }
+                        $('#save-edit-images-popular').find('.icon-loader-form').hide();
+                    }
+                });
+            });
         });
     </script>
     
@@ -607,6 +767,18 @@
             $('#save-edit-images-popular').prop('disabled', false);
             $('#save-edit-images-popular').find('.icon-loader-form').show();
         })
+    </script>
+    <script>
+        function ChangeColorInput(target)
+        {
+            let value = $(target).val();
+            $(target).parents(".swatch").find(".color1").val(value);
+        }
+        function ChangeColorInput1(target)
+        {
+            let value = $(target).val();
+            $(target).parents(".swatch").find(".color").val(value);
+        }
     </script>
 @endsection
 

@@ -98,6 +98,13 @@
             <span>Notifications</span>
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="/administrator/tours/{{$tour->id}}/settings" >
+            <i class="fas fa-comments"></i>
+            <span>Settings</span>
+        </a>
+    </li>
     
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block" />
